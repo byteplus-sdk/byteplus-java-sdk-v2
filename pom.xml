@@ -209,6 +209,5 @@
     <modules>
         <module>byteplus-java-sdk-core</module>
         <module>byteplus-java-sdk-bom</module>
-        <module>byteplus-java-sdk-iam</module>
     </modules>
 </project>
