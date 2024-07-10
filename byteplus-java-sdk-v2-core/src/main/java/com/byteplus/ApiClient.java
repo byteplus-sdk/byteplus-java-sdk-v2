@@ -26,6 +26,7 @@ import com.byteplus.sign.Credentials;
 import com.byteplus.sign.ServiceInfo;
 import com.byteplus.sign.ByteplusSign;
 import com.byteplus.version.Version;
+import okio.Buffer;
 import okio.BufferedSink;
 import okio.Okio;
 import org.apache.commons.lang.StringUtils;
@@ -1088,7 +1089,7 @@ public class ApiClient {
         return false;
     }
 
-    private void buildSimpleRequest(Object body, List<Pair> queryParams, Map<String, String> headerParams, StringBuilder builder, String chain, boolean... isCommon) throws Exception {
+    private void buildSimpleRequest(Object body, List<Pair> queryParams, Map<String, String> headerParams, StringBuilder builder, FormEncodingBuilder formBuilder, String chain, boolean... isCommon) throws Exception {
         if (body == null) {
             return;
         }
@@ -1104,10 +1105,7 @@ public class ApiClient {
                 Map<String, Object> map = (Map<String, Object>) body;
                 if (isPostBody(headerParams)) {
                     for (Entry<String, Object> entry : map.entrySet()) {
-                        builder.append(entry.getKey());
-                        builder.append("=");
-                        builder.append(entry.getValue().toString());
-                        builder.append("&");
+                        formBuilder.add(entry.getKey(), entry.getValue().toString());
                     }
                 } else {
                     for (Entry<String, Object> entry : map.entrySet()) {
@@ -1122,10 +1120,7 @@ public class ApiClient {
 
         if (!clazz.getName().startsWith("com.byteplus")) {
             if (isPostBody(headerParams)) {
-                builder.append(chain);
-                builder.append("=");
-                builder.append(body);
-                builder.append("&");
+                formBuilder.add(chain, body.toString());
             } else {
                 Pair pair = new Pair(chain, body.toString());
                 queryParams.add(pair);
@@ -1148,17 +1143,17 @@ public class ApiClient {
                     int count = 0;
                     for (Object o : (List<?>) value) {
                         String key = chain + getMethodName(field.getName()) + "." + (++count);
-                        buildSimpleRequest(o, queryParams, headerParams, builder, key);
+                        buildSimpleRequest(o, queryParams, headerParams, builder, formBuilder, key);
                     }
                 } else {
                     if (!field.getType().getName().startsWith("com.byteplus")) {
-                        buildBodyOrParameter(field, value, queryParams, headerParams, builder, chain);
+                        buildBodyOrParameter(field, value, queryParams, headerParams, builder, formBuilder, chain);
                     } else if (field.getType().isEnum()) {
                         try {
                             Method method = field.getType().getDeclaredMethod("getValue");
                             Object v = method.invoke(value);
                             if (v != null) {
-                                buildBodyOrParameter(field, v, queryParams, headerParams, builder, chain);
+                                buildBodyOrParameter(field, v, queryParams, headerParams, builder, formBuilder, chain);
                             }
                         } catch (NoSuchMethodException e) {
                             throw new ApiException("sdk internal error,please contract us in github,ErrorCode is EnumNotGetValueMethod");
@@ -1166,14 +1161,14 @@ public class ApiClient {
 
                     } else {
                         String key = chain + getMethodName(field.getName());
-                        buildSimpleRequest(value, queryParams, headerParams, builder, key);
+                        buildSimpleRequest(value, queryParams, headerParams, builder, formBuilder, key);
                     }
                 }
             }
         }
     }
 
-    private void buildBodyOrParameter(Field field, Object v, List<Pair> queryParams, Map<String, String> headerParams, StringBuilder builder, String chain) throws Exception {
+    private void buildBodyOrParameter(Field field, Object v, List<Pair> queryParams, Map<String, String> headerParams, StringBuilder builder, FormEncodingBuilder formBuilder, String chain) throws Exception {
         String name;
         String defaultName = getMethodName(field.getName());
         if (field.getAnnotation(SerializedName.class) != null) {
@@ -1188,25 +1183,10 @@ public class ApiClient {
         }
 
         if (isPostBody(headerParams)) {
-            builder.append(chain);
-            builder.append(name);
-            builder.append("=");
-            builder.append(v);
-            builder.append("&");
+            formBuilder.add(chain + name, v.toString());
         } else {
             Pair pair = new Pair(chain + name, v.toString());
             queryParams.add(pair);
-        }
-    }
-
-    private String getPayload(String contentType, String source) {
-        if (source.equals("")) {
-            return "";
-        }
-        if (contentType.equals("application/json")) {
-            return source;
-        } else {
-            return source.substring(0, source.length() - 1);
         }
     }
 
@@ -1249,9 +1229,10 @@ public class ApiClient {
         String truePath = getTruePath(path, headerParams);
         String contentType = headerParams.get("Content-Type");
         StringBuilder bodyBuilder = new StringBuilder();
+        FormEncodingBuilder formBuilder = new FormEncodingBuilder();
 
         try {
-            buildSimpleRequest(body, queryParams, headerParams, bodyBuilder, "", isCommon);
+            buildSimpleRequest(body, queryParams, headerParams, bodyBuilder, formBuilder, "", isCommon);
         } catch (Exception e) {
             throw new ApiException(e);
         }
@@ -1265,15 +1246,12 @@ public class ApiClient {
         final String url = buildUrl(defaultEndpoint, truePath, queryParams, collectionQueryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
 
-
         RequestBody reqBody;
         if (!HttpMethod.permitsRequestBody(method)) {
             reqBody = null;
         } else if ("application/x-www-form-urlencoded".equals(contentType)) {
-            for (Pair pair : queryParams) {
-                formParams.put(pair.getName(), pair.getValue());
-            }
-            reqBody = buildRequestBodyFormEncoding(formParams);
+            reqBody = formBuilder.build();
+
             // fix action & version
             queryParams.clear();
             updateQueryParams(queryParams, path.split("/"));
@@ -1299,9 +1277,17 @@ public class ApiClient {
             queryParams.clear();
             updateQueryParams(queryParams, path.split("/"));
         }
+
         //sign
-        updateParamsForAuth(authNames, queryParams, headerParams, serviceInfo, getPayload(contentType,
-                bodyBuilder.toString()));
+        final Buffer buffer = new Buffer();
+        try {
+            if(reqBody != null) {
+                reqBody.writeTo(buffer);
+            }
+        } catch (IOException e) {
+            throw new ApiException(e);
+        }
+        updateParamsForAuth(authNames, queryParams, headerParams, serviceInfo, buffer.readUtf8());
 
         processHeaderParams(headerParams, reqBuilder);
 
