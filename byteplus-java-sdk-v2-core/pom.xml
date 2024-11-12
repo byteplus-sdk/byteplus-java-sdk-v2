@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.byteplus</groupId>
-        <artifactId>byteplus-java-sdk</artifactId>
+        <artifactId>byteplus-java-sdk-v2</artifactId>
         <version>0.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>byteplus-java-sdk-core</artifactId>
+    <artifactId>byteplus-java-sdk-v2-core</artifactId>
     <dependencies>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>

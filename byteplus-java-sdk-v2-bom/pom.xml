@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>byteplus-java-sdk</artifactId>
+        <artifactId>byteplus-java-sdk-v2</artifactId>
         <groupId>com.byteplus</groupId>
         <version>0.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>byteplus-java-sdk-bom</artifactId>
+    <artifactId>byteplus-java-sdk-v2-bom</artifactId>
     <packaging>pom</packaging>
     <name>byteplus SDK for Java - BOM</name>
     <description>The byteplus SDK for Java - BOM module holds the dependency mangements for individual java clients.</description>
