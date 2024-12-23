@@ -12,6 +12,7 @@
 
 package com.byteplus;
 
+import com.byteplus.endpoint.DefaultEndpointResolver;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.*;
@@ -83,7 +84,7 @@ public class ApiClient {
 
     private Credentials credentials;
     private String region;
-    private String endpoint = "open.byteplusapi.com";
+    private String endpoint;
     private boolean disableSSL = false;
 
     /*
@@ -692,13 +693,13 @@ public class ApiClient {
      * @param <T>        Type
      * @param response   HTTP response
      * @param returnType The type of the Java object
-     * @param isCommon                The flag for Universal
+     * @param isCommon   The flag for Universal
      * @return The deserialized Java object
      * @throws ApiException If fail to deserialize response body, i.e. cannot read response body
      *                      or the Content-Type of the response is not supported.
      */
     @SuppressWarnings("unchecked")
-    public <T> T deserialize(Response response, Type returnType,boolean ...isCommon) throws ApiException {
+    public <T> T deserialize(Response response, Type returnType, boolean... isCommon) throws ApiException {
         if (response == null || returnType == null) {
             return null;
         }
@@ -730,13 +731,13 @@ public class ApiClient {
         }
 
         StringBuilder builder = new StringBuilder();
-        Map<String,ResponseMetadata> meta = new HashMap<>();
+        Map<String, ResponseMetadata> meta = new HashMap<>();
         if (isCommon.length == 0 || !isCommon[0]) {
-            if (!convertResponseBody(respBody, builder,meta)) {
+            if (!convertResponseBody(respBody, builder, meta)) {
                 throw new ApiException(
                         response.code(),
                         response.headers().toMultimap(),
-                        respBody,meta.get("ResponseMetadata"));
+                        respBody, meta.get("ResponseMetadata"));
             } else {
                 respBody = builder.toString();
             }
@@ -749,16 +750,16 @@ public class ApiClient {
         }
         if (isJsonMime(contentType)) {
             T t = json.deserialize(respBody, returnType);
-            if (t instanceof AbstractResponse){
+            if (t instanceof AbstractResponse) {
                 try {
-                    Method m = t.getClass().getMethod("setResponseMetadata",ResponseMetadata.class);
-                    m.invoke(t,meta.get("ResponseMetadata"));
+                    Method m = t.getClass().getMethod("setResponseMetadata", ResponseMetadata.class);
+                    m.invoke(t, meta.get("ResponseMetadata"));
                 } catch (Exception e) {
                     throw new ApiException(
                             e.getMessage(),
                             response.code(),
                             response.headers().toMultimap(),
-                            respBody,meta.get("ResponseMetadata"));
+                            respBody, meta.get("ResponseMetadata"));
                 }
             }
             return t;
@@ -770,7 +771,7 @@ public class ApiClient {
                     "Content type \"" + contentType + "\" is not supported for type: " + returnType,
                     response.code(),
                     response.headers().toMultimap(),
-                    respBody,meta.get("ResponseMetadata"));
+                    respBody, meta.get("ResponseMetadata"));
         }
     }
 
@@ -883,16 +884,16 @@ public class ApiClient {
      * @param returnType The return type used to deserialize HTTP response body
      * @param <T>        The return type corresponding to (same with) returnType
      * @param call       Call
-     * @param isCommon                The flag for Universal
+     * @param isCommon   The flag for Universal
      * @return ApiResponse object containing response status, headers and
      * data, which is a Java object deserialized from response body and would be null
      * when returnType is null.
      * @throws ApiException If fail to execute the call
      */
-    public <T> ApiResponse<T> execute(Call call, final Type returnType,boolean ...isCommon) throws ApiException {
+    public <T> ApiResponse<T> execute(Call call, final Type returnType, boolean... isCommon) throws ApiException {
         try {
             Response response = call.execute();
-            T data = handleResponse(response, returnType,isCommon);
+            T data = handleResponse(response, returnType, isCommon);
             return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
         } catch (IOException e) {
             throw new ApiException(e);
@@ -947,12 +948,12 @@ public class ApiClient {
      * @param <T>        Type
      * @param response   Response
      * @param returnType Return type
-     * @param isCommon                The flag for Universal
+     * @param isCommon   The flag for Universal
      * @return Type
      * @throws ApiException If the response has a unsuccessful status code or
      *                      fail to deserialize the response body
      */
-    public <T> T handleResponse(Response response, Type returnType, boolean ...isCommon) throws ApiException {
+    public <T> T handleResponse(Response response, Type returnType, boolean... isCommon) throws ApiException {
         if (response.isSuccessful()) {
             if (returnType == null || response.code() == 204) {
                 // returning null if the returnType is not defined,
@@ -966,7 +967,7 @@ public class ApiClient {
                 }
                 return null;
             } else {
-                return deserialize(response, returnType,isCommon);
+                return deserialize(response, returnType, isCommon);
             }
         } else {
             String respBody = null;
@@ -998,7 +999,7 @@ public class ApiClient {
      * @throws ApiException If fail to serialize the request body object
      */
     public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener, boolean... isCommon) throws ApiException {
-        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener,isCommon);
+        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener, isCommon);
 
         return httpClient.newCall(request);
     }
@@ -1040,8 +1041,8 @@ public class ApiClient {
     private ServiceInfo addPairAndGetServiceInfo(String path, List<Pair> queryParams, Map<String, String> headerParams) {
         String[] param = path.split("/");
 
-        if (param.length >= 6){
-            headerParams.put("Content-Type",param[5].replaceAll("_","/"));
+        if (param.length >= 6) {
+            headerParams.put("Content-Type", param[5].replaceAll("_", "/"));
         }
 
         if (!isApplicationJsonBody(headerParams) && !isPostBody(headerParams)) {
@@ -1062,22 +1063,23 @@ public class ApiClient {
     }
 
     @SuppressWarnings("all")
-    private boolean convertResponseBody(String source, StringBuilder stringBuilder,Map<String, ResponseMetadata> m) {
+    private boolean convertResponseBody(String source, StringBuilder stringBuilder, Map<String, ResponseMetadata> m) {
         Type t = new TypeToken<Map<String, ?>>() {
         }.getType();
         Map<String, ?> temp = json.deserialize(source, t);
-        if (temp.containsKey("ResponseMetadata"))  {
-            ResponseMetadata meta = json.deserialize(json.serialize(temp.get("ResponseMetadata")),new TypeToken<ResponseMetadata>(){}.getType());
-            m.put("ResponseMetadata",meta);
+        if (temp.containsKey("ResponseMetadata")) {
+            ResponseMetadata meta = json.deserialize(json.serialize(temp.get("ResponseMetadata")), new TypeToken<ResponseMetadata>() {
+            }.getType());
+            m.put("ResponseMetadata", meta);
 
-            if (meta.getError()!= null){
+            if (meta.getError() != null) {
                 return false;
             }
 
-            if (temp.containsKey("Result")){
+            if (temp.containsKey("Result")) {
                 stringBuilder.append(json.serialize(temp.get("Result")));
-            }else{
-                stringBuilder.append(json.serialize(new HashMap<String,Object>()));
+            } else {
+                stringBuilder.append(json.serialize(new HashMap<String, Object>()));
             }
 
             return true;
@@ -1087,7 +1089,7 @@ public class ApiClient {
     }
 
     private void buildSimpleRequest(Object body, List<Pair> queryParams, Map<String, String> headerParams, StringBuilder builder, String chain, boolean... isCommon) throws Exception {
-        if (body ==null) {
+        if (body == null) {
             return;
         }
         if (isApplicationJsonBody(headerParams)) {
@@ -1253,9 +1255,14 @@ public class ApiClient {
         } catch (Exception e) {
             throw new ApiException(e);
         }
+        String defaultEndpoint;
+        if (this.endpoint != null) {
+            defaultEndpoint = endpoint;
+        } else {
+            defaultEndpoint = DefaultEndpointResolver.getDefaultEndpointByServiceInfo(serviceInfo.getServiceName(), this.region);
+        }
 
-
-        final String url = buildUrl(truePath, queryParams, collectionQueryParams);
+        final String url = buildUrl(defaultEndpoint, truePath, queryParams, collectionQueryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
 
 
@@ -1318,7 +1325,7 @@ public class ApiClient {
      * @param collectionQueryParams The collection query parameters
      * @return The full URL
      */
-    public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
+    public String buildUrl(String endpoint, String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
 
         if (disableSSL) {
