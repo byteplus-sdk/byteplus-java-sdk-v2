@@ -14,15 +14,43 @@ package com.byteplus.ark.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * LogprobsForChatCompletionsVisionOutput
+ * CreateEvaluationJobResponse
  */
 
 
 
-public class LogprobsForChatCompletionsVisionOutput {
+public class CreateEvaluationJobResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("Id")
+  private String id = null;
+
+  public CreateEvaluationJobResponse id(String id) {
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * Get id
+   * @return id
+  **/
+  @Schema(description = "")
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -32,20 +60,22 @@ public class LogprobsForChatCompletionsVisionOutput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return true;
+    CreateEvaluationJobResponse createEvaluationJobResponse = (CreateEvaluationJobResponse) o;
+    return Objects.equals(this.id, createEvaluationJobResponse.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash();
+    return Objects.hash(id);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LogprobsForChatCompletionsVisionOutput {\n");
+    sb.append("class CreateEvaluationJobResponse {\n");
     
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }
