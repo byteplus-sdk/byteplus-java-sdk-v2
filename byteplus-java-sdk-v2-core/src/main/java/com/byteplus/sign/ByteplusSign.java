@@ -57,7 +57,7 @@ public class ByteplusSign implements Authentication {
             params.put(p.getName(), p.getValue());
         }
         try {
-            sign(params, headerParams,payload);
+            sign(params, headerParams, payload);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +119,7 @@ public class ByteplusSign implements Authentication {
         return listHeaderKeys;
     }
 
-    private void buildCredentialScope(Map<String, String> headerParams,SignRequest signRequest){
+    private void buildCredentialScope(Map<String, String> headerParams, SignRequest signRequest) {
         StringBuilder credentialScope = new StringBuilder("");
         credentialScope.append(headerParams.get("X-Date").substring(0, 8));
         credentialScope.append("/");
@@ -130,7 +130,7 @@ public class ByteplusSign implements Authentication {
         signRequest.credentialScope = credentialScope;
     }
 
-    private void buildStringToSign(Map<String, String> headerParams,SignRequest signRequest)throws Exception{
+    private void buildStringToSign(Map<String, String> headerParams, SignRequest signRequest) throws Exception {
         StringBuilder stringToSign = new StringBuilder("");
         stringToSign.append("HMAC-SHA256");
         stringToSign.append("\n");
@@ -142,7 +142,7 @@ public class ByteplusSign implements Authentication {
         signRequest.stringToSign = stringToSign;
     }
 
-    private void buildAuthorization(Map<String, String> headerParams,SignRequest signRequest)throws Exception{
+    private void buildAuthorization(Map<String, String> headerParams, SignRequest signRequest) throws Exception {
         byte[] signingkeyByte = getHmacSHA256("request", getHmacSHA256(
                 service, getHmacSHA256(
                         region, getHmacSHA256(
@@ -178,7 +178,7 @@ public class ByteplusSign implements Authentication {
         StringBuilder canonicalHeaders = new StringBuilder("");
         StringBuilder signedHeaders = new StringBuilder("");
         for (String key : listHeaderKeys) {
-            if (!key.equalsIgnoreCase("x-date")){
+            if (!key.equalsIgnoreCase("x-date")) {
                 continue;
             }
             canonicalHeaders.append(key.toLowerCase());
@@ -192,9 +192,9 @@ public class ByteplusSign implements Authentication {
         signRequest.signedHeaders = signedHeaders;
     }
 
-    private void initHeaders(Map<String,String> headerParams){
-        if (!StringUtils.isEmpty(credentials.getSessionToken())){
-            headerParams.put("X-Security-Token",credentials.getSessionToken());
+    private void initHeaders(Map<String, String> headerParams) {
+        if (!StringUtils.isEmpty(credentials.getSessionToken())) {
+            headerParams.put("X-Security-Token", credentials.getSessionToken());
         }
         if (!headerParams.containsKey("X-Date")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
@@ -234,15 +234,15 @@ public class ByteplusSign implements Authentication {
         initHeaders(headerParams);
         // step 1
         buildCanonicalRequest(queryParams, signRequest);
-        buildSignedHeaders(headerParams,signRequest);
-        buildPayload(signRequest,payload);
+        buildSignedHeaders(headerParams, signRequest);
+        buildPayload(signRequest, payload);
 
         // step 2
-        buildCredentialScope(headerParams,signRequest);
-        buildStringToSign(headerParams,signRequest);
+        buildCredentialScope(headerParams, signRequest);
+        buildStringToSign(headerParams, signRequest);
 
         // step 3
-        buildAuthorization(headerParams,signRequest);
+        buildAuthorization(headerParams, signRequest);
 
     }
 
@@ -298,6 +298,15 @@ public class ByteplusSign implements Authentication {
         }
 
         return buf.toString();
+    }
+
+    public ByteplusSign copy() {
+        ByteplusSign copySign = new ByteplusSign();
+        copySign.setRegion(this.region);
+        copySign.setCredentials(this.credentials);
+        copySign.setService(this.service);
+        copySign.setMethod(this.method);
+        return copySign;
     }
 }
 

@@ -1281,7 +1281,7 @@ public class ApiClient {
         //sign
         final Buffer buffer = new Buffer();
         try {
-            if(reqBody != null) {
+            if (reqBody != null) {
                 reqBody.writeTo(buffer);
             }
         } catch (IOException e) {
@@ -1405,8 +1405,10 @@ public class ApiClient {
                 if (StringUtils.isEmpty(byteplusSign.getRegion())) {
                     throw new RuntimeException("Region must set when ApiClient init");
                 }
-                byteplusSign.setMethod(serviceInfo.getMethod().toUpperCase());
-                byteplusSign.setService(serviceInfo.getServiceName());
+                ByteplusSign requestSign = byteplusSign.copy();
+                requestSign.setMethod(serviceInfo.getMethod().toUpperCase());
+                requestSign.setService(serviceInfo.getServiceName());
+                auth = requestSign;
             }
             auth.applyToParams(queryParams, headerParams, payload);
         }
