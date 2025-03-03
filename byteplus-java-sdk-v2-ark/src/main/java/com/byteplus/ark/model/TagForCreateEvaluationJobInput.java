@@ -14,7 +14,6 @@ package com.byteplus.ark.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.ark.model.ConvertfunctionForBatchChatCompletionsInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -25,53 +24,52 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ToolForBatchChatCompletionsInput
+ * TagForCreateEvaluationJobInput
  */
 
 
 
-public class ToolForBatchChatCompletionsInput {
-  @SerializedName("function")
-  private ConvertfunctionForBatchChatCompletionsInput function = null;
+public class TagForCreateEvaluationJobInput {
+  @SerializedName("Key")
+  private String key = null;
 
-  @SerializedName("type")
-  private String type = null;
+  @SerializedName("Value")
+  private String value = null;
 
-  public ToolForBatchChatCompletionsInput function(ConvertfunctionForBatchChatCompletionsInput function) {
-    this.function = function;
+  public TagForCreateEvaluationJobInput key(String key) {
+    this.key = key;
     return this;
   }
 
    /**
-   * Get function
-   * @return function
+   * Get key
+   * @return key
   **/
-  @Valid
   @Schema(description = "")
-  public ConvertfunctionForBatchChatCompletionsInput getFunction() {
-    return function;
+  public String getKey() {
+    return key;
   }
 
-  public void setFunction(ConvertfunctionForBatchChatCompletionsInput function) {
-    this.function = function;
+  public void setKey(String key) {
+    this.key = key;
   }
 
-  public ToolForBatchChatCompletionsInput type(String type) {
-    this.type = type;
+  public TagForCreateEvaluationJobInput value(String value) {
+    this.value = value;
     return this;
   }
 
    /**
-   * Get type
-   * @return type
+   * Get value
+   * @return value
   **/
   @Schema(description = "")
-  public String getType() {
-    return type;
+  public String getValue() {
+    return value;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setValue(String value) {
+    this.value = value;
   }
 
 
@@ -83,24 +81,24 @@ public class ToolForBatchChatCompletionsInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ToolForBatchChatCompletionsInput toolForBatchChatCompletionsInput = (ToolForBatchChatCompletionsInput) o;
-    return Objects.equals(this.function, toolForBatchChatCompletionsInput.function) &&
-        Objects.equals(this.type, toolForBatchChatCompletionsInput.type);
+    TagForCreateEvaluationJobInput tagForCreateEvaluationJobInput = (TagForCreateEvaluationJobInput) o;
+    return Objects.equals(this.key, tagForCreateEvaluationJobInput.key) &&
+        Objects.equals(this.value, tagForCreateEvaluationJobInput.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(function, type);
+    return Objects.hash(key, value);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ToolForBatchChatCompletionsInput {\n");
+    sb.append("class TagForCreateEvaluationJobInput {\n");
     
-    sb.append("    function: ").append(toIndentedString(function)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    key: ").append(toIndentedString(key)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }

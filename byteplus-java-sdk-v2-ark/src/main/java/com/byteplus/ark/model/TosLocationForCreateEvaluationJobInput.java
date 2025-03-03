@@ -24,52 +24,52 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * UsageForEmbeddingsOutput
+ * TosLocationForCreateEvaluationJobInput
  */
 
 
 
-public class UsageForEmbeddingsOutput {
-  @SerializedName("prompt_tokens")
-  private Integer promptTokens = null;
+public class TosLocationForCreateEvaluationJobInput {
+  @SerializedName("BucketName")
+  private String bucketName = null;
 
-  @SerializedName("total_tokens")
-  private Integer totalTokens = null;
+  @SerializedName("ObjectKey")
+  private String objectKey = null;
 
-  public UsageForEmbeddingsOutput promptTokens(Integer promptTokens) {
-    this.promptTokens = promptTokens;
+  public TosLocationForCreateEvaluationJobInput bucketName(String bucketName) {
+    this.bucketName = bucketName;
     return this;
   }
 
    /**
-   * Get promptTokens
-   * @return promptTokens
+   * Get bucketName
+   * @return bucketName
   **/
   @Schema(description = "")
-  public Integer getPromptTokens() {
-    return promptTokens;
+  public String getBucketName() {
+    return bucketName;
   }
 
-  public void setPromptTokens(Integer promptTokens) {
-    this.promptTokens = promptTokens;
+  public void setBucketName(String bucketName) {
+    this.bucketName = bucketName;
   }
 
-  public UsageForEmbeddingsOutput totalTokens(Integer totalTokens) {
-    this.totalTokens = totalTokens;
+  public TosLocationForCreateEvaluationJobInput objectKey(String objectKey) {
+    this.objectKey = objectKey;
     return this;
   }
 
    /**
-   * Get totalTokens
-   * @return totalTokens
+   * Get objectKey
+   * @return objectKey
   **/
   @Schema(description = "")
-  public Integer getTotalTokens() {
-    return totalTokens;
+  public String getObjectKey() {
+    return objectKey;
   }
 
-  public void setTotalTokens(Integer totalTokens) {
-    this.totalTokens = totalTokens;
+  public void setObjectKey(String objectKey) {
+    this.objectKey = objectKey;
   }
 
 
@@ -81,24 +81,24 @@ public class UsageForEmbeddingsOutput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UsageForEmbeddingsOutput usageForEmbeddingsOutput = (UsageForEmbeddingsOutput) o;
-    return Objects.equals(this.promptTokens, usageForEmbeddingsOutput.promptTokens) &&
-        Objects.equals(this.totalTokens, usageForEmbeddingsOutput.totalTokens);
+    TosLocationForCreateEvaluationJobInput tosLocationForCreateEvaluationJobInput = (TosLocationForCreateEvaluationJobInput) o;
+    return Objects.equals(this.bucketName, tosLocationForCreateEvaluationJobInput.bucketName) &&
+        Objects.equals(this.objectKey, tosLocationForCreateEvaluationJobInput.objectKey);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(promptTokens, totalTokens);
+    return Objects.hash(bucketName, objectKey);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UsageForEmbeddingsOutput {\n");
+    sb.append("class TosLocationForCreateEvaluationJobInput {\n");
     
-    sb.append("    promptTokens: ").append(toIndentedString(promptTokens)).append("\n");
-    sb.append("    totalTokens: ").append(toIndentedString(totalTokens)).append("\n");
+    sb.append("    bucketName: ").append(toIndentedString(bucketName)).append("\n");
+    sb.append("    objectKey: ").append(toIndentedString(objectKey)).append("\n");
     sb.append("}");
     return sb.toString();
   }
