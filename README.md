@@ -39,7 +39,7 @@
     <dependency>
       <groupId>com.byteplus</groupId>
 	  <artifactId>byteplus-java-sdk-v2-bom</artifactId>
-       <version>0.1.7</version>
+       <version>0.1.8</version>
 	  <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -55,12 +55,12 @@
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-vpc</artifactId>
-   <version>0.1.7</version>
+   <version>0.1.8</version>
   </dependency>
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-ecs</artifactId>
-   <version>0.1.7</version>
+   <version>0.1.8</version>
   </dependency>
 </dependencies>
 ```
