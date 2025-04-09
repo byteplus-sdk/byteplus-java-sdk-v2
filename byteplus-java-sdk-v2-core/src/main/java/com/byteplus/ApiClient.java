@@ -1648,18 +1648,21 @@ public class ApiClient {
         return endpointResolver;
     }
 
-    public void setEndpointResolver(EndpointResolver endpointResolver) {
+    public ApiClient setEndpointResolver(EndpointResolver endpointResolver) {
         this.endpointResolver = endpointResolver;
+        return this;
     }
 
-    public void setConnectTimeout(Integer connectTimeout) {
+    public ApiClient setConnectTimeout(Integer connectTimeout) {
         this.connectTimeout = connectTimeout;
         this.httpClient.setConnectTimeout(connectTimeout, TimeUnit.MILLISECONDS);
+        return this;
     }
 
-    public void setReadTimeout(Integer readTimeout) {
+    public ApiClient setReadTimeout(Integer readTimeout) {
         this.readTimeout = readTimeout;
         this.httpClient.setReadTimeout(readTimeout, TimeUnit.MILLISECONDS);
+        return this;
     }
 
 
@@ -1667,17 +1670,19 @@ public class ApiClient {
         return maxIdleConns;
     }
 
-    public void setMaxIdleConns(Integer maxIdleConns) {
+    public ApiClient setMaxIdleConns(Integer maxIdleConns) {
         this.maxIdleConns = maxIdleConns;
         this.httpClient.setConnectionPool(new ConnectionPool(maxIdleConns,keepAliveDurationMs));
+        return this;
     }
 
     public Integer getKeepAliveDurationMs() {
         return keepAliveDurationMs;
     }
 
-    public void setKeepAliveDurationMs(Integer keepAliveDurationMs) {
+    public ApiClient setKeepAliveDurationMs(Integer keepAliveDurationMs) {
         this.keepAliveDurationMs = keepAliveDurationMs;
         this.httpClient.setConnectionPool(new ConnectionPool(maxIdleConns,keepAliveDurationMs));
+        return this;
     }
 }
