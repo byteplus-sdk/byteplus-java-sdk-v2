@@ -84,7 +84,6 @@ public class InterceptorContext extends Call {
         ServiceInfo serviceInfo = this.apiClient.addPairAndGetServiceInfo(path, queryParams, headerParams);
         //rebuild method
         method = serviceInfo.getMethod().toUpperCase();
-        String truePath = this.apiClient.getTruePath(path, headerParams);
         String contentType = headerParams.get("Content-Type");
         StringBuilder bodyBuilder = new StringBuilder();
         FormEncodingBuilder formBuilder = new FormEncodingBuilder();
@@ -133,7 +132,7 @@ public class InterceptorContext extends Call {
         this.getRequestContext().setAuthNames(authNames);
         this.getRequestContext().setHeaderParams(headerParams);
         this.getRequestContext().setCommon(isCommon);
-        this.getRequestContext().setPath(truePath);
+        this.getRequestContext().setPath("/");
         this.getRequestContext().setMethod(method);
         this.getRequestContext().setServiceInfo(serviceInfo);
     }
