@@ -1,7 +1,11 @@
 package com.byteplus.endpoint;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class DefaultEndpointProvider implements EndpointResolver {
 
@@ -18,14 +22,29 @@ public class DefaultEndpointProvider implements EndpointResolver {
 
 
     // 区域代码常量
+    public static final String REGION_CODE_CN_BEIJING_AUTODRIVING = "cn-beijing-autodriving";
     public static final String REGION_CODE_AP_SOUTH_EAST_3 = "ap-southeast-3";
+    // 常量
+    private static final String SEPARATOR = ".";
+    private static final String OPEN_PREFIX = "open";
+    private static final String ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
+    private static final String AP_SOUTHEAST_1_PREFIX = SEPARATOR + "ap-southeast-1";
 
+    private static final String ENDPOINT = OPEN_PREFIX + ENDPOINT_SUFFIX;
+
+    private static final String DUALSTACK_ENDPOINT_SUFFIX = SEPARATOR + "byteplus-api.com";
+    private static final Map<String, ServiceEndpointInfo> DEFAULT_ENDPOINT_MAP = new HashMap<>();
+    private static final Set<String> BOOTSTRAP_REGION = new HashSet<>();
 
     // 区域端点映射类型
     private static class RegionEndpointMap extends HashMap<String, String> {
     }
 
-    private static final Map<String, ServiceEndpointInfo> DEFAULT_ENDPOINT_MAP = new HashMap<>();
+    static {
+        BOOTSTRAP_REGION.add(REGION_CODE_CN_BEIJING_AUTODRIVING);
+        BOOTSTRAP_REGION.add(REGION_CODE_AP_SOUTH_EAST_3);
+    }
+
 
     private static class ServiceEndpointInfo {
         private String service;
@@ -33,14 +52,16 @@ public class DefaultEndpointProvider implements EndpointResolver {
         private String globalEndpoint;
         private String defaultEndpoint;
         private RegionEndpointMap regionEndpointMap;
+        private String prefix;
 
         public ServiceEndpointInfo(String service, boolean isGlobal, String globalEndpoint,
-                                   String defaultEndpoint, RegionEndpointMap regionEndpointMap) {
+                                   String defaultEndpoint, RegionEndpointMap regionEndpointMap, String prefix) {
             this.service = service;
             this.isGlobal = isGlobal;
             this.globalEndpoint = globalEndpoint;
             this.defaultEndpoint = defaultEndpoint;
             this.regionEndpointMap = regionEndpointMap;
+            this.prefix = prefix;
         }
     }
 
@@ -51,7 +72,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 true,
                 "",
                 BYTEPLUS_ORIGIN_ENDPOINT,
-                createRegionEndpointMap()
+                createRegionEndpointMap(), ""
         ));
         // --------------------------- iam ---------------------------
         DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(
@@ -59,7 +80,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 true,
                 "",
                 BYTEPLUS_ORIGIN_ENDPOINT,
-                createRegionEndpointMap()
+                createRegionEndpointMap(), ""
         ));
         // --------------------------- vpc ---------------------------
         DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo(
@@ -67,7 +88,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 false,
                 "",
                 ENDPOINT,
-                createRegionEndpointMap(REGION_CODE_AP_SOUTH_EAST_3, "vpc")
+                createRegionEndpointMap(), AP_SOUTHEAST_1_PREFIX
         ));
         // --------------------------- ecs ---------------------------
         DEFAULT_ENDPOINT_MAP.put("ecs", new ServiceEndpointInfo(
@@ -75,7 +96,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 false,
                 "",
                 ENDPOINT,
-                createRegionEndpointMap(REGION_CODE_AP_SOUTH_EAST_3, "ecs")
+                createRegionEndpointMap(), AP_SOUTHEAST_1_PREFIX
         ));
 
     }
@@ -91,37 +112,93 @@ public class DefaultEndpointProvider implements EndpointResolver {
         return map;
     }
 
+    private static String standardizeDomainServiceCode(String serviceCode) {
+        return serviceCode.toLowerCase().replaceAll("_", "-");
+    }
+
     @Override
     public ResolvedEndpoint endpointFor(ResolveEndpointOption option) {
-        String endpoint = DefaultEndpointProvider.getDefaultEndpointByServiceInfo(option.getService(), option.getRegion());
+        String endpoint = DefaultEndpointProvider.getDefaultEndpointByServiceInfo(
+                option.getService(), option.getRegion(), option.getCustomBootstrapRegion());
         ResolvedEndpoint result = new ResolvedEndpoint();
         result.setEndpoint(endpoint);
         return result;
     }
 
-    public static String getDefaultEndpointByServiceInfo(String service, String regionCode) {
+    private static boolean isCNRegion(String region) {
+        return region.startsWith("cn-");
+    }
+
+    private static boolean inBootstrapRegionList(String region, Set<String> customBootstrapRegion) {
+        String regionCode = region.trim();
+        String bsRegionListPath = System.getenv("BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF");
+
+        if (bsRegionListPath != null && !bsRegionListPath.isEmpty()) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(bsRegionListPath));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = line.trim();
+                    if (line.isEmpty()) {
+                        continue;
+                    }
+                    if (line.equals(regionCode)) {
+                        reader.close();
+                        return true;
+                    }
+                }
+                reader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (BOOTSTRAP_REGION.contains(region)) {
+            return true;
+        }
+
+        if (customBootstrapRegion != null) {
+            return customBootstrapRegion.contains(region);
+        }
+
+        return false;
+    }
+
+    private static boolean hasEnabledDualstack() {
+        String enableDualstack = System.getenv("BYTEPLUS_ENABLE_DUALSTACK");
+        return enableDualstack != null && enableDualstack.equals("true");
+    }
+
+
+    public static String getDefaultEndpointByServiceInfo(String service, String regionCode,
+                                                         Set<String> customBootstrapRegion) {
         String resultEndpoint = ENDPOINT;
         ServiceEndpointInfo endpointInfo = DEFAULT_ENDPOINT_MAP.get(service);
-        if (endpointInfo == null) {
+        if (endpointInfo == null || !inBootstrapRegionList(regionCode, customBootstrapRegion)) {
             return resultEndpoint;
         }
+
+        String endpointSuffix = hasEnabledDualstack() ? DUALSTACK_ENDPOINT_SUFFIX : ENDPOINT_SUFFIX;
+        endpointSuffix = endpointInfo.prefix + endpointSuffix;
 
         if (endpointInfo.isGlobal) {
             if (!endpointInfo.globalEndpoint.isEmpty()) {
                 resultEndpoint = endpointInfo.globalEndpoint;
                 return resultEndpoint;
             }
-        } else {
-            String regionEndpoint = endpointInfo.regionEndpointMap.get(regionCode);
-            if (regionEndpoint != null) {
-                resultEndpoint = regionEndpoint;
-                return resultEndpoint;
-            }
+
+            resultEndpoint = standardizeDomainServiceCode(service) + endpointSuffix + (isCNRegion(regionCode) ? ".cn" : "");
+            return resultEndpoint;
         }
 
-        if (!endpointInfo.defaultEndpoint.isEmpty()) {
-            resultEndpoint = endpointInfo.defaultEndpoint;
+        String regionEndpoint = endpointInfo.regionEndpointMap.get(regionCode);
+        if (regionEndpoint != null) {
+            resultEndpoint = regionEndpoint;
+            return resultEndpoint;
         }
+
+        resultEndpoint = standardizeDomainServiceCode(service) + SEPARATOR + regionCode + endpointSuffix +
+                (isCNRegion(regionCode) ? ".cn" : "");
         return resultEndpoint;
     }
 }
