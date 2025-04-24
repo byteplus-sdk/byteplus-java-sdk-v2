@@ -7,7 +7,7 @@
 * Note
 
 ### Requirements ###
-运行 SDK需要jdk **Java 1.7+**. 你可以下载最新的版本： http://developers.sun.com/downloads/.
+运行 SDK需要jdk **Java 1.8.0_131**. 你可以下载最新的版本： http://developers.sun.com/downloads/.
 如果 SDK版本 高于或者等于 **Java 9** 请依赖javax.annotation-api
 由于在高于或者等于 **Java 9** 中 javax.annotation-api 被移除
 
@@ -39,7 +39,7 @@
     <dependency>
       <groupId>com.byteplus</groupId>
 	  <artifactId>byteplus-java-sdk-v2-bom</artifactId>
-       <version>0.1.9</version>
+       <version>0.1.10</version>
 	  <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -55,12 +55,12 @@
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-vpc</artifactId>
-   <version>0.1.9</version>
+   <version>0.1.10</version>
   </dependency>
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-ecs</artifactId>
-   <version>0.1.9</version>
+   <version>0.1.10</version>
   </dependency>
 </dependencies>
 ```
