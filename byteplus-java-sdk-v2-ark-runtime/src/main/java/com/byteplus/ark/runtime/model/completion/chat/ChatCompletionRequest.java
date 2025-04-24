@@ -1,8 +1,8 @@
 package com.byteplus.ark.runtime.model.completion.chat;
 
+import com.byteplus.ark.runtime.utils.JacksonUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.byteplus.ark.runtime.utils.JacksonUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +46,26 @@ public class ChatCompletionRequest {
      */
     @JsonProperty("stream_options")
     ChatCompletionRequestStreamOptions streamOptions;
+
+    /**
+     * Specifies the latency tier to use for processing the request.
+     *
+     *     This parameter is relevant for customers subscribed to the scale tier service:
+     *
+     *     - If set to 'auto', and the endpoint is Scale tier enabled, the system will
+     *       utilize scale tier credits until they are exhausted.
+     *     - If set to 'auto', and the endpoint is not Scale tier enabled, the request will
+     *       be processed using the default service tier with a lower uptime SLA and no
+     *       latency guarentee.
+     *     - If set to 'default', the request will be processed using the default service
+     *       tier with a lower uptime SLA and no latency guarentee.
+     *     - When not set, the default behavior is 'auto'.
+     *
+     *     When this parameter is set, the response body will include the `service_tier`
+     *     utilized.
+     */
+    @JsonProperty("service_tier")
+    String serviceTier;
 
     /**
      * Up to 4 sequences where the API will stop generating further tokens.
@@ -119,6 +139,11 @@ public class ChatCompletionRequest {
      */
     Integer n;
 
+    /**
+     * Whether to enable parallel function calling during tool use.
+     */
+    Boolean parallelToolCalls;
+
     @JsonProperty("tool_choice")
     Object toolChoice;
 
@@ -178,6 +203,14 @@ public class ChatCompletionRequest {
 
     public void setStreamOptions(ChatCompletionRequestStreamOptions streamOptions) {
         this.streamOptions = streamOptions;
+    }
+
+    public String getServiceTier() {
+        return serviceTier;
+    }
+
+    public void setServiceTier(String serviceTier) {
+        this.serviceTier = serviceTier;
     }
 
     public List<String> getStop() {
@@ -276,6 +309,14 @@ public class ChatCompletionRequest {
         this.n = n;
     }
 
+    public Boolean getParallelToolCalls() {
+        return parallelToolCalls;
+    }
+
+    public void setParallelToolCalls(Boolean parallelToolCalls) {
+        this.parallelToolCalls = parallelToolCalls;
+    }
+
     public Object getToolChoice() {
         return toolChoice;
     }
@@ -301,6 +342,7 @@ public class ChatCompletionRequest {
                 ", topP=" + topP +
                 ", stream=" + stream +
                 ", streamOptions=" + streamOptions +
+                ", serviceTier=" + serviceTier +
                 ", stop=" + stop +
                 ", maxTokens=" + maxTokens +
                 ", presencePenalty=" + presencePenalty +
@@ -313,6 +355,7 @@ public class ChatCompletionRequest {
                 ", topLogprobs=" + topLogprobs +
                 ", repetitionPenalty=" + repetitionPenalty +
                 ", n=" + n +
+                ", parallelToolCalls=" + parallelToolCalls +
                 ", toolChoice=" + toolChoice +
                 ", responseFormat=" + responseFormat +
                 '}';
@@ -342,12 +385,24 @@ public class ChatCompletionRequest {
         @JsonProperty("include_usage")
         Boolean includeUsage;
 
+        @JsonProperty("chunk_include_usage")
+        Boolean chunkIncludeUsage;
+
         public ChatCompletionRequestStreamOptions(Boolean includeUsage) {
             this.includeUsage = includeUsage;
         }
 
+        public ChatCompletionRequestStreamOptions(Boolean includeUsage, Boolean chunkIncludeUsage) {
+            this.includeUsage = includeUsage;
+            this.chunkIncludeUsage = chunkIncludeUsage;
+        }
+
         public static ChatCompletionRequestStreamOptions of(Boolean includeUsage) {
             return new ChatCompletionRequestStreamOptions(includeUsage);
+        }
+
+        public static ChatCompletionRequestStreamOptions of(Boolean includeUsage, Boolean chunkIncludeUsage) {
+            return new ChatCompletionRequestStreamOptions(includeUsage, chunkIncludeUsage);
         }
 
         public Boolean getIncludeUsage() {
@@ -356,6 +411,14 @@ public class ChatCompletionRequest {
 
         public void setIncludeUsage(Boolean includeUsage) {
             this.includeUsage = includeUsage;
+        }
+
+        public Boolean getChunkIncludeUsage() {
+            return chunkIncludeUsage;
+        }
+
+        public void setChunkIncludeUsage(Boolean chunkIncludeUsage) {
+            this.chunkIncludeUsage = chunkIncludeUsage;
         }
     }
 
@@ -432,8 +495,8 @@ public class ChatCompletionRequest {
         }
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static ChatCompletionRequest.Builder builder() {
+        return new ChatCompletionRequest.Builder();
     }
 
     public static class Builder {
@@ -443,6 +506,7 @@ public class ChatCompletionRequest {
         private Double topP;
         private Boolean stream;
         private ChatCompletionRequestStreamOptions streamOptions;
+        private String serviceTier;
         private List<String> stop;
         private Integer maxTokens;
         private Double presencePenalty;
@@ -455,110 +519,121 @@ public class ChatCompletionRequest {
         private Integer topLogprobs;
         private Double repetitionPenalty;
         private Integer n;
+        private Boolean parallelToolCalls;
         private Object toolChoice;
         private ChatCompletionRequestResponseFormat responseFormat;
 
-        public Builder model(String model) {
+        public ChatCompletionRequest.Builder model(String model) {
             this.model = model;
             return this;
         }
 
-        public Builder messages(List<ChatMessage> messages) {
+        public ChatCompletionRequest.Builder messages(List<ChatMessage> messages) {
             this.messages = messages;
             return this;
         }
 
-        public Builder temperature(Double temperature) {
+        public ChatCompletionRequest.Builder temperature(Double temperature) {
             this.temperature = temperature;
             return this;
         }
 
-        public Builder topP(Double topP) {
+        public ChatCompletionRequest.Builder topP(Double topP) {
             this.topP = topP;
             return this;
         }
 
-        public Builder stream(Boolean stream) {
+        public ChatCompletionRequest.Builder stream(Boolean stream) {
             this.stream = stream;
             return this;
         }
 
-        public Builder streamOptions(ChatCompletionRequestStreamOptions streamOptions) {
+        public ChatCompletionRequest.Builder streamOptions(ChatCompletionRequestStreamOptions streamOptions) {
             this.streamOptions = streamOptions;
             return this;
         }
 
-        public Builder stop(List<String> stop) {
+        public ChatCompletionRequest.Builder serviceTier(String serviceTier) {
+            this.serviceTier = serviceTier;
+            return this;
+        }
+
+        public ChatCompletionRequest.Builder stop(List<String> stop) {
             this.stop = stop;
             return this;
         }
 
-        public Builder maxTokens(Integer maxTokens) {
+        public ChatCompletionRequest.Builder maxTokens(Integer maxTokens) {
             this.maxTokens = maxTokens;
             return this;
         }
 
-        public Builder presencePenalty(Double presencePenalty) {
+        public ChatCompletionRequest.Builder presencePenalty(Double presencePenalty) {
             this.presencePenalty = presencePenalty;
             return this;
         }
 
-        public Builder frequencyPenalty(Double frequencyPenalty) {
+        public ChatCompletionRequest.Builder frequencyPenalty(Double frequencyPenalty) {
             this.frequencyPenalty = frequencyPenalty;
             return this;
         }
 
-        public Builder logitBias(Map<String, Integer> logitBias) {
+        public ChatCompletionRequest.Builder logitBias(Map<String, Integer> logitBias) {
             this.logitBias = logitBias;
             return this;
         }
 
-        public Builder user(String user) {
+        public ChatCompletionRequest.Builder user(String user) {
             this.user = user;
             return this;
         }
 
-        public Builder tools(List<ChatTool> tools) {
+        public ChatCompletionRequest.Builder tools(List<ChatTool> tools) {
             this.tools = tools;
             return this;
         }
 
-        public Builder functionCall(ChatCompletionRequestFunctionCall functionCall) {
+        public ChatCompletionRequest.Builder functionCall(ChatCompletionRequestFunctionCall functionCall) {
             this.functionCall = functionCall;
             return this;
         }
 
-        public Builder logprobs(Boolean logprobs) {
+        public ChatCompletionRequest.Builder logprobs(Boolean logprobs) {
             this.logprobs = logprobs;
             return this;
         }
 
-        public Builder topLogprobs(Integer topLogprobs) {
+        public ChatCompletionRequest.Builder topLogprobs(Integer topLogprobs) {
             this.topLogprobs = topLogprobs;
             return this;
         }
 
-        public Builder repetitionPenalty(Double repetitionPenalty) {
+        public ChatCompletionRequest.Builder repetitionPenalty(Double repetitionPenalty) {
             this.repetitionPenalty = repetitionPenalty;
             return this;
         }
 
-        public Builder n(Integer n) {
+        public ChatCompletionRequest.Builder n(Integer n) {
             this.n = n;
             return this;
         }
 
-        public Builder toolChoice(String toolChoice) {
+        public ChatCompletionRequest.Builder parallelToolCalls(Boolean parallelToolCalls) {
+            this.parallelToolCalls = parallelToolCalls;
+            return this;
+        }
+
+        public ChatCompletionRequest.Builder toolChoice(String toolChoice) {
             this.toolChoice = toolChoice;
             return this;
         }
 
-        public Builder toolChoice(ChatCompletionRequestToolChoice toolChoice) {
+        public ChatCompletionRequest.Builder toolChoice(ChatCompletionRequestToolChoice toolChoice) {
             this.toolChoice = toolChoice;
             return this;
         }
 
-        public Builder responseFormat(ChatCompletionRequestResponseFormat responseFormat) {
+        public ChatCompletionRequest.Builder responseFormat(ChatCompletionRequestResponseFormat responseFormat) {
             this.responseFormat = responseFormat;
             return this;
         }
@@ -571,6 +646,7 @@ public class ChatCompletionRequest {
             chatCompletionRequest.setTopP(topP);
             chatCompletionRequest.setStream(stream);
             chatCompletionRequest.setStreamOptions(streamOptions);
+            chatCompletionRequest.setServiceTier(serviceTier);
             chatCompletionRequest.setStop(stop);
             chatCompletionRequest.setMaxTokens(maxTokens);
             chatCompletionRequest.setPresencePenalty(presencePenalty);
@@ -583,6 +659,7 @@ public class ChatCompletionRequest {
             chatCompletionRequest.setTopLogprobs(topLogprobs);
             chatCompletionRequest.setRepetitionPenalty(repetitionPenalty);
             chatCompletionRequest.setN(n);
+            chatCompletionRequest.setParallelToolCalls(parallelToolCalls);
             chatCompletionRequest.setToolChoice(toolChoice);
             chatCompletionRequest.setResponseFormat(responseFormat);
             return chatCompletionRequest;

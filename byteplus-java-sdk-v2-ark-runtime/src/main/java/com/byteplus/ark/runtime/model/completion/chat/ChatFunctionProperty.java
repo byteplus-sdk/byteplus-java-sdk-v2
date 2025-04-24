@@ -3,8 +3,6 @@ package com.byteplus.ark.runtime.model.completion.chat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.byteplus.ark.runtime.utils.JacksonUtil;
 
 import java.util.Set;
 
@@ -74,8 +72,8 @@ public class ChatFunctionProperty {
         this.enumValues = enumValues;
     }
 
-    public Builder builder() {
-        return new Builder();
+    public ChatFunctionProperty.Builder builder() {
+        return new ChatFunctionProperty.Builder();
     }
 
     @Override

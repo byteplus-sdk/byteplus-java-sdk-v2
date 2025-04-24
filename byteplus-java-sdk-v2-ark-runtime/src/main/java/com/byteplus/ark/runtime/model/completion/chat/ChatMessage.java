@@ -1,8 +1,8 @@
 package com.byteplus.ark.runtime.model.completion.chat;
 
+import com.byteplus.ark.runtime.utils.Converter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.byteplus.ark.runtime.utils.Converter;
 
 import java.util.List;
 
@@ -12,6 +12,9 @@ public class ChatMessage {
 	ChatMessageRole role;
 
 	Object content;
+
+	@JsonProperty("reasoning_content")
+	String reasoningContent;
 
 	private String name;
 	@JsonProperty("function_call")
@@ -47,6 +50,7 @@ public class ChatMessage {
 		this.content = content;
 	}
 
+
 	public String getName() {
 		return name;
 	}
@@ -79,6 +83,14 @@ public class ChatMessage {
 		this.toolCallId = toolCallId;
 	}
 
+	public String getReasoningContent() {
+		return reasoningContent;
+	}
+
+	public void setReasoningContent(String reasoningContent) {
+		this.reasoningContent = reasoningContent;
+	}
+
 	public static Builder builder() {
 		return new Builder();
 	}
@@ -87,7 +99,8 @@ public class ChatMessage {
 	public String toString() {
 		return "ChatMessage{" +
 				"role=" + role +
-				", content='" + content + '\'' +
+				", content=" + content +
+				", reasoningContent='" + reasoningContent + '\'' +
 				", name='" + name + '\'' +
 				", functionCall=" + functionCall +
 				", toolCalls=" + toolCalls +
@@ -101,6 +114,9 @@ public class ChatMessage {
 
 		private Object content;
 
+		@JsonProperty("reasoning_content")
+		private String reasoningContent;
+
 		private String name;
 		@JsonProperty("function_call")
 		private ChatFunctionCall functionCall;
@@ -111,38 +127,43 @@ public class ChatMessage {
 		@JsonProperty("tool_call_id")
 		private String toolCallId;
 
-		public Builder role(ChatMessageRole role) {
+		public ChatMessage.Builder role(ChatMessageRole role) {
 			this.role = role;
 			return this;
 		}
 
-		public Builder content(String content) {
+		public ChatMessage.Builder content(String content) {
 			this.content = content;
 			return this;
 		}
 
-		public Builder multiContent(List<ChatCompletionContentPart> multiContent) {
+		public ChatMessage.Builder multiContent(List<ChatCompletionContentPart> multiContent) {
 			this.content = multiContent;
 			return this;
 		}
 
-		public Builder name(String name) {
+		public ChatMessage.Builder name(String name) {
 			this.name = name;
 			return this;
 		}
 
-		public Builder functionCall(ChatFunctionCall functionCall) {
+		public ChatMessage.Builder functionCall(ChatFunctionCall functionCall) {
 			this.functionCall = functionCall;
 			return this;
 		}
 
-		public Builder toolCalls(List<ChatToolCall> toolCalls) {
+		public ChatMessage.Builder toolCalls(List<ChatToolCall> toolCalls) {
 			this.toolCalls = toolCalls;
 			return this;
 		}
 
-		public Builder toolCallId(String toolCallId) {
+		public ChatMessage.Builder toolCallId(String toolCallId) {
 			this.toolCallId = toolCallId;
+			return this;
+		}
+
+		public ChatMessage.Builder reasoningContent(String reasoningContent) {
+			this.reasoningContent = reasoningContent;
 			return this;
 		}
 
@@ -150,6 +171,7 @@ public class ChatMessage {
 			ChatMessage chatMessage = new ChatMessage();
 			chatMessage.setRole(role);
 			chatMessage.setContent(content);
+			chatMessage.setReasoningContent(reasoningContent);
 			chatMessage.setName(name);
 			chatMessage.setFunctionCall(functionCall);
 			chatMessage.setToolCalls(toolCalls);
