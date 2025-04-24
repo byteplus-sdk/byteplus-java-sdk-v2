@@ -1,4 +1,4 @@
-package com.byteplus.ark.runtime;
+package example;
 
 import com.byteplus.ark.runtime.model.completion.chat.ChatCompletionRequest;
 import com.byteplus.ark.runtime.model.completion.chat.ChatMessage;
@@ -18,29 +18,46 @@ import java.util.concurrent.TimeUnit;
 public class BatchChatCompletionsExample {
 
     public static void main(String[] args) {
-        // 为batch chat设置一个较大的超时时间，最小不小于10分钟
-        Duration timeout = Duration.ofHours(1);
-        int maxConcurrency = 5000;
+        // set a timeout for batch inference
+        Duration timeout = Duration.ofHours(24);
+        int maxConcurrency = 1000;
         int taskNumPerWorker = 5;
         String apiKey = System.getenv("ARK_API_KEY");
         ConnectionPool connectionPool = new ConnectionPool(maxConcurrency, 10, TimeUnit.MINUTES);
+
         Dispatcher dispatcher = new Dispatcher();
-        // 设置最大并发数
+        // set max parallel for batch inference
         dispatcher.setMaxRequests(maxConcurrency);
         dispatcher.setMaxRequestsPerHost(maxConcurrency);
-        // 请单独为batch chat单独初始化一个service实例，且多个Endpoint间也不要复用同一个service实例，避免互相影响。单个service会根据最大并发数启动对应的线程池，会占用一定的资源
-        ArkService service = ArkService.builder().dispatcher(dispatcher).timeout(timeout).connectionPool(connectionPool).apiKey(apiKey).build();
+
+        // Please create a separate service instance specifically for batch chat,
+        // and ensure that multiple Endpoints do not reuse the same service instance
+        // to prevent mutual interference.
+        // Each individual service will start a corresponding thread pool based on
+        // the maximum concurrency limit, which will occupy a certain amount of resources.
+        ArkService service = ArkService.builder()
+                .dispatcher(dispatcher)
+                .timeout(timeout)
+                .connectionPool(connectionPool)
+                .apiKey(apiKey)
+                .build();
 
         ExecutorService executorService = Executors.newFixedThreadPool(maxConcurrency);
         CountDownLatch latch = new CountDownLatch(maxConcurrency);
         Runnable batchChatTask = () -> {
             System.out.println("Executing task in " + Thread.currentThread().getName());
-            for(int i = 0; i < taskNumPerWorker; i++) {
+            for (int i = 0; i < taskNumPerWorker; i++) {
                 // 每个线程执行的任务逻辑
                 try {
                     final List<ChatMessage> messages = new ArrayList<>();
-                    final ChatMessage systemMessage = ChatMessage.builder().role(ChatMessageRole.SYSTEM).content("你是豆包，是由字节跳动开发的 AI 人工智能助手").build();
-                    final ChatMessage userMessage = ChatMessage.builder().role(ChatMessageRole.USER).content("常见的十字花科植物有哪些？").build();
+                    final ChatMessage systemMessage = ChatMessage.builder()
+                            .role(ChatMessageRole.SYSTEM)
+                            .content("You are a helpful AI assistant.")
+                            .build();
+                    final ChatMessage userMessage = ChatMessage.builder()
+                            .role(ChatMessageRole.USER)
+                            .content("Hello, how are you?")
+                            .build();
                     messages.add(systemMessage);
                     messages.add(userMessage);
 
@@ -52,10 +69,10 @@ public class BatchChatCompletionsExample {
                     service.createBatchChatCompletion(batchChatCompletionRequest);
                     System.out.println(Thread.currentThread().getName() + ": request " + i + "succeed");
                 } catch (Exception e) {
-                    System.out.println(Thread.currentThread().getName() + ": request " + i + " failed "+ e.getMessage());
+                    System.out.println(Thread.currentThread().getName() + ": request " + i + " failed " + e.getMessage());
                 }
             }
-            System.out.println(Thread.currentThread().getName()+ " done");
+            System.out.println(Thread.currentThread().getName() + " done");
             latch.countDown();
         };
         for (int i = 0; i < maxConcurrency; i++) {
@@ -63,10 +80,13 @@ public class BatchChatCompletionsExample {
         }
         try {
             latch.await();
-        } catch (InterruptedException ignored) {}
-        System.out.println("所有线程已退出");
+        } catch (InterruptedException ignored) {
+        }
+        System.out.println("all threads finished");
+
         executorService.shutdown();
-        System.out.println("线程池已退出");
+        System.out.println("thread pool shutdown");
+
         // shutdown service after all requests is finished
         service.shutdownExecutor();
     }
