@@ -9,7 +9,7 @@ import java.time.Duration;
  */
 public abstract class ArkBaseService {
 
-    public static final String BASE_URL = "https://ark.ap-southeast.bytepluses.com ";
+    public static final String BASE_URL = "https://ark.ap-southeast.bytepluses.com";
     public static final String BASE_REGION = "ap-southeast-1";
     public static final Duration DEFAULT_TIMEOUT = Duration.ofMinutes(10);
     public static final Duration DEFAULT_CONNECT_TIMEOUT = Duration.ofMinutes(1);
