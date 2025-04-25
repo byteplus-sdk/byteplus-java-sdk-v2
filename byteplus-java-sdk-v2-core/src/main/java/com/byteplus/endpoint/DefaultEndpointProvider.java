@@ -9,12 +9,6 @@ import java.util.Set;
 
 public class DefaultEndpointProvider implements EndpointResolver {
 
-    private static final String ENDPOINT = OPEN_PREFIX + ENDPOINT_SUFFIX;
-
-    private static final String BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
-
-    private static final String BYTEPLUS_ORIGIN_ENDPOINT = OPEN_PREFIX + BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX;
-
 
     // 区域代码常量
     private static final String REGION_CODE_CN_BEIJING_AUTODRIVING = "cn-beijing-autodriving";
@@ -26,6 +20,10 @@ public class DefaultEndpointProvider implements EndpointResolver {
     private static final String OPEN_PREFIX = "open";
     private static final String ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
     private static final String AP_SOUTHEAST_1_PREFIX = SEPARATOR + "ap-southeast-1";
+    private static final String ENDPOINT = OPEN_PREFIX + ENDPOINT_SUFFIX;
+    private static final String BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
+    private static final String BYTEPLUS_ORIGIN_ENDPOINT = OPEN_PREFIX + BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX;
+
 
     private static final String DUALSTACK_ENDPOINT_SUFFIX = SEPARATOR + "byteplus-api.com";
     private static final Map<String, ServiceEndpointInfo> DEFAULT_ENDPOINT_MAP = new HashMap<>();
