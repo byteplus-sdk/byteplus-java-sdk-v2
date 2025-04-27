@@ -45,16 +45,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
         private String globalEndpoint;
         private String defaultEndpoint;
         private RegionEndpointMap regionEndpointMap;
-        private String prefix;
 
         public ServiceEndpointInfo(String service, boolean isGlobal, String globalEndpoint,
-                                   String defaultEndpoint, RegionEndpointMap regionEndpointMap, String prefix) {
+                                   String defaultEndpoint, RegionEndpointMap regionEndpointMap) {
             this.service = service;
             this.isGlobal = isGlobal;
             this.globalEndpoint = globalEndpoint;
             this.defaultEndpoint = defaultEndpoint;
             this.regionEndpointMap = regionEndpointMap;
-            this.prefix = prefix;
         }
     }
 
@@ -69,7 +67,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 false,
                 "",
                 BYTEPLUS_ORIGIN_ENDPOINT,
-                createRegionEndpointMap(), ""
+                createRegionEndpointMap()
         ));
 
         // --------------------------- billing ---------------------------
@@ -78,7 +76,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 true,
                 "",
                 BYTEPLUS_ORIGIN_ENDPOINT,
-                createRegionEndpointMap(), ""
+                createRegionEndpointMap()
         ));
 
         // --------------------------- vpc ---------------------------
@@ -87,9 +85,8 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 false,
                 "",
                 ENDPOINT,
-                createRegionEndpointMap(), AP_SOUTHEAST_1_PREFIX
+                createRegionEndpointMap()
         ));
-        CN_NONE_MAINLAND_REGION_SET.add(REGION_CODE_CN_HONGKONG);
 
         // --------------------------- ecs ---------------------------
         DEFAULT_ENDPOINT_MAP.put("ecs", new ServiceEndpointInfo(
@@ -97,7 +94,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 false,
                 "",
                 ENDPOINT,
-                createRegionEndpointMap(), AP_SOUTHEAST_1_PREFIX
+                createRegionEndpointMap()
         ));
 
     }
@@ -120,7 +117,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
     @Override
     public ResolvedEndpoint endpointFor(ResolveEndpointOption option) {
         String endpoint = DefaultEndpointProvider.getDefaultEndpointByServiceInfo(
-                option.getService(), option.getRegion(), option.getCustomBootstrapRegion());
+                option.getService(), option.getRegion(), option.getCustomBootstrapRegion(),option.getUseDualStack());
         ResolvedEndpoint result = new ResolvedEndpoint();
         result.setEndpoint(endpoint);
         return result;
@@ -154,7 +151,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 }
                 reader.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.println("Error when reading " + bsRegionListPath + ": " + e.getMessage());
             }
         }
 
@@ -169,17 +166,19 @@ public class DefaultEndpointProvider implements EndpointResolver {
         return false;
     }
 
-    private static boolean hasEnabledDualstack() {
-        String enableDualstack = System.getenv("BYTEPLUS_ENABLE_DUALSTACK");
-        return enableDualstack != null && enableDualstack.equals("true");
+    private static boolean hasEnabledDualstack(Boolean useDualStack) {
+        if (useDualStack == null) {
+            String enableDualstack = System.getenv("VOLC_ENABLE_DUALSTACK");
+            return enableDualstack != null && enableDualstack.equals("true");
+        }
+
+        return useDualStack;
     }
 
 
     public static String getDefaultEndpointByServiceInfo(String service, String regionCode,
-                                                         Set<String> customBootstrapRegion) {
+                                                         Set<String> customBootstrapRegion, Boolean useDualStack) {
         String resultEndpoint = OPEN_PREFIX + AP_SOUTHEAST_1_PREFIX + ENDPOINT_SUFFIX;
-
-        String endpointSuffix = hasEnabledDualstack() ? DUALSTACK_ENDPOINT_SUFFIX : ENDPOINT_SUFFIX;
 
         ServiceEndpointInfo endpointInfo = DEFAULT_ENDPOINT_MAP.get(service);
 
@@ -188,9 +187,10 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 return resultEndpoint;
             }
 
-            endpointSuffix = endpointInfo.prefix + endpointSuffix;
-            return OPEN_PREFIX + endpointSuffix;
+            return endpointInfo.defaultEndpoint;
         }
+
+        String endpointSuffix = hasEnabledDualstack(useDualStack) ? DUALSTACK_ENDPOINT_SUFFIX : ENDPOINT_SUFFIX;
 
         if (endpointInfo == null) {
             return resultEndpoint;
