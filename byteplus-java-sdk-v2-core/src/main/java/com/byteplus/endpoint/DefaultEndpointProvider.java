@@ -63,6 +63,15 @@ public class DefaultEndpointProvider implements EndpointResolver {
     static {
         CN_NONE_MAINLAND_REGION_SET.add(REGION_CODE_CN_HONGKONG);
 
+        // --------------------------- ark ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("ark", new ServiceEndpointInfo(
+                "ark",
+                false,
+                "",
+                BYTEPLUS_ORIGIN_ENDPOINT,
+                createRegionEndpointMap(), ""
+        ));
+
         // --------------------------- billing ---------------------------
         DEFAULT_ENDPOINT_MAP.put("billing", new ServiceEndpointInfo(
                 "billing",
@@ -71,14 +80,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 BYTEPLUS_ORIGIN_ENDPOINT,
                 createRegionEndpointMap(), ""
         ));
-        // --------------------------- iam ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(
-                "iam",
-                true,
-                "",
-                BYTEPLUS_ORIGIN_ENDPOINT,
-                createRegionEndpointMap(), ""
-        ));
+
         // --------------------------- vpc ---------------------------
         DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo(
                 "vpc",
@@ -175,7 +177,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
 
     public static String getDefaultEndpointByServiceInfo(String service, String regionCode,
                                                          Set<String> customBootstrapRegion) {
-        String resultEndpoint = ENDPOINT;
+        String resultEndpoint = OPEN_PREFIX + AP_SOUTHEAST_1_PREFIX + ENDPOINT_SUFFIX;
 
         String endpointSuffix = hasEnabledDualstack() ? DUALSTACK_ENDPOINT_SUFFIX : ENDPOINT_SUFFIX;
 
