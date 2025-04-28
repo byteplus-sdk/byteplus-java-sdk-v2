@@ -20,7 +20,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
     private static final String OPEN_PREFIX = "open";
     private static final String ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
     private static final String AP_SOUTHEAST_1_PREFIX = SEPARATOR + "ap-southeast-1";
-    private static final String ENDPOINT = OPEN_PREFIX + ENDPOINT_SUFFIX;
+    private static final String ENDPOINT = OPEN_PREFIX + AP_SOUTHEAST_1_PREFIX + ENDPOINT_SUFFIX;
     private static final String BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
     private static final String BYTEPLUS_ORIGIN_ENDPOINT = OPEN_PREFIX + BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX;
 
