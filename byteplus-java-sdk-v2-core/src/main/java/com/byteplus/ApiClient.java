@@ -102,11 +102,15 @@ public class ApiClient {
 
     private Integer keepAliveDurationMs = 5 * 60 * 1000;
 
+    private Set<String> customBootstrapRegion;
+
+    private Boolean useDualStack;
+
     /*
      * Constructor for ApiClient
      */
     public ApiClient() {
-        ConnectionPool connectionPool=new ConnectionPool(maxIdleConns,keepAliveDurationMs);
+        ConnectionPool connectionPool = new ConnectionPool(maxIdleConns, keepAliveDurationMs);
         httpClient = new OkHttpClient();
         httpClient.setConnectionPool(connectionPool);
 
@@ -526,6 +530,46 @@ public class ApiClient {
      */
     public ApiClient setWriteTimeout(int writeTimeout) {
         httpClient.setWriteTimeout(writeTimeout, TimeUnit.MILLISECONDS);
+        return this;
+    }
+
+    /**
+     * Get the custom bootstrapping regions.
+     *
+     * @return Set of custom bootstrapping regions
+     */
+    public Set<String> getCustomBootstrapRegion() {
+        return this.customBootstrapRegion;
+    }
+
+    /**
+     * Set the custom bootstrapping regions.
+     *
+     * @param customBootstrapRegion Set of custom bootstrapping regions
+     * @return Api client
+     */
+    public ApiClient setCustomBootstrapRegion(Set<String> customBootstrapRegion) {
+        this.customBootstrapRegion = customBootstrapRegion;
+        return this;
+    }
+
+    /**
+     * Get the use dual stack flag.
+     *
+     * @return use dual stack flag
+     */
+    public Boolean getUseDualStack() {
+        return this.useDualStack;
+    }
+
+    /**
+     * Set the use dual stack flag.
+     *
+     * @param useDualStack boolean
+     * @return Api client
+     */
+    public ApiClient setUseDualStack(boolean useDualStack) {
+        this.useDualStack = useDualStack;
         return this;
     }
 
@@ -1426,6 +1470,7 @@ public class ApiClient {
 
         return url.toString();
     }
+
     public void buildQueryParams(String path, StringBuilder url, List<Pair> queryParams) {
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"
@@ -1444,6 +1489,7 @@ public class ApiClient {
             }
         }
     }
+
     /**
      * Set header parameters to the request builder, including default headers.
      *
@@ -1460,6 +1506,7 @@ public class ApiClient {
             }
         }
     }
+
     public void processDefaultHeader(Map<String, String> headerParams) {
         for (Entry<String, String> header : defaultHeaderMap.entrySet()) {
             if (!headerParams.containsKey(header.getKey())) {
@@ -1656,7 +1703,7 @@ public class ApiClient {
 
     public ApiClient setMaxIdleConns(Integer maxIdleConns) {
         this.maxIdleConns = maxIdleConns;
-        this.httpClient.setConnectionPool(new ConnectionPool(maxIdleConns,keepAliveDurationMs));
+        this.httpClient.setConnectionPool(new ConnectionPool(maxIdleConns, keepAliveDurationMs));
         return this;
     }
 
@@ -1666,7 +1713,7 @@ public class ApiClient {
 
     public ApiClient setKeepAliveDurationMs(Integer keepAliveDurationMs) {
         this.keepAliveDurationMs = keepAliveDurationMs;
-        this.httpClient.setConnectionPool(new ConnectionPool(maxIdleConns,keepAliveDurationMs));
+        this.httpClient.setConnectionPool(new ConnectionPool(maxIdleConns, keepAliveDurationMs));
         return this;
     }
 }
