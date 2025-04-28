@@ -161,6 +161,10 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.createChatCompletion(request, request.getModel(), customHeaders));
     }
 
+    public ChatCompletionResult createBatchChatCompletion(ChatCompletionRequest request) {
+        return execute(api.createBatchChatCompletion(request, request.getModel(), new HashMap<>()));
+    }
+
     public Flowable<ChatCompletionChunk> streamChatCompletion(ChatCompletionRequest request) {
         request.setStream(true);
 
