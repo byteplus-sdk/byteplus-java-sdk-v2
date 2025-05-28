@@ -24,52 +24,53 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * TrafficEnvForListBillOverviewByProdInput
+ * UpdateAuthRequest
  */
 
 
 
-public class TrafficEnvForListBillOverviewByProdInput {
-  @SerializedName("Env")
-  private String env = null;
+public class UpdateAuthRequest {
+  @SerializedName("AuthListStr")
+  private String authListStr = null;
 
-  @SerializedName("Open")
-  private Boolean open = null;
+  @SerializedName("RelationID")
+  private String relationID = null;
 
-  public TrafficEnvForListBillOverviewByProdInput env(String env) {
-    this.env = env;
+  public UpdateAuthRequest authListStr(String authListStr) {
+    this.authListStr = authListStr;
     return this;
   }
 
    /**
-   * Get env
-   * @return env
+   * Get authListStr
+   * @return authListStr
   **/
   @Schema(description = "")
-  public String getEnv() {
-    return env;
+  public String getAuthListStr() {
+    return authListStr;
   }
 
-  public void setEnv(String env) {
-    this.env = env;
+  public void setAuthListStr(String authListStr) {
+    this.authListStr = authListStr;
   }
 
-  public TrafficEnvForListBillOverviewByProdInput open(Boolean open) {
-    this.open = open;
+  public UpdateAuthRequest relationID(String relationID) {
+    this.relationID = relationID;
     return this;
   }
 
    /**
-   * Get open
-   * @return open
+   * Get relationID
+   * @return relationID
   **/
-  @Schema(description = "")
-  public Boolean isOpen() {
-    return open;
+  @NotNull
+  @Schema(required = true, description = "")
+  public String getRelationID() {
+    return relationID;
   }
 
-  public void setOpen(Boolean open) {
-    this.open = open;
+  public void setRelationID(String relationID) {
+    this.relationID = relationID;
   }
 
 
@@ -81,24 +82,24 @@ public class TrafficEnvForListBillOverviewByProdInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TrafficEnvForListBillOverviewByProdInput trafficEnvForListBillOverviewByProdInput = (TrafficEnvForListBillOverviewByProdInput) o;
-    return Objects.equals(this.env, trafficEnvForListBillOverviewByProdInput.env) &&
-        Objects.equals(this.open, trafficEnvForListBillOverviewByProdInput.open);
+    UpdateAuthRequest updateAuthRequest = (UpdateAuthRequest) o;
+    return Objects.equals(this.authListStr, updateAuthRequest.authListStr) &&
+        Objects.equals(this.relationID, updateAuthRequest.relationID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(env, open);
+    return Objects.hash(authListStr, relationID);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TrafficEnvForListBillOverviewByProdInput {\n");
+    sb.append("class UpdateAuthRequest {\n");
     
-    sb.append("    env: ").append(toIndentedString(env)).append("\n");
-    sb.append("    open: ").append(toIndentedString(open)).append("\n");
+    sb.append("    authListStr: ").append(toIndentedString(authListStr)).append("\n");
+    sb.append("    relationID: ").append(toIndentedString(relationID)).append("\n");
     sb.append("}");
     return sb.toString();
   }

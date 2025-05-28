@@ -24,14 +24,20 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ListForListBillOverviewByProdOutput
+ * ListForListBillOutput
  */
 
 
 
-public class ListForListBillOverviewByProdOutput {
+public class ListForListBillOutput {
   @SerializedName("BillCategoryParent")
   private String billCategoryParent = null;
+
+  @SerializedName("BillDetailNum")
+  private String billDetailNum = null;
+
+  @SerializedName("BillID")
+  private String billID = null;
 
   @SerializedName("BillPeriod")
   private String billPeriod = null;
@@ -39,11 +45,11 @@ public class ListForListBillOverviewByProdOutput {
   @SerializedName("BillingMode")
   private String billingMode = null;
 
+  @SerializedName("BusiPeriod")
+  private String busiPeriod = null;
+
   @SerializedName("BusinessMode")
   private String businessMode = null;
-
-  @SerializedName("CountryRegion")
-  private String countryRegion = null;
 
   @SerializedName("CouponAmount")
   private String couponAmount = null;
@@ -56,6 +62,12 @@ public class ListForListBillOverviewByProdOutput {
 
   @SerializedName("DiscountBillAmount")
   private String discountBillAmount = null;
+
+  @SerializedName("ExpenseBeginTime")
+  private String expenseBeginTime = null;
+
+  @SerializedName("ExpenseEndTime")
+  private String expenseEndTime = null;
 
   @SerializedName("OriginalBillAmount")
   private String originalBillAmount = null;
@@ -72,6 +84,9 @@ public class ListForListBillOverviewByProdOutput {
   @SerializedName("PaidAmount")
   private String paidAmount = null;
 
+  @SerializedName("PayStatus")
+  private String payStatus = null;
+
   @SerializedName("PayableAmount")
   private String payableAmount = null;
 
@@ -84,26 +99,14 @@ public class ListForListBillOverviewByProdOutput {
   @SerializedName("PayerUserName")
   private String payerUserName = null;
 
-  @SerializedName("PosttaxAmount")
-  private String posttaxAmount = null;
-
   @SerializedName("PreferentialBillAmount")
   private String preferentialBillAmount = null;
-
-  @SerializedName("PretaxAmount")
-  private String pretaxAmount = null;
-
-  @SerializedName("PretaxRealValue")
-  private String pretaxRealValue = null;
 
   @SerializedName("Product")
   private String product = null;
 
   @SerializedName("ProductZh")
   private String productZh = null;
-
-  @SerializedName("RealValue")
-  private String realValue = null;
 
   @SerializedName("RoundBillAmount")
   private String roundBillAmount = null;
@@ -117,34 +120,19 @@ public class ListForListBillOverviewByProdOutput {
   @SerializedName("SellerUserName")
   private String sellerUserName = null;
 
-  @SerializedName("SettlePosttaxAmount")
-  private String settlePosttaxAmount = null;
-
-  @SerializedName("SettlePretaxAmount")
-  private String settlePretaxAmount = null;
-
-  @SerializedName("SettlePretaxRealValue")
-  private String settlePretaxRealValue = null;
-
-  @SerializedName("SettleRealValue")
-  private String settleRealValue = null;
-
-  @SerializedName("SettleTax")
-  private String settleTax = null;
-
   @SerializedName("SettlementType")
   private String settlementType = null;
 
   @SerializedName("SubjectName")
   private String subjectName = null;
 
-  @SerializedName("Tax")
-  private String tax = null;
+  @SerializedName("TradeTime")
+  private String tradeTime = null;
 
   @SerializedName("UnpaidAmount")
   private String unpaidAmount = null;
 
-  public ListForListBillOverviewByProdOutput billCategoryParent(String billCategoryParent) {
+  public ListForListBillOutput billCategoryParent(String billCategoryParent) {
     this.billCategoryParent = billCategoryParent;
     return this;
   }
@@ -162,7 +150,43 @@ public class ListForListBillOverviewByProdOutput {
     this.billCategoryParent = billCategoryParent;
   }
 
-  public ListForListBillOverviewByProdOutput billPeriod(String billPeriod) {
+  public ListForListBillOutput billDetailNum(String billDetailNum) {
+    this.billDetailNum = billDetailNum;
+    return this;
+  }
+
+   /**
+   * Get billDetailNum
+   * @return billDetailNum
+  **/
+  @Schema(description = "")
+  public String getBillDetailNum() {
+    return billDetailNum;
+  }
+
+  public void setBillDetailNum(String billDetailNum) {
+    this.billDetailNum = billDetailNum;
+  }
+
+  public ListForListBillOutput billID(String billID) {
+    this.billID = billID;
+    return this;
+  }
+
+   /**
+   * Get billID
+   * @return billID
+  **/
+  @Schema(description = "")
+  public String getBillID() {
+    return billID;
+  }
+
+  public void setBillID(String billID) {
+    this.billID = billID;
+  }
+
+  public ListForListBillOutput billPeriod(String billPeriod) {
     this.billPeriod = billPeriod;
     return this;
   }
@@ -180,7 +204,7 @@ public class ListForListBillOverviewByProdOutput {
     this.billPeriod = billPeriod;
   }
 
-  public ListForListBillOverviewByProdOutput billingMode(String billingMode) {
+  public ListForListBillOutput billingMode(String billingMode) {
     this.billingMode = billingMode;
     return this;
   }
@@ -198,7 +222,25 @@ public class ListForListBillOverviewByProdOutput {
     this.billingMode = billingMode;
   }
 
-  public ListForListBillOverviewByProdOutput businessMode(String businessMode) {
+  public ListForListBillOutput busiPeriod(String busiPeriod) {
+    this.busiPeriod = busiPeriod;
+    return this;
+  }
+
+   /**
+   * Get busiPeriod
+   * @return busiPeriod
+  **/
+  @Schema(description = "")
+  public String getBusiPeriod() {
+    return busiPeriod;
+  }
+
+  public void setBusiPeriod(String busiPeriod) {
+    this.busiPeriod = busiPeriod;
+  }
+
+  public ListForListBillOutput businessMode(String businessMode) {
     this.businessMode = businessMode;
     return this;
   }
@@ -216,25 +258,7 @@ public class ListForListBillOverviewByProdOutput {
     this.businessMode = businessMode;
   }
 
-  public ListForListBillOverviewByProdOutput countryRegion(String countryRegion) {
-    this.countryRegion = countryRegion;
-    return this;
-  }
-
-   /**
-   * Get countryRegion
-   * @return countryRegion
-  **/
-  @Schema(description = "")
-  public String getCountryRegion() {
-    return countryRegion;
-  }
-
-  public void setCountryRegion(String countryRegion) {
-    this.countryRegion = countryRegion;
-  }
-
-  public ListForListBillOverviewByProdOutput couponAmount(String couponAmount) {
+  public ListForListBillOutput couponAmount(String couponAmount) {
     this.couponAmount = couponAmount;
     return this;
   }
@@ -252,7 +276,7 @@ public class ListForListBillOverviewByProdOutput {
     this.couponAmount = couponAmount;
   }
 
-  public ListForListBillOverviewByProdOutput creditCarriedAmount(String creditCarriedAmount) {
+  public ListForListBillOutput creditCarriedAmount(String creditCarriedAmount) {
     this.creditCarriedAmount = creditCarriedAmount;
     return this;
   }
@@ -270,7 +294,7 @@ public class ListForListBillOverviewByProdOutput {
     this.creditCarriedAmount = creditCarriedAmount;
   }
 
-  public ListForListBillOverviewByProdOutput currency(String currency) {
+  public ListForListBillOutput currency(String currency) {
     this.currency = currency;
     return this;
   }
@@ -288,7 +312,7 @@ public class ListForListBillOverviewByProdOutput {
     this.currency = currency;
   }
 
-  public ListForListBillOverviewByProdOutput discountBillAmount(String discountBillAmount) {
+  public ListForListBillOutput discountBillAmount(String discountBillAmount) {
     this.discountBillAmount = discountBillAmount;
     return this;
   }
@@ -306,7 +330,43 @@ public class ListForListBillOverviewByProdOutput {
     this.discountBillAmount = discountBillAmount;
   }
 
-  public ListForListBillOverviewByProdOutput originalBillAmount(String originalBillAmount) {
+  public ListForListBillOutput expenseBeginTime(String expenseBeginTime) {
+    this.expenseBeginTime = expenseBeginTime;
+    return this;
+  }
+
+   /**
+   * Get expenseBeginTime
+   * @return expenseBeginTime
+  **/
+  @Schema(description = "")
+  public String getExpenseBeginTime() {
+    return expenseBeginTime;
+  }
+
+  public void setExpenseBeginTime(String expenseBeginTime) {
+    this.expenseBeginTime = expenseBeginTime;
+  }
+
+  public ListForListBillOutput expenseEndTime(String expenseEndTime) {
+    this.expenseEndTime = expenseEndTime;
+    return this;
+  }
+
+   /**
+   * Get expenseEndTime
+   * @return expenseEndTime
+  **/
+  @Schema(description = "")
+  public String getExpenseEndTime() {
+    return expenseEndTime;
+  }
+
+  public void setExpenseEndTime(String expenseEndTime) {
+    this.expenseEndTime = expenseEndTime;
+  }
+
+  public ListForListBillOutput originalBillAmount(String originalBillAmount) {
     this.originalBillAmount = originalBillAmount;
     return this;
   }
@@ -324,7 +384,7 @@ public class ListForListBillOverviewByProdOutput {
     this.originalBillAmount = originalBillAmount;
   }
 
-  public ListForListBillOverviewByProdOutput ownerCustomerName(String ownerCustomerName) {
+  public ListForListBillOutput ownerCustomerName(String ownerCustomerName) {
     this.ownerCustomerName = ownerCustomerName;
     return this;
   }
@@ -342,7 +402,7 @@ public class ListForListBillOverviewByProdOutput {
     this.ownerCustomerName = ownerCustomerName;
   }
 
-  public ListForListBillOverviewByProdOutput ownerID(String ownerID) {
+  public ListForListBillOutput ownerID(String ownerID) {
     this.ownerID = ownerID;
     return this;
   }
@@ -360,7 +420,7 @@ public class ListForListBillOverviewByProdOutput {
     this.ownerID = ownerID;
   }
 
-  public ListForListBillOverviewByProdOutput ownerUserName(String ownerUserName) {
+  public ListForListBillOutput ownerUserName(String ownerUserName) {
     this.ownerUserName = ownerUserName;
     return this;
   }
@@ -378,7 +438,7 @@ public class ListForListBillOverviewByProdOutput {
     this.ownerUserName = ownerUserName;
   }
 
-  public ListForListBillOverviewByProdOutput paidAmount(String paidAmount) {
+  public ListForListBillOutput paidAmount(String paidAmount) {
     this.paidAmount = paidAmount;
     return this;
   }
@@ -396,7 +456,25 @@ public class ListForListBillOverviewByProdOutput {
     this.paidAmount = paidAmount;
   }
 
-  public ListForListBillOverviewByProdOutput payableAmount(String payableAmount) {
+  public ListForListBillOutput payStatus(String payStatus) {
+    this.payStatus = payStatus;
+    return this;
+  }
+
+   /**
+   * Get payStatus
+   * @return payStatus
+  **/
+  @Schema(description = "")
+  public String getPayStatus() {
+    return payStatus;
+  }
+
+  public void setPayStatus(String payStatus) {
+    this.payStatus = payStatus;
+  }
+
+  public ListForListBillOutput payableAmount(String payableAmount) {
     this.payableAmount = payableAmount;
     return this;
   }
@@ -414,7 +492,7 @@ public class ListForListBillOverviewByProdOutput {
     this.payableAmount = payableAmount;
   }
 
-  public ListForListBillOverviewByProdOutput payerCustomerName(String payerCustomerName) {
+  public ListForListBillOutput payerCustomerName(String payerCustomerName) {
     this.payerCustomerName = payerCustomerName;
     return this;
   }
@@ -432,7 +510,7 @@ public class ListForListBillOverviewByProdOutput {
     this.payerCustomerName = payerCustomerName;
   }
 
-  public ListForListBillOverviewByProdOutput payerID(String payerID) {
+  public ListForListBillOutput payerID(String payerID) {
     this.payerID = payerID;
     return this;
   }
@@ -450,7 +528,7 @@ public class ListForListBillOverviewByProdOutput {
     this.payerID = payerID;
   }
 
-  public ListForListBillOverviewByProdOutput payerUserName(String payerUserName) {
+  public ListForListBillOutput payerUserName(String payerUserName) {
     this.payerUserName = payerUserName;
     return this;
   }
@@ -468,25 +546,7 @@ public class ListForListBillOverviewByProdOutput {
     this.payerUserName = payerUserName;
   }
 
-  public ListForListBillOverviewByProdOutput posttaxAmount(String posttaxAmount) {
-    this.posttaxAmount = posttaxAmount;
-    return this;
-  }
-
-   /**
-   * Get posttaxAmount
-   * @return posttaxAmount
-  **/
-  @Schema(description = "")
-  public String getPosttaxAmount() {
-    return posttaxAmount;
-  }
-
-  public void setPosttaxAmount(String posttaxAmount) {
-    this.posttaxAmount = posttaxAmount;
-  }
-
-  public ListForListBillOverviewByProdOutput preferentialBillAmount(String preferentialBillAmount) {
+  public ListForListBillOutput preferentialBillAmount(String preferentialBillAmount) {
     this.preferentialBillAmount = preferentialBillAmount;
     return this;
   }
@@ -504,43 +564,7 @@ public class ListForListBillOverviewByProdOutput {
     this.preferentialBillAmount = preferentialBillAmount;
   }
 
-  public ListForListBillOverviewByProdOutput pretaxAmount(String pretaxAmount) {
-    this.pretaxAmount = pretaxAmount;
-    return this;
-  }
-
-   /**
-   * Get pretaxAmount
-   * @return pretaxAmount
-  **/
-  @Schema(description = "")
-  public String getPretaxAmount() {
-    return pretaxAmount;
-  }
-
-  public void setPretaxAmount(String pretaxAmount) {
-    this.pretaxAmount = pretaxAmount;
-  }
-
-  public ListForListBillOverviewByProdOutput pretaxRealValue(String pretaxRealValue) {
-    this.pretaxRealValue = pretaxRealValue;
-    return this;
-  }
-
-   /**
-   * Get pretaxRealValue
-   * @return pretaxRealValue
-  **/
-  @Schema(description = "")
-  public String getPretaxRealValue() {
-    return pretaxRealValue;
-  }
-
-  public void setPretaxRealValue(String pretaxRealValue) {
-    this.pretaxRealValue = pretaxRealValue;
-  }
-
-  public ListForListBillOverviewByProdOutput product(String product) {
+  public ListForListBillOutput product(String product) {
     this.product = product;
     return this;
   }
@@ -558,7 +582,7 @@ public class ListForListBillOverviewByProdOutput {
     this.product = product;
   }
 
-  public ListForListBillOverviewByProdOutput productZh(String productZh) {
+  public ListForListBillOutput productZh(String productZh) {
     this.productZh = productZh;
     return this;
   }
@@ -576,25 +600,7 @@ public class ListForListBillOverviewByProdOutput {
     this.productZh = productZh;
   }
 
-  public ListForListBillOverviewByProdOutput realValue(String realValue) {
-    this.realValue = realValue;
-    return this;
-  }
-
-   /**
-   * Get realValue
-   * @return realValue
-  **/
-  @Schema(description = "")
-  public String getRealValue() {
-    return realValue;
-  }
-
-  public void setRealValue(String realValue) {
-    this.realValue = realValue;
-  }
-
-  public ListForListBillOverviewByProdOutput roundBillAmount(String roundBillAmount) {
+  public ListForListBillOutput roundBillAmount(String roundBillAmount) {
     this.roundBillAmount = roundBillAmount;
     return this;
   }
@@ -612,7 +618,7 @@ public class ListForListBillOverviewByProdOutput {
     this.roundBillAmount = roundBillAmount;
   }
 
-  public ListForListBillOverviewByProdOutput sellerCustomerName(String sellerCustomerName) {
+  public ListForListBillOutput sellerCustomerName(String sellerCustomerName) {
     this.sellerCustomerName = sellerCustomerName;
     return this;
   }
@@ -630,7 +636,7 @@ public class ListForListBillOverviewByProdOutput {
     this.sellerCustomerName = sellerCustomerName;
   }
 
-  public ListForListBillOverviewByProdOutput sellerID(String sellerID) {
+  public ListForListBillOutput sellerID(String sellerID) {
     this.sellerID = sellerID;
     return this;
   }
@@ -648,7 +654,7 @@ public class ListForListBillOverviewByProdOutput {
     this.sellerID = sellerID;
   }
 
-  public ListForListBillOverviewByProdOutput sellerUserName(String sellerUserName) {
+  public ListForListBillOutput sellerUserName(String sellerUserName) {
     this.sellerUserName = sellerUserName;
     return this;
   }
@@ -666,97 +672,7 @@ public class ListForListBillOverviewByProdOutput {
     this.sellerUserName = sellerUserName;
   }
 
-  public ListForListBillOverviewByProdOutput settlePosttaxAmount(String settlePosttaxAmount) {
-    this.settlePosttaxAmount = settlePosttaxAmount;
-    return this;
-  }
-
-   /**
-   * Get settlePosttaxAmount
-   * @return settlePosttaxAmount
-  **/
-  @Schema(description = "")
-  public String getSettlePosttaxAmount() {
-    return settlePosttaxAmount;
-  }
-
-  public void setSettlePosttaxAmount(String settlePosttaxAmount) {
-    this.settlePosttaxAmount = settlePosttaxAmount;
-  }
-
-  public ListForListBillOverviewByProdOutput settlePretaxAmount(String settlePretaxAmount) {
-    this.settlePretaxAmount = settlePretaxAmount;
-    return this;
-  }
-
-   /**
-   * Get settlePretaxAmount
-   * @return settlePretaxAmount
-  **/
-  @Schema(description = "")
-  public String getSettlePretaxAmount() {
-    return settlePretaxAmount;
-  }
-
-  public void setSettlePretaxAmount(String settlePretaxAmount) {
-    this.settlePretaxAmount = settlePretaxAmount;
-  }
-
-  public ListForListBillOverviewByProdOutput settlePretaxRealValue(String settlePretaxRealValue) {
-    this.settlePretaxRealValue = settlePretaxRealValue;
-    return this;
-  }
-
-   /**
-   * Get settlePretaxRealValue
-   * @return settlePretaxRealValue
-  **/
-  @Schema(description = "")
-  public String getSettlePretaxRealValue() {
-    return settlePretaxRealValue;
-  }
-
-  public void setSettlePretaxRealValue(String settlePretaxRealValue) {
-    this.settlePretaxRealValue = settlePretaxRealValue;
-  }
-
-  public ListForListBillOverviewByProdOutput settleRealValue(String settleRealValue) {
-    this.settleRealValue = settleRealValue;
-    return this;
-  }
-
-   /**
-   * Get settleRealValue
-   * @return settleRealValue
-  **/
-  @Schema(description = "")
-  public String getSettleRealValue() {
-    return settleRealValue;
-  }
-
-  public void setSettleRealValue(String settleRealValue) {
-    this.settleRealValue = settleRealValue;
-  }
-
-  public ListForListBillOverviewByProdOutput settleTax(String settleTax) {
-    this.settleTax = settleTax;
-    return this;
-  }
-
-   /**
-   * Get settleTax
-   * @return settleTax
-  **/
-  @Schema(description = "")
-  public String getSettleTax() {
-    return settleTax;
-  }
-
-  public void setSettleTax(String settleTax) {
-    this.settleTax = settleTax;
-  }
-
-  public ListForListBillOverviewByProdOutput settlementType(String settlementType) {
+  public ListForListBillOutput settlementType(String settlementType) {
     this.settlementType = settlementType;
     return this;
   }
@@ -774,7 +690,7 @@ public class ListForListBillOverviewByProdOutput {
     this.settlementType = settlementType;
   }
 
-  public ListForListBillOverviewByProdOutput subjectName(String subjectName) {
+  public ListForListBillOutput subjectName(String subjectName) {
     this.subjectName = subjectName;
     return this;
   }
@@ -792,25 +708,25 @@ public class ListForListBillOverviewByProdOutput {
     this.subjectName = subjectName;
   }
 
-  public ListForListBillOverviewByProdOutput tax(String tax) {
-    this.tax = tax;
+  public ListForListBillOutput tradeTime(String tradeTime) {
+    this.tradeTime = tradeTime;
     return this;
   }
 
    /**
-   * Get tax
-   * @return tax
+   * Get tradeTime
+   * @return tradeTime
   **/
   @Schema(description = "")
-  public String getTax() {
-    return tax;
+  public String getTradeTime() {
+    return tradeTime;
   }
 
-  public void setTax(String tax) {
-    this.tax = tax;
+  public void setTradeTime(String tradeTime) {
+    this.tradeTime = tradeTime;
   }
 
-  public ListForListBillOverviewByProdOutput unpaidAmount(String unpaidAmount) {
+  public ListForListBillOutput unpaidAmount(String unpaidAmount) {
     this.unpaidAmount = unpaidAmount;
     return this;
   }
@@ -837,95 +753,87 @@ public class ListForListBillOverviewByProdOutput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListForListBillOverviewByProdOutput listForListBillOverviewByProdOutput = (ListForListBillOverviewByProdOutput) o;
-    return Objects.equals(this.billCategoryParent, listForListBillOverviewByProdOutput.billCategoryParent) &&
-        Objects.equals(this.billPeriod, listForListBillOverviewByProdOutput.billPeriod) &&
-        Objects.equals(this.billingMode, listForListBillOverviewByProdOutput.billingMode) &&
-        Objects.equals(this.businessMode, listForListBillOverviewByProdOutput.businessMode) &&
-        Objects.equals(this.countryRegion, listForListBillOverviewByProdOutput.countryRegion) &&
-        Objects.equals(this.couponAmount, listForListBillOverviewByProdOutput.couponAmount) &&
-        Objects.equals(this.creditCarriedAmount, listForListBillOverviewByProdOutput.creditCarriedAmount) &&
-        Objects.equals(this.currency, listForListBillOverviewByProdOutput.currency) &&
-        Objects.equals(this.discountBillAmount, listForListBillOverviewByProdOutput.discountBillAmount) &&
-        Objects.equals(this.originalBillAmount, listForListBillOverviewByProdOutput.originalBillAmount) &&
-        Objects.equals(this.ownerCustomerName, listForListBillOverviewByProdOutput.ownerCustomerName) &&
-        Objects.equals(this.ownerID, listForListBillOverviewByProdOutput.ownerID) &&
-        Objects.equals(this.ownerUserName, listForListBillOverviewByProdOutput.ownerUserName) &&
-        Objects.equals(this.paidAmount, listForListBillOverviewByProdOutput.paidAmount) &&
-        Objects.equals(this.payableAmount, listForListBillOverviewByProdOutput.payableAmount) &&
-        Objects.equals(this.payerCustomerName, listForListBillOverviewByProdOutput.payerCustomerName) &&
-        Objects.equals(this.payerID, listForListBillOverviewByProdOutput.payerID) &&
-        Objects.equals(this.payerUserName, listForListBillOverviewByProdOutput.payerUserName) &&
-        Objects.equals(this.posttaxAmount, listForListBillOverviewByProdOutput.posttaxAmount) &&
-        Objects.equals(this.preferentialBillAmount, listForListBillOverviewByProdOutput.preferentialBillAmount) &&
-        Objects.equals(this.pretaxAmount, listForListBillOverviewByProdOutput.pretaxAmount) &&
-        Objects.equals(this.pretaxRealValue, listForListBillOverviewByProdOutput.pretaxRealValue) &&
-        Objects.equals(this.product, listForListBillOverviewByProdOutput.product) &&
-        Objects.equals(this.productZh, listForListBillOverviewByProdOutput.productZh) &&
-        Objects.equals(this.realValue, listForListBillOverviewByProdOutput.realValue) &&
-        Objects.equals(this.roundBillAmount, listForListBillOverviewByProdOutput.roundBillAmount) &&
-        Objects.equals(this.sellerCustomerName, listForListBillOverviewByProdOutput.sellerCustomerName) &&
-        Objects.equals(this.sellerID, listForListBillOverviewByProdOutput.sellerID) &&
-        Objects.equals(this.sellerUserName, listForListBillOverviewByProdOutput.sellerUserName) &&
-        Objects.equals(this.settlePosttaxAmount, listForListBillOverviewByProdOutput.settlePosttaxAmount) &&
-        Objects.equals(this.settlePretaxAmount, listForListBillOverviewByProdOutput.settlePretaxAmount) &&
-        Objects.equals(this.settlePretaxRealValue, listForListBillOverviewByProdOutput.settlePretaxRealValue) &&
-        Objects.equals(this.settleRealValue, listForListBillOverviewByProdOutput.settleRealValue) &&
-        Objects.equals(this.settleTax, listForListBillOverviewByProdOutput.settleTax) &&
-        Objects.equals(this.settlementType, listForListBillOverviewByProdOutput.settlementType) &&
-        Objects.equals(this.subjectName, listForListBillOverviewByProdOutput.subjectName) &&
-        Objects.equals(this.tax, listForListBillOverviewByProdOutput.tax) &&
-        Objects.equals(this.unpaidAmount, listForListBillOverviewByProdOutput.unpaidAmount);
+    ListForListBillOutput listForListBillOutput = (ListForListBillOutput) o;
+    return Objects.equals(this.billCategoryParent, listForListBillOutput.billCategoryParent) &&
+        Objects.equals(this.billDetailNum, listForListBillOutput.billDetailNum) &&
+        Objects.equals(this.billID, listForListBillOutput.billID) &&
+        Objects.equals(this.billPeriod, listForListBillOutput.billPeriod) &&
+        Objects.equals(this.billingMode, listForListBillOutput.billingMode) &&
+        Objects.equals(this.busiPeriod, listForListBillOutput.busiPeriod) &&
+        Objects.equals(this.businessMode, listForListBillOutput.businessMode) &&
+        Objects.equals(this.couponAmount, listForListBillOutput.couponAmount) &&
+        Objects.equals(this.creditCarriedAmount, listForListBillOutput.creditCarriedAmount) &&
+        Objects.equals(this.currency, listForListBillOutput.currency) &&
+        Objects.equals(this.discountBillAmount, listForListBillOutput.discountBillAmount) &&
+        Objects.equals(this.expenseBeginTime, listForListBillOutput.expenseBeginTime) &&
+        Objects.equals(this.expenseEndTime, listForListBillOutput.expenseEndTime) &&
+        Objects.equals(this.originalBillAmount, listForListBillOutput.originalBillAmount) &&
+        Objects.equals(this.ownerCustomerName, listForListBillOutput.ownerCustomerName) &&
+        Objects.equals(this.ownerID, listForListBillOutput.ownerID) &&
+        Objects.equals(this.ownerUserName, listForListBillOutput.ownerUserName) &&
+        Objects.equals(this.paidAmount, listForListBillOutput.paidAmount) &&
+        Objects.equals(this.payStatus, listForListBillOutput.payStatus) &&
+        Objects.equals(this.payableAmount, listForListBillOutput.payableAmount) &&
+        Objects.equals(this.payerCustomerName, listForListBillOutput.payerCustomerName) &&
+        Objects.equals(this.payerID, listForListBillOutput.payerID) &&
+        Objects.equals(this.payerUserName, listForListBillOutput.payerUserName) &&
+        Objects.equals(this.preferentialBillAmount, listForListBillOutput.preferentialBillAmount) &&
+        Objects.equals(this.product, listForListBillOutput.product) &&
+        Objects.equals(this.productZh, listForListBillOutput.productZh) &&
+        Objects.equals(this.roundBillAmount, listForListBillOutput.roundBillAmount) &&
+        Objects.equals(this.sellerCustomerName, listForListBillOutput.sellerCustomerName) &&
+        Objects.equals(this.sellerID, listForListBillOutput.sellerID) &&
+        Objects.equals(this.sellerUserName, listForListBillOutput.sellerUserName) &&
+        Objects.equals(this.settlementType, listForListBillOutput.settlementType) &&
+        Objects.equals(this.subjectName, listForListBillOutput.subjectName) &&
+        Objects.equals(this.tradeTime, listForListBillOutput.tradeTime) &&
+        Objects.equals(this.unpaidAmount, listForListBillOutput.unpaidAmount);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategoryParent, billPeriod, billingMode, businessMode, countryRegion, couponAmount, creditCarriedAmount, currency, discountBillAmount, originalBillAmount, ownerCustomerName, ownerID, ownerUserName, paidAmount, payableAmount, payerCustomerName, payerID, payerUserName, posttaxAmount, preferentialBillAmount, pretaxAmount, pretaxRealValue, product, productZh, realValue, roundBillAmount, sellerCustomerName, sellerID, sellerUserName, settlePosttaxAmount, settlePretaxAmount, settlePretaxRealValue, settleRealValue, settleTax, settlementType, subjectName, tax, unpaidAmount);
+    return Objects.hash(billCategoryParent, billDetailNum, billID, billPeriod, billingMode, busiPeriod, businessMode, couponAmount, creditCarriedAmount, currency, discountBillAmount, expenseBeginTime, expenseEndTime, originalBillAmount, ownerCustomerName, ownerID, ownerUserName, paidAmount, payStatus, payableAmount, payerCustomerName, payerID, payerUserName, preferentialBillAmount, product, productZh, roundBillAmount, sellerCustomerName, sellerID, sellerUserName, settlementType, subjectName, tradeTime, unpaidAmount);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListForListBillOverviewByProdOutput {\n");
+    sb.append("class ListForListBillOutput {\n");
     
     sb.append("    billCategoryParent: ").append(toIndentedString(billCategoryParent)).append("\n");
+    sb.append("    billDetailNum: ").append(toIndentedString(billDetailNum)).append("\n");
+    sb.append("    billID: ").append(toIndentedString(billID)).append("\n");
     sb.append("    billPeriod: ").append(toIndentedString(billPeriod)).append("\n");
     sb.append("    billingMode: ").append(toIndentedString(billingMode)).append("\n");
+    sb.append("    busiPeriod: ").append(toIndentedString(busiPeriod)).append("\n");
     sb.append("    businessMode: ").append(toIndentedString(businessMode)).append("\n");
-    sb.append("    countryRegion: ").append(toIndentedString(countryRegion)).append("\n");
     sb.append("    couponAmount: ").append(toIndentedString(couponAmount)).append("\n");
     sb.append("    creditCarriedAmount: ").append(toIndentedString(creditCarriedAmount)).append("\n");
     sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
     sb.append("    discountBillAmount: ").append(toIndentedString(discountBillAmount)).append("\n");
+    sb.append("    expenseBeginTime: ").append(toIndentedString(expenseBeginTime)).append("\n");
+    sb.append("    expenseEndTime: ").append(toIndentedString(expenseEndTime)).append("\n");
     sb.append("    originalBillAmount: ").append(toIndentedString(originalBillAmount)).append("\n");
     sb.append("    ownerCustomerName: ").append(toIndentedString(ownerCustomerName)).append("\n");
     sb.append("    ownerID: ").append(toIndentedString(ownerID)).append("\n");
     sb.append("    ownerUserName: ").append(toIndentedString(ownerUserName)).append("\n");
     sb.append("    paidAmount: ").append(toIndentedString(paidAmount)).append("\n");
+    sb.append("    payStatus: ").append(toIndentedString(payStatus)).append("\n");
     sb.append("    payableAmount: ").append(toIndentedString(payableAmount)).append("\n");
     sb.append("    payerCustomerName: ").append(toIndentedString(payerCustomerName)).append("\n");
     sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    payerUserName: ").append(toIndentedString(payerUserName)).append("\n");
-    sb.append("    posttaxAmount: ").append(toIndentedString(posttaxAmount)).append("\n");
     sb.append("    preferentialBillAmount: ").append(toIndentedString(preferentialBillAmount)).append("\n");
-    sb.append("    pretaxAmount: ").append(toIndentedString(pretaxAmount)).append("\n");
-    sb.append("    pretaxRealValue: ").append(toIndentedString(pretaxRealValue)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("    productZh: ").append(toIndentedString(productZh)).append("\n");
-    sb.append("    realValue: ").append(toIndentedString(realValue)).append("\n");
     sb.append("    roundBillAmount: ").append(toIndentedString(roundBillAmount)).append("\n");
     sb.append("    sellerCustomerName: ").append(toIndentedString(sellerCustomerName)).append("\n");
     sb.append("    sellerID: ").append(toIndentedString(sellerID)).append("\n");
     sb.append("    sellerUserName: ").append(toIndentedString(sellerUserName)).append("\n");
-    sb.append("    settlePosttaxAmount: ").append(toIndentedString(settlePosttaxAmount)).append("\n");
-    sb.append("    settlePretaxAmount: ").append(toIndentedString(settlePretaxAmount)).append("\n");
-    sb.append("    settlePretaxRealValue: ").append(toIndentedString(settlePretaxRealValue)).append("\n");
-    sb.append("    settleRealValue: ").append(toIndentedString(settleRealValue)).append("\n");
-    sb.append("    settleTax: ").append(toIndentedString(settleTax)).append("\n");
     sb.append("    settlementType: ").append(toIndentedString(settlementType)).append("\n");
     sb.append("    subjectName: ").append(toIndentedString(subjectName)).append("\n");
-    sb.append("    tax: ").append(toIndentedString(tax)).append("\n");
+    sb.append("    tradeTime: ").append(toIndentedString(tradeTime)).append("\n");
     sb.append("    unpaidAmount: ").append(toIndentedString(unpaidAmount)).append("\n");
     sb.append("}");
     return sb.toString();

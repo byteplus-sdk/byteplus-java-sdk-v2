@@ -24,18 +24,12 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * CancelInvitationRequest
+ * CleanUpFinancialRelationRequest
  */
 
 
 
-public class CancelInvitationRequest {
-  @SerializedName("AuthID")
-  private String authID = null;
-
-  @SerializedName("InvitationType")
-  private Integer invitationType = null;
-
+public class CleanUpFinancialRelationRequest {
   @SerializedName("Relation")
   private Integer relation = null;
 
@@ -45,44 +39,7 @@ public class CancelInvitationRequest {
   @SerializedName("SubAccountID")
   private Long subAccountID = null;
 
-  public CancelInvitationRequest authID(String authID) {
-    this.authID = authID;
-    return this;
-  }
-
-   /**
-   * Get authID
-   * @return authID
-  **/
-  @Schema(description = "")
-  public String getAuthID() {
-    return authID;
-  }
-
-  public void setAuthID(String authID) {
-    this.authID = authID;
-  }
-
-  public CancelInvitationRequest invitationType(Integer invitationType) {
-    this.invitationType = invitationType;
-    return this;
-  }
-
-   /**
-   * Get invitationType
-   * @return invitationType
-  **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public Integer getInvitationType() {
-    return invitationType;
-  }
-
-  public void setInvitationType(Integer invitationType) {
-    this.invitationType = invitationType;
-  }
-
-  public CancelInvitationRequest relation(Integer relation) {
+  public CleanUpFinancialRelationRequest relation(Integer relation) {
     this.relation = relation;
     return this;
   }
@@ -91,7 +48,8 @@ public class CancelInvitationRequest {
    * Get relation
    * @return relation
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public Integer getRelation() {
     return relation;
   }
@@ -100,7 +58,7 @@ public class CancelInvitationRequest {
     this.relation = relation;
   }
 
-  public CancelInvitationRequest relationID(String relationID) {
+  public CleanUpFinancialRelationRequest relationID(String relationID) {
     this.relationID = relationID;
     return this;
   }
@@ -119,7 +77,7 @@ public class CancelInvitationRequest {
     this.relationID = relationID;
   }
 
-  public CancelInvitationRequest subAccountID(Long subAccountID) {
+  public CleanUpFinancialRelationRequest subAccountID(Long subAccountID) {
     this.subAccountID = subAccountID;
     return this;
   }
@@ -128,7 +86,8 @@ public class CancelInvitationRequest {
    * Get subAccountID
    * @return subAccountID
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public Long getSubAccountID() {
     return subAccountID;
   }
@@ -146,27 +105,23 @@ public class CancelInvitationRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CancelInvitationRequest cancelInvitationRequest = (CancelInvitationRequest) o;
-    return Objects.equals(this.authID, cancelInvitationRequest.authID) &&
-        Objects.equals(this.invitationType, cancelInvitationRequest.invitationType) &&
-        Objects.equals(this.relation, cancelInvitationRequest.relation) &&
-        Objects.equals(this.relationID, cancelInvitationRequest.relationID) &&
-        Objects.equals(this.subAccountID, cancelInvitationRequest.subAccountID);
+    CleanUpFinancialRelationRequest cleanUpFinancialRelationRequest = (CleanUpFinancialRelationRequest) o;
+    return Objects.equals(this.relation, cleanUpFinancialRelationRequest.relation) &&
+        Objects.equals(this.relationID, cleanUpFinancialRelationRequest.relationID) &&
+        Objects.equals(this.subAccountID, cleanUpFinancialRelationRequest.subAccountID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(authID, invitationType, relation, relationID, subAccountID);
+    return Objects.hash(relation, relationID, subAccountID);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CancelInvitationRequest {\n");
+    sb.append("class CleanUpFinancialRelationRequest {\n");
     
-    sb.append("    authID: ").append(toIndentedString(authID)).append("\n");
-    sb.append("    invitationType: ").append(toIndentedString(invitationType)).append("\n");
     sb.append("    relation: ").append(toIndentedString(relation)).append("\n");
     sb.append("    relationID: ").append(toIndentedString(relationID)).append("\n");
     sb.append("    subAccountID: ").append(toIndentedString(subAccountID)).append("\n");
