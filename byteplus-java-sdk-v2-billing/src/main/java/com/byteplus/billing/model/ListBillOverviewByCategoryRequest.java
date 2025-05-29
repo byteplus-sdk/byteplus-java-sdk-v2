@@ -14,7 +14,6 @@ package com.byteplus.billing.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.billing.model.BaseForListBillOverviewByCategoryInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -33,12 +32,6 @@ import javax.validation.Valid;
 
 
 public class ListBillOverviewByCategoryRequest {
-  @SerializedName("AccountID")
-  private Long accountID = null;
-
-  @SerializedName("Base")
-  private BaseForListBillOverviewByCategoryInput base = null;
-
   @SerializedName("BillCategoryParent")
   private List<String> billCategoryParent = null;
 
@@ -53,43 +46,6 @@ public class ListBillOverviewByCategoryRequest {
 
   @SerializedName("PayerID")
   private List<Long> payerID = null;
-
-  public ListBillOverviewByCategoryRequest accountID(Long accountID) {
-    this.accountID = accountID;
-    return this;
-  }
-
-   /**
-   * Get accountID
-   * @return accountID
-  **/
-  @Schema(description = "")
-  public Long getAccountID() {
-    return accountID;
-  }
-
-  public void setAccountID(Long accountID) {
-    this.accountID = accountID;
-  }
-
-  public ListBillOverviewByCategoryRequest base(BaseForListBillOverviewByCategoryInput base) {
-    this.base = base;
-    return this;
-  }
-
-   /**
-   * Get base
-   * @return base
-  **/
-  @Valid
-  @Schema(description = "")
-  public BaseForListBillOverviewByCategoryInput getBase() {
-    return base;
-  }
-
-  public void setBase(BaseForListBillOverviewByCategoryInput base) {
-    this.base = base;
-  }
 
   public ListBillOverviewByCategoryRequest billCategoryParent(List<String> billCategoryParent) {
     this.billCategoryParent = billCategoryParent;
@@ -126,7 +82,8 @@ public class ListBillOverviewByCategoryRequest {
    * Get billPeriod
    * @return billPeriod
   **/
-  @Schema(description = "")
+  @NotNull
+ @Size(min=7,max=7)  @Schema(required = true, description = "")
   public String getBillPeriod() {
     return billPeriod;
   }
@@ -223,9 +180,7 @@ public class ListBillOverviewByCategoryRequest {
       return false;
     }
     ListBillOverviewByCategoryRequest listBillOverviewByCategoryRequest = (ListBillOverviewByCategoryRequest) o;
-    return Objects.equals(this.accountID, listBillOverviewByCategoryRequest.accountID) &&
-        Objects.equals(this.base, listBillOverviewByCategoryRequest.base) &&
-        Objects.equals(this.billCategoryParent, listBillOverviewByCategoryRequest.billCategoryParent) &&
+    return Objects.equals(this.billCategoryParent, listBillOverviewByCategoryRequest.billCategoryParent) &&
         Objects.equals(this.billPeriod, listBillOverviewByCategoryRequest.billPeriod) &&
         Objects.equals(this.billingMode, listBillOverviewByCategoryRequest.billingMode) &&
         Objects.equals(this.ownerID, listBillOverviewByCategoryRequest.ownerID) &&
@@ -234,7 +189,7 @@ public class ListBillOverviewByCategoryRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountID, base, billCategoryParent, billPeriod, billingMode, ownerID, payerID);
+    return Objects.hash(billCategoryParent, billPeriod, billingMode, ownerID, payerID);
   }
 
 
@@ -243,8 +198,6 @@ public class ListBillOverviewByCategoryRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class ListBillOverviewByCategoryRequest {\n");
     
-    sb.append("    accountID: ").append(toIndentedString(accountID)).append("\n");
-    sb.append("    base: ").append(toIndentedString(base)).append("\n");
     sb.append("    billCategoryParent: ").append(toIndentedString(billCategoryParent)).append("\n");
     sb.append("    billPeriod: ").append(toIndentedString(billPeriod)).append("\n");
     sb.append("    billingMode: ").append(toIndentedString(billingMode)).append("\n");

@@ -24,52 +24,52 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * TrafficEnvForListBillOverviewByCategoryInput
+ * CleanUpFinancialRelationResponse
  */
 
 
 
-public class TrafficEnvForListBillOverviewByCategoryInput {
-  @SerializedName("Env")
-  private String env = null;
+public class CleanUpFinancialRelationResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("IsIdempotent")
+  private Boolean isIdempotent = null;
 
-  @SerializedName("Open")
-  private Boolean open = null;
+  @SerializedName("IsSuccess")
+  private Boolean isSuccess = null;
 
-  public TrafficEnvForListBillOverviewByCategoryInput env(String env) {
-    this.env = env;
+  public CleanUpFinancialRelationResponse isIdempotent(Boolean isIdempotent) {
+    this.isIdempotent = isIdempotent;
     return this;
   }
 
    /**
-   * Get env
-   * @return env
+   * Get isIdempotent
+   * @return isIdempotent
   **/
   @Schema(description = "")
-  public String getEnv() {
-    return env;
+  public Boolean isIsIdempotent() {
+    return isIdempotent;
   }
 
-  public void setEnv(String env) {
-    this.env = env;
+  public void setIsIdempotent(Boolean isIdempotent) {
+    this.isIdempotent = isIdempotent;
   }
 
-  public TrafficEnvForListBillOverviewByCategoryInput open(Boolean open) {
-    this.open = open;
+  public CleanUpFinancialRelationResponse isSuccess(Boolean isSuccess) {
+    this.isSuccess = isSuccess;
     return this;
   }
 
    /**
-   * Get open
-   * @return open
+   * Get isSuccess
+   * @return isSuccess
   **/
   @Schema(description = "")
-  public Boolean isOpen() {
-    return open;
+  public Boolean isIsSuccess() {
+    return isSuccess;
   }
 
-  public void setOpen(Boolean open) {
-    this.open = open;
+  public void setIsSuccess(Boolean isSuccess) {
+    this.isSuccess = isSuccess;
   }
 
 
@@ -81,24 +81,24 @@ public class TrafficEnvForListBillOverviewByCategoryInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TrafficEnvForListBillOverviewByCategoryInput trafficEnvForListBillOverviewByCategoryInput = (TrafficEnvForListBillOverviewByCategoryInput) o;
-    return Objects.equals(this.env, trafficEnvForListBillOverviewByCategoryInput.env) &&
-        Objects.equals(this.open, trafficEnvForListBillOverviewByCategoryInput.open);
+    CleanUpFinancialRelationResponse cleanUpFinancialRelationResponse = (CleanUpFinancialRelationResponse) o;
+    return Objects.equals(this.isIdempotent, cleanUpFinancialRelationResponse.isIdempotent) &&
+        Objects.equals(this.isSuccess, cleanUpFinancialRelationResponse.isSuccess);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(env, open);
+    return Objects.hash(isIdempotent, isSuccess);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TrafficEnvForListBillOverviewByCategoryInput {\n");
+    sb.append("class CleanUpFinancialRelationResponse {\n");
     
-    sb.append("    env: ").append(toIndentedString(env)).append("\n");
-    sb.append("    open: ").append(toIndentedString(open)).append("\n");
+    sb.append("    isIdempotent: ").append(toIndentedString(isIdempotent)).append("\n");
+    sb.append("    isSuccess: ").append(toIndentedString(isSuccess)).append("\n");
     sb.append("}");
     return sb.toString();
   }

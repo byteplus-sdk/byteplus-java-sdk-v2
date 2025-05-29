@@ -33,11 +33,14 @@ public class HandleInvitationRequest {
   @SerializedName("Action")
   private Integer action = null;
 
+  @SerializedName("AuthID")
+  private String authID = null;
+
   @SerializedName("InvitationType")
   private Integer invitationType = null;
 
   @SerializedName("MajorAccountID")
-  private Integer majorAccountID = null;
+  private Long majorAccountID = null;
 
   @SerializedName("Relation")
   private Integer relation = null;
@@ -64,6 +67,24 @@ public class HandleInvitationRequest {
     this.action = action;
   }
 
+  public HandleInvitationRequest authID(String authID) {
+    this.authID = authID;
+    return this;
+  }
+
+   /**
+   * Get authID
+   * @return authID
+  **/
+  @Schema(description = "")
+  public String getAuthID() {
+    return authID;
+  }
+
+  public void setAuthID(String authID) {
+    this.authID = authID;
+  }
+
   public HandleInvitationRequest invitationType(Integer invitationType) {
     this.invitationType = invitationType;
     return this;
@@ -83,7 +104,7 @@ public class HandleInvitationRequest {
     this.invitationType = invitationType;
   }
 
-  public HandleInvitationRequest majorAccountID(Integer majorAccountID) {
+  public HandleInvitationRequest majorAccountID(Long majorAccountID) {
     this.majorAccountID = majorAccountID;
     return this;
   }
@@ -93,11 +114,11 @@ public class HandleInvitationRequest {
    * @return majorAccountID
   **/
   @Schema(description = "")
-  public Integer getMajorAccountID() {
+  public Long getMajorAccountID() {
     return majorAccountID;
   }
 
-  public void setMajorAccountID(Integer majorAccountID) {
+  public void setMajorAccountID(Long majorAccountID) {
     this.majorAccountID = majorAccountID;
   }
 
@@ -149,6 +170,7 @@ public class HandleInvitationRequest {
     }
     HandleInvitationRequest handleInvitationRequest = (HandleInvitationRequest) o;
     return Objects.equals(this.action, handleInvitationRequest.action) &&
+        Objects.equals(this.authID, handleInvitationRequest.authID) &&
         Objects.equals(this.invitationType, handleInvitationRequest.invitationType) &&
         Objects.equals(this.majorAccountID, handleInvitationRequest.majorAccountID) &&
         Objects.equals(this.relation, handleInvitationRequest.relation) &&
@@ -157,7 +179,7 @@ public class HandleInvitationRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(action, invitationType, majorAccountID, relation, relationID);
+    return Objects.hash(action, authID, invitationType, majorAccountID, relation, relationID);
   }
 
 
@@ -167,6 +189,7 @@ public class HandleInvitationRequest {
     sb.append("class HandleInvitationRequest {\n");
     
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    authID: ").append(toIndentedString(authID)).append("\n");
     sb.append("    invitationType: ").append(toIndentedString(invitationType)).append("\n");
     sb.append("    majorAccountID: ").append(toIndentedString(majorAccountID)).append("\n");
     sb.append("    relation: ").append(toIndentedString(relation)).append("\n");

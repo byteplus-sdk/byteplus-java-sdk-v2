@@ -51,7 +51,7 @@ public class UnsubscribeInstanceRequest {
    * Get clientToken
    * @return clientToken
   **/
-  @Schema(description = "")
+ @Size(max=36)  @Schema(description = "")
   public String getClientToken() {
     return clientToken;
   }

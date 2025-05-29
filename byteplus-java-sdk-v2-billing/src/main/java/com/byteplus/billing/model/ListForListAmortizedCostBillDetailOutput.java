@@ -24,17 +24,29 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ListForListBillDetailOutput
+ * ListForListAmortizedCostBillDetailOutput
  */
 
 
 
-public class ListForListBillDetailOutput {
+public class ListForListAmortizedCostBillDetailOutput {
+  @SerializedName("AmortizedBeginTime")
+  private String amortizedBeginTime = null;
+
+  @SerializedName("AmortizedDay")
+  private String amortizedDay = null;
+
+  @SerializedName("AmortizedEndTime")
+  private String amortizedEndTime = null;
+
+  @SerializedName("AmortizedMonth")
+  private String amortizedMonth = null;
+
+  @SerializedName("AmortizedType")
+  private String amortizedType = null;
+
   @SerializedName("BillCategory")
   private String billCategory = null;
-
-  @SerializedName("BillDetailId")
-  private String billDetailId = null;
 
   @SerializedName("BillID")
   private String billID = null;
@@ -60,26 +72,38 @@ public class ListForListBillDetailOutput {
   @SerializedName("ConfigName")
   private String configName = null;
 
-  @SerializedName("ConfigurationCode")
-  private String configurationCode = null;
+  @SerializedName("CostID")
+  private String costID = null;
 
   @SerializedName("Count")
   private String count = null;
 
-  @SerializedName("CountryRegion")
-  private String countryRegion = null;
-
   @SerializedName("CouponAmount")
   private String couponAmount = null;
-
-  @SerializedName("CreditCarriedAmount")
-  private String creditCarriedAmount = null;
 
   @SerializedName("Currency")
   private String currency = null;
 
-  @SerializedName("DeductionCount")
-  private String deductionCount = null;
+  @SerializedName("DailyAmortizedCouponAmount")
+  private String dailyAmortizedCouponAmount = null;
+
+  @SerializedName("DailyAmortizedDiscountBillAmount")
+  private String dailyAmortizedDiscountBillAmount = null;
+
+  @SerializedName("DailyAmortizedOriginalBillAmount")
+  private String dailyAmortizedOriginalBillAmount = null;
+
+  @SerializedName("DailyAmortizedPaidAmount")
+  private String dailyAmortizedPaidAmount = null;
+
+  @SerializedName("DailyAmortizedPayableAmount")
+  private String dailyAmortizedPayableAmount = null;
+
+  @SerializedName("DailyAmortizedPreferentialBillAmount")
+  private String dailyAmortizedPreferentialBillAmount = null;
+
+  @SerializedName("DailyAmortizedRoundAmount")
+  private String dailyAmortizedRoundAmount = null;
 
   @SerializedName("DeductionUseDuration")
   private String deductionUseDuration = null;
@@ -105,29 +129,17 @@ public class ListForListBillDetailOutput {
   @SerializedName("Element")
   private String element = null;
 
-  @SerializedName("ElementCode")
-  private String elementCode = null;
-
   @SerializedName("ExpandField")
   private String expandField = null;
 
   @SerializedName("ExpenseBeginTime")
   private String expenseBeginTime = null;
 
-  @SerializedName("ExpenseDate")
-  private String expenseDate = null;
-
   @SerializedName("ExpenseEndTime")
   private String expenseEndTime = null;
 
   @SerializedName("Factor")
   private String factor = null;
-
-  @SerializedName("FactorCode")
-  private String factorCode = null;
-
-  @SerializedName("Formula")
-  private String formula = null;
 
   @SerializedName("InstanceName")
   private String instanceName = null;
@@ -168,17 +180,8 @@ public class ListForListBillDetailOutput {
   @SerializedName("PayerUserName")
   private String payerUserName = null;
 
-  @SerializedName("PosttaxAmount")
-  private String posttaxAmount = null;
-
   @SerializedName("PreferentialBillAmount")
   private String preferentialBillAmount = null;
-
-  @SerializedName("PretaxAmount")
-  private String pretaxAmount = null;
-
-  @SerializedName("PretaxRealValue")
-  private String pretaxRealValue = null;
 
   @SerializedName("Price")
   private String price = null;
@@ -201,20 +204,11 @@ public class ListForListBillDetailOutput {
   @SerializedName("ProjectDisplayName")
   private String projectDisplayName = null;
 
-  @SerializedName("RealValue")
-  private String realValue = null;
-
   @SerializedName("Region")
   private String region = null;
 
-  @SerializedName("RegionCode")
-  private String regionCode = null;
-
-  @SerializedName("ReservationInstance")
-  private String reservationInstance = null;
-
   @SerializedName("RoundAmount")
-  private Double roundAmount = null;
+  private String roundAmount = null;
 
   @SerializedName("SellerCustomerName")
   private String sellerCustomerName = null;
@@ -225,29 +219,11 @@ public class ListForListBillDetailOutput {
   @SerializedName("SellerUserName")
   private String sellerUserName = null;
 
-  @SerializedName("SellingMode")
-  private String sellingMode = null;
+  @SerializedName("SplitItemID")
+  private String splitItemID = null;
 
-  @SerializedName("SettlePosttaxAmount")
-  private String settlePosttaxAmount = null;
-
-  @SerializedName("SettlePretaxAmount")
-  private String settlePretaxAmount = null;
-
-  @SerializedName("SettlePretaxRealValue")
-  private String settlePretaxRealValue = null;
-
-  @SerializedName("SettleRealValue")
-  private String settleRealValue = null;
-
-  @SerializedName("SettleTax")
-  private String settleTax = null;
-
-  @SerializedName("SettlementType")
-  private String settlementType = null;
-
-  @SerializedName("SolutionZh")
-  private String solutionZh = null;
+  @SerializedName("SplitItemName")
+  private String splitItemName = null;
 
   @SerializedName("SubjectName")
   private String subjectName = null;
@@ -255,20 +231,11 @@ public class ListForListBillDetailOutput {
   @SerializedName("Tag")
   private String tag = null;
 
-  @SerializedName("Tax")
-  private String tax = null;
-
-  @SerializedName("TaxRate")
-  private String taxRate = null;
-
   @SerializedName("TradeTime")
   private String tradeTime = null;
 
   @SerializedName("Unit")
   private String unit = null;
-
-  @SerializedName("UnpaidAmount")
-  private String unpaidAmount = null;
 
   @SerializedName("UseDuration")
   private String useDuration = null;
@@ -279,10 +246,97 @@ public class ListForListBillDetailOutput {
   @SerializedName("Zone")
   private String zone = null;
 
-  @SerializedName("ZoneCode")
-  private String zoneCode = null;
+  public ListForListAmortizedCostBillDetailOutput amortizedBeginTime(String amortizedBeginTime) {
+    this.amortizedBeginTime = amortizedBeginTime;
+    return this;
+  }
 
-  public ListForListBillDetailOutput billCategory(String billCategory) {
+   /**
+   * Get amortizedBeginTime
+   * @return amortizedBeginTime
+  **/
+  @Schema(description = "")
+  public String getAmortizedBeginTime() {
+    return amortizedBeginTime;
+  }
+
+  public void setAmortizedBeginTime(String amortizedBeginTime) {
+    this.amortizedBeginTime = amortizedBeginTime;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput amortizedDay(String amortizedDay) {
+    this.amortizedDay = amortizedDay;
+    return this;
+  }
+
+   /**
+   * Get amortizedDay
+   * @return amortizedDay
+  **/
+  @Schema(description = "")
+  public String getAmortizedDay() {
+    return amortizedDay;
+  }
+
+  public void setAmortizedDay(String amortizedDay) {
+    this.amortizedDay = amortizedDay;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput amortizedEndTime(String amortizedEndTime) {
+    this.amortizedEndTime = amortizedEndTime;
+    return this;
+  }
+
+   /**
+   * Get amortizedEndTime
+   * @return amortizedEndTime
+  **/
+  @Schema(description = "")
+  public String getAmortizedEndTime() {
+    return amortizedEndTime;
+  }
+
+  public void setAmortizedEndTime(String amortizedEndTime) {
+    this.amortizedEndTime = amortizedEndTime;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput amortizedMonth(String amortizedMonth) {
+    this.amortizedMonth = amortizedMonth;
+    return this;
+  }
+
+   /**
+   * Get amortizedMonth
+   * @return amortizedMonth
+  **/
+  @Schema(description = "")
+  public String getAmortizedMonth() {
+    return amortizedMonth;
+  }
+
+  public void setAmortizedMonth(String amortizedMonth) {
+    this.amortizedMonth = amortizedMonth;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput amortizedType(String amortizedType) {
+    this.amortizedType = amortizedType;
+    return this;
+  }
+
+   /**
+   * Get amortizedType
+   * @return amortizedType
+  **/
+  @Schema(description = "")
+  public String getAmortizedType() {
+    return amortizedType;
+  }
+
+  public void setAmortizedType(String amortizedType) {
+    this.amortizedType = amortizedType;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput billCategory(String billCategory) {
     this.billCategory = billCategory;
     return this;
   }
@@ -300,25 +354,7 @@ public class ListForListBillDetailOutput {
     this.billCategory = billCategory;
   }
 
-  public ListForListBillDetailOutput billDetailId(String billDetailId) {
-    this.billDetailId = billDetailId;
-    return this;
-  }
-
-   /**
-   * Get billDetailId
-   * @return billDetailId
-  **/
-  @Schema(description = "")
-  public String getBillDetailId() {
-    return billDetailId;
-  }
-
-  public void setBillDetailId(String billDetailId) {
-    this.billDetailId = billDetailId;
-  }
-
-  public ListForListBillDetailOutput billID(String billID) {
+  public ListForListAmortizedCostBillDetailOutput billID(String billID) {
     this.billID = billID;
     return this;
   }
@@ -336,7 +372,7 @@ public class ListForListBillDetailOutput {
     this.billID = billID;
   }
 
-  public ListForListBillDetailOutput billPeriod(String billPeriod) {
+  public ListForListAmortizedCostBillDetailOutput billPeriod(String billPeriod) {
     this.billPeriod = billPeriod;
     return this;
   }
@@ -354,7 +390,7 @@ public class ListForListBillDetailOutput {
     this.billPeriod = billPeriod;
   }
 
-  public ListForListBillDetailOutput billingFunction(String billingFunction) {
+  public ListForListAmortizedCostBillDetailOutput billingFunction(String billingFunction) {
     this.billingFunction = billingFunction;
     return this;
   }
@@ -372,7 +408,7 @@ public class ListForListBillDetailOutput {
     this.billingFunction = billingFunction;
   }
 
-  public ListForListBillDetailOutput billingMethodCode(String billingMethodCode) {
+  public ListForListAmortizedCostBillDetailOutput billingMethodCode(String billingMethodCode) {
     this.billingMethodCode = billingMethodCode;
     return this;
   }
@@ -390,7 +426,7 @@ public class ListForListBillDetailOutput {
     this.billingMethodCode = billingMethodCode;
   }
 
-  public ListForListBillDetailOutput billingMode(String billingMode) {
+  public ListForListAmortizedCostBillDetailOutput billingMode(String billingMode) {
     this.billingMode = billingMode;
     return this;
   }
@@ -408,7 +444,7 @@ public class ListForListBillDetailOutput {
     this.billingMode = billingMode;
   }
 
-  public ListForListBillDetailOutput busiPeriod(String busiPeriod) {
+  public ListForListAmortizedCostBillDetailOutput busiPeriod(String busiPeriod) {
     this.busiPeriod = busiPeriod;
     return this;
   }
@@ -426,7 +462,7 @@ public class ListForListBillDetailOutput {
     this.busiPeriod = busiPeriod;
   }
 
-  public ListForListBillDetailOutput businessMode(String businessMode) {
+  public ListForListAmortizedCostBillDetailOutput businessMode(String businessMode) {
     this.businessMode = businessMode;
     return this;
   }
@@ -444,7 +480,7 @@ public class ListForListBillDetailOutput {
     this.businessMode = businessMode;
   }
 
-  public ListForListBillDetailOutput configName(String configName) {
+  public ListForListAmortizedCostBillDetailOutput configName(String configName) {
     this.configName = configName;
     return this;
   }
@@ -462,25 +498,25 @@ public class ListForListBillDetailOutput {
     this.configName = configName;
   }
 
-  public ListForListBillDetailOutput configurationCode(String configurationCode) {
-    this.configurationCode = configurationCode;
+  public ListForListAmortizedCostBillDetailOutput costID(String costID) {
+    this.costID = costID;
     return this;
   }
 
    /**
-   * Get configurationCode
-   * @return configurationCode
+   * Get costID
+   * @return costID
   **/
   @Schema(description = "")
-  public String getConfigurationCode() {
-    return configurationCode;
+  public String getCostID() {
+    return costID;
   }
 
-  public void setConfigurationCode(String configurationCode) {
-    this.configurationCode = configurationCode;
+  public void setCostID(String costID) {
+    this.costID = costID;
   }
 
-  public ListForListBillDetailOutput count(String count) {
+  public ListForListAmortizedCostBillDetailOutput count(String count) {
     this.count = count;
     return this;
   }
@@ -498,25 +534,7 @@ public class ListForListBillDetailOutput {
     this.count = count;
   }
 
-  public ListForListBillDetailOutput countryRegion(String countryRegion) {
-    this.countryRegion = countryRegion;
-    return this;
-  }
-
-   /**
-   * Get countryRegion
-   * @return countryRegion
-  **/
-  @Schema(description = "")
-  public String getCountryRegion() {
-    return countryRegion;
-  }
-
-  public void setCountryRegion(String countryRegion) {
-    this.countryRegion = countryRegion;
-  }
-
-  public ListForListBillDetailOutput couponAmount(String couponAmount) {
+  public ListForListAmortizedCostBillDetailOutput couponAmount(String couponAmount) {
     this.couponAmount = couponAmount;
     return this;
   }
@@ -534,25 +552,7 @@ public class ListForListBillDetailOutput {
     this.couponAmount = couponAmount;
   }
 
-  public ListForListBillDetailOutput creditCarriedAmount(String creditCarriedAmount) {
-    this.creditCarriedAmount = creditCarriedAmount;
-    return this;
-  }
-
-   /**
-   * Get creditCarriedAmount
-   * @return creditCarriedAmount
-  **/
-  @Schema(description = "")
-  public String getCreditCarriedAmount() {
-    return creditCarriedAmount;
-  }
-
-  public void setCreditCarriedAmount(String creditCarriedAmount) {
-    this.creditCarriedAmount = creditCarriedAmount;
-  }
-
-  public ListForListBillDetailOutput currency(String currency) {
+  public ListForListAmortizedCostBillDetailOutput currency(String currency) {
     this.currency = currency;
     return this;
   }
@@ -570,25 +570,133 @@ public class ListForListBillDetailOutput {
     this.currency = currency;
   }
 
-  public ListForListBillDetailOutput deductionCount(String deductionCount) {
-    this.deductionCount = deductionCount;
+  public ListForListAmortizedCostBillDetailOutput dailyAmortizedCouponAmount(String dailyAmortizedCouponAmount) {
+    this.dailyAmortizedCouponAmount = dailyAmortizedCouponAmount;
     return this;
   }
 
    /**
-   * Get deductionCount
-   * @return deductionCount
+   * Get dailyAmortizedCouponAmount
+   * @return dailyAmortizedCouponAmount
   **/
   @Schema(description = "")
-  public String getDeductionCount() {
-    return deductionCount;
+  public String getDailyAmortizedCouponAmount() {
+    return dailyAmortizedCouponAmount;
   }
 
-  public void setDeductionCount(String deductionCount) {
-    this.deductionCount = deductionCount;
+  public void setDailyAmortizedCouponAmount(String dailyAmortizedCouponAmount) {
+    this.dailyAmortizedCouponAmount = dailyAmortizedCouponAmount;
   }
 
-  public ListForListBillDetailOutput deductionUseDuration(String deductionUseDuration) {
+  public ListForListAmortizedCostBillDetailOutput dailyAmortizedDiscountBillAmount(String dailyAmortizedDiscountBillAmount) {
+    this.dailyAmortizedDiscountBillAmount = dailyAmortizedDiscountBillAmount;
+    return this;
+  }
+
+   /**
+   * Get dailyAmortizedDiscountBillAmount
+   * @return dailyAmortizedDiscountBillAmount
+  **/
+  @Schema(description = "")
+  public String getDailyAmortizedDiscountBillAmount() {
+    return dailyAmortizedDiscountBillAmount;
+  }
+
+  public void setDailyAmortizedDiscountBillAmount(String dailyAmortizedDiscountBillAmount) {
+    this.dailyAmortizedDiscountBillAmount = dailyAmortizedDiscountBillAmount;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput dailyAmortizedOriginalBillAmount(String dailyAmortizedOriginalBillAmount) {
+    this.dailyAmortizedOriginalBillAmount = dailyAmortizedOriginalBillAmount;
+    return this;
+  }
+
+   /**
+   * Get dailyAmortizedOriginalBillAmount
+   * @return dailyAmortizedOriginalBillAmount
+  **/
+  @Schema(description = "")
+  public String getDailyAmortizedOriginalBillAmount() {
+    return dailyAmortizedOriginalBillAmount;
+  }
+
+  public void setDailyAmortizedOriginalBillAmount(String dailyAmortizedOriginalBillAmount) {
+    this.dailyAmortizedOriginalBillAmount = dailyAmortizedOriginalBillAmount;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput dailyAmortizedPaidAmount(String dailyAmortizedPaidAmount) {
+    this.dailyAmortizedPaidAmount = dailyAmortizedPaidAmount;
+    return this;
+  }
+
+   /**
+   * Get dailyAmortizedPaidAmount
+   * @return dailyAmortizedPaidAmount
+  **/
+  @Schema(description = "")
+  public String getDailyAmortizedPaidAmount() {
+    return dailyAmortizedPaidAmount;
+  }
+
+  public void setDailyAmortizedPaidAmount(String dailyAmortizedPaidAmount) {
+    this.dailyAmortizedPaidAmount = dailyAmortizedPaidAmount;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput dailyAmortizedPayableAmount(String dailyAmortizedPayableAmount) {
+    this.dailyAmortizedPayableAmount = dailyAmortizedPayableAmount;
+    return this;
+  }
+
+   /**
+   * Get dailyAmortizedPayableAmount
+   * @return dailyAmortizedPayableAmount
+  **/
+  @Schema(description = "")
+  public String getDailyAmortizedPayableAmount() {
+    return dailyAmortizedPayableAmount;
+  }
+
+  public void setDailyAmortizedPayableAmount(String dailyAmortizedPayableAmount) {
+    this.dailyAmortizedPayableAmount = dailyAmortizedPayableAmount;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput dailyAmortizedPreferentialBillAmount(String dailyAmortizedPreferentialBillAmount) {
+    this.dailyAmortizedPreferentialBillAmount = dailyAmortizedPreferentialBillAmount;
+    return this;
+  }
+
+   /**
+   * Get dailyAmortizedPreferentialBillAmount
+   * @return dailyAmortizedPreferentialBillAmount
+  **/
+  @Schema(description = "")
+  public String getDailyAmortizedPreferentialBillAmount() {
+    return dailyAmortizedPreferentialBillAmount;
+  }
+
+  public void setDailyAmortizedPreferentialBillAmount(String dailyAmortizedPreferentialBillAmount) {
+    this.dailyAmortizedPreferentialBillAmount = dailyAmortizedPreferentialBillAmount;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput dailyAmortizedRoundAmount(String dailyAmortizedRoundAmount) {
+    this.dailyAmortizedRoundAmount = dailyAmortizedRoundAmount;
+    return this;
+  }
+
+   /**
+   * Get dailyAmortizedRoundAmount
+   * @return dailyAmortizedRoundAmount
+  **/
+  @Schema(description = "")
+  public String getDailyAmortizedRoundAmount() {
+    return dailyAmortizedRoundAmount;
+  }
+
+  public void setDailyAmortizedRoundAmount(String dailyAmortizedRoundAmount) {
+    this.dailyAmortizedRoundAmount = dailyAmortizedRoundAmount;
+  }
+
+  public ListForListAmortizedCostBillDetailOutput deductionUseDuration(String deductionUseDuration) {
     this.deductionUseDuration = deductionUseDuration;
     return this;
   }
@@ -606,7 +714,7 @@ public class ListForListBillDetailOutput {
     this.deductionUseDuration = deductionUseDuration;
   }
 
-  public ListForListBillDetailOutput discountBillAmount(String discountBillAmount) {
+  public ListForListAmortizedCostBillDetailOutput discountBillAmount(String discountBillAmount) {
     this.discountBillAmount = discountBillAmount;
     return this;
   }
@@ -624,7 +732,7 @@ public class ListForListBillDetailOutput {
     this.discountBillAmount = discountBillAmount;
   }
 
-  public ListForListBillDetailOutput discountBizBillingFunction(String discountBizBillingFunction) {
+  public ListForListAmortizedCostBillDetailOutput discountBizBillingFunction(String discountBizBillingFunction) {
     this.discountBizBillingFunction = discountBizBillingFunction;
     return this;
   }
@@ -642,7 +750,7 @@ public class ListForListBillDetailOutput {
     this.discountBizBillingFunction = discountBizBillingFunction;
   }
 
-  public ListForListBillDetailOutput discountBizMeasureInterval(String discountBizMeasureInterval) {
+  public ListForListAmortizedCostBillDetailOutput discountBizMeasureInterval(String discountBizMeasureInterval) {
     this.discountBizMeasureInterval = discountBizMeasureInterval;
     return this;
   }
@@ -660,7 +768,7 @@ public class ListForListBillDetailOutput {
     this.discountBizMeasureInterval = discountBizMeasureInterval;
   }
 
-  public ListForListBillDetailOutput discountBizUnitPrice(String discountBizUnitPrice) {
+  public ListForListAmortizedCostBillDetailOutput discountBizUnitPrice(String discountBizUnitPrice) {
     this.discountBizUnitPrice = discountBizUnitPrice;
     return this;
   }
@@ -678,7 +786,7 @@ public class ListForListBillDetailOutput {
     this.discountBizUnitPrice = discountBizUnitPrice;
   }
 
-  public ListForListBillDetailOutput discountBizUnitPriceInterval(String discountBizUnitPriceInterval) {
+  public ListForListAmortizedCostBillDetailOutput discountBizUnitPriceInterval(String discountBizUnitPriceInterval) {
     this.discountBizUnitPriceInterval = discountBizUnitPriceInterval;
     return this;
   }
@@ -696,7 +804,7 @@ public class ListForListBillDetailOutput {
     this.discountBizUnitPriceInterval = discountBizUnitPriceInterval;
   }
 
-  public ListForListBillDetailOutput effectiveFactor(String effectiveFactor) {
+  public ListForListAmortizedCostBillDetailOutput effectiveFactor(String effectiveFactor) {
     this.effectiveFactor = effectiveFactor;
     return this;
   }
@@ -714,7 +822,7 @@ public class ListForListBillDetailOutput {
     this.effectiveFactor = effectiveFactor;
   }
 
-  public ListForListBillDetailOutput element(String element) {
+  public ListForListAmortizedCostBillDetailOutput element(String element) {
     this.element = element;
     return this;
   }
@@ -732,25 +840,7 @@ public class ListForListBillDetailOutput {
     this.element = element;
   }
 
-  public ListForListBillDetailOutput elementCode(String elementCode) {
-    this.elementCode = elementCode;
-    return this;
-  }
-
-   /**
-   * Get elementCode
-   * @return elementCode
-  **/
-  @Schema(description = "")
-  public String getElementCode() {
-    return elementCode;
-  }
-
-  public void setElementCode(String elementCode) {
-    this.elementCode = elementCode;
-  }
-
-  public ListForListBillDetailOutput expandField(String expandField) {
+  public ListForListAmortizedCostBillDetailOutput expandField(String expandField) {
     this.expandField = expandField;
     return this;
   }
@@ -768,7 +858,7 @@ public class ListForListBillDetailOutput {
     this.expandField = expandField;
   }
 
-  public ListForListBillDetailOutput expenseBeginTime(String expenseBeginTime) {
+  public ListForListAmortizedCostBillDetailOutput expenseBeginTime(String expenseBeginTime) {
     this.expenseBeginTime = expenseBeginTime;
     return this;
   }
@@ -786,25 +876,7 @@ public class ListForListBillDetailOutput {
     this.expenseBeginTime = expenseBeginTime;
   }
 
-  public ListForListBillDetailOutput expenseDate(String expenseDate) {
-    this.expenseDate = expenseDate;
-    return this;
-  }
-
-   /**
-   * Get expenseDate
-   * @return expenseDate
-  **/
-  @Schema(description = "")
-  public String getExpenseDate() {
-    return expenseDate;
-  }
-
-  public void setExpenseDate(String expenseDate) {
-    this.expenseDate = expenseDate;
-  }
-
-  public ListForListBillDetailOutput expenseEndTime(String expenseEndTime) {
+  public ListForListAmortizedCostBillDetailOutput expenseEndTime(String expenseEndTime) {
     this.expenseEndTime = expenseEndTime;
     return this;
   }
@@ -822,7 +894,7 @@ public class ListForListBillDetailOutput {
     this.expenseEndTime = expenseEndTime;
   }
 
-  public ListForListBillDetailOutput factor(String factor) {
+  public ListForListAmortizedCostBillDetailOutput factor(String factor) {
     this.factor = factor;
     return this;
   }
@@ -840,43 +912,7 @@ public class ListForListBillDetailOutput {
     this.factor = factor;
   }
 
-  public ListForListBillDetailOutput factorCode(String factorCode) {
-    this.factorCode = factorCode;
-    return this;
-  }
-
-   /**
-   * Get factorCode
-   * @return factorCode
-  **/
-  @Schema(description = "")
-  public String getFactorCode() {
-    return factorCode;
-  }
-
-  public void setFactorCode(String factorCode) {
-    this.factorCode = factorCode;
-  }
-
-  public ListForListBillDetailOutput formula(String formula) {
-    this.formula = formula;
-    return this;
-  }
-
-   /**
-   * Get formula
-   * @return formula
-  **/
-  @Schema(description = "")
-  public String getFormula() {
-    return formula;
-  }
-
-  public void setFormula(String formula) {
-    this.formula = formula;
-  }
-
-  public ListForListBillDetailOutput instanceName(String instanceName) {
+  public ListForListAmortizedCostBillDetailOutput instanceName(String instanceName) {
     this.instanceName = instanceName;
     return this;
   }
@@ -894,7 +930,7 @@ public class ListForListBillDetailOutput {
     this.instanceName = instanceName;
   }
 
-  public ListForListBillDetailOutput instanceNo(String instanceNo) {
+  public ListForListAmortizedCostBillDetailOutput instanceNo(String instanceNo) {
     this.instanceNo = instanceNo;
     return this;
   }
@@ -912,7 +948,7 @@ public class ListForListBillDetailOutput {
     this.instanceNo = instanceNo;
   }
 
-  public ListForListBillDetailOutput marketPrice(String marketPrice) {
+  public ListForListAmortizedCostBillDetailOutput marketPrice(String marketPrice) {
     this.marketPrice = marketPrice;
     return this;
   }
@@ -930,7 +966,7 @@ public class ListForListBillDetailOutput {
     this.marketPrice = marketPrice;
   }
 
-  public ListForListBillDetailOutput measureInterval(String measureInterval) {
+  public ListForListAmortizedCostBillDetailOutput measureInterval(String measureInterval) {
     this.measureInterval = measureInterval;
     return this;
   }
@@ -948,7 +984,7 @@ public class ListForListBillDetailOutput {
     this.measureInterval = measureInterval;
   }
 
-  public ListForListBillDetailOutput originalBillAmount(String originalBillAmount) {
+  public ListForListAmortizedCostBillDetailOutput originalBillAmount(String originalBillAmount) {
     this.originalBillAmount = originalBillAmount;
     return this;
   }
@@ -966,7 +1002,7 @@ public class ListForListBillDetailOutput {
     this.originalBillAmount = originalBillAmount;
   }
 
-  public ListForListBillDetailOutput ownerCustomerName(String ownerCustomerName) {
+  public ListForListAmortizedCostBillDetailOutput ownerCustomerName(String ownerCustomerName) {
     this.ownerCustomerName = ownerCustomerName;
     return this;
   }
@@ -984,7 +1020,7 @@ public class ListForListBillDetailOutput {
     this.ownerCustomerName = ownerCustomerName;
   }
 
-  public ListForListBillDetailOutput ownerID(String ownerID) {
+  public ListForListAmortizedCostBillDetailOutput ownerID(String ownerID) {
     this.ownerID = ownerID;
     return this;
   }
@@ -1002,7 +1038,7 @@ public class ListForListBillDetailOutput {
     this.ownerID = ownerID;
   }
 
-  public ListForListBillDetailOutput ownerUserName(String ownerUserName) {
+  public ListForListAmortizedCostBillDetailOutput ownerUserName(String ownerUserName) {
     this.ownerUserName = ownerUserName;
     return this;
   }
@@ -1020,7 +1056,7 @@ public class ListForListBillDetailOutput {
     this.ownerUserName = ownerUserName;
   }
 
-  public ListForListBillDetailOutput paidAmount(String paidAmount) {
+  public ListForListAmortizedCostBillDetailOutput paidAmount(String paidAmount) {
     this.paidAmount = paidAmount;
     return this;
   }
@@ -1038,7 +1074,7 @@ public class ListForListBillDetailOutput {
     this.paidAmount = paidAmount;
   }
 
-  public ListForListBillDetailOutput payableAmount(String payableAmount) {
+  public ListForListAmortizedCostBillDetailOutput payableAmount(String payableAmount) {
     this.payableAmount = payableAmount;
     return this;
   }
@@ -1056,7 +1092,7 @@ public class ListForListBillDetailOutput {
     this.payableAmount = payableAmount;
   }
 
-  public ListForListBillDetailOutput payerCustomerName(String payerCustomerName) {
+  public ListForListAmortizedCostBillDetailOutput payerCustomerName(String payerCustomerName) {
     this.payerCustomerName = payerCustomerName;
     return this;
   }
@@ -1074,7 +1110,7 @@ public class ListForListBillDetailOutput {
     this.payerCustomerName = payerCustomerName;
   }
 
-  public ListForListBillDetailOutput payerID(String payerID) {
+  public ListForListAmortizedCostBillDetailOutput payerID(String payerID) {
     this.payerID = payerID;
     return this;
   }
@@ -1092,7 +1128,7 @@ public class ListForListBillDetailOutput {
     this.payerID = payerID;
   }
 
-  public ListForListBillDetailOutput payerUserName(String payerUserName) {
+  public ListForListAmortizedCostBillDetailOutput payerUserName(String payerUserName) {
     this.payerUserName = payerUserName;
     return this;
   }
@@ -1110,25 +1146,7 @@ public class ListForListBillDetailOutput {
     this.payerUserName = payerUserName;
   }
 
-  public ListForListBillDetailOutput posttaxAmount(String posttaxAmount) {
-    this.posttaxAmount = posttaxAmount;
-    return this;
-  }
-
-   /**
-   * Get posttaxAmount
-   * @return posttaxAmount
-  **/
-  @Schema(description = "")
-  public String getPosttaxAmount() {
-    return posttaxAmount;
-  }
-
-  public void setPosttaxAmount(String posttaxAmount) {
-    this.posttaxAmount = posttaxAmount;
-  }
-
-  public ListForListBillDetailOutput preferentialBillAmount(String preferentialBillAmount) {
+  public ListForListAmortizedCostBillDetailOutput preferentialBillAmount(String preferentialBillAmount) {
     this.preferentialBillAmount = preferentialBillAmount;
     return this;
   }
@@ -1146,43 +1164,7 @@ public class ListForListBillDetailOutput {
     this.preferentialBillAmount = preferentialBillAmount;
   }
 
-  public ListForListBillDetailOutput pretaxAmount(String pretaxAmount) {
-    this.pretaxAmount = pretaxAmount;
-    return this;
-  }
-
-   /**
-   * Get pretaxAmount
-   * @return pretaxAmount
-  **/
-  @Schema(description = "")
-  public String getPretaxAmount() {
-    return pretaxAmount;
-  }
-
-  public void setPretaxAmount(String pretaxAmount) {
-    this.pretaxAmount = pretaxAmount;
-  }
-
-  public ListForListBillDetailOutput pretaxRealValue(String pretaxRealValue) {
-    this.pretaxRealValue = pretaxRealValue;
-    return this;
-  }
-
-   /**
-   * Get pretaxRealValue
-   * @return pretaxRealValue
-  **/
-  @Schema(description = "")
-  public String getPretaxRealValue() {
-    return pretaxRealValue;
-  }
-
-  public void setPretaxRealValue(String pretaxRealValue) {
-    this.pretaxRealValue = pretaxRealValue;
-  }
-
-  public ListForListBillDetailOutput price(String price) {
+  public ListForListAmortizedCostBillDetailOutput price(String price) {
     this.price = price;
     return this;
   }
@@ -1200,7 +1182,7 @@ public class ListForListBillDetailOutput {
     this.price = price;
   }
 
-  public ListForListBillDetailOutput priceInterval(String priceInterval) {
+  public ListForListAmortizedCostBillDetailOutput priceInterval(String priceInterval) {
     this.priceInterval = priceInterval;
     return this;
   }
@@ -1218,7 +1200,7 @@ public class ListForListBillDetailOutput {
     this.priceInterval = priceInterval;
   }
 
-  public ListForListBillDetailOutput priceUnit(String priceUnit) {
+  public ListForListAmortizedCostBillDetailOutput priceUnit(String priceUnit) {
     this.priceUnit = priceUnit;
     return this;
   }
@@ -1236,7 +1218,7 @@ public class ListForListBillDetailOutput {
     this.priceUnit = priceUnit;
   }
 
-  public ListForListBillDetailOutput product(String product) {
+  public ListForListAmortizedCostBillDetailOutput product(String product) {
     this.product = product;
     return this;
   }
@@ -1254,7 +1236,7 @@ public class ListForListBillDetailOutput {
     this.product = product;
   }
 
-  public ListForListBillDetailOutput productZh(String productZh) {
+  public ListForListAmortizedCostBillDetailOutput productZh(String productZh) {
     this.productZh = productZh;
     return this;
   }
@@ -1272,7 +1254,7 @@ public class ListForListBillDetailOutput {
     this.productZh = productZh;
   }
 
-  public ListForListBillDetailOutput project(String project) {
+  public ListForListAmortizedCostBillDetailOutput project(String project) {
     this.project = project;
     return this;
   }
@@ -1290,7 +1272,7 @@ public class ListForListBillDetailOutput {
     this.project = project;
   }
 
-  public ListForListBillDetailOutput projectDisplayName(String projectDisplayName) {
+  public ListForListAmortizedCostBillDetailOutput projectDisplayName(String projectDisplayName) {
     this.projectDisplayName = projectDisplayName;
     return this;
   }
@@ -1308,25 +1290,7 @@ public class ListForListBillDetailOutput {
     this.projectDisplayName = projectDisplayName;
   }
 
-  public ListForListBillDetailOutput realValue(String realValue) {
-    this.realValue = realValue;
-    return this;
-  }
-
-   /**
-   * Get realValue
-   * @return realValue
-  **/
-  @Schema(description = "")
-  public String getRealValue() {
-    return realValue;
-  }
-
-  public void setRealValue(String realValue) {
-    this.realValue = realValue;
-  }
-
-  public ListForListBillDetailOutput region(String region) {
+  public ListForListAmortizedCostBillDetailOutput region(String region) {
     this.region = region;
     return this;
   }
@@ -1344,43 +1308,7 @@ public class ListForListBillDetailOutput {
     this.region = region;
   }
 
-  public ListForListBillDetailOutput regionCode(String regionCode) {
-    this.regionCode = regionCode;
-    return this;
-  }
-
-   /**
-   * Get regionCode
-   * @return regionCode
-  **/
-  @Schema(description = "")
-  public String getRegionCode() {
-    return regionCode;
-  }
-
-  public void setRegionCode(String regionCode) {
-    this.regionCode = regionCode;
-  }
-
-  public ListForListBillDetailOutput reservationInstance(String reservationInstance) {
-    this.reservationInstance = reservationInstance;
-    return this;
-  }
-
-   /**
-   * Get reservationInstance
-   * @return reservationInstance
-  **/
-  @Schema(description = "")
-  public String getReservationInstance() {
-    return reservationInstance;
-  }
-
-  public void setReservationInstance(String reservationInstance) {
-    this.reservationInstance = reservationInstance;
-  }
-
-  public ListForListBillDetailOutput roundAmount(Double roundAmount) {
+  public ListForListAmortizedCostBillDetailOutput roundAmount(String roundAmount) {
     this.roundAmount = roundAmount;
     return this;
   }
@@ -1390,15 +1318,15 @@ public class ListForListBillDetailOutput {
    * @return roundAmount
   **/
   @Schema(description = "")
-  public Double getRoundAmount() {
+  public String getRoundAmount() {
     return roundAmount;
   }
 
-  public void setRoundAmount(Double roundAmount) {
+  public void setRoundAmount(String roundAmount) {
     this.roundAmount = roundAmount;
   }
 
-  public ListForListBillDetailOutput sellerCustomerName(String sellerCustomerName) {
+  public ListForListAmortizedCostBillDetailOutput sellerCustomerName(String sellerCustomerName) {
     this.sellerCustomerName = sellerCustomerName;
     return this;
   }
@@ -1416,7 +1344,7 @@ public class ListForListBillDetailOutput {
     this.sellerCustomerName = sellerCustomerName;
   }
 
-  public ListForListBillDetailOutput sellerID(String sellerID) {
+  public ListForListAmortizedCostBillDetailOutput sellerID(String sellerID) {
     this.sellerID = sellerID;
     return this;
   }
@@ -1434,7 +1362,7 @@ public class ListForListBillDetailOutput {
     this.sellerID = sellerID;
   }
 
-  public ListForListBillDetailOutput sellerUserName(String sellerUserName) {
+  public ListForListAmortizedCostBillDetailOutput sellerUserName(String sellerUserName) {
     this.sellerUserName = sellerUserName;
     return this;
   }
@@ -1452,151 +1380,43 @@ public class ListForListBillDetailOutput {
     this.sellerUserName = sellerUserName;
   }
 
-  public ListForListBillDetailOutput sellingMode(String sellingMode) {
-    this.sellingMode = sellingMode;
+  public ListForListAmortizedCostBillDetailOutput splitItemID(String splitItemID) {
+    this.splitItemID = splitItemID;
     return this;
   }
 
    /**
-   * Get sellingMode
-   * @return sellingMode
+   * Get splitItemID
+   * @return splitItemID
   **/
   @Schema(description = "")
-  public String getSellingMode() {
-    return sellingMode;
+  public String getSplitItemID() {
+    return splitItemID;
   }
 
-  public void setSellingMode(String sellingMode) {
-    this.sellingMode = sellingMode;
+  public void setSplitItemID(String splitItemID) {
+    this.splitItemID = splitItemID;
   }
 
-  public ListForListBillDetailOutput settlePosttaxAmount(String settlePosttaxAmount) {
-    this.settlePosttaxAmount = settlePosttaxAmount;
+  public ListForListAmortizedCostBillDetailOutput splitItemName(String splitItemName) {
+    this.splitItemName = splitItemName;
     return this;
   }
 
    /**
-   * Get settlePosttaxAmount
-   * @return settlePosttaxAmount
+   * Get splitItemName
+   * @return splitItemName
   **/
   @Schema(description = "")
-  public String getSettlePosttaxAmount() {
-    return settlePosttaxAmount;
+  public String getSplitItemName() {
+    return splitItemName;
   }
 
-  public void setSettlePosttaxAmount(String settlePosttaxAmount) {
-    this.settlePosttaxAmount = settlePosttaxAmount;
+  public void setSplitItemName(String splitItemName) {
+    this.splitItemName = splitItemName;
   }
 
-  public ListForListBillDetailOutput settlePretaxAmount(String settlePretaxAmount) {
-    this.settlePretaxAmount = settlePretaxAmount;
-    return this;
-  }
-
-   /**
-   * Get settlePretaxAmount
-   * @return settlePretaxAmount
-  **/
-  @Schema(description = "")
-  public String getSettlePretaxAmount() {
-    return settlePretaxAmount;
-  }
-
-  public void setSettlePretaxAmount(String settlePretaxAmount) {
-    this.settlePretaxAmount = settlePretaxAmount;
-  }
-
-  public ListForListBillDetailOutput settlePretaxRealValue(String settlePretaxRealValue) {
-    this.settlePretaxRealValue = settlePretaxRealValue;
-    return this;
-  }
-
-   /**
-   * Get settlePretaxRealValue
-   * @return settlePretaxRealValue
-  **/
-  @Schema(description = "")
-  public String getSettlePretaxRealValue() {
-    return settlePretaxRealValue;
-  }
-
-  public void setSettlePretaxRealValue(String settlePretaxRealValue) {
-    this.settlePretaxRealValue = settlePretaxRealValue;
-  }
-
-  public ListForListBillDetailOutput settleRealValue(String settleRealValue) {
-    this.settleRealValue = settleRealValue;
-    return this;
-  }
-
-   /**
-   * Get settleRealValue
-   * @return settleRealValue
-  **/
-  @Schema(description = "")
-  public String getSettleRealValue() {
-    return settleRealValue;
-  }
-
-  public void setSettleRealValue(String settleRealValue) {
-    this.settleRealValue = settleRealValue;
-  }
-
-  public ListForListBillDetailOutput settleTax(String settleTax) {
-    this.settleTax = settleTax;
-    return this;
-  }
-
-   /**
-   * Get settleTax
-   * @return settleTax
-  **/
-  @Schema(description = "")
-  public String getSettleTax() {
-    return settleTax;
-  }
-
-  public void setSettleTax(String settleTax) {
-    this.settleTax = settleTax;
-  }
-
-  public ListForListBillDetailOutput settlementType(String settlementType) {
-    this.settlementType = settlementType;
-    return this;
-  }
-
-   /**
-   * Get settlementType
-   * @return settlementType
-  **/
-  @Schema(description = "")
-  public String getSettlementType() {
-    return settlementType;
-  }
-
-  public void setSettlementType(String settlementType) {
-    this.settlementType = settlementType;
-  }
-
-  public ListForListBillDetailOutput solutionZh(String solutionZh) {
-    this.solutionZh = solutionZh;
-    return this;
-  }
-
-   /**
-   * Get solutionZh
-   * @return solutionZh
-  **/
-  @Schema(description = "")
-  public String getSolutionZh() {
-    return solutionZh;
-  }
-
-  public void setSolutionZh(String solutionZh) {
-    this.solutionZh = solutionZh;
-  }
-
-  public ListForListBillDetailOutput subjectName(String subjectName) {
+  public ListForListAmortizedCostBillDetailOutput subjectName(String subjectName) {
     this.subjectName = subjectName;
     return this;
   }
@@ -1614,7 +1434,7 @@ public class ListForListBillDetailOutput {
     this.subjectName = subjectName;
   }
 
-  public ListForListBillDetailOutput tag(String tag) {
+  public ListForListAmortizedCostBillDetailOutput tag(String tag) {
     this.tag = tag;
     return this;
   }
@@ -1632,43 +1452,7 @@ public class ListForListBillDetailOutput {
     this.tag = tag;
   }
 
-  public ListForListBillDetailOutput tax(String tax) {
-    this.tax = tax;
-    return this;
-  }
-
-   /**
-   * Get tax
-   * @return tax
-  **/
-  @Schema(description = "")
-  public String getTax() {
-    return tax;
-  }
-
-  public void setTax(String tax) {
-    this.tax = tax;
-  }
-
-  public ListForListBillDetailOutput taxRate(String taxRate) {
-    this.taxRate = taxRate;
-    return this;
-  }
-
-   /**
-   * Get taxRate
-   * @return taxRate
-  **/
-  @Schema(description = "")
-  public String getTaxRate() {
-    return taxRate;
-  }
-
-  public void setTaxRate(String taxRate) {
-    this.taxRate = taxRate;
-  }
-
-  public ListForListBillDetailOutput tradeTime(String tradeTime) {
+  public ListForListAmortizedCostBillDetailOutput tradeTime(String tradeTime) {
     this.tradeTime = tradeTime;
     return this;
   }
@@ -1686,7 +1470,7 @@ public class ListForListBillDetailOutput {
     this.tradeTime = tradeTime;
   }
 
-  public ListForListBillDetailOutput unit(String unit) {
+  public ListForListAmortizedCostBillDetailOutput unit(String unit) {
     this.unit = unit;
     return this;
   }
@@ -1704,25 +1488,7 @@ public class ListForListBillDetailOutput {
     this.unit = unit;
   }
 
-  public ListForListBillDetailOutput unpaidAmount(String unpaidAmount) {
-    this.unpaidAmount = unpaidAmount;
-    return this;
-  }
-
-   /**
-   * Get unpaidAmount
-   * @return unpaidAmount
-  **/
-  @Schema(description = "")
-  public String getUnpaidAmount() {
-    return unpaidAmount;
-  }
-
-  public void setUnpaidAmount(String unpaidAmount) {
-    this.unpaidAmount = unpaidAmount;
-  }
-
-  public ListForListBillDetailOutput useDuration(String useDuration) {
+  public ListForListAmortizedCostBillDetailOutput useDuration(String useDuration) {
     this.useDuration = useDuration;
     return this;
   }
@@ -1740,7 +1506,7 @@ public class ListForListBillDetailOutput {
     this.useDuration = useDuration;
   }
 
-  public ListForListBillDetailOutput useDurationUnit(String useDurationUnit) {
+  public ListForListAmortizedCostBillDetailOutput useDurationUnit(String useDurationUnit) {
     this.useDurationUnit = useDurationUnit;
     return this;
   }
@@ -1758,7 +1524,7 @@ public class ListForListBillDetailOutput {
     this.useDurationUnit = useDurationUnit;
   }
 
-  public ListForListBillDetailOutput zone(String zone) {
+  public ListForListAmortizedCostBillDetailOutput zone(String zone) {
     this.zone = zone;
     return this;
   }
@@ -1776,24 +1542,6 @@ public class ListForListBillDetailOutput {
     this.zone = zone;
   }
 
-  public ListForListBillDetailOutput zoneCode(String zoneCode) {
-    this.zoneCode = zoneCode;
-    return this;
-  }
-
-   /**
-   * Get zoneCode
-   * @return zoneCode
-  **/
-  @Schema(description = "")
-  public String getZoneCode() {
-    return zoneCode;
-  }
-
-  public void setZoneCode(String zoneCode) {
-    this.zoneCode = zoneCode;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -1803,106 +1551,98 @@ public class ListForListBillDetailOutput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListForListBillDetailOutput listForListBillDetailOutput = (ListForListBillDetailOutput) o;
-    return Objects.equals(this.billCategory, listForListBillDetailOutput.billCategory) &&
-        Objects.equals(this.billDetailId, listForListBillDetailOutput.billDetailId) &&
-        Objects.equals(this.billID, listForListBillDetailOutput.billID) &&
-        Objects.equals(this.billPeriod, listForListBillDetailOutput.billPeriod) &&
-        Objects.equals(this.billingFunction, listForListBillDetailOutput.billingFunction) &&
-        Objects.equals(this.billingMethodCode, listForListBillDetailOutput.billingMethodCode) &&
-        Objects.equals(this.billingMode, listForListBillDetailOutput.billingMode) &&
-        Objects.equals(this.busiPeriod, listForListBillDetailOutput.busiPeriod) &&
-        Objects.equals(this.businessMode, listForListBillDetailOutput.businessMode) &&
-        Objects.equals(this.configName, listForListBillDetailOutput.configName) &&
-        Objects.equals(this.configurationCode, listForListBillDetailOutput.configurationCode) &&
-        Objects.equals(this.count, listForListBillDetailOutput.count) &&
-        Objects.equals(this.countryRegion, listForListBillDetailOutput.countryRegion) &&
-        Objects.equals(this.couponAmount, listForListBillDetailOutput.couponAmount) &&
-        Objects.equals(this.creditCarriedAmount, listForListBillDetailOutput.creditCarriedAmount) &&
-        Objects.equals(this.currency, listForListBillDetailOutput.currency) &&
-        Objects.equals(this.deductionCount, listForListBillDetailOutput.deductionCount) &&
-        Objects.equals(this.deductionUseDuration, listForListBillDetailOutput.deductionUseDuration) &&
-        Objects.equals(this.discountBillAmount, listForListBillDetailOutput.discountBillAmount) &&
-        Objects.equals(this.discountBizBillingFunction, listForListBillDetailOutput.discountBizBillingFunction) &&
-        Objects.equals(this.discountBizMeasureInterval, listForListBillDetailOutput.discountBizMeasureInterval) &&
-        Objects.equals(this.discountBizUnitPrice, listForListBillDetailOutput.discountBizUnitPrice) &&
-        Objects.equals(this.discountBizUnitPriceInterval, listForListBillDetailOutput.discountBizUnitPriceInterval) &&
-        Objects.equals(this.effectiveFactor, listForListBillDetailOutput.effectiveFactor) &&
-        Objects.equals(this.element, listForListBillDetailOutput.element) &&
-        Objects.equals(this.elementCode, listForListBillDetailOutput.elementCode) &&
-        Objects.equals(this.expandField, listForListBillDetailOutput.expandField) &&
-        Objects.equals(this.expenseBeginTime, listForListBillDetailOutput.expenseBeginTime) &&
-        Objects.equals(this.expenseDate, listForListBillDetailOutput.expenseDate) &&
-        Objects.equals(this.expenseEndTime, listForListBillDetailOutput.expenseEndTime) &&
-        Objects.equals(this.factor, listForListBillDetailOutput.factor) &&
-        Objects.equals(this.factorCode, listForListBillDetailOutput.factorCode) &&
-        Objects.equals(this.formula, listForListBillDetailOutput.formula) &&
-        Objects.equals(this.instanceName, listForListBillDetailOutput.instanceName) &&
-        Objects.equals(this.instanceNo, listForListBillDetailOutput.instanceNo) &&
-        Objects.equals(this.marketPrice, listForListBillDetailOutput.marketPrice) &&
-        Objects.equals(this.measureInterval, listForListBillDetailOutput.measureInterval) &&
-        Objects.equals(this.originalBillAmount, listForListBillDetailOutput.originalBillAmount) &&
-        Objects.equals(this.ownerCustomerName, listForListBillDetailOutput.ownerCustomerName) &&
-        Objects.equals(this.ownerID, listForListBillDetailOutput.ownerID) &&
-        Objects.equals(this.ownerUserName, listForListBillDetailOutput.ownerUserName) &&
-        Objects.equals(this.paidAmount, listForListBillDetailOutput.paidAmount) &&
-        Objects.equals(this.payableAmount, listForListBillDetailOutput.payableAmount) &&
-        Objects.equals(this.payerCustomerName, listForListBillDetailOutput.payerCustomerName) &&
-        Objects.equals(this.payerID, listForListBillDetailOutput.payerID) &&
-        Objects.equals(this.payerUserName, listForListBillDetailOutput.payerUserName) &&
-        Objects.equals(this.posttaxAmount, listForListBillDetailOutput.posttaxAmount) &&
-        Objects.equals(this.preferentialBillAmount, listForListBillDetailOutput.preferentialBillAmount) &&
-        Objects.equals(this.pretaxAmount, listForListBillDetailOutput.pretaxAmount) &&
-        Objects.equals(this.pretaxRealValue, listForListBillDetailOutput.pretaxRealValue) &&
-        Objects.equals(this.price, listForListBillDetailOutput.price) &&
-        Objects.equals(this.priceInterval, listForListBillDetailOutput.priceInterval) &&
-        Objects.equals(this.priceUnit, listForListBillDetailOutput.priceUnit) &&
-        Objects.equals(this.product, listForListBillDetailOutput.product) &&
-        Objects.equals(this.productZh, listForListBillDetailOutput.productZh) &&
-        Objects.equals(this.project, listForListBillDetailOutput.project) &&
-        Objects.equals(this.projectDisplayName, listForListBillDetailOutput.projectDisplayName) &&
-        Objects.equals(this.realValue, listForListBillDetailOutput.realValue) &&
-        Objects.equals(this.region, listForListBillDetailOutput.region) &&
-        Objects.equals(this.regionCode, listForListBillDetailOutput.regionCode) &&
-        Objects.equals(this.reservationInstance, listForListBillDetailOutput.reservationInstance) &&
-        Objects.equals(this.roundAmount, listForListBillDetailOutput.roundAmount) &&
-        Objects.equals(this.sellerCustomerName, listForListBillDetailOutput.sellerCustomerName) &&
-        Objects.equals(this.sellerID, listForListBillDetailOutput.sellerID) &&
-        Objects.equals(this.sellerUserName, listForListBillDetailOutput.sellerUserName) &&
-        Objects.equals(this.sellingMode, listForListBillDetailOutput.sellingMode) &&
-        Objects.equals(this.settlePosttaxAmount, listForListBillDetailOutput.settlePosttaxAmount) &&
-        Objects.equals(this.settlePretaxAmount, listForListBillDetailOutput.settlePretaxAmount) &&
-        Objects.equals(this.settlePretaxRealValue, listForListBillDetailOutput.settlePretaxRealValue) &&
-        Objects.equals(this.settleRealValue, listForListBillDetailOutput.settleRealValue) &&
-        Objects.equals(this.settleTax, listForListBillDetailOutput.settleTax) &&
-        Objects.equals(this.settlementType, listForListBillDetailOutput.settlementType) &&
-        Objects.equals(this.solutionZh, listForListBillDetailOutput.solutionZh) &&
-        Objects.equals(this.subjectName, listForListBillDetailOutput.subjectName) &&
-        Objects.equals(this.tag, listForListBillDetailOutput.tag) &&
-        Objects.equals(this.tax, listForListBillDetailOutput.tax) &&
-        Objects.equals(this.taxRate, listForListBillDetailOutput.taxRate) &&
-        Objects.equals(this.tradeTime, listForListBillDetailOutput.tradeTime) &&
-        Objects.equals(this.unit, listForListBillDetailOutput.unit) &&
-        Objects.equals(this.unpaidAmount, listForListBillDetailOutput.unpaidAmount) &&
-        Objects.equals(this.useDuration, listForListBillDetailOutput.useDuration) &&
-        Objects.equals(this.useDurationUnit, listForListBillDetailOutput.useDurationUnit) &&
-        Objects.equals(this.zone, listForListBillDetailOutput.zone) &&
-        Objects.equals(this.zoneCode, listForListBillDetailOutput.zoneCode);
+    ListForListAmortizedCostBillDetailOutput listForListAmortizedCostBillDetailOutput = (ListForListAmortizedCostBillDetailOutput) o;
+    return Objects.equals(this.amortizedBeginTime, listForListAmortizedCostBillDetailOutput.amortizedBeginTime) &&
+        Objects.equals(this.amortizedDay, listForListAmortizedCostBillDetailOutput.amortizedDay) &&
+        Objects.equals(this.amortizedEndTime, listForListAmortizedCostBillDetailOutput.amortizedEndTime) &&
+        Objects.equals(this.amortizedMonth, listForListAmortizedCostBillDetailOutput.amortizedMonth) &&
+        Objects.equals(this.amortizedType, listForListAmortizedCostBillDetailOutput.amortizedType) &&
+        Objects.equals(this.billCategory, listForListAmortizedCostBillDetailOutput.billCategory) &&
+        Objects.equals(this.billID, listForListAmortizedCostBillDetailOutput.billID) &&
+        Objects.equals(this.billPeriod, listForListAmortizedCostBillDetailOutput.billPeriod) &&
+        Objects.equals(this.billingFunction, listForListAmortizedCostBillDetailOutput.billingFunction) &&
+        Objects.equals(this.billingMethodCode, listForListAmortizedCostBillDetailOutput.billingMethodCode) &&
+        Objects.equals(this.billingMode, listForListAmortizedCostBillDetailOutput.billingMode) &&
+        Objects.equals(this.busiPeriod, listForListAmortizedCostBillDetailOutput.busiPeriod) &&
+        Objects.equals(this.businessMode, listForListAmortizedCostBillDetailOutput.businessMode) &&
+        Objects.equals(this.configName, listForListAmortizedCostBillDetailOutput.configName) &&
+        Objects.equals(this.costID, listForListAmortizedCostBillDetailOutput.costID) &&
+        Objects.equals(this.count, listForListAmortizedCostBillDetailOutput.count) &&
+        Objects.equals(this.couponAmount, listForListAmortizedCostBillDetailOutput.couponAmount) &&
+        Objects.equals(this.currency, listForListAmortizedCostBillDetailOutput.currency) &&
+        Objects.equals(this.dailyAmortizedCouponAmount, listForListAmortizedCostBillDetailOutput.dailyAmortizedCouponAmount) &&
+        Objects.equals(this.dailyAmortizedDiscountBillAmount, listForListAmortizedCostBillDetailOutput.dailyAmortizedDiscountBillAmount) &&
+        Objects.equals(this.dailyAmortizedOriginalBillAmount, listForListAmortizedCostBillDetailOutput.dailyAmortizedOriginalBillAmount) &&
+        Objects.equals(this.dailyAmortizedPaidAmount, listForListAmortizedCostBillDetailOutput.dailyAmortizedPaidAmount) &&
+        Objects.equals(this.dailyAmortizedPayableAmount, listForListAmortizedCostBillDetailOutput.dailyAmortizedPayableAmount) &&
+        Objects.equals(this.dailyAmortizedPreferentialBillAmount, listForListAmortizedCostBillDetailOutput.dailyAmortizedPreferentialBillAmount) &&
+        Objects.equals(this.dailyAmortizedRoundAmount, listForListAmortizedCostBillDetailOutput.dailyAmortizedRoundAmount) &&
+        Objects.equals(this.deductionUseDuration, listForListAmortizedCostBillDetailOutput.deductionUseDuration) &&
+        Objects.equals(this.discountBillAmount, listForListAmortizedCostBillDetailOutput.discountBillAmount) &&
+        Objects.equals(this.discountBizBillingFunction, listForListAmortizedCostBillDetailOutput.discountBizBillingFunction) &&
+        Objects.equals(this.discountBizMeasureInterval, listForListAmortizedCostBillDetailOutput.discountBizMeasureInterval) &&
+        Objects.equals(this.discountBizUnitPrice, listForListAmortizedCostBillDetailOutput.discountBizUnitPrice) &&
+        Objects.equals(this.discountBizUnitPriceInterval, listForListAmortizedCostBillDetailOutput.discountBizUnitPriceInterval) &&
+        Objects.equals(this.effectiveFactor, listForListAmortizedCostBillDetailOutput.effectiveFactor) &&
+        Objects.equals(this.element, listForListAmortizedCostBillDetailOutput.element) &&
+        Objects.equals(this.expandField, listForListAmortizedCostBillDetailOutput.expandField) &&
+        Objects.equals(this.expenseBeginTime, listForListAmortizedCostBillDetailOutput.expenseBeginTime) &&
+        Objects.equals(this.expenseEndTime, listForListAmortizedCostBillDetailOutput.expenseEndTime) &&
+        Objects.equals(this.factor, listForListAmortizedCostBillDetailOutput.factor) &&
+        Objects.equals(this.instanceName, listForListAmortizedCostBillDetailOutput.instanceName) &&
+        Objects.equals(this.instanceNo, listForListAmortizedCostBillDetailOutput.instanceNo) &&
+        Objects.equals(this.marketPrice, listForListAmortizedCostBillDetailOutput.marketPrice) &&
+        Objects.equals(this.measureInterval, listForListAmortizedCostBillDetailOutput.measureInterval) &&
+        Objects.equals(this.originalBillAmount, listForListAmortizedCostBillDetailOutput.originalBillAmount) &&
+        Objects.equals(this.ownerCustomerName, listForListAmortizedCostBillDetailOutput.ownerCustomerName) &&
+        Objects.equals(this.ownerID, listForListAmortizedCostBillDetailOutput.ownerID) &&
+        Objects.equals(this.ownerUserName, listForListAmortizedCostBillDetailOutput.ownerUserName) &&
+        Objects.equals(this.paidAmount, listForListAmortizedCostBillDetailOutput.paidAmount) &&
+        Objects.equals(this.payableAmount, listForListAmortizedCostBillDetailOutput.payableAmount) &&
+        Objects.equals(this.payerCustomerName, listForListAmortizedCostBillDetailOutput.payerCustomerName) &&
+        Objects.equals(this.payerID, listForListAmortizedCostBillDetailOutput.payerID) &&
+        Objects.equals(this.payerUserName, listForListAmortizedCostBillDetailOutput.payerUserName) &&
+        Objects.equals(this.preferentialBillAmount, listForListAmortizedCostBillDetailOutput.preferentialBillAmount) &&
+        Objects.equals(this.price, listForListAmortizedCostBillDetailOutput.price) &&
+        Objects.equals(this.priceInterval, listForListAmortizedCostBillDetailOutput.priceInterval) &&
+        Objects.equals(this.priceUnit, listForListAmortizedCostBillDetailOutput.priceUnit) &&
+        Objects.equals(this.product, listForListAmortizedCostBillDetailOutput.product) &&
+        Objects.equals(this.productZh, listForListAmortizedCostBillDetailOutput.productZh) &&
+        Objects.equals(this.project, listForListAmortizedCostBillDetailOutput.project) &&
+        Objects.equals(this.projectDisplayName, listForListAmortizedCostBillDetailOutput.projectDisplayName) &&
+        Objects.equals(this.region, listForListAmortizedCostBillDetailOutput.region) &&
+        Objects.equals(this.roundAmount, listForListAmortizedCostBillDetailOutput.roundAmount) &&
+        Objects.equals(this.sellerCustomerName, listForListAmortizedCostBillDetailOutput.sellerCustomerName) &&
+        Objects.equals(this.sellerID, listForListAmortizedCostBillDetailOutput.sellerID) &&
+        Objects.equals(this.sellerUserName, listForListAmortizedCostBillDetailOutput.sellerUserName) &&
+        Objects.equals(this.splitItemID, listForListAmortizedCostBillDetailOutput.splitItemID) &&
+        Objects.equals(this.splitItemName, listForListAmortizedCostBillDetailOutput.splitItemName) &&
+        Objects.equals(this.subjectName, listForListAmortizedCostBillDetailOutput.subjectName) &&
+        Objects.equals(this.tag, listForListAmortizedCostBillDetailOutput.tag) &&
+        Objects.equals(this.tradeTime, listForListAmortizedCostBillDetailOutput.tradeTime) &&
+        Objects.equals(this.unit, listForListAmortizedCostBillDetailOutput.unit) &&
+        Objects.equals(this.useDuration, listForListAmortizedCostBillDetailOutput.useDuration) &&
+        Objects.equals(this.useDurationUnit, listForListAmortizedCostBillDetailOutput.useDurationUnit) &&
+        Objects.equals(this.zone, listForListAmortizedCostBillDetailOutput.zone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategory, billDetailId, billID, billPeriod, billingFunction, billingMethodCode, billingMode, busiPeriod, businessMode, configName, configurationCode, count, countryRegion, couponAmount, creditCarriedAmount, currency, deductionCount, deductionUseDuration, discountBillAmount, discountBizBillingFunction, discountBizMeasureInterval, discountBizUnitPrice, discountBizUnitPriceInterval, effectiveFactor, element, elementCode, expandField, expenseBeginTime, expenseDate, expenseEndTime, factor, factorCode, formula, instanceName, instanceNo, marketPrice, measureInterval, originalBillAmount, ownerCustomerName, ownerID, ownerUserName, paidAmount, payableAmount, payerCustomerName, payerID, payerUserName, posttaxAmount, preferentialBillAmount, pretaxAmount, pretaxRealValue, price, priceInterval, priceUnit, product, productZh, project, projectDisplayName, realValue, region, regionCode, reservationInstance, roundAmount, sellerCustomerName, sellerID, sellerUserName, sellingMode, settlePosttaxAmount, settlePretaxAmount, settlePretaxRealValue, settleRealValue, settleTax, settlementType, solutionZh, subjectName, tag, tax, taxRate, tradeTime, unit, unpaidAmount, useDuration, useDurationUnit, zone, zoneCode);
+    return Objects.hash(amortizedBeginTime, amortizedDay, amortizedEndTime, amortizedMonth, amortizedType, billCategory, billID, billPeriod, billingFunction, billingMethodCode, billingMode, busiPeriod, businessMode, configName, costID, count, couponAmount, currency, dailyAmortizedCouponAmount, dailyAmortizedDiscountBillAmount, dailyAmortizedOriginalBillAmount, dailyAmortizedPaidAmount, dailyAmortizedPayableAmount, dailyAmortizedPreferentialBillAmount, dailyAmortizedRoundAmount, deductionUseDuration, discountBillAmount, discountBizBillingFunction, discountBizMeasureInterval, discountBizUnitPrice, discountBizUnitPriceInterval, effectiveFactor, element, expandField, expenseBeginTime, expenseEndTime, factor, instanceName, instanceNo, marketPrice, measureInterval, originalBillAmount, ownerCustomerName, ownerID, ownerUserName, paidAmount, payableAmount, payerCustomerName, payerID, payerUserName, preferentialBillAmount, price, priceInterval, priceUnit, product, productZh, project, projectDisplayName, region, roundAmount, sellerCustomerName, sellerID, sellerUserName, splitItemID, splitItemName, subjectName, tag, tradeTime, unit, useDuration, useDurationUnit, zone);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListForListBillDetailOutput {\n");
+    sb.append("class ListForListAmortizedCostBillDetailOutput {\n");
     
+    sb.append("    amortizedBeginTime: ").append(toIndentedString(amortizedBeginTime)).append("\n");
+    sb.append("    amortizedDay: ").append(toIndentedString(amortizedDay)).append("\n");
+    sb.append("    amortizedEndTime: ").append(toIndentedString(amortizedEndTime)).append("\n");
+    sb.append("    amortizedMonth: ").append(toIndentedString(amortizedMonth)).append("\n");
+    sb.append("    amortizedType: ").append(toIndentedString(amortizedType)).append("\n");
     sb.append("    billCategory: ").append(toIndentedString(billCategory)).append("\n");
-    sb.append("    billDetailId: ").append(toIndentedString(billDetailId)).append("\n");
     sb.append("    billID: ").append(toIndentedString(billID)).append("\n");
     sb.append("    billPeriod: ").append(toIndentedString(billPeriod)).append("\n");
     sb.append("    billingFunction: ").append(toIndentedString(billingFunction)).append("\n");
@@ -1911,13 +1651,17 @@ public class ListForListBillDetailOutput {
     sb.append("    busiPeriod: ").append(toIndentedString(busiPeriod)).append("\n");
     sb.append("    businessMode: ").append(toIndentedString(businessMode)).append("\n");
     sb.append("    configName: ").append(toIndentedString(configName)).append("\n");
-    sb.append("    configurationCode: ").append(toIndentedString(configurationCode)).append("\n");
+    sb.append("    costID: ").append(toIndentedString(costID)).append("\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
-    sb.append("    countryRegion: ").append(toIndentedString(countryRegion)).append("\n");
     sb.append("    couponAmount: ").append(toIndentedString(couponAmount)).append("\n");
-    sb.append("    creditCarriedAmount: ").append(toIndentedString(creditCarriedAmount)).append("\n");
     sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
-    sb.append("    deductionCount: ").append(toIndentedString(deductionCount)).append("\n");
+    sb.append("    dailyAmortizedCouponAmount: ").append(toIndentedString(dailyAmortizedCouponAmount)).append("\n");
+    sb.append("    dailyAmortizedDiscountBillAmount: ").append(toIndentedString(dailyAmortizedDiscountBillAmount)).append("\n");
+    sb.append("    dailyAmortizedOriginalBillAmount: ").append(toIndentedString(dailyAmortizedOriginalBillAmount)).append("\n");
+    sb.append("    dailyAmortizedPaidAmount: ").append(toIndentedString(dailyAmortizedPaidAmount)).append("\n");
+    sb.append("    dailyAmortizedPayableAmount: ").append(toIndentedString(dailyAmortizedPayableAmount)).append("\n");
+    sb.append("    dailyAmortizedPreferentialBillAmount: ").append(toIndentedString(dailyAmortizedPreferentialBillAmount)).append("\n");
+    sb.append("    dailyAmortizedRoundAmount: ").append(toIndentedString(dailyAmortizedRoundAmount)).append("\n");
     sb.append("    deductionUseDuration: ").append(toIndentedString(deductionUseDuration)).append("\n");
     sb.append("    discountBillAmount: ").append(toIndentedString(discountBillAmount)).append("\n");
     sb.append("    discountBizBillingFunction: ").append(toIndentedString(discountBizBillingFunction)).append("\n");
@@ -1926,14 +1670,10 @@ public class ListForListBillDetailOutput {
     sb.append("    discountBizUnitPriceInterval: ").append(toIndentedString(discountBizUnitPriceInterval)).append("\n");
     sb.append("    effectiveFactor: ").append(toIndentedString(effectiveFactor)).append("\n");
     sb.append("    element: ").append(toIndentedString(element)).append("\n");
-    sb.append("    elementCode: ").append(toIndentedString(elementCode)).append("\n");
     sb.append("    expandField: ").append(toIndentedString(expandField)).append("\n");
     sb.append("    expenseBeginTime: ").append(toIndentedString(expenseBeginTime)).append("\n");
-    sb.append("    expenseDate: ").append(toIndentedString(expenseDate)).append("\n");
     sb.append("    expenseEndTime: ").append(toIndentedString(expenseEndTime)).append("\n");
     sb.append("    factor: ").append(toIndentedString(factor)).append("\n");
-    sb.append("    factorCode: ").append(toIndentedString(factorCode)).append("\n");
-    sb.append("    formula: ").append(toIndentedString(formula)).append("\n");
     sb.append("    instanceName: ").append(toIndentedString(instanceName)).append("\n");
     sb.append("    instanceNo: ").append(toIndentedString(instanceNo)).append("\n");
     sb.append("    marketPrice: ").append(toIndentedString(marketPrice)).append("\n");
@@ -1947,10 +1687,7 @@ public class ListForListBillDetailOutput {
     sb.append("    payerCustomerName: ").append(toIndentedString(payerCustomerName)).append("\n");
     sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    payerUserName: ").append(toIndentedString(payerUserName)).append("\n");
-    sb.append("    posttaxAmount: ").append(toIndentedString(posttaxAmount)).append("\n");
     sb.append("    preferentialBillAmount: ").append(toIndentedString(preferentialBillAmount)).append("\n");
-    sb.append("    pretaxAmount: ").append(toIndentedString(pretaxAmount)).append("\n");
-    sb.append("    pretaxRealValue: ").append(toIndentedString(pretaxRealValue)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("    priceInterval: ").append(toIndentedString(priceInterval)).append("\n");
     sb.append("    priceUnit: ").append(toIndentedString(priceUnit)).append("\n");
@@ -1958,33 +1695,20 @@ public class ListForListBillDetailOutput {
     sb.append("    productZh: ").append(toIndentedString(productZh)).append("\n");
     sb.append("    project: ").append(toIndentedString(project)).append("\n");
     sb.append("    projectDisplayName: ").append(toIndentedString(projectDisplayName)).append("\n");
-    sb.append("    realValue: ").append(toIndentedString(realValue)).append("\n");
     sb.append("    region: ").append(toIndentedString(region)).append("\n");
-    sb.append("    regionCode: ").append(toIndentedString(regionCode)).append("\n");
-    sb.append("    reservationInstance: ").append(toIndentedString(reservationInstance)).append("\n");
     sb.append("    roundAmount: ").append(toIndentedString(roundAmount)).append("\n");
     sb.append("    sellerCustomerName: ").append(toIndentedString(sellerCustomerName)).append("\n");
     sb.append("    sellerID: ").append(toIndentedString(sellerID)).append("\n");
     sb.append("    sellerUserName: ").append(toIndentedString(sellerUserName)).append("\n");
-    sb.append("    sellingMode: ").append(toIndentedString(sellingMode)).append("\n");
-    sb.append("    settlePosttaxAmount: ").append(toIndentedString(settlePosttaxAmount)).append("\n");
-    sb.append("    settlePretaxAmount: ").append(toIndentedString(settlePretaxAmount)).append("\n");
-    sb.append("    settlePretaxRealValue: ").append(toIndentedString(settlePretaxRealValue)).append("\n");
-    sb.append("    settleRealValue: ").append(toIndentedString(settleRealValue)).append("\n");
-    sb.append("    settleTax: ").append(toIndentedString(settleTax)).append("\n");
-    sb.append("    settlementType: ").append(toIndentedString(settlementType)).append("\n");
-    sb.append("    solutionZh: ").append(toIndentedString(solutionZh)).append("\n");
+    sb.append("    splitItemID: ").append(toIndentedString(splitItemID)).append("\n");
+    sb.append("    splitItemName: ").append(toIndentedString(splitItemName)).append("\n");
     sb.append("    subjectName: ").append(toIndentedString(subjectName)).append("\n");
     sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
-    sb.append("    tax: ").append(toIndentedString(tax)).append("\n");
-    sb.append("    taxRate: ").append(toIndentedString(taxRate)).append("\n");
     sb.append("    tradeTime: ").append(toIndentedString(tradeTime)).append("\n");
     sb.append("    unit: ").append(toIndentedString(unit)).append("\n");
-    sb.append("    unpaidAmount: ").append(toIndentedString(unpaidAmount)).append("\n");
     sb.append("    useDuration: ").append(toIndentedString(useDuration)).append("\n");
     sb.append("    useDurationUnit: ").append(toIndentedString(useDurationUnit)).append("\n");
     sb.append("    zone: ").append(toIndentedString(zone)).append("\n");
-    sb.append("    zoneCode: ").append(toIndentedString(zoneCode)).append("\n");
     sb.append("}");
     return sb.toString();
   }

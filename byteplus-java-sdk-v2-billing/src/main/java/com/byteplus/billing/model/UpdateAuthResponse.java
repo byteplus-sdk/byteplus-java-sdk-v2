@@ -24,52 +24,31 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * TrafficEnvForListBillDetailInput
+ * UpdateAuthResponse
  */
 
 
 
-public class TrafficEnvForListBillDetailInput {
-  @SerializedName("Env")
-  private String env = null;
+public class UpdateAuthResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("IsSuccess")
+  private Boolean isSuccess = null;
 
-  @SerializedName("Open")
-  private Boolean open = null;
-
-  public TrafficEnvForListBillDetailInput env(String env) {
-    this.env = env;
+  public UpdateAuthResponse isSuccess(Boolean isSuccess) {
+    this.isSuccess = isSuccess;
     return this;
   }
 
    /**
-   * Get env
-   * @return env
+   * Get isSuccess
+   * @return isSuccess
   **/
   @Schema(description = "")
-  public String getEnv() {
-    return env;
+  public Boolean isIsSuccess() {
+    return isSuccess;
   }
 
-  public void setEnv(String env) {
-    this.env = env;
-  }
-
-  public TrafficEnvForListBillDetailInput open(Boolean open) {
-    this.open = open;
-    return this;
-  }
-
-   /**
-   * Get open
-   * @return open
-  **/
-  @Schema(description = "")
-  public Boolean isOpen() {
-    return open;
-  }
-
-  public void setOpen(Boolean open) {
-    this.open = open;
+  public void setIsSuccess(Boolean isSuccess) {
+    this.isSuccess = isSuccess;
   }
 
 
@@ -81,24 +60,22 @@ public class TrafficEnvForListBillDetailInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TrafficEnvForListBillDetailInput trafficEnvForListBillDetailInput = (TrafficEnvForListBillDetailInput) o;
-    return Objects.equals(this.env, trafficEnvForListBillDetailInput.env) &&
-        Objects.equals(this.open, trafficEnvForListBillDetailInput.open);
+    UpdateAuthResponse updateAuthResponse = (UpdateAuthResponse) o;
+    return Objects.equals(this.isSuccess, updateAuthResponse.isSuccess);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(env, open);
+    return Objects.hash(isSuccess);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TrafficEnvForListBillDetailInput {\n");
+    sb.append("class UpdateAuthResponse {\n");
     
-    sb.append("    env: ").append(toIndentedString(env)).append("\n");
-    sb.append("    open: ").append(toIndentedString(open)).append("\n");
+    sb.append("    isSuccess: ").append(toIndentedString(isSuccess)).append("\n");
     sb.append("}");
     return sb.toString();
   }

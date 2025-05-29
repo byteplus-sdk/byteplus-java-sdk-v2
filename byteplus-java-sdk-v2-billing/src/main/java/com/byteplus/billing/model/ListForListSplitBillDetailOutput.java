@@ -48,6 +48,9 @@ public class ListForListSplitBillDetailOutput {
   @SerializedName("BillingMode")
   private String billingMode = null;
 
+  @SerializedName("BusiPeriod")
+  private String busiPeriod = null;
+
   @SerializedName("BusinessMode")
   private String businessMode = null;
 
@@ -56,9 +59,6 @@ public class ListForListSplitBillDetailOutput {
 
   @SerializedName("ConfigurationCode")
   private String configurationCode = null;
-
-  @SerializedName("CountryRegion")
-  private String countryRegion = null;
 
   @SerializedName("CouponDeductionAmount")
   private String couponDeductionAmount = null;
@@ -123,23 +123,32 @@ public class ListForListSplitBillDetailOutput {
   @SerializedName("OriginalBillAmount")
   private String originalBillAmount = null;
 
+  @SerializedName("OwnerCustomerName")
+  private String ownerCustomerName = null;
+
+  @SerializedName("OwnerID")
+  private String ownerID = null;
+
   @SerializedName("OwnerUserName")
   private String ownerUserName = null;
 
   @SerializedName("PaidAmount")
   private String paidAmount = null;
 
+  @SerializedName("PayableAmount")
+  private String payableAmount = null;
+
+  @SerializedName("PayerCustomerName")
+  private String payerCustomerName = null;
+
+  @SerializedName("PayerID")
+  private String payerID = null;
+
   @SerializedName("PayerUserName")
   private String payerUserName = null;
 
-  @SerializedName("PosttaxAmount")
-  private String posttaxAmount = null;
-
   @SerializedName("PreferentialBillAmount")
   private String preferentialBillAmount = null;
-
-  @SerializedName("PretaxAmount")
-  private String pretaxAmount = null;
 
   @SerializedName("Price")
   private String price = null;
@@ -159,6 +168,9 @@ public class ListForListSplitBillDetailOutput {
   @SerializedName("Project")
   private String project = null;
 
+  @SerializedName("ProjectDisplayName")
+  private String projectDisplayName = null;
+
   @SerializedName("Region")
   private String region = null;
 
@@ -167,6 +179,12 @@ public class ListForListSplitBillDetailOutput {
 
   @SerializedName("ReservationInstance")
   private String reservationInstance = null;
+
+  @SerializedName("SellerCustomerName")
+  private String sellerCustomerName = null;
+
+  @SerializedName("SellerID")
+  private String sellerID = null;
 
   @SerializedName("SellerUserName")
   private String sellerUserName = null;
@@ -200,9 +218,6 @@ public class ListForListSplitBillDetailOutput {
 
   @SerializedName("Tag")
   private String tag = null;
-
-  @SerializedName("Tax")
-  private String tax = null;
 
   @SerializedName("TradeTime")
   private String tradeTime = null;
@@ -333,6 +348,24 @@ public class ListForListSplitBillDetailOutput {
     this.billingMode = billingMode;
   }
 
+  public ListForListSplitBillDetailOutput busiPeriod(String busiPeriod) {
+    this.busiPeriod = busiPeriod;
+    return this;
+  }
+
+   /**
+   * Get busiPeriod
+   * @return busiPeriod
+  **/
+  @Schema(description = "")
+  public String getBusiPeriod() {
+    return busiPeriod;
+  }
+
+  public void setBusiPeriod(String busiPeriod) {
+    this.busiPeriod = busiPeriod;
+  }
+
   public ListForListSplitBillDetailOutput businessMode(String businessMode) {
     this.businessMode = businessMode;
     return this;
@@ -385,24 +418,6 @@ public class ListForListSplitBillDetailOutput {
 
   public void setConfigurationCode(String configurationCode) {
     this.configurationCode = configurationCode;
-  }
-
-  public ListForListSplitBillDetailOutput countryRegion(String countryRegion) {
-    this.countryRegion = countryRegion;
-    return this;
-  }
-
-   /**
-   * Get countryRegion
-   * @return countryRegion
-  **/
-  @Schema(description = "")
-  public String getCountryRegion() {
-    return countryRegion;
-  }
-
-  public void setCountryRegion(String countryRegion) {
-    this.countryRegion = countryRegion;
   }
 
   public ListForListSplitBillDetailOutput couponDeductionAmount(String couponDeductionAmount) {
@@ -783,6 +798,42 @@ public class ListForListSplitBillDetailOutput {
     this.originalBillAmount = originalBillAmount;
   }
 
+  public ListForListSplitBillDetailOutput ownerCustomerName(String ownerCustomerName) {
+    this.ownerCustomerName = ownerCustomerName;
+    return this;
+  }
+
+   /**
+   * Get ownerCustomerName
+   * @return ownerCustomerName
+  **/
+  @Schema(description = "")
+  public String getOwnerCustomerName() {
+    return ownerCustomerName;
+  }
+
+  public void setOwnerCustomerName(String ownerCustomerName) {
+    this.ownerCustomerName = ownerCustomerName;
+  }
+
+  public ListForListSplitBillDetailOutput ownerID(String ownerID) {
+    this.ownerID = ownerID;
+    return this;
+  }
+
+   /**
+   * Get ownerID
+   * @return ownerID
+  **/
+  @Schema(description = "")
+  public String getOwnerID() {
+    return ownerID;
+  }
+
+  public void setOwnerID(String ownerID) {
+    this.ownerID = ownerID;
+  }
+
   public ListForListSplitBillDetailOutput ownerUserName(String ownerUserName) {
     this.ownerUserName = ownerUserName;
     return this;
@@ -819,6 +870,60 @@ public class ListForListSplitBillDetailOutput {
     this.paidAmount = paidAmount;
   }
 
+  public ListForListSplitBillDetailOutput payableAmount(String payableAmount) {
+    this.payableAmount = payableAmount;
+    return this;
+  }
+
+   /**
+   * Get payableAmount
+   * @return payableAmount
+  **/
+  @Schema(description = "")
+  public String getPayableAmount() {
+    return payableAmount;
+  }
+
+  public void setPayableAmount(String payableAmount) {
+    this.payableAmount = payableAmount;
+  }
+
+  public ListForListSplitBillDetailOutput payerCustomerName(String payerCustomerName) {
+    this.payerCustomerName = payerCustomerName;
+    return this;
+  }
+
+   /**
+   * Get payerCustomerName
+   * @return payerCustomerName
+  **/
+  @Schema(description = "")
+  public String getPayerCustomerName() {
+    return payerCustomerName;
+  }
+
+  public void setPayerCustomerName(String payerCustomerName) {
+    this.payerCustomerName = payerCustomerName;
+  }
+
+  public ListForListSplitBillDetailOutput payerID(String payerID) {
+    this.payerID = payerID;
+    return this;
+  }
+
+   /**
+   * Get payerID
+   * @return payerID
+  **/
+  @Schema(description = "")
+  public String getPayerID() {
+    return payerID;
+  }
+
+  public void setPayerID(String payerID) {
+    this.payerID = payerID;
+  }
+
   public ListForListSplitBillDetailOutput payerUserName(String payerUserName) {
     this.payerUserName = payerUserName;
     return this;
@@ -837,24 +942,6 @@ public class ListForListSplitBillDetailOutput {
     this.payerUserName = payerUserName;
   }
 
-  public ListForListSplitBillDetailOutput posttaxAmount(String posttaxAmount) {
-    this.posttaxAmount = posttaxAmount;
-    return this;
-  }
-
-   /**
-   * Get posttaxAmount
-   * @return posttaxAmount
-  **/
-  @Schema(description = "")
-  public String getPosttaxAmount() {
-    return posttaxAmount;
-  }
-
-  public void setPosttaxAmount(String posttaxAmount) {
-    this.posttaxAmount = posttaxAmount;
-  }
-
   public ListForListSplitBillDetailOutput preferentialBillAmount(String preferentialBillAmount) {
     this.preferentialBillAmount = preferentialBillAmount;
     return this;
@@ -871,24 +958,6 @@ public class ListForListSplitBillDetailOutput {
 
   public void setPreferentialBillAmount(String preferentialBillAmount) {
     this.preferentialBillAmount = preferentialBillAmount;
-  }
-
-  public ListForListSplitBillDetailOutput pretaxAmount(String pretaxAmount) {
-    this.pretaxAmount = pretaxAmount;
-    return this;
-  }
-
-   /**
-   * Get pretaxAmount
-   * @return pretaxAmount
-  **/
-  @Schema(description = "")
-  public String getPretaxAmount() {
-    return pretaxAmount;
-  }
-
-  public void setPretaxAmount(String pretaxAmount) {
-    this.pretaxAmount = pretaxAmount;
   }
 
   public ListForListSplitBillDetailOutput price(String price) {
@@ -999,6 +1068,24 @@ public class ListForListSplitBillDetailOutput {
     this.project = project;
   }
 
+  public ListForListSplitBillDetailOutput projectDisplayName(String projectDisplayName) {
+    this.projectDisplayName = projectDisplayName;
+    return this;
+  }
+
+   /**
+   * Get projectDisplayName
+   * @return projectDisplayName
+  **/
+  @Schema(description = "")
+  public String getProjectDisplayName() {
+    return projectDisplayName;
+  }
+
+  public void setProjectDisplayName(String projectDisplayName) {
+    this.projectDisplayName = projectDisplayName;
+  }
+
   public ListForListSplitBillDetailOutput region(String region) {
     this.region = region;
     return this;
@@ -1051,6 +1138,42 @@ public class ListForListSplitBillDetailOutput {
 
   public void setReservationInstance(String reservationInstance) {
     this.reservationInstance = reservationInstance;
+  }
+
+  public ListForListSplitBillDetailOutput sellerCustomerName(String sellerCustomerName) {
+    this.sellerCustomerName = sellerCustomerName;
+    return this;
+  }
+
+   /**
+   * Get sellerCustomerName
+   * @return sellerCustomerName
+  **/
+  @Schema(description = "")
+  public String getSellerCustomerName() {
+    return sellerCustomerName;
+  }
+
+  public void setSellerCustomerName(String sellerCustomerName) {
+    this.sellerCustomerName = sellerCustomerName;
+  }
+
+  public ListForListSplitBillDetailOutput sellerID(String sellerID) {
+    this.sellerID = sellerID;
+    return this;
+  }
+
+   /**
+   * Get sellerID
+   * @return sellerID
+  **/
+  @Schema(description = "")
+  public String getSellerID() {
+    return sellerID;
+  }
+
+  public void setSellerID(String sellerID) {
+    this.sellerID = sellerID;
   }
 
   public ListForListSplitBillDetailOutput sellerUserName(String sellerUserName) {
@@ -1251,24 +1374,6 @@ public class ListForListSplitBillDetailOutput {
     this.tag = tag;
   }
 
-  public ListForListSplitBillDetailOutput tax(String tax) {
-    this.tax = tax;
-    return this;
-  }
-
-   /**
-   * Get tax
-   * @return tax
-  **/
-  @Schema(description = "")
-  public String getTax() {
-    return tax;
-  }
-
-  public void setTax(String tax) {
-    this.tax = tax;
-  }
-
   public ListForListSplitBillDetailOutput tradeTime(String tradeTime) {
     this.tradeTime = tradeTime;
     return this;
@@ -1411,10 +1516,10 @@ public class ListForListSplitBillDetailOutput {
         Objects.equals(this.billingFunction, listForListSplitBillDetailOutput.billingFunction) &&
         Objects.equals(this.billingMethodCode, listForListSplitBillDetailOutput.billingMethodCode) &&
         Objects.equals(this.billingMode, listForListSplitBillDetailOutput.billingMode) &&
+        Objects.equals(this.busiPeriod, listForListSplitBillDetailOutput.busiPeriod) &&
         Objects.equals(this.businessMode, listForListSplitBillDetailOutput.businessMode) &&
         Objects.equals(this.configName, listForListSplitBillDetailOutput.configName) &&
         Objects.equals(this.configurationCode, listForListSplitBillDetailOutput.configurationCode) &&
-        Objects.equals(this.countryRegion, listForListSplitBillDetailOutput.countryRegion) &&
         Objects.equals(this.couponDeductionAmount, listForListSplitBillDetailOutput.couponDeductionAmount) &&
         Objects.equals(this.creditCarriedAmount, listForListSplitBillDetailOutput.creditCarriedAmount) &&
         Objects.equals(this.currency, listForListSplitBillDetailOutput.currency) &&
@@ -1436,21 +1541,27 @@ public class ListForListSplitBillDetailOutput {
         Objects.equals(this.marketPrice, listForListSplitBillDetailOutput.marketPrice) &&
         Objects.equals(this.measureInterval, listForListSplitBillDetailOutput.measureInterval) &&
         Objects.equals(this.originalBillAmount, listForListSplitBillDetailOutput.originalBillAmount) &&
+        Objects.equals(this.ownerCustomerName, listForListSplitBillDetailOutput.ownerCustomerName) &&
+        Objects.equals(this.ownerID, listForListSplitBillDetailOutput.ownerID) &&
         Objects.equals(this.ownerUserName, listForListSplitBillDetailOutput.ownerUserName) &&
         Objects.equals(this.paidAmount, listForListSplitBillDetailOutput.paidAmount) &&
+        Objects.equals(this.payableAmount, listForListSplitBillDetailOutput.payableAmount) &&
+        Objects.equals(this.payerCustomerName, listForListSplitBillDetailOutput.payerCustomerName) &&
+        Objects.equals(this.payerID, listForListSplitBillDetailOutput.payerID) &&
         Objects.equals(this.payerUserName, listForListSplitBillDetailOutput.payerUserName) &&
-        Objects.equals(this.posttaxAmount, listForListSplitBillDetailOutput.posttaxAmount) &&
         Objects.equals(this.preferentialBillAmount, listForListSplitBillDetailOutput.preferentialBillAmount) &&
-        Objects.equals(this.pretaxAmount, listForListSplitBillDetailOutput.pretaxAmount) &&
         Objects.equals(this.price, listForListSplitBillDetailOutput.price) &&
         Objects.equals(this.priceInterval, listForListSplitBillDetailOutput.priceInterval) &&
         Objects.equals(this.priceUnit, listForListSplitBillDetailOutput.priceUnit) &&
         Objects.equals(this.product, listForListSplitBillDetailOutput.product) &&
         Objects.equals(this.productZh, listForListSplitBillDetailOutput.productZh) &&
         Objects.equals(this.project, listForListSplitBillDetailOutput.project) &&
+        Objects.equals(this.projectDisplayName, listForListSplitBillDetailOutput.projectDisplayName) &&
         Objects.equals(this.region, listForListSplitBillDetailOutput.region) &&
         Objects.equals(this.regionCode, listForListSplitBillDetailOutput.regionCode) &&
         Objects.equals(this.reservationInstance, listForListSplitBillDetailOutput.reservationInstance) &&
+        Objects.equals(this.sellerCustomerName, listForListSplitBillDetailOutput.sellerCustomerName) &&
+        Objects.equals(this.sellerID, listForListSplitBillDetailOutput.sellerID) &&
         Objects.equals(this.sellerUserName, listForListSplitBillDetailOutput.sellerUserName) &&
         Objects.equals(this.sellingMode, listForListSplitBillDetailOutput.sellingMode) &&
         Objects.equals(this.settlementType, listForListSplitBillDetailOutput.settlementType) &&
@@ -1462,7 +1573,6 @@ public class ListForListSplitBillDetailOutput {
         Objects.equals(this.splitItemRatio, listForListSplitBillDetailOutput.splitItemRatio) &&
         Objects.equals(this.subjectName, listForListSplitBillDetailOutput.subjectName) &&
         Objects.equals(this.tag, listForListSplitBillDetailOutput.tag) &&
-        Objects.equals(this.tax, listForListSplitBillDetailOutput.tax) &&
         Objects.equals(this.tradeTime, listForListSplitBillDetailOutput.tradeTime) &&
         Objects.equals(this.unit, listForListSplitBillDetailOutput.unit) &&
         Objects.equals(this.unpaidAmount, listForListSplitBillDetailOutput.unpaidAmount) &&
@@ -1474,7 +1584,7 @@ public class ListForListSplitBillDetailOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategory, billID, billPeriod, billingFunction, billingMethodCode, billingMode, businessMode, configName, configurationCode, countryRegion, couponDeductionAmount, creditCarriedAmount, currency, deductionCount, discountBillAmount, discountBizBillingFunction, discountBizMeasureInterval, discountBizUnitPrice, discountBizUnitPriceInterval, effectiveFactor, element, elementCode, expandField, expenseTime, factor, factorCode, instanceName, instanceNo, marketPrice, measureInterval, originalBillAmount, ownerUserName, paidAmount, payerUserName, posttaxAmount, preferentialBillAmount, pretaxAmount, price, priceInterval, priceUnit, product, productZh, project, region, regionCode, reservationInstance, sellerUserName, sellingMode, settlementType, solutionZh, splitBillDetailId, splitItemAmount, splitItemID, splitItemName, splitItemRatio, subjectName, tag, tax, tradeTime, unit, unpaidAmount, useDuration, useDurationUnit, zone, zoneCode);
+    return Objects.hash(billCategory, billID, billPeriod, billingFunction, billingMethodCode, billingMode, busiPeriod, businessMode, configName, configurationCode, couponDeductionAmount, creditCarriedAmount, currency, deductionCount, discountBillAmount, discountBizBillingFunction, discountBizMeasureInterval, discountBizUnitPrice, discountBizUnitPriceInterval, effectiveFactor, element, elementCode, expandField, expenseTime, factor, factorCode, instanceName, instanceNo, marketPrice, measureInterval, originalBillAmount, ownerCustomerName, ownerID, ownerUserName, paidAmount, payableAmount, payerCustomerName, payerID, payerUserName, preferentialBillAmount, price, priceInterval, priceUnit, product, productZh, project, projectDisplayName, region, regionCode, reservationInstance, sellerCustomerName, sellerID, sellerUserName, sellingMode, settlementType, solutionZh, splitBillDetailId, splitItemAmount, splitItemID, splitItemName, splitItemRatio, subjectName, tag, tradeTime, unit, unpaidAmount, useDuration, useDurationUnit, zone, zoneCode);
   }
 
 
@@ -1489,10 +1599,10 @@ public class ListForListSplitBillDetailOutput {
     sb.append("    billingFunction: ").append(toIndentedString(billingFunction)).append("\n");
     sb.append("    billingMethodCode: ").append(toIndentedString(billingMethodCode)).append("\n");
     sb.append("    billingMode: ").append(toIndentedString(billingMode)).append("\n");
+    sb.append("    busiPeriod: ").append(toIndentedString(busiPeriod)).append("\n");
     sb.append("    businessMode: ").append(toIndentedString(businessMode)).append("\n");
     sb.append("    configName: ").append(toIndentedString(configName)).append("\n");
     sb.append("    configurationCode: ").append(toIndentedString(configurationCode)).append("\n");
-    sb.append("    countryRegion: ").append(toIndentedString(countryRegion)).append("\n");
     sb.append("    couponDeductionAmount: ").append(toIndentedString(couponDeductionAmount)).append("\n");
     sb.append("    creditCarriedAmount: ").append(toIndentedString(creditCarriedAmount)).append("\n");
     sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
@@ -1514,21 +1624,27 @@ public class ListForListSplitBillDetailOutput {
     sb.append("    marketPrice: ").append(toIndentedString(marketPrice)).append("\n");
     sb.append("    measureInterval: ").append(toIndentedString(measureInterval)).append("\n");
     sb.append("    originalBillAmount: ").append(toIndentedString(originalBillAmount)).append("\n");
+    sb.append("    ownerCustomerName: ").append(toIndentedString(ownerCustomerName)).append("\n");
+    sb.append("    ownerID: ").append(toIndentedString(ownerID)).append("\n");
     sb.append("    ownerUserName: ").append(toIndentedString(ownerUserName)).append("\n");
     sb.append("    paidAmount: ").append(toIndentedString(paidAmount)).append("\n");
+    sb.append("    payableAmount: ").append(toIndentedString(payableAmount)).append("\n");
+    sb.append("    payerCustomerName: ").append(toIndentedString(payerCustomerName)).append("\n");
+    sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    payerUserName: ").append(toIndentedString(payerUserName)).append("\n");
-    sb.append("    posttaxAmount: ").append(toIndentedString(posttaxAmount)).append("\n");
     sb.append("    preferentialBillAmount: ").append(toIndentedString(preferentialBillAmount)).append("\n");
-    sb.append("    pretaxAmount: ").append(toIndentedString(pretaxAmount)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("    priceInterval: ").append(toIndentedString(priceInterval)).append("\n");
     sb.append("    priceUnit: ").append(toIndentedString(priceUnit)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("    productZh: ").append(toIndentedString(productZh)).append("\n");
     sb.append("    project: ").append(toIndentedString(project)).append("\n");
+    sb.append("    projectDisplayName: ").append(toIndentedString(projectDisplayName)).append("\n");
     sb.append("    region: ").append(toIndentedString(region)).append("\n");
     sb.append("    regionCode: ").append(toIndentedString(regionCode)).append("\n");
     sb.append("    reservationInstance: ").append(toIndentedString(reservationInstance)).append("\n");
+    sb.append("    sellerCustomerName: ").append(toIndentedString(sellerCustomerName)).append("\n");
+    sb.append("    sellerID: ").append(toIndentedString(sellerID)).append("\n");
     sb.append("    sellerUserName: ").append(toIndentedString(sellerUserName)).append("\n");
     sb.append("    sellingMode: ").append(toIndentedString(sellingMode)).append("\n");
     sb.append("    settlementType: ").append(toIndentedString(settlementType)).append("\n");
@@ -1540,7 +1656,6 @@ public class ListForListSplitBillDetailOutput {
     sb.append("    splitItemRatio: ").append(toIndentedString(splitItemRatio)).append("\n");
     sb.append("    subjectName: ").append(toIndentedString(subjectName)).append("\n");
     sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
-    sb.append("    tax: ").append(toIndentedString(tax)).append("\n");
     sb.append("    tradeTime: ").append(toIndentedString(tradeTime)).append("\n");
     sb.append("    unit: ").append(toIndentedString(unit)).append("\n");
     sb.append("    unpaidAmount: ").append(toIndentedString(unpaidAmount)).append("\n");

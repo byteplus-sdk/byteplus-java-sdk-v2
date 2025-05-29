@@ -14,7 +14,6 @@ package com.byteplus.billing.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.billing.model.BaseForListBillDetailInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -33,12 +32,6 @@ import javax.validation.Valid;
 
 
 public class ListBillDetailRequest {
-  @SerializedName("AccountID")
-  private Long accountID = null;
-
-  @SerializedName("Base")
-  private BaseForListBillDetailInput base = null;
-
   @SerializedName("BillCategory")
   private List<String> billCategory = null;
 
@@ -72,12 +65,6 @@ public class ListBillDetailRequest {
   @SerializedName("Offset")
   private Integer offset = null;
 
-  @SerializedName("OrderBy")
-  private String orderBy = null;
-
-  @SerializedName("OrderType")
-  private Integer orderType = null;
-
   @SerializedName("OwnerID")
   private List<Long> ownerID = null;
 
@@ -86,46 +73,6 @@ public class ListBillDetailRequest {
 
   @SerializedName("Product")
   private List<String> product = null;
-
-  @SerializedName("SubjectNo")
-  private String subjectNo = null;
-
-  public ListBillDetailRequest accountID(Long accountID) {
-    this.accountID = accountID;
-    return this;
-  }
-
-   /**
-   * Get accountID
-   * @return accountID
-  **/
-  @Schema(description = "")
-  public Long getAccountID() {
-    return accountID;
-  }
-
-  public void setAccountID(Long accountID) {
-    this.accountID = accountID;
-  }
-
-  public ListBillDetailRequest base(BaseForListBillDetailInput base) {
-    this.base = base;
-    return this;
-  }
-
-   /**
-   * Get base
-   * @return base
-  **/
-  @Valid
-  @Schema(description = "")
-  public BaseForListBillDetailInput getBase() {
-    return base;
-  }
-
-  public void setBase(BaseForListBillDetailInput base) {
-    this.base = base;
-  }
 
   public ListBillDetailRequest billCategory(List<String> billCategory) {
     this.billCategory = billCategory;
@@ -162,7 +109,8 @@ public class ListBillDetailRequest {
    * Get billPeriod
    * @return billPeriod
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getBillPeriod() {
     return billPeriod;
   }
@@ -224,8 +172,7 @@ public class ListBillDetailRequest {
    * Get groupPeriod
    * @return groupPeriod
   **/
-  @NotNull
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   public Integer getGroupPeriod() {
     return groupPeriod;
   }
@@ -243,8 +190,7 @@ public class ListBillDetailRequest {
    * Get groupTerm
    * @return groupTerm
   **/
-  @NotNull
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   public Integer getGroupTerm() {
     return groupTerm;
   }
@@ -262,8 +208,7 @@ public class ListBillDetailRequest {
    * Get ignoreZero
    * @return ignoreZero
   **/
-  @NotNull
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   public Integer getIgnoreZero() {
     return ignoreZero;
   }
@@ -336,50 +281,13 @@ public class ListBillDetailRequest {
    * Get offset
    * @return offset
   **/
-  @NotNull
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   public Integer getOffset() {
     return offset;
   }
 
   public void setOffset(Integer offset) {
     this.offset = offset;
-  }
-
-  public ListBillDetailRequest orderBy(String orderBy) {
-    this.orderBy = orderBy;
-    return this;
-  }
-
-   /**
-   * Get orderBy
-   * @return orderBy
-  **/
-  @Schema(description = "")
-  public String getOrderBy() {
-    return orderBy;
-  }
-
-  public void setOrderBy(String orderBy) {
-    this.orderBy = orderBy;
-  }
-
-  public ListBillDetailRequest orderType(Integer orderType) {
-    this.orderType = orderType;
-    return this;
-  }
-
-   /**
-   * Get orderType
-   * @return orderType
-  **/
-  @Schema(description = "")
-  public Integer getOrderType() {
-    return orderType;
-  }
-
-  public void setOrderType(Integer orderType) {
-    this.orderType = orderType;
   }
 
   public ListBillDetailRequest ownerID(List<Long> ownerID) {
@@ -460,24 +368,6 @@ public class ListBillDetailRequest {
     this.product = product;
   }
 
-  public ListBillDetailRequest subjectNo(String subjectNo) {
-    this.subjectNo = subjectNo;
-    return this;
-  }
-
-   /**
-   * Get subjectNo
-   * @return subjectNo
-  **/
-  @Schema(description = "")
-  public String getSubjectNo() {
-    return subjectNo;
-  }
-
-  public void setSubjectNo(String subjectNo) {
-    this.subjectNo = subjectNo;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -488,9 +378,7 @@ public class ListBillDetailRequest {
       return false;
     }
     ListBillDetailRequest listBillDetailRequest = (ListBillDetailRequest) o;
-    return Objects.equals(this.accountID, listBillDetailRequest.accountID) &&
-        Objects.equals(this.base, listBillDetailRequest.base) &&
-        Objects.equals(this.billCategory, listBillDetailRequest.billCategory) &&
+    return Objects.equals(this.billCategory, listBillDetailRequest.billCategory) &&
         Objects.equals(this.billPeriod, listBillDetailRequest.billPeriod) &&
         Objects.equals(this.billingMode, listBillDetailRequest.billingMode) &&
         Objects.equals(this.expenseDate, listBillDetailRequest.expenseDate) &&
@@ -501,17 +389,14 @@ public class ListBillDetailRequest {
         Objects.equals(this.limit, listBillDetailRequest.limit) &&
         Objects.equals(this.needRecordNum, listBillDetailRequest.needRecordNum) &&
         Objects.equals(this.offset, listBillDetailRequest.offset) &&
-        Objects.equals(this.orderBy, listBillDetailRequest.orderBy) &&
-        Objects.equals(this.orderType, listBillDetailRequest.orderType) &&
         Objects.equals(this.ownerID, listBillDetailRequest.ownerID) &&
         Objects.equals(this.payerID, listBillDetailRequest.payerID) &&
-        Objects.equals(this.product, listBillDetailRequest.product) &&
-        Objects.equals(this.subjectNo, listBillDetailRequest.subjectNo);
+        Objects.equals(this.product, listBillDetailRequest.product);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountID, base, billCategory, billPeriod, billingMode, expenseDate, groupPeriod, groupTerm, ignoreZero, instanceNo, limit, needRecordNum, offset, orderBy, orderType, ownerID, payerID, product, subjectNo);
+    return Objects.hash(billCategory, billPeriod, billingMode, expenseDate, groupPeriod, groupTerm, ignoreZero, instanceNo, limit, needRecordNum, offset, ownerID, payerID, product);
   }
 
 
@@ -520,8 +405,6 @@ public class ListBillDetailRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class ListBillDetailRequest {\n");
     
-    sb.append("    accountID: ").append(toIndentedString(accountID)).append("\n");
-    sb.append("    base: ").append(toIndentedString(base)).append("\n");
     sb.append("    billCategory: ").append(toIndentedString(billCategory)).append("\n");
     sb.append("    billPeriod: ").append(toIndentedString(billPeriod)).append("\n");
     sb.append("    billingMode: ").append(toIndentedString(billingMode)).append("\n");
@@ -533,12 +416,9 @@ public class ListBillDetailRequest {
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("    needRecordNum: ").append(toIndentedString(needRecordNum)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
-    sb.append("    orderBy: ").append(toIndentedString(orderBy)).append("\n");
-    sb.append("    orderType: ").append(toIndentedString(orderType)).append("\n");
     sb.append("    ownerID: ").append(toIndentedString(ownerID)).append("\n");
     sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
-    sb.append("    subjectNo: ").append(toIndentedString(subjectNo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

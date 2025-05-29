@@ -33,11 +33,14 @@ public class CreateFinancialRelationRequest {
   @SerializedName("AccountAlias")
   private String accountAlias = null;
 
+  @SerializedName("AuthListStr")
+  private String authListStr = null;
+
   @SerializedName("Relation")
   private Integer relation = null;
 
   @SerializedName("SubAccountID")
-  private Integer subAccountID = null;
+  private Long subAccountID = null;
 
   public CreateFinancialRelationRequest accountAlias(String accountAlias) {
     this.accountAlias = accountAlias;
@@ -55,6 +58,24 @@ public class CreateFinancialRelationRequest {
 
   public void setAccountAlias(String accountAlias) {
     this.accountAlias = accountAlias;
+  }
+
+  public CreateFinancialRelationRequest authListStr(String authListStr) {
+    this.authListStr = authListStr;
+    return this;
+  }
+
+   /**
+   * Get authListStr
+   * @return authListStr
+  **/
+  @Schema(description = "")
+  public String getAuthListStr() {
+    return authListStr;
+  }
+
+  public void setAuthListStr(String authListStr) {
+    this.authListStr = authListStr;
   }
 
   public CreateFinancialRelationRequest relation(Integer relation) {
@@ -76,7 +97,7 @@ public class CreateFinancialRelationRequest {
     this.relation = relation;
   }
 
-  public CreateFinancialRelationRequest subAccountID(Integer subAccountID) {
+  public CreateFinancialRelationRequest subAccountID(Long subAccountID) {
     this.subAccountID = subAccountID;
     return this;
   }
@@ -87,11 +108,11 @@ public class CreateFinancialRelationRequest {
   **/
   @NotNull
   @Schema(required = true, description = "")
-  public Integer getSubAccountID() {
+  public Long getSubAccountID() {
     return subAccountID;
   }
 
-  public void setSubAccountID(Integer subAccountID) {
+  public void setSubAccountID(Long subAccountID) {
     this.subAccountID = subAccountID;
   }
 
@@ -106,13 +127,14 @@ public class CreateFinancialRelationRequest {
     }
     CreateFinancialRelationRequest createFinancialRelationRequest = (CreateFinancialRelationRequest) o;
     return Objects.equals(this.accountAlias, createFinancialRelationRequest.accountAlias) &&
+        Objects.equals(this.authListStr, createFinancialRelationRequest.authListStr) &&
         Objects.equals(this.relation, createFinancialRelationRequest.relation) &&
         Objects.equals(this.subAccountID, createFinancialRelationRequest.subAccountID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountAlias, relation, subAccountID);
+    return Objects.hash(accountAlias, authListStr, relation, subAccountID);
   }
 
 
@@ -122,6 +144,7 @@ public class CreateFinancialRelationRequest {
     sb.append("class CreateFinancialRelationRequest {\n");
     
     sb.append("    accountAlias: ").append(toIndentedString(accountAlias)).append("\n");
+    sb.append("    authListStr: ").append(toIndentedString(authListStr)).append("\n");
     sb.append("    relation: ").append(toIndentedString(relation)).append("\n");
     sb.append("    subAccountID: ").append(toIndentedString(subAccountID)).append("\n");
     sb.append("}");

@@ -26,14 +26,23 @@ import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ListBillOverviewByProdRequest
+ * ListAmortizedCostBillDailyRequest
  */
 
 
 
-public class ListBillOverviewByProdRequest {
-  @SerializedName("BillCategoryParent")
-  private List<String> billCategoryParent = null;
+public class ListAmortizedCostBillDailyRequest {
+  @SerializedName("AmortizedDay")
+  private String amortizedDay = null;
+
+  @SerializedName("AmortizedMonth")
+  private String amortizedMonth = null;
+
+  @SerializedName("AmortizedType")
+  private List<String> amortizedType = null;
+
+  @SerializedName("BillCategory")
+  private List<String> billCategory = null;
 
   @SerializedName("BillPeriod")
   private String billPeriod = null;
@@ -43,6 +52,9 @@ public class ListBillOverviewByProdRequest {
 
   @SerializedName("IgnoreZero")
   private Integer ignoreZero = null;
+
+  @SerializedName("InstanceNo")
+  private String instanceNo = null;
 
   @SerializedName("Limit")
   private Integer limit = null;
@@ -62,33 +74,96 @@ public class ListBillOverviewByProdRequest {
   @SerializedName("Product")
   private List<String> product = null;
 
-  public ListBillOverviewByProdRequest billCategoryParent(List<String> billCategoryParent) {
-    this.billCategoryParent = billCategoryParent;
-    return this;
-  }
-
-  public ListBillOverviewByProdRequest addBillCategoryParentItem(String billCategoryParentItem) {
-    if (this.billCategoryParent == null) {
-      this.billCategoryParent = new ArrayList<String>();
-    }
-    this.billCategoryParent.add(billCategoryParentItem);
+  public ListAmortizedCostBillDailyRequest amortizedDay(String amortizedDay) {
+    this.amortizedDay = amortizedDay;
     return this;
   }
 
    /**
-   * Get billCategoryParent
-   * @return billCategoryParent
+   * Get amortizedDay
+   * @return amortizedDay
   **/
   @Schema(description = "")
-  public List<String> getBillCategoryParent() {
-    return billCategoryParent;
+  public String getAmortizedDay() {
+    return amortizedDay;
   }
 
-  public void setBillCategoryParent(List<String> billCategoryParent) {
-    this.billCategoryParent = billCategoryParent;
+  public void setAmortizedDay(String amortizedDay) {
+    this.amortizedDay = amortizedDay;
   }
 
-  public ListBillOverviewByProdRequest billPeriod(String billPeriod) {
+  public ListAmortizedCostBillDailyRequest amortizedMonth(String amortizedMonth) {
+    this.amortizedMonth = amortizedMonth;
+    return this;
+  }
+
+   /**
+   * Get amortizedMonth
+   * @return amortizedMonth
+  **/
+  @NotNull
+  @Schema(required = true, description = "")
+  public String getAmortizedMonth() {
+    return amortizedMonth;
+  }
+
+  public void setAmortizedMonth(String amortizedMonth) {
+    this.amortizedMonth = amortizedMonth;
+  }
+
+  public ListAmortizedCostBillDailyRequest amortizedType(List<String> amortizedType) {
+    this.amortizedType = amortizedType;
+    return this;
+  }
+
+  public ListAmortizedCostBillDailyRequest addAmortizedTypeItem(String amortizedTypeItem) {
+    if (this.amortizedType == null) {
+      this.amortizedType = new ArrayList<String>();
+    }
+    this.amortizedType.add(amortizedTypeItem);
+    return this;
+  }
+
+   /**
+   * Get amortizedType
+   * @return amortizedType
+  **/
+  @Schema(description = "")
+  public List<String> getAmortizedType() {
+    return amortizedType;
+  }
+
+  public void setAmortizedType(List<String> amortizedType) {
+    this.amortizedType = amortizedType;
+  }
+
+  public ListAmortizedCostBillDailyRequest billCategory(List<String> billCategory) {
+    this.billCategory = billCategory;
+    return this;
+  }
+
+  public ListAmortizedCostBillDailyRequest addBillCategoryItem(String billCategoryItem) {
+    if (this.billCategory == null) {
+      this.billCategory = new ArrayList<String>();
+    }
+    this.billCategory.add(billCategoryItem);
+    return this;
+  }
+
+   /**
+   * Get billCategory
+   * @return billCategory
+  **/
+  @Schema(description = "")
+  public List<String> getBillCategory() {
+    return billCategory;
+  }
+
+  public void setBillCategory(List<String> billCategory) {
+    this.billCategory = billCategory;
+  }
+
+  public ListAmortizedCostBillDailyRequest billPeriod(String billPeriod) {
     this.billPeriod = billPeriod;
     return this;
   }
@@ -97,8 +172,7 @@ public class ListBillOverviewByProdRequest {
    * Get billPeriod
    * @return billPeriod
   **/
-  @NotNull
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   public String getBillPeriod() {
     return billPeriod;
   }
@@ -107,12 +181,12 @@ public class ListBillOverviewByProdRequest {
     this.billPeriod = billPeriod;
   }
 
-  public ListBillOverviewByProdRequest billingMode(List<String> billingMode) {
+  public ListAmortizedCostBillDailyRequest billingMode(List<String> billingMode) {
     this.billingMode = billingMode;
     return this;
   }
 
-  public ListBillOverviewByProdRequest addBillingModeItem(String billingModeItem) {
+  public ListAmortizedCostBillDailyRequest addBillingModeItem(String billingModeItem) {
     if (this.billingMode == null) {
       this.billingMode = new ArrayList<String>();
     }
@@ -133,7 +207,7 @@ public class ListBillOverviewByProdRequest {
     this.billingMode = billingMode;
   }
 
-  public ListBillOverviewByProdRequest ignoreZero(Integer ignoreZero) {
+  public ListAmortizedCostBillDailyRequest ignoreZero(Integer ignoreZero) {
     this.ignoreZero = ignoreZero;
     return this;
   }
@@ -151,7 +225,25 @@ public class ListBillOverviewByProdRequest {
     this.ignoreZero = ignoreZero;
   }
 
-  public ListBillOverviewByProdRequest limit(Integer limit) {
+  public ListAmortizedCostBillDailyRequest instanceNo(String instanceNo) {
+    this.instanceNo = instanceNo;
+    return this;
+  }
+
+   /**
+   * Get instanceNo
+   * @return instanceNo
+  **/
+  @Schema(description = "")
+  public String getInstanceNo() {
+    return instanceNo;
+  }
+
+  public void setInstanceNo(String instanceNo) {
+    this.instanceNo = instanceNo;
+  }
+
+  public ListAmortizedCostBillDailyRequest limit(Integer limit) {
     this.limit = limit;
     return this;
   }
@@ -170,7 +262,7 @@ public class ListBillOverviewByProdRequest {
     this.limit = limit;
   }
 
-  public ListBillOverviewByProdRequest needRecordNum(Integer needRecordNum) {
+  public ListAmortizedCostBillDailyRequest needRecordNum(Integer needRecordNum) {
     this.needRecordNum = needRecordNum;
     return this;
   }
@@ -188,7 +280,7 @@ public class ListBillOverviewByProdRequest {
     this.needRecordNum = needRecordNum;
   }
 
-  public ListBillOverviewByProdRequest offset(Integer offset) {
+  public ListAmortizedCostBillDailyRequest offset(Integer offset) {
     this.offset = offset;
     return this;
   }
@@ -206,12 +298,12 @@ public class ListBillOverviewByProdRequest {
     this.offset = offset;
   }
 
-  public ListBillOverviewByProdRequest ownerID(List<Long> ownerID) {
+  public ListAmortizedCostBillDailyRequest ownerID(List<Long> ownerID) {
     this.ownerID = ownerID;
     return this;
   }
 
-  public ListBillOverviewByProdRequest addOwnerIDItem(Long ownerIDItem) {
+  public ListAmortizedCostBillDailyRequest addOwnerIDItem(Long ownerIDItem) {
     if (this.ownerID == null) {
       this.ownerID = new ArrayList<Long>();
     }
@@ -232,12 +324,12 @@ public class ListBillOverviewByProdRequest {
     this.ownerID = ownerID;
   }
 
-  public ListBillOverviewByProdRequest payerID(List<Long> payerID) {
+  public ListAmortizedCostBillDailyRequest payerID(List<Long> payerID) {
     this.payerID = payerID;
     return this;
   }
 
-  public ListBillOverviewByProdRequest addPayerIDItem(Long payerIDItem) {
+  public ListAmortizedCostBillDailyRequest addPayerIDItem(Long payerIDItem) {
     if (this.payerID == null) {
       this.payerID = new ArrayList<Long>();
     }
@@ -258,12 +350,12 @@ public class ListBillOverviewByProdRequest {
     this.payerID = payerID;
   }
 
-  public ListBillOverviewByProdRequest product(List<String> product) {
+  public ListAmortizedCostBillDailyRequest product(List<String> product) {
     this.product = product;
     return this;
   }
 
-  public ListBillOverviewByProdRequest addProductItem(String productItem) {
+  public ListAmortizedCostBillDailyRequest addProductItem(String productItem) {
     if (this.product == null) {
       this.product = new ArrayList<String>();
     }
@@ -293,34 +385,42 @@ public class ListBillOverviewByProdRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ListBillOverviewByProdRequest listBillOverviewByProdRequest = (ListBillOverviewByProdRequest) o;
-    return Objects.equals(this.billCategoryParent, listBillOverviewByProdRequest.billCategoryParent) &&
-        Objects.equals(this.billPeriod, listBillOverviewByProdRequest.billPeriod) &&
-        Objects.equals(this.billingMode, listBillOverviewByProdRequest.billingMode) &&
-        Objects.equals(this.ignoreZero, listBillOverviewByProdRequest.ignoreZero) &&
-        Objects.equals(this.limit, listBillOverviewByProdRequest.limit) &&
-        Objects.equals(this.needRecordNum, listBillOverviewByProdRequest.needRecordNum) &&
-        Objects.equals(this.offset, listBillOverviewByProdRequest.offset) &&
-        Objects.equals(this.ownerID, listBillOverviewByProdRequest.ownerID) &&
-        Objects.equals(this.payerID, listBillOverviewByProdRequest.payerID) &&
-        Objects.equals(this.product, listBillOverviewByProdRequest.product);
+    ListAmortizedCostBillDailyRequest listAmortizedCostBillDailyRequest = (ListAmortizedCostBillDailyRequest) o;
+    return Objects.equals(this.amortizedDay, listAmortizedCostBillDailyRequest.amortizedDay) &&
+        Objects.equals(this.amortizedMonth, listAmortizedCostBillDailyRequest.amortizedMonth) &&
+        Objects.equals(this.amortizedType, listAmortizedCostBillDailyRequest.amortizedType) &&
+        Objects.equals(this.billCategory, listAmortizedCostBillDailyRequest.billCategory) &&
+        Objects.equals(this.billPeriod, listAmortizedCostBillDailyRequest.billPeriod) &&
+        Objects.equals(this.billingMode, listAmortizedCostBillDailyRequest.billingMode) &&
+        Objects.equals(this.ignoreZero, listAmortizedCostBillDailyRequest.ignoreZero) &&
+        Objects.equals(this.instanceNo, listAmortizedCostBillDailyRequest.instanceNo) &&
+        Objects.equals(this.limit, listAmortizedCostBillDailyRequest.limit) &&
+        Objects.equals(this.needRecordNum, listAmortizedCostBillDailyRequest.needRecordNum) &&
+        Objects.equals(this.offset, listAmortizedCostBillDailyRequest.offset) &&
+        Objects.equals(this.ownerID, listAmortizedCostBillDailyRequest.ownerID) &&
+        Objects.equals(this.payerID, listAmortizedCostBillDailyRequest.payerID) &&
+        Objects.equals(this.product, listAmortizedCostBillDailyRequest.product);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategoryParent, billPeriod, billingMode, ignoreZero, limit, needRecordNum, offset, ownerID, payerID, product);
+    return Objects.hash(amortizedDay, amortizedMonth, amortizedType, billCategory, billPeriod, billingMode, ignoreZero, instanceNo, limit, needRecordNum, offset, ownerID, payerID, product);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ListBillOverviewByProdRequest {\n");
+    sb.append("class ListAmortizedCostBillDailyRequest {\n");
     
-    sb.append("    billCategoryParent: ").append(toIndentedString(billCategoryParent)).append("\n");
+    sb.append("    amortizedDay: ").append(toIndentedString(amortizedDay)).append("\n");
+    sb.append("    amortizedMonth: ").append(toIndentedString(amortizedMonth)).append("\n");
+    sb.append("    amortizedType: ").append(toIndentedString(amortizedType)).append("\n");
+    sb.append("    billCategory: ").append(toIndentedString(billCategory)).append("\n");
     sb.append("    billPeriod: ").append(toIndentedString(billPeriod)).append("\n");
     sb.append("    billingMode: ").append(toIndentedString(billingMode)).append("\n");
     sb.append("    ignoreZero: ").append(toIndentedString(ignoreZero)).append("\n");
+    sb.append("    instanceNo: ").append(toIndentedString(instanceNo)).append("\n");
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("    needRecordNum: ").append(toIndentedString(needRecordNum)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");

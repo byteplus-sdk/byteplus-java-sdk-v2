@@ -41,6 +41,9 @@ public class ListSplitBillDetailRequest {
   @SerializedName("BillingMode")
   private List<String> billingMode = null;
 
+  @SerializedName("ExpenseDate")
+  private String expenseDate = null;
+
   @SerializedName("GroupPeriod")
   private Integer groupPeriod = null;
 
@@ -58,6 +61,12 @@ public class ListSplitBillDetailRequest {
 
   @SerializedName("Offset")
   private Integer offset = null;
+
+  @SerializedName("OwnerID")
+  private List<Long> ownerID = null;
+
+  @SerializedName("PayerID")
+  private List<Long> payerID = null;
 
   @SerializedName("Product")
   private List<String> product = null;
@@ -134,6 +143,24 @@ public class ListSplitBillDetailRequest {
 
   public void setBillingMode(List<String> billingMode) {
     this.billingMode = billingMode;
+  }
+
+  public ListSplitBillDetailRequest expenseDate(String expenseDate) {
+    this.expenseDate = expenseDate;
+    return this;
+  }
+
+   /**
+   * Get expenseDate
+   * @return expenseDate
+  **/
+  @Schema(description = "")
+  public String getExpenseDate() {
+    return expenseDate;
+  }
+
+  public void setExpenseDate(String expenseDate) {
+    this.expenseDate = expenseDate;
   }
 
   public ListSplitBillDetailRequest groupPeriod(Integer groupPeriod) {
@@ -245,6 +272,58 @@ public class ListSplitBillDetailRequest {
     this.offset = offset;
   }
 
+  public ListSplitBillDetailRequest ownerID(List<Long> ownerID) {
+    this.ownerID = ownerID;
+    return this;
+  }
+
+  public ListSplitBillDetailRequest addOwnerIDItem(Long ownerIDItem) {
+    if (this.ownerID == null) {
+      this.ownerID = new ArrayList<Long>();
+    }
+    this.ownerID.add(ownerIDItem);
+    return this;
+  }
+
+   /**
+   * Get ownerID
+   * @return ownerID
+  **/
+  @Schema(description = "")
+  public List<Long> getOwnerID() {
+    return ownerID;
+  }
+
+  public void setOwnerID(List<Long> ownerID) {
+    this.ownerID = ownerID;
+  }
+
+  public ListSplitBillDetailRequest payerID(List<Long> payerID) {
+    this.payerID = payerID;
+    return this;
+  }
+
+  public ListSplitBillDetailRequest addPayerIDItem(Long payerIDItem) {
+    if (this.payerID == null) {
+      this.payerID = new ArrayList<Long>();
+    }
+    this.payerID.add(payerIDItem);
+    return this;
+  }
+
+   /**
+   * Get payerID
+   * @return payerID
+  **/
+  @Schema(description = "")
+  public List<Long> getPayerID() {
+    return payerID;
+  }
+
+  public void setPayerID(List<Long> payerID) {
+    this.payerID = payerID;
+  }
+
   public ListSplitBillDetailRequest product(List<String> product) {
     this.product = product;
     return this;
@@ -302,19 +381,22 @@ public class ListSplitBillDetailRequest {
     return Objects.equals(this.billCategory, listSplitBillDetailRequest.billCategory) &&
         Objects.equals(this.billPeriod, listSplitBillDetailRequest.billPeriod) &&
         Objects.equals(this.billingMode, listSplitBillDetailRequest.billingMode) &&
+        Objects.equals(this.expenseDate, listSplitBillDetailRequest.expenseDate) &&
         Objects.equals(this.groupPeriod, listSplitBillDetailRequest.groupPeriod) &&
         Objects.equals(this.ignoreZero, listSplitBillDetailRequest.ignoreZero) &&
         Objects.equals(this.instanceNo, listSplitBillDetailRequest.instanceNo) &&
         Objects.equals(this.limit, listSplitBillDetailRequest.limit) &&
         Objects.equals(this.needRecordNum, listSplitBillDetailRequest.needRecordNum) &&
         Objects.equals(this.offset, listSplitBillDetailRequest.offset) &&
+        Objects.equals(this.ownerID, listSplitBillDetailRequest.ownerID) &&
+        Objects.equals(this.payerID, listSplitBillDetailRequest.payerID) &&
         Objects.equals(this.product, listSplitBillDetailRequest.product) &&
         Objects.equals(this.splitItemID, listSplitBillDetailRequest.splitItemID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategory, billPeriod, billingMode, groupPeriod, ignoreZero, instanceNo, limit, needRecordNum, offset, product, splitItemID);
+    return Objects.hash(billCategory, billPeriod, billingMode, expenseDate, groupPeriod, ignoreZero, instanceNo, limit, needRecordNum, offset, ownerID, payerID, product, splitItemID);
   }
 
 
@@ -326,12 +408,15 @@ public class ListSplitBillDetailRequest {
     sb.append("    billCategory: ").append(toIndentedString(billCategory)).append("\n");
     sb.append("    billPeriod: ").append(toIndentedString(billPeriod)).append("\n");
     sb.append("    billingMode: ").append(toIndentedString(billingMode)).append("\n");
+    sb.append("    expenseDate: ").append(toIndentedString(expenseDate)).append("\n");
     sb.append("    groupPeriod: ").append(toIndentedString(groupPeriod)).append("\n");
     sb.append("    ignoreZero: ").append(toIndentedString(ignoreZero)).append("\n");
     sb.append("    instanceNo: ").append(toIndentedString(instanceNo)).append("\n");
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("    needRecordNum: ").append(toIndentedString(needRecordNum)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
+    sb.append("    ownerID: ").append(toIndentedString(ownerID)).append("\n");
+    sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("    splitItemID: ").append(toIndentedString(splitItemID)).append("\n");
     sb.append("}");
