@@ -1,6 +1,9 @@
 package com.byteplus.ark.runtime.service;
 
 
+import com.byteplus.ark.runtime.model.content.generation.*;
+import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
+import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +32,7 @@ import retrofit2.HttpException;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.Retrofit;
+import sun.rmi.server.Dispatcher;
 
 import java.io.IOException;
 import java.net.Proxy;
@@ -205,6 +209,68 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         request.setStream(true);
         return stream(api.createContextChatCompletionStream(request, request.getModel(), customHeaders), ChatCompletionChunk.class);
     }
+
+
+    public ImagesResponse generateImages(GenerateImagesRequest request) {
+        return execute(api.generateImages(request, request.getModel(), new HashMap<>()));
+    }
+
+    public CreateContentGenerationTaskResult createContentGenerationTask(CreateContentGenerationTaskRequest request) {
+        return execute(api.createContentGenerationTask(request, request.getModel(), new HashMap<>()));
+    }
+
+    public CreateContentGenerationTaskResult createContentGenerationTask(CreateContentGenerationTaskRequest request, Map<String, String> customHeaders) {
+        return execute(api.createContentGenerationTask(request, request.getModel(), customHeaders));
+    }
+
+
+    public GetContentGenerationTaskResponse getContentGenerationTask(GetContentGenerationTaskRequest request) {
+        return execute(api.getContentGenerationTask(request.getTaskId(), new HashMap<>()));
+    }
+
+    public GetContentGenerationTaskResponse getContentGenerationTask(GetContentGenerationTaskRequest request, Map<String, String> customHeaders) {
+        return execute(api.getContentGenerationTask(request.getTaskId(), customHeaders));
+    }
+
+    @Override
+    public ListContentGenerationTasksResponse listContentGenerationTasks(ListContentGenerationTasksRequest request) {
+        return execute(
+                api.listContentGenerationTasks(
+                        request.getPageNum(),
+                        request.getPageSize(),
+                        request.getStatus(),
+                        request.getModel(),
+                        request.getTaskIds(),
+                        new HashMap<>()
+                )
+        );
+    }
+
+    public ListContentGenerationTasksResponse listContentGenerationTasks(
+            ListContentGenerationTasksRequest request,
+            Map<String, String> customHeaders
+    ) {
+        return execute(
+                api.listContentGenerationTasks(
+                        request.getPageNum(),
+                        request.getPageSize(),
+                        request.getStatus(),
+                        request.getModel(),
+                        request.getTaskIds(),
+                        customHeaders
+                )
+        );
+    }
+
+
+    public DeleteContentGenerationTaskResponse deleteContentGenerationTask(DeleteContentGenerationTaskRequest request) {
+        return execute(api.deleteContentGenerationTask(request.getTaskId(), new HashMap<>()));
+    }
+
+    public DeleteContentGenerationTaskResponse deleteContentGenerationTask(DeleteContentGenerationTaskRequest request, Map<String, String> customHeaders) {
+        return execute(api.deleteContentGenerationTask(request.getTaskId(), customHeaders));
+    }
+
 
     public void shutdownExecutor() {
         Objects.requireNonNull(this.executorService, "executorService must be set in order to shut down");
