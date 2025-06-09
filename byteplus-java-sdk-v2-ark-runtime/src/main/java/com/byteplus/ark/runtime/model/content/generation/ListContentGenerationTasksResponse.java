@@ -98,6 +98,12 @@ public class ListContentGenerationTasksResponse {
             this.usage = usage;
         }
 
+        public ContentGenerationError getError() {
+            return error;
+        }
+
+        public void setError(ContentGenerationError error) { this.error = error; }
+
         public java.lang.Long getCreatedAt() {
             return createdAt;
         }

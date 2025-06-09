@@ -32,7 +32,7 @@ import retrofit2.HttpException;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.Retrofit;
-import sun.rmi.server.Dispatcher;
+import okhttp3.Dispatcher;
 
 import java.io.IOException;
 import java.net.Proxy;
