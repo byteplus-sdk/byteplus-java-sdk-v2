@@ -35,7 +35,7 @@ public class ContentGenerationTaskExample {
         // Text content
         contents.add(Content.builder()
                 .type("text")
-                .text("Dragon soaring above vast grasslands")
+                .text("Bird soaring above vast grasslands")
                 .build());
 
         // Image URL content
@@ -44,12 +44,12 @@ public class ContentGenerationTaskExample {
                 .imageUrl(CreateContentGenerationTaskRequest.ImageUrl.builder()
                         .url("${IMAGE URL HERE}")
                         .build())
-                // .role("first_frame")
                 .build());
 
         CreateContentGenerationTaskRequest createRequest = CreateContentGenerationTaskRequest.builder()
                 .model(model)
                 .content(contents)
+//                .callbackUrl("${YOUR_CALLBACK_URL}")
                 .build();
 
         // send create request

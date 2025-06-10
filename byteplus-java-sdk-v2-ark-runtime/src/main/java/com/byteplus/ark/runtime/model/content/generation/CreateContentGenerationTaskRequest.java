@@ -14,12 +14,21 @@ public class CreateContentGenerationTaskRequest {
     @JsonProperty("content")
     private List<Content> content;
 
+    @JsonProperty("callback_url")
+    private String callbackUrl;
+
     public CreateContentGenerationTaskRequest() {
     }
 
     public CreateContentGenerationTaskRequest(String model, List<Content> content) {
         this.model = model;
         this.content = content;
+    }
+
+    public CreateContentGenerationTaskRequest(String model, List<Content> content, String callbackUrl) {
+        this.model = model;
+        this.content = content;
+        this.callbackUrl = callbackUrl;
     }
 
     public String getModel() {
@@ -38,11 +47,19 @@ public class CreateContentGenerationTaskRequest {
         this.content = content;
     }
 
+    public String getCallbackUrl() {
+        return callbackUrl;
+    }
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
+    }
+
     @Override
     public String toString() {
         return "CreateContentGenerationTaskRequest{" +
                 "model='" + model + '\'' +
                 ", content=" + content +
+                ", callbackUrl='" + callbackUrl + '\'' +
                 '}';
     }
 
@@ -53,6 +70,7 @@ public class CreateContentGenerationTaskRequest {
     public static class Builder {
         private String model;
         private List<Content> content;
+        private String callbackUrl;
 
         private Builder() {
         }
@@ -67,10 +85,16 @@ public class CreateContentGenerationTaskRequest {
             return this;
         }
 
+        public Builder callbackUrl(String callbackUrl) {
+            this.callbackUrl = callbackUrl;
+            return this;
+        }
+
         public CreateContentGenerationTaskRequest build() {
             CreateContentGenerationTaskRequest createContentGenerationTaskRequest = new CreateContentGenerationTaskRequest();
             createContentGenerationTaskRequest.setModel(model);
             createContentGenerationTaskRequest.setContent(content);
+            createContentGenerationTaskRequest.setCallbackUrl(callbackUrl);
             return createContentGenerationTaskRequest;
         }
     }
@@ -87,17 +111,13 @@ public class CreateContentGenerationTaskRequest {
         @JsonProperty("image_url")
         private ImageUrl imageUrl;
 
-        @JsonProperty("role")
-        private String role;
-
         public Content() {
         }
 
-        public Content(String type, String text, ImageUrl imageUrl, String role) {
+        public Content(String type, String text, ImageUrl imageUrl) {
             this.type = type;
             this.text = text;
             this.imageUrl = imageUrl;
-            this.role = role;
         }
 
         public String getType() {
@@ -124,21 +144,12 @@ public class CreateContentGenerationTaskRequest {
             this.imageUrl = imageUrl;
         }
 
-        public String getRole() {
-            return role;
-        }
-
-        public void setRole(String role) {
-            this.role = role;
-        }
-
         @Override
         public String toString() {
             return "Content{" +
                     "type='" + type + '\'' +
                     ", text='" + text + '\'' +
                     ", imageUrl=" + imageUrl +
-                    ", role=" + role +
                     '}';
         }
 
@@ -150,7 +161,6 @@ public class CreateContentGenerationTaskRequest {
             private String type;
             private String text;
             private ImageUrl imageUrl;
-            private String role;
 
             private Builder() {
             }
@@ -170,17 +180,11 @@ public class CreateContentGenerationTaskRequest {
                 return this;
             }
 
-            public Builder role(String role) {
-                this.role = role;
-                return this;
-            }
-
             public Content build() {
                 Content content = new Content();
                 content.setType(type);
                 content.setText(text);
                 content.setImageUrl(imageUrl);
-                content.setRole(role);
                 return content;
             }
         }

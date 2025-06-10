@@ -32,7 +32,7 @@ public class ImageGenerationsExample {
 
         GenerateImagesRequest generateRequest = GenerateImagesRequest.builder()
                 .model(model)
-                .prompt("Dragon soaring above vast grasslands")
+                .prompt("Bird soaring above vast grasslands")
                 .responseFormat(ResponseFormat.Url)
                 .seed(1234567890)
                 .watermark(true)
