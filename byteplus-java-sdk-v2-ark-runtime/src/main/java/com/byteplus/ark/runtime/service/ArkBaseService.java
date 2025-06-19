@@ -1,6 +1,9 @@
 package com.byteplus.ark.runtime.service;
 
 
+import com.byteplus.ark.runtime.model.content.generation.ListContentGenerationTasksRequest;
+import com.byteplus.ark.runtime.model.content.generation.ListContentGenerationTasksResponse;
+
 import java.time.Duration;
 
 
