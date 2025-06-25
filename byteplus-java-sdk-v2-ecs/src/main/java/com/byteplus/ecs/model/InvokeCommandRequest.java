@@ -72,6 +72,9 @@ public class InvokeCommandRequest {
   @SerializedName("Username")
   private String username = null;
 
+  @SerializedName("WindowsPassword")
+  private String windowsPassword = null;
+
   @SerializedName("WorkingDir")
   private String workingDir = null;
 
@@ -84,7 +87,8 @@ public class InvokeCommandRequest {
    * Get commandId
    * @return commandId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getCommandId() {
     return commandId;
   }
@@ -164,7 +168,8 @@ public class InvokeCommandRequest {
    * Get invocationName
    * @return invocationName
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInvocationName() {
     return invocationName;
   }
@@ -326,6 +331,24 @@ public class InvokeCommandRequest {
     this.username = username;
   }
 
+  public InvokeCommandRequest windowsPassword(String windowsPassword) {
+    this.windowsPassword = windowsPassword;
+    return this;
+  }
+
+   /**
+   * Get windowsPassword
+   * @return windowsPassword
+  **/
+  @Schema(description = "")
+  public String getWindowsPassword() {
+    return windowsPassword;
+  }
+
+  public void setWindowsPassword(String windowsPassword) {
+    this.windowsPassword = windowsPassword;
+  }
+
   public InvokeCommandRequest workingDir(String workingDir) {
     this.workingDir = workingDir;
     return this;
@@ -367,12 +390,13 @@ public class InvokeCommandRequest {
         Objects.equals(this.tags, invokeCommandRequest.tags) &&
         Objects.equals(this.timeout, invokeCommandRequest.timeout) &&
         Objects.equals(this.username, invokeCommandRequest.username) &&
+        Objects.equals(this.windowsPassword, invokeCommandRequest.windowsPassword) &&
         Objects.equals(this.workingDir, invokeCommandRequest.workingDir);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(commandId, frequency, instanceIds, invocationDescription, invocationName, launchTime, parameters, projectName, recurrenceEndTime, repeatMode, tags, timeout, username, workingDir);
+    return Objects.hash(commandId, frequency, instanceIds, invocationDescription, invocationName, launchTime, parameters, projectName, recurrenceEndTime, repeatMode, tags, timeout, username, windowsPassword, workingDir);
   }
 
 
@@ -394,6 +418,7 @@ public class InvokeCommandRequest {
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    timeout: ").append(toIndentedString(timeout)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    windowsPassword: ").append(toIndentedString(windowsPassword)).append("\n");
     sb.append("    workingDir: ").append(toIndentedString(workingDir)).append("\n");
     sb.append("}");
     return sb.toString();

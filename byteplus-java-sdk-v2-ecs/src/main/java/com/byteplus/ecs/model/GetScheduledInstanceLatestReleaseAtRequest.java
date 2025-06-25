@@ -72,7 +72,8 @@ public class GetScheduledInstanceLatestReleaseAtRequest {
    * Get instanceTypeId
    * @return instanceTypeId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInstanceTypeId() {
     return instanceTypeId;
   }
@@ -108,7 +109,8 @@ public class GetScheduledInstanceLatestReleaseAtRequest {
    * Get volumeType
    * @return volumeType
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getVolumeType() {
     return volumeType;
   }
@@ -126,7 +128,8 @@ public class GetScheduledInstanceLatestReleaseAtRequest {
    * Get zoneId
    * @return zoneId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getZoneId() {
     return zoneId;
   }

@@ -14,7 +14,6 @@ package com.byteplus.ecs.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.ecs.model.ConvertNetworkInterfaceForRunInstancesInput;
 import com.byteplus.ecs.model.EipAddressForRunInstancesInput;
 import com.byteplus.ecs.model.NetworkInterfaceForRunInstancesInput;
 import com.byteplus.ecs.model.PlacementForRunInstancesInput;
@@ -38,6 +37,9 @@ import javax.validation.Valid;
 
 
 public class RunInstancesRequest {
+  @SerializedName("AffinityGroupSize")
+  private Integer affinityGroupSize = null;
+
   @SerializedName("AutoRenew")
   private Boolean autoRenew = null;
 
@@ -50,8 +52,14 @@ public class RunInstancesRequest {
   @SerializedName("Count")
   private Integer count = null;
 
+  @SerializedName("CpuMaxFrequency")
+  private Float cpuMaxFrequency = null;
+
   @SerializedName("CreditSpecification")
   private String creditSpecification = null;
+
+  @SerializedName("DeletionProtection")
+  private Boolean deletionProtection = null;
 
   @SerializedName("DeploymentSetGroupNumber")
   private Integer deploymentSetGroupNumber = null;
@@ -107,11 +115,8 @@ public class RunInstancesRequest {
   @SerializedName("MinCount")
   private Integer minCount = null;
 
-  @SerializedName("NetworkInterface")
-  private List<NetworkInterfaceForRunInstancesInput> networkInterface = null;
-
   @SerializedName("NetworkInterfaces")
-  private List<ConvertNetworkInterfaceForRunInstancesInput> networkInterfaces = null;
+  private List<NetworkInterfaceForRunInstancesInput> networkInterfaces = null;
 
   @SerializedName("Password")
   private String password = null;
@@ -154,6 +159,24 @@ public class RunInstancesRequest {
 
   @SerializedName("ZoneId")
   private String zoneId = null;
+
+  public RunInstancesRequest affinityGroupSize(Integer affinityGroupSize) {
+    this.affinityGroupSize = affinityGroupSize;
+    return this;
+  }
+
+   /**
+   * Get affinityGroupSize
+   * @return affinityGroupSize
+  **/
+  @Schema(description = "")
+  public Integer getAffinityGroupSize() {
+    return affinityGroupSize;
+  }
+
+  public void setAffinityGroupSize(Integer affinityGroupSize) {
+    this.affinityGroupSize = affinityGroupSize;
+  }
 
   public RunInstancesRequest autoRenew(Boolean autoRenew) {
     this.autoRenew = autoRenew;
@@ -227,6 +250,24 @@ public class RunInstancesRequest {
     this.count = count;
   }
 
+  public RunInstancesRequest cpuMaxFrequency(Float cpuMaxFrequency) {
+    this.cpuMaxFrequency = cpuMaxFrequency;
+    return this;
+  }
+
+   /**
+   * Get cpuMaxFrequency
+   * @return cpuMaxFrequency
+  **/
+  @Schema(description = "")
+  public Float getCpuMaxFrequency() {
+    return cpuMaxFrequency;
+  }
+
+  public void setCpuMaxFrequency(Float cpuMaxFrequency) {
+    this.cpuMaxFrequency = cpuMaxFrequency;
+  }
+
   public RunInstancesRequest creditSpecification(String creditSpecification) {
     this.creditSpecification = creditSpecification;
     return this;
@@ -243,6 +284,24 @@ public class RunInstancesRequest {
 
   public void setCreditSpecification(String creditSpecification) {
     this.creditSpecification = creditSpecification;
+  }
+
+  public RunInstancesRequest deletionProtection(Boolean deletionProtection) {
+    this.deletionProtection = deletionProtection;
+    return this;
+  }
+
+   /**
+   * Get deletionProtection
+   * @return deletionProtection
+  **/
+  @Schema(description = "")
+  public Boolean isDeletionProtection() {
+    return deletionProtection;
+  }
+
+  public void setDeletionProtection(Boolean deletionProtection) {
+    this.deletionProtection = deletionProtection;
   }
 
   public RunInstancesRequest deploymentSetGroupNumber(Integer deploymentSetGroupNumber) {
@@ -399,7 +458,8 @@ public class RunInstancesRequest {
    * Get imageId
    * @return imageId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getImageId() {
     return imageId;
   }
@@ -471,7 +531,8 @@ public class RunInstancesRequest {
    * Get instanceName
    * @return instanceName
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInstanceName() {
     return instanceName;
   }
@@ -570,41 +631,14 @@ public class RunInstancesRequest {
     this.minCount = minCount;
   }
 
-  public RunInstancesRequest networkInterface(List<NetworkInterfaceForRunInstancesInput> networkInterface) {
-    this.networkInterface = networkInterface;
-    return this;
-  }
-
-  public RunInstancesRequest addNetworkInterfaceItem(NetworkInterfaceForRunInstancesInput networkInterfaceItem) {
-    if (this.networkInterface == null) {
-      this.networkInterface = new ArrayList<NetworkInterfaceForRunInstancesInput>();
-    }
-    this.networkInterface.add(networkInterfaceItem);
-    return this;
-  }
-
-   /**
-   * Get networkInterface
-   * @return networkInterface
-  **/
-  @Valid
-  @Schema(description = "")
-  public List<NetworkInterfaceForRunInstancesInput> getNetworkInterface() {
-    return networkInterface;
-  }
-
-  public void setNetworkInterface(List<NetworkInterfaceForRunInstancesInput> networkInterface) {
-    this.networkInterface = networkInterface;
-  }
-
-  public RunInstancesRequest networkInterfaces(List<ConvertNetworkInterfaceForRunInstancesInput> networkInterfaces) {
+  public RunInstancesRequest networkInterfaces(List<NetworkInterfaceForRunInstancesInput> networkInterfaces) {
     this.networkInterfaces = networkInterfaces;
     return this;
   }
 
-  public RunInstancesRequest addNetworkInterfacesItem(ConvertNetworkInterfaceForRunInstancesInput networkInterfacesItem) {
+  public RunInstancesRequest addNetworkInterfacesItem(NetworkInterfaceForRunInstancesInput networkInterfacesItem) {
     if (this.networkInterfaces == null) {
-      this.networkInterfaces = new ArrayList<ConvertNetworkInterfaceForRunInstancesInput>();
+      this.networkInterfaces = new ArrayList<NetworkInterfaceForRunInstancesInput>();
     }
     this.networkInterfaces.add(networkInterfacesItem);
     return this;
@@ -616,11 +650,11 @@ public class RunInstancesRequest {
   **/
   @Valid
   @Schema(description = "")
-  public List<ConvertNetworkInterfaceForRunInstancesInput> getNetworkInterfaces() {
+  public List<NetworkInterfaceForRunInstancesInput> getNetworkInterfaces() {
     return networkInterfaces;
   }
 
-  public void setNetworkInterfaces(List<ConvertNetworkInterfaceForRunInstancesInput> networkInterfaces) {
+  public void setNetworkInterfaces(List<NetworkInterfaceForRunInstancesInput> networkInterfaces) {
     this.networkInterfaces = networkInterfaces;
   }
 
@@ -886,7 +920,8 @@ public class RunInstancesRequest {
    * Get zoneId
    * @return zoneId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getZoneId() {
     return zoneId;
   }
@@ -905,11 +940,14 @@ public class RunInstancesRequest {
       return false;
     }
     RunInstancesRequest runInstancesRequest = (RunInstancesRequest) o;
-    return Objects.equals(this.autoRenew, runInstancesRequest.autoRenew) &&
+    return Objects.equals(this.affinityGroupSize, runInstancesRequest.affinityGroupSize) &&
+        Objects.equals(this.autoRenew, runInstancesRequest.autoRenew) &&
         Objects.equals(this.autoRenewPeriod, runInstancesRequest.autoRenewPeriod) &&
         Objects.equals(this.clientToken, runInstancesRequest.clientToken) &&
         Objects.equals(this.count, runInstancesRequest.count) &&
+        Objects.equals(this.cpuMaxFrequency, runInstancesRequest.cpuMaxFrequency) &&
         Objects.equals(this.creditSpecification, runInstancesRequest.creditSpecification) &&
+        Objects.equals(this.deletionProtection, runInstancesRequest.deletionProtection) &&
         Objects.equals(this.deploymentSetGroupNumber, runInstancesRequest.deploymentSetGroupNumber) &&
         Objects.equals(this.deploymentSetId, runInstancesRequest.deploymentSetId) &&
         Objects.equals(this.description, runInstancesRequest.description) &&
@@ -928,7 +966,6 @@ public class RunInstancesRequest {
         Objects.equals(this.keepImageCredential, runInstancesRequest.keepImageCredential) &&
         Objects.equals(this.keyPairName, runInstancesRequest.keyPairName) &&
         Objects.equals(this.minCount, runInstancesRequest.minCount) &&
-        Objects.equals(this.networkInterface, runInstancesRequest.networkInterface) &&
         Objects.equals(this.networkInterfaces, runInstancesRequest.networkInterfaces) &&
         Objects.equals(this.password, runInstancesRequest.password) &&
         Objects.equals(this.period, runInstancesRequest.period) &&
@@ -948,7 +985,7 @@ public class RunInstancesRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(autoRenew, autoRenewPeriod, clientToken, count, creditSpecification, deploymentSetGroupNumber, deploymentSetId, description, dryRun, eipAddress, hostName, hostname, hpcClusterId, imageId, imageReleaseVersion, installRunCommandAgent, instanceChargeType, instanceName, instanceType, instanceTypeId, keepImageCredential, keyPairName, minCount, networkInterface, networkInterfaces, password, period, periodUnit, placement, projectName, securityEnhancementStrategy, spotPriceLimit, spotStrategy, suffixIndex, tags, uniqueSuffix, userData, volumes, zoneId);
+    return Objects.hash(affinityGroupSize, autoRenew, autoRenewPeriod, clientToken, count, cpuMaxFrequency, creditSpecification, deletionProtection, deploymentSetGroupNumber, deploymentSetId, description, dryRun, eipAddress, hostName, hostname, hpcClusterId, imageId, imageReleaseVersion, installRunCommandAgent, instanceChargeType, instanceName, instanceType, instanceTypeId, keepImageCredential, keyPairName, minCount, networkInterfaces, password, period, periodUnit, placement, projectName, securityEnhancementStrategy, spotPriceLimit, spotStrategy, suffixIndex, tags, uniqueSuffix, userData, volumes, zoneId);
   }
 
 
@@ -957,11 +994,14 @@ public class RunInstancesRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class RunInstancesRequest {\n");
     
+    sb.append("    affinityGroupSize: ").append(toIndentedString(affinityGroupSize)).append("\n");
     sb.append("    autoRenew: ").append(toIndentedString(autoRenew)).append("\n");
     sb.append("    autoRenewPeriod: ").append(toIndentedString(autoRenewPeriod)).append("\n");
     sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    cpuMaxFrequency: ").append(toIndentedString(cpuMaxFrequency)).append("\n");
     sb.append("    creditSpecification: ").append(toIndentedString(creditSpecification)).append("\n");
+    sb.append("    deletionProtection: ").append(toIndentedString(deletionProtection)).append("\n");
     sb.append("    deploymentSetGroupNumber: ").append(toIndentedString(deploymentSetGroupNumber)).append("\n");
     sb.append("    deploymentSetId: ").append(toIndentedString(deploymentSetId)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
@@ -980,7 +1020,6 @@ public class RunInstancesRequest {
     sb.append("    keepImageCredential: ").append(toIndentedString(keepImageCredential)).append("\n");
     sb.append("    keyPairName: ").append(toIndentedString(keyPairName)).append("\n");
     sb.append("    minCount: ").append(toIndentedString(minCount)).append("\n");
-    sb.append("    networkInterface: ").append(toIndentedString(networkInterface)).append("\n");
     sb.append("    networkInterfaces: ").append(toIndentedString(networkInterfaces)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    period: ").append(toIndentedString(period)).append("\n");

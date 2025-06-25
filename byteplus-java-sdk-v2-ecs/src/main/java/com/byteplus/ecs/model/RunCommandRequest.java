@@ -85,6 +85,9 @@ public class RunCommandRequest {
   @SerializedName("Username")
   private String username = null;
 
+  @SerializedName("WindowsPassword")
+  private String windowsPassword = null;
+
   @SerializedName("WorkingDir")
   private String workingDir = null;
 
@@ -97,7 +100,8 @@ public class RunCommandRequest {
    * Get commandContent
    * @return commandContent
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getCommandContent() {
     return commandContent;
   }
@@ -213,7 +217,8 @@ public class RunCommandRequest {
    * Get invocationName
    * @return invocationName
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInvocationName() {
     return invocationName;
   }
@@ -393,7 +398,8 @@ public class RunCommandRequest {
    * Get type
    * @return type
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getType() {
     return type;
   }
@@ -418,6 +424,24 @@ public class RunCommandRequest {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public RunCommandRequest windowsPassword(String windowsPassword) {
+    this.windowsPassword = windowsPassword;
+    return this;
+  }
+
+   /**
+   * Get windowsPassword
+   * @return windowsPassword
+  **/
+  @Schema(description = "")
+  public String getWindowsPassword() {
+    return windowsPassword;
+  }
+
+  public void setWindowsPassword(String windowsPassword) {
+    this.windowsPassword = windowsPassword;
   }
 
   public RunCommandRequest workingDir(String workingDir) {
@@ -465,12 +489,13 @@ public class RunCommandRequest {
         Objects.equals(this.timeout, runCommandRequest.timeout) &&
         Objects.equals(this.type, runCommandRequest.type) &&
         Objects.equals(this.username, runCommandRequest.username) &&
+        Objects.equals(this.windowsPassword, runCommandRequest.windowsPassword) &&
         Objects.equals(this.workingDir, runCommandRequest.workingDir);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(commandContent, contentEncoding, enableParameter, frequency, instanceIds, invocationDescription, invocationName, launchTime, parameterDefinitions, parameters, projectName, recurrenceEndTime, repeatMode, tags, timeout, type, username, workingDir);
+    return Objects.hash(commandContent, contentEncoding, enableParameter, frequency, instanceIds, invocationDescription, invocationName, launchTime, parameterDefinitions, parameters, projectName, recurrenceEndTime, repeatMode, tags, timeout, type, username, windowsPassword, workingDir);
   }
 
 
@@ -496,6 +521,7 @@ public class RunCommandRequest {
     sb.append("    timeout: ").append(toIndentedString(timeout)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    windowsPassword: ").append(toIndentedString(windowsPassword)).append("\n");
     sb.append("    workingDir: ").append(toIndentedString(workingDir)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -45,7 +45,8 @@ public class GetConsoleScreenshotRequest {
    * Get instanceId
    * @return instanceId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInstanceId() {
     return instanceId;
   }

@@ -24,32 +24,31 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DescribeInstanceVncUrlRequest
+ * ImportDataVolumeForImportImageInput
  */
 
 
 
-public class DescribeInstanceVncUrlRequest {
-  @SerializedName("InstanceId")
-  private String instanceId = null;
+public class ImportDataVolumeForImportImageInput {
+  @SerializedName("DataVolumeUrl")
+  private String dataVolumeUrl = null;
 
-  public DescribeInstanceVncUrlRequest instanceId(String instanceId) {
-    this.instanceId = instanceId;
+  public ImportDataVolumeForImportImageInput dataVolumeUrl(String dataVolumeUrl) {
+    this.dataVolumeUrl = dataVolumeUrl;
     return this;
   }
 
    /**
-   * Get instanceId
-   * @return instanceId
+   * Get dataVolumeUrl
+   * @return dataVolumeUrl
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public String getInstanceId() {
-    return instanceId;
+  @Schema(description = "")
+  public String getDataVolumeUrl() {
+    return dataVolumeUrl;
   }
 
-  public void setInstanceId(String instanceId) {
-    this.instanceId = instanceId;
+  public void setDataVolumeUrl(String dataVolumeUrl) {
+    this.dataVolumeUrl = dataVolumeUrl;
   }
 
 
@@ -61,22 +60,22 @@ public class DescribeInstanceVncUrlRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DescribeInstanceVncUrlRequest describeInstanceVncUrlRequest = (DescribeInstanceVncUrlRequest) o;
-    return Objects.equals(this.instanceId, describeInstanceVncUrlRequest.instanceId);
+    ImportDataVolumeForImportImageInput importDataVolumeForImportImageInput = (ImportDataVolumeForImportImageInput) o;
+    return Objects.equals(this.dataVolumeUrl, importDataVolumeForImportImageInput.dataVolumeUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(instanceId);
+    return Objects.hash(dataVolumeUrl);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DescribeInstanceVncUrlRequest {\n");
+    sb.append("class ImportDataVolumeForImportImageInput {\n");
     
-    sb.append("    instanceId: ").append(toIndentedString(instanceId)).append("\n");
+    sb.append("    dataVolumeUrl: ").append(toIndentedString(dataVolumeUrl)).append("\n");
     sb.append("}");
     return sb.toString();
   }

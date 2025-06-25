@@ -24,32 +24,31 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DescribeInstanceVncUrlRequest
+ * CreateHpcClusterResponse
  */
 
 
 
-public class DescribeInstanceVncUrlRequest {
-  @SerializedName("InstanceId")
-  private String instanceId = null;
+public class CreateHpcClusterResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("HpcClusterId")
+  private String hpcClusterId = null;
 
-  public DescribeInstanceVncUrlRequest instanceId(String instanceId) {
-    this.instanceId = instanceId;
+  public CreateHpcClusterResponse hpcClusterId(String hpcClusterId) {
+    this.hpcClusterId = hpcClusterId;
     return this;
   }
 
    /**
-   * Get instanceId
-   * @return instanceId
+   * Get hpcClusterId
+   * @return hpcClusterId
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public String getInstanceId() {
-    return instanceId;
+  @Schema(description = "")
+  public String getHpcClusterId() {
+    return hpcClusterId;
   }
 
-  public void setInstanceId(String instanceId) {
-    this.instanceId = instanceId;
+  public void setHpcClusterId(String hpcClusterId) {
+    this.hpcClusterId = hpcClusterId;
   }
 
 
@@ -61,22 +60,22 @@ public class DescribeInstanceVncUrlRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DescribeInstanceVncUrlRequest describeInstanceVncUrlRequest = (DescribeInstanceVncUrlRequest) o;
-    return Objects.equals(this.instanceId, describeInstanceVncUrlRequest.instanceId);
+    CreateHpcClusterResponse createHpcClusterResponse = (CreateHpcClusterResponse) o;
+    return Objects.equals(this.hpcClusterId, createHpcClusterResponse.hpcClusterId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(instanceId);
+    return Objects.hash(hpcClusterId);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DescribeInstanceVncUrlRequest {\n");
+    sb.append("class CreateHpcClusterResponse {\n");
     
-    sb.append("    instanceId: ").append(toIndentedString(instanceId)).append("\n");
+    sb.append("    hpcClusterId: ").append(toIndentedString(hpcClusterId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

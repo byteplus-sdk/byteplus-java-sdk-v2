@@ -21,27 +21,22 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * AssociateInstancesIamRoleRequest
+ * DeleteHpcClusterRequest
  */
 
 
 
-public class AssociateInstancesIamRoleRequest {
+public class DeleteHpcClusterRequest {
   @SerializedName("ClientToken")
   private String clientToken = null;
 
-  @SerializedName("IamRoleName")
-  private String iamRoleName = null;
+  @SerializedName("HpcClusterId")
+  private String hpcClusterId = null;
 
-  @SerializedName("InstanceIds")
-  private List<String> instanceIds = null;
-
-  public AssociateInstancesIamRoleRequest clientToken(String clientToken) {
+  public DeleteHpcClusterRequest clientToken(String clientToken) {
     this.clientToken = clientToken;
     return this;
   }
@@ -59,49 +54,23 @@ public class AssociateInstancesIamRoleRequest {
     this.clientToken = clientToken;
   }
 
-  public AssociateInstancesIamRoleRequest iamRoleName(String iamRoleName) {
-    this.iamRoleName = iamRoleName;
+  public DeleteHpcClusterRequest hpcClusterId(String hpcClusterId) {
+    this.hpcClusterId = hpcClusterId;
     return this;
   }
 
    /**
-   * Get iamRoleName
-   * @return iamRoleName
+   * Get hpcClusterId
+   * @return hpcClusterId
   **/
   @NotNull
   @Schema(required = true, description = "")
-  public String getIamRoleName() {
-    return iamRoleName;
+  public String getHpcClusterId() {
+    return hpcClusterId;
   }
 
-  public void setIamRoleName(String iamRoleName) {
-    this.iamRoleName = iamRoleName;
-  }
-
-  public AssociateInstancesIamRoleRequest instanceIds(List<String> instanceIds) {
-    this.instanceIds = instanceIds;
-    return this;
-  }
-
-  public AssociateInstancesIamRoleRequest addInstanceIdsItem(String instanceIdsItem) {
-    if (this.instanceIds == null) {
-      this.instanceIds = new ArrayList<String>();
-    }
-    this.instanceIds.add(instanceIdsItem);
-    return this;
-  }
-
-   /**
-   * Get instanceIds
-   * @return instanceIds
-  **/
-  @Schema(description = "")
-  public List<String> getInstanceIds() {
-    return instanceIds;
-  }
-
-  public void setInstanceIds(List<String> instanceIds) {
-    this.instanceIds = instanceIds;
+  public void setHpcClusterId(String hpcClusterId) {
+    this.hpcClusterId = hpcClusterId;
   }
 
 
@@ -113,26 +82,24 @@ public class AssociateInstancesIamRoleRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AssociateInstancesIamRoleRequest associateInstancesIamRoleRequest = (AssociateInstancesIamRoleRequest) o;
-    return Objects.equals(this.clientToken, associateInstancesIamRoleRequest.clientToken) &&
-        Objects.equals(this.iamRoleName, associateInstancesIamRoleRequest.iamRoleName) &&
-        Objects.equals(this.instanceIds, associateInstancesIamRoleRequest.instanceIds);
+    DeleteHpcClusterRequest deleteHpcClusterRequest = (DeleteHpcClusterRequest) o;
+    return Objects.equals(this.clientToken, deleteHpcClusterRequest.clientToken) &&
+        Objects.equals(this.hpcClusterId, deleteHpcClusterRequest.hpcClusterId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientToken, iamRoleName, instanceIds);
+    return Objects.hash(clientToken, hpcClusterId);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AssociateInstancesIamRoleRequest {\n");
+    sb.append("class DeleteHpcClusterRequest {\n");
     
     sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
-    sb.append("    iamRoleName: ").append(toIndentedString(iamRoleName)).append("\n");
-    sb.append("    instanceIds: ").append(toIndentedString(instanceIds)).append("\n");
+    sb.append("    hpcClusterId: ").append(toIndentedString(hpcClusterId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

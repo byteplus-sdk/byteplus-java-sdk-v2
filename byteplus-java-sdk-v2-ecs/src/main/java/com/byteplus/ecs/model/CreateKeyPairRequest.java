@@ -93,7 +93,8 @@ public class CreateKeyPairRequest {
    * Get keyPairName
    * @return keyPairName
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getKeyPairName() {
     return keyPairName;
   }

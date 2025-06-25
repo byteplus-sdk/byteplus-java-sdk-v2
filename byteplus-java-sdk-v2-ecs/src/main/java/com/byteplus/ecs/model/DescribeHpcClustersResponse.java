@@ -14,6 +14,7 @@ package com.byteplus.ecs.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.ecs.model.HpcClusterForDescribeHpcClustersOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -21,62 +22,51 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DescribeImageSharePermissionRequest
+ * DescribeHpcClustersResponse
  */
 
 
 
-public class DescribeImageSharePermissionRequest {
-  @SerializedName("ImageId")
-  private String imageId = null;
-
-  @SerializedName("MaxResults")
-  private Integer maxResults = null;
+public class DescribeHpcClustersResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("HpcClusters")
+  private List<HpcClusterForDescribeHpcClustersOutput> hpcClusters = null;
 
   @SerializedName("NextToken")
   private String nextToken = null;
 
-  public DescribeImageSharePermissionRequest imageId(String imageId) {
-    this.imageId = imageId;
+  public DescribeHpcClustersResponse hpcClusters(List<HpcClusterForDescribeHpcClustersOutput> hpcClusters) {
+    this.hpcClusters = hpcClusters;
+    return this;
+  }
+
+  public DescribeHpcClustersResponse addHpcClustersItem(HpcClusterForDescribeHpcClustersOutput hpcClustersItem) {
+    if (this.hpcClusters == null) {
+      this.hpcClusters = new ArrayList<HpcClusterForDescribeHpcClustersOutput>();
+    }
+    this.hpcClusters.add(hpcClustersItem);
     return this;
   }
 
    /**
-   * Get imageId
-   * @return imageId
+   * Get hpcClusters
+   * @return hpcClusters
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public String getImageId() {
-    return imageId;
-  }
-
-  public void setImageId(String imageId) {
-    this.imageId = imageId;
-  }
-
-  public DescribeImageSharePermissionRequest maxResults(Integer maxResults) {
-    this.maxResults = maxResults;
-    return this;
-  }
-
-   /**
-   * Get maxResults
-   * @return maxResults
-  **/
+  @Valid
   @Schema(description = "")
-  public Integer getMaxResults() {
-    return maxResults;
+  public List<HpcClusterForDescribeHpcClustersOutput> getHpcClusters() {
+    return hpcClusters;
   }
 
-  public void setMaxResults(Integer maxResults) {
-    this.maxResults = maxResults;
+  public void setHpcClusters(List<HpcClusterForDescribeHpcClustersOutput> hpcClusters) {
+    this.hpcClusters = hpcClusters;
   }
 
-  public DescribeImageSharePermissionRequest nextToken(String nextToken) {
+  public DescribeHpcClustersResponse nextToken(String nextToken) {
     this.nextToken = nextToken;
     return this;
   }
@@ -103,25 +93,23 @@ public class DescribeImageSharePermissionRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DescribeImageSharePermissionRequest describeImageSharePermissionRequest = (DescribeImageSharePermissionRequest) o;
-    return Objects.equals(this.imageId, describeImageSharePermissionRequest.imageId) &&
-        Objects.equals(this.maxResults, describeImageSharePermissionRequest.maxResults) &&
-        Objects.equals(this.nextToken, describeImageSharePermissionRequest.nextToken);
+    DescribeHpcClustersResponse describeHpcClustersResponse = (DescribeHpcClustersResponse) o;
+    return Objects.equals(this.hpcClusters, describeHpcClustersResponse.hpcClusters) &&
+        Objects.equals(this.nextToken, describeHpcClustersResponse.nextToken);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(imageId, maxResults, nextToken);
+    return Objects.hash(hpcClusters, nextToken);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DescribeImageSharePermissionRequest {\n");
+    sb.append("class DescribeHpcClustersResponse {\n");
     
-    sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
-    sb.append("    maxResults: ").append(toIndentedString(maxResults)).append("\n");
+    sb.append("    hpcClusters: ").append(toIndentedString(hpcClusters)).append("\n");
     sb.append("    nextToken: ").append(toIndentedString(nextToken)).append("\n");
     sb.append("}");
     return sb.toString();

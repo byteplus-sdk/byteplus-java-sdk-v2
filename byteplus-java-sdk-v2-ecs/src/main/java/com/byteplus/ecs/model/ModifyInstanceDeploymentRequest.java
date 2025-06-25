@@ -87,7 +87,8 @@ public class ModifyInstanceDeploymentRequest {
    * Get deploymentSetId
    * @return deploymentSetId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getDeploymentSetId() {
     return deploymentSetId;
   }
@@ -105,7 +106,8 @@ public class ModifyInstanceDeploymentRequest {
    * Get instanceId
    * @return instanceId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInstanceId() {
     return instanceId;
   }
