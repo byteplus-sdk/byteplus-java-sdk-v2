@@ -24,25 +24,25 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ModifyKeyPairAttributeRequest
+ * CreateHpcClusterRequest
  */
 
 
 
-public class ModifyKeyPairAttributeRequest {
+public class CreateHpcClusterRequest {
   @SerializedName("ClientToken")
   private String clientToken = null;
 
   @SerializedName("Description")
   private String description = null;
 
-  @SerializedName("KeyPairId")
-  private String keyPairId = null;
+  @SerializedName("Name")
+  private String name = null;
 
-  @SerializedName("KeyPairName")
-  private String keyPairName = null;
+  @SerializedName("ZoneId")
+  private String zoneId = null;
 
-  public ModifyKeyPairAttributeRequest clientToken(String clientToken) {
+  public CreateHpcClusterRequest clientToken(String clientToken) {
     this.clientToken = clientToken;
     return this;
   }
@@ -60,7 +60,7 @@ public class ModifyKeyPairAttributeRequest {
     this.clientToken = clientToken;
   }
 
-  public ModifyKeyPairAttributeRequest description(String description) {
+  public CreateHpcClusterRequest description(String description) {
     this.description = description;
     return this;
   }
@@ -69,8 +69,7 @@ public class ModifyKeyPairAttributeRequest {
    * Get description
    * @return description
   **/
-  @NotNull
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   public String getDescription() {
     return description;
   }
@@ -79,40 +78,42 @@ public class ModifyKeyPairAttributeRequest {
     this.description = description;
   }
 
-  public ModifyKeyPairAttributeRequest keyPairId(String keyPairId) {
-    this.keyPairId = keyPairId;
+  public CreateHpcClusterRequest name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * Get keyPairId
-   * @return keyPairId
+   * Get name
+   * @return name
   **/
-  @Schema(description = "")
-  public String getKeyPairId() {
-    return keyPairId;
+  @NotNull
+  @Schema(required = true, description = "")
+  public String getName() {
+    return name;
   }
 
-  public void setKeyPairId(String keyPairId) {
-    this.keyPairId = keyPairId;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public ModifyKeyPairAttributeRequest keyPairName(String keyPairName) {
-    this.keyPairName = keyPairName;
+  public CreateHpcClusterRequest zoneId(String zoneId) {
+    this.zoneId = zoneId;
     return this;
   }
 
    /**
-   * Get keyPairName
-   * @return keyPairName
+   * Get zoneId
+   * @return zoneId
   **/
-  @Schema(description = "")
-  public String getKeyPairName() {
-    return keyPairName;
+  @NotNull
+  @Schema(required = true, description = "")
+  public String getZoneId() {
+    return zoneId;
   }
 
-  public void setKeyPairName(String keyPairName) {
-    this.keyPairName = keyPairName;
+  public void setZoneId(String zoneId) {
+    this.zoneId = zoneId;
   }
 
 
@@ -124,28 +125,28 @@ public class ModifyKeyPairAttributeRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ModifyKeyPairAttributeRequest modifyKeyPairAttributeRequest = (ModifyKeyPairAttributeRequest) o;
-    return Objects.equals(this.clientToken, modifyKeyPairAttributeRequest.clientToken) &&
-        Objects.equals(this.description, modifyKeyPairAttributeRequest.description) &&
-        Objects.equals(this.keyPairId, modifyKeyPairAttributeRequest.keyPairId) &&
-        Objects.equals(this.keyPairName, modifyKeyPairAttributeRequest.keyPairName);
+    CreateHpcClusterRequest createHpcClusterRequest = (CreateHpcClusterRequest) o;
+    return Objects.equals(this.clientToken, createHpcClusterRequest.clientToken) &&
+        Objects.equals(this.description, createHpcClusterRequest.description) &&
+        Objects.equals(this.name, createHpcClusterRequest.name) &&
+        Objects.equals(this.zoneId, createHpcClusterRequest.zoneId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientToken, description, keyPairId, keyPairName);
+    return Objects.hash(clientToken, description, name, zoneId);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModifyKeyPairAttributeRequest {\n");
+    sb.append("class CreateHpcClusterRequest {\n");
     
     sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    keyPairId: ").append(toIndentedString(keyPairId)).append("\n");
-    sb.append("    keyPairName: ").append(toIndentedString(keyPairName)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    zoneId: ").append(toIndentedString(zoneId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

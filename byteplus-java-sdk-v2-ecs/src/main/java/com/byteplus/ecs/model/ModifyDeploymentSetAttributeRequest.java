@@ -69,7 +69,8 @@ public class ModifyDeploymentSetAttributeRequest {
    * Get deploymentSetId
    * @return deploymentSetId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getDeploymentSetId() {
     return deploymentSetId;
   }

@@ -69,7 +69,8 @@ public class RenewInstanceRequest {
    * Get instanceId
    * @return instanceId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInstanceId() {
     return instanceId;
   }
@@ -87,7 +88,8 @@ public class RenewInstanceRequest {
    * Get period
    * @return period
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public Integer getPeriod() {
     return period;
   }
@@ -105,7 +107,8 @@ public class RenewInstanceRequest {
    * Get periodUnit
    * @return periodUnit
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getPeriodUnit() {
     return periodUnit;
   }

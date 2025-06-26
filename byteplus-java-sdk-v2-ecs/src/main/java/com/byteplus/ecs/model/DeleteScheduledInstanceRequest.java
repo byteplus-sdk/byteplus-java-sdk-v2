@@ -63,7 +63,8 @@ public class DeleteScheduledInstanceRequest {
    * Get scheduledInstanceId
    * @return scheduledInstanceId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getScheduledInstanceId() {
     return scheduledInstanceId;
   }

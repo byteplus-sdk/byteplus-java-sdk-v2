@@ -96,7 +96,8 @@ public class ImportKeyPairRequest {
    * Get keyPairName
    * @return keyPairName
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getKeyPairName() {
     return keyPairName;
   }
@@ -132,7 +133,8 @@ public class ImportKeyPairRequest {
    * Get publicKey
    * @return publicKey
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getPublicKey() {
     return publicKey;
   }

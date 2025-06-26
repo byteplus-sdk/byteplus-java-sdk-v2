@@ -14,6 +14,7 @@ package com.byteplus.ecs.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.ecs.model.ImportDataVolumeForImportImageInput;
 import com.byteplus.ecs.model.TagForImportImageInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -44,6 +45,9 @@ public class ImportImageRequest {
 
   @SerializedName("ImageName")
   private String imageName = null;
+
+  @SerializedName("ImportDataVolumes")
+  private List<ImportDataVolumeForImportImageInput> importDataVolumes = null;
 
   @SerializedName("LicenseType")
   private String licenseType = null;
@@ -132,13 +136,41 @@ public class ImportImageRequest {
    * Get imageName
    * @return imageName
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getImageName() {
     return imageName;
   }
 
   public void setImageName(String imageName) {
     this.imageName = imageName;
+  }
+
+  public ImportImageRequest importDataVolumes(List<ImportDataVolumeForImportImageInput> importDataVolumes) {
+    this.importDataVolumes = importDataVolumes;
+    return this;
+  }
+
+  public ImportImageRequest addImportDataVolumesItem(ImportDataVolumeForImportImageInput importDataVolumesItem) {
+    if (this.importDataVolumes == null) {
+      this.importDataVolumes = new ArrayList<ImportDataVolumeForImportImageInput>();
+    }
+    this.importDataVolumes.add(importDataVolumesItem);
+    return this;
+  }
+
+   /**
+   * Get importDataVolumes
+   * @return importDataVolumes
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<ImportDataVolumeForImportImageInput> getImportDataVolumes() {
+    return importDataVolumes;
+  }
+
+  public void setImportDataVolumes(List<ImportDataVolumeForImportImageInput> importDataVolumes) {
+    this.importDataVolumes = importDataVolumes;
   }
 
   public ImportImageRequest licenseType(String licenseType) {
@@ -204,7 +236,8 @@ public class ImportImageRequest {
    * Get platform
    * @return platform
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getPlatform() {
     return platform;
   }
@@ -285,7 +318,8 @@ public class ImportImageRequest {
    * Get url
    * @return url
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getUrl() {
     return url;
   }
@@ -308,6 +342,7 @@ public class ImportImageRequest {
         Objects.equals(this.bootMode, importImageRequest.bootMode) &&
         Objects.equals(this.description, importImageRequest.description) &&
         Objects.equals(this.imageName, importImageRequest.imageName) &&
+        Objects.equals(this.importDataVolumes, importImageRequest.importDataVolumes) &&
         Objects.equals(this.licenseType, importImageRequest.licenseType) &&
         Objects.equals(this.needDetection, importImageRequest.needDetection) &&
         Objects.equals(this.osType, importImageRequest.osType) &&
@@ -320,7 +355,7 @@ public class ImportImageRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(architecture, bootMode, description, imageName, licenseType, needDetection, osType, platform, platformVersion, projectName, tags, url);
+    return Objects.hash(architecture, bootMode, description, imageName, importDataVolumes, licenseType, needDetection, osType, platform, platformVersion, projectName, tags, url);
   }
 
 
@@ -333,6 +368,7 @@ public class ImportImageRequest {
     sb.append("    bootMode: ").append(toIndentedString(bootMode)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    imageName: ").append(toIndentedString(imageName)).append("\n");
+    sb.append("    importDataVolumes: ").append(toIndentedString(importDataVolumes)).append("\n");
     sb.append("    licenseType: ").append(toIndentedString(licenseType)).append("\n");
     sb.append("    needDetection: ").append(toIndentedString(needDetection)).append("\n");
     sb.append("    osType: ").append(toIndentedString(osType)).append("\n");

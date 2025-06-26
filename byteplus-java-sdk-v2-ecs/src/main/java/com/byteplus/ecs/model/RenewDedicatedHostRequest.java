@@ -69,7 +69,8 @@ public class RenewDedicatedHostRequest {
    * Get dedicatedHostId
    * @return dedicatedHostId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getDedicatedHostId() {
     return dedicatedHostId;
   }
@@ -87,7 +88,8 @@ public class RenewDedicatedHostRequest {
    * Get period
    * @return period
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public Integer getPeriod() {
     return period;
   }
@@ -105,7 +107,8 @@ public class RenewDedicatedHostRequest {
    * Get periodUnit
    * @return periodUnit
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getPeriodUnit() {
     return periodUnit;
   }

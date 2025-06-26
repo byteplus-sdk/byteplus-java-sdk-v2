@@ -24,32 +24,31 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DescribeInstanceVncUrlRequest
+ * VolumeForDescribeInstancesOutput
  */
 
 
 
-public class DescribeInstanceVncUrlRequest {
-  @SerializedName("InstanceId")
-  private String instanceId = null;
+public class VolumeForDescribeInstancesOutput {
+  @SerializedName("VolumeId")
+  private String volumeId = null;
 
-  public DescribeInstanceVncUrlRequest instanceId(String instanceId) {
-    this.instanceId = instanceId;
+  public VolumeForDescribeInstancesOutput volumeId(String volumeId) {
+    this.volumeId = volumeId;
     return this;
   }
 
    /**
-   * Get instanceId
-   * @return instanceId
+   * Get volumeId
+   * @return volumeId
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public String getInstanceId() {
-    return instanceId;
+  @Schema(description = "")
+  public String getVolumeId() {
+    return volumeId;
   }
 
-  public void setInstanceId(String instanceId) {
-    this.instanceId = instanceId;
+  public void setVolumeId(String volumeId) {
+    this.volumeId = volumeId;
   }
 
 
@@ -61,22 +60,22 @@ public class DescribeInstanceVncUrlRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DescribeInstanceVncUrlRequest describeInstanceVncUrlRequest = (DescribeInstanceVncUrlRequest) o;
-    return Objects.equals(this.instanceId, describeInstanceVncUrlRequest.instanceId);
+    VolumeForDescribeInstancesOutput volumeForDescribeInstancesOutput = (VolumeForDescribeInstancesOutput) o;
+    return Objects.equals(this.volumeId, volumeForDescribeInstancesOutput.volumeId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(instanceId);
+    return Objects.hash(volumeId);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DescribeInstanceVncUrlRequest {\n");
+    sb.append("class VolumeForDescribeInstancesOutput {\n");
     
-    sb.append("    instanceId: ").append(toIndentedString(instanceId)).append("\n");
+    sb.append("    volumeId: ").append(toIndentedString(volumeId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
