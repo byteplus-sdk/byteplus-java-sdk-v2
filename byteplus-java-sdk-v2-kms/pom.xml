@@ -8,6 +8,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>byteplus-java-sdk-v2-kms</artifactId>
+    <name>byteplus-java-sdk-v2-kms</name>
+    <description>The Java SDK for byteplus kms</description>
     <dependencies>
         <dependency>
             <groupId>com.byteplus</groupId>
