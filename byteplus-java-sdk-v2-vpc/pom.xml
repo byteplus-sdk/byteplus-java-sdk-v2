@@ -8,6 +8,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>byteplus-java-sdk-v2-vpc</artifactId>
+    <name>byteplus-java-sdk-v2-vpc</name>
+    <description>The Java SDK for byteplus vpc</description>
     <dependencies>
         <dependency>
             <groupId>com.byteplus</groupId>

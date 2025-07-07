@@ -20,6 +20,8 @@
     </build>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>byteplus-java-sdk-v2-ark-runtime</artifactId>
+    <name>byteplus-java-sdk-v2-ark-runtime</name>
+    <description>The Java SDK for byteplus ark-runtime</description>
     <properties>
         <jackson.version>2.12.7.1</jackson.version>
         <retrofit.version>2.9.0</retrofit.version>
