@@ -674,8 +674,11 @@ public class ApiClient extends BaseClient{
                     return proxies;
                 }
 
-                addProxy(proxies, httpProxy, "HTTP_PROXY");
-                addProxy(proxies, httpsProxy, "HTTPS_PROXY");
+                if (disableSSL) {
+                    addProxy(proxies, httpProxy, "HTTP_PROXY");
+                } else {
+                    addProxy(proxies, httpsProxy, "HTTPS_PROXY");
+                }
 
                 return proxies;
             }
