@@ -1,5 +1,6 @@
 package com.byteplus.interceptor;
 
+import com.byteplus.BaseClient;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.byteplus.ApiClient;
@@ -53,8 +54,8 @@ public class InterceptorContext extends Call {
         return apiClient;
     }
 
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public void setApiClient(BaseClient apiClient) {
+        this.apiClient = (ApiClient) apiClient;
     }
 
     public RequestInterceptorContext getRequestContext() {
