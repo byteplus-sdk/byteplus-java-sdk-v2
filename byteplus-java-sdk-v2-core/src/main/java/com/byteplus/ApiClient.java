@@ -50,8 +50,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.net.URLConnection;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
@@ -651,30 +650,7 @@ public class ApiClient extends BaseClient{
         httpClient.setProxySelector(new ProxySelector() {
             @Override
             public List<Proxy> select(URI uri) {
-                String targetHost = uri.getHost();
-                String envNoProxy = System.getenv("NO_PROXY");
-
-                if (StringUtils.isEmpty(envNoProxy)) {
-                    envNoProxy = System.getenv("no_proxy");
-                }
-
-                boolean noProxyFlag = false;
-                String noProxyList = (StringUtils.isEmpty(noProxy) ? envNoProxy : noProxy);
-                if (!StringUtils.isEmpty(noProxyList)) {
-                    String[] noProxyArr = noProxyList.split(",");
-                    for (String noProxyHost : noProxyArr) {
-                        if (noProxyHost.equals(targetHost)) {
-                            noProxyFlag = true;
-                            break;
-                        }
-                    }
-                }
-
                 List<Proxy> proxies = new ArrayList<>();
-                if (noProxyFlag) {
-                    proxies.add(Proxy.NO_PROXY);
-                    return proxies;
-                }
 
                 if (disableSSL) {
                     addProxy(proxies, httpProxy, "HTTP_PROXY");
