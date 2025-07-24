@@ -214,5 +214,6 @@
         <module>byteplus-java-sdk-v2-ark-runtime</module>
         <module>byteplus-java-sdk-v2-vpc</module>
         <module>byteplus-java-sdk-v2-kms</module>
+        <module>byteplus-java-sdk-v2-cr</module>
     </modules>
 </project>
