@@ -176,7 +176,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
 
     private static boolean hasEnabledDualstack(Boolean useDualStack) {
         if (useDualStack == null) {
-            String enableDualstack = System.getenv("VOLC_ENABLE_DUALSTACK");
+            String enableDualstack = System.getenv("BYTEPLUS_ENABLE_DUALSTACK");
             return enableDualstack != null && enableDualstack.equals("true");
         }
 
