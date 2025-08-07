@@ -1,9 +1,6 @@
 package com.byteplus.ark.runtime.model.images.generation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.byteplus.ark.runtime.model.content.generation.CreateContentGenerationTaskRequest;
-
-import java.util.List;
 
 public class GenerateImagesRequest {
 
@@ -12,6 +9,9 @@ public class GenerateImagesRequest {
 
     @JsonProperty("prompt")
     private String prompt;
+
+    @JsonProperty("image")
+    private String image;
 
     @JsonProperty("response_format")
     private String responseFormat;
@@ -28,17 +28,22 @@ public class GenerateImagesRequest {
     @JsonProperty("watermark")
     private Boolean watermark;
 
+    @JsonProperty("optimize_prompt")
+    private Boolean optimizePrompt;
+
     public GenerateImagesRequest() {
     }
 
-    public GenerateImagesRequest(String model, String prompt, String responseFormat, Integer seed, Double guidanceScale, String size) {
+    public GenerateImagesRequest(String model, String prompt, String image, String responseFormat, Integer seed, Double guidanceScale, String size, Boolean watermark, Boolean optimizePrompt) {
         this.model = model;
         this.prompt = prompt;
+        this.image = image;
         this.responseFormat = responseFormat;
         this.seed = seed;
         this.guidanceScale = guidanceScale;
         this.size = size;
-        this.watermark = false;
+        this.watermark = watermark;
+        this.optimizePrompt = optimizePrompt;
     }
 
     public String getModel() {
@@ -55,6 +60,14 @@ public class GenerateImagesRequest {
 
     public void setPrompt(String prompt) {
         this.prompt = prompt;
+    }
+
+    public String getImage() {
+        return this.image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getResponseFormat() {
@@ -97,16 +110,26 @@ public class GenerateImagesRequest {
         this.watermark = watermark;
     }
 
+    public Boolean getOptimizePrompt() {
+        return this.optimizePrompt;
+    }
+
+    public void setOptimizePrompt(Boolean optimizePrompt) {
+        this.optimizePrompt = optimizePrompt;
+    }
+
     @Override
     public String toString() {
         return "GenerateImagesRequest{" +
                 "model='" + model + '\'' +
                 ", prompt=" + prompt +
+                ", image=" + image +
                 ", responseFormat=" + responseFormat +
                 ", seed=" + seed +
                 ", guidanceScale=" + guidanceScale +
                 ", size=" + size +
                 ", watermark=" + watermark +
+                ", optimizePrompt=" + optimizePrompt +
                 '}';
     }
 
@@ -117,11 +140,13 @@ public class GenerateImagesRequest {
     public static class Builder {
         private String model;
         private String prompt;
+        private String image;
         private String responseFormat;
         private Integer seed;
         private Double guidanceScale;
         private String size;
         private Boolean watermark;
+        private Boolean optimizePrompt;
 
         private Builder() {
         }
@@ -133,6 +158,11 @@ public class GenerateImagesRequest {
 
         public GenerateImagesRequest.Builder prompt(String prompt) {
             this.prompt = prompt;
+            return this;
+        }
+
+        public GenerateImagesRequest.Builder image(String image) {
+            this.image = image;
             return this;
         }
 
@@ -161,15 +191,22 @@ public class GenerateImagesRequest {
             return this;
         }
 
+        public GenerateImagesRequest.Builder optimizePrompt(Boolean optimizePrompt) {
+            this.optimizePrompt = optimizePrompt;
+            return this;
+        }
+
         public GenerateImagesRequest build() {
             GenerateImagesRequest generateImagesRequest = new GenerateImagesRequest();
             generateImagesRequest.setModel(model);
             generateImagesRequest.setPrompt(prompt);
+            generateImagesRequest.setImage(image);
             generateImagesRequest.setResponseFormat(responseFormat);
             generateImagesRequest.setSeed(seed);
             generateImagesRequest.setGuidanceScale(guidanceScale);
             generateImagesRequest.setSize(size);
             generateImagesRequest.setWatermark(watermark);
+            generateImagesRequest.setOptimizePrompt(optimizePrompt);
             return generateImagesRequest;
         }
     }

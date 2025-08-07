@@ -1,9 +1,9 @@
 package com.byteplus.ark.runtime;
 
-import com.byteplus.ark.runtime.model.content.generation.*;
 import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
 import com.byteplus.ark.runtime.model.images.generation.ResponseFormat;
+import com.byteplus.ark.runtime.model.images.generation.Size;
 import com.byteplus.ark.runtime.service.ArkService;
 import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
@@ -28,10 +28,10 @@ public class ImageGenerationsExample {
     public static void main(String[] args) {
         String model = "YOUR_ENDPOINT_ID";
 
-        System.out.println("\n----- Generate Images Request -----");
+        System.out.println("\n----- [Seedream] Generate Images Request -----");
 
         GenerateImagesRequest generateRequest = GenerateImagesRequest.builder()
-                .model(model)
+                .model(model)   // Replace with your Seedream endpoint ID
                 .prompt("Bird soaring above vast grasslands")
                 .responseFormat(ResponseFormat.Url)
                 .seed(1234567890)
@@ -43,6 +43,24 @@ public class ImageGenerationsExample {
         System.out.println(generateRequest.toString());
         // send create request
         ImagesResponse imagesResponse = service.generateImages(generateRequest);
+        System.out.println(imagesResponse.getData().get(0).getUrl());
+
+        System.out.println("\n----- [Seededit] Generate Images Request -----");
+
+        generateRequest = GenerateImagesRequest.builder()
+               .model(model)   // Replace with your Seededit endpoint ID
+               .prompt("Bird soaring above vast grasslands")
+                .image("YOUR_IMAGE_URL")
+               .responseFormat(ResponseFormat.Url)
+              .seed(1234567890)
+              .watermark(true)
+              .size(Size.Adaptive)
+              .guidanceScale(2.5)
+              .build();
+
+        System.out.println(generateRequest.toString());
+        // send create request
+        imagesResponse = service.generateImages(generateRequest);
         System.out.println(imagesResponse.getData().get(0).getUrl());
 
         service.shutdownExecutor();
