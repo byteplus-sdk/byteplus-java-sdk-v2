@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static com.byteplus.observability.debugger.SdkDebugLog.SDK_CORE_LOGGER;
+
 public class DefaultEndpointProvider implements EndpointResolver {
 
 
@@ -144,6 +146,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
         String bsRegionListPath = System.getenv("BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF");
 
         if (bsRegionListPath != null && !bsRegionListPath.isEmpty()) {
+            SDK_CORE_LOGGER.debugEndpoint("Checking for region in file specified by BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF: " + bsRegionListPath);
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(bsRegionListPath));
                 String line;
@@ -154,22 +157,27 @@ public class DefaultEndpointProvider implements EndpointResolver {
                     }
                     if (line.equals(regionCode)) {
                         reader.close();
+                        SDK_CORE_LOGGER.debugEndpoint("Region '{}' found in {}.", regionCode, bsRegionListPath);
                         return true;
                     }
                 }
                 reader.close();
             } catch (Exception e) {
-                System.err.println("Error when reading " + bsRegionListPath + ": " + e.getMessage());
+                SDK_CORE_LOGGER.error(()->"Error when reading " + bsRegionListPath + ": ", e);
             }
         }
 
         if (BOOTSTRAP_REGION.contains(region)) {
+            SDK_CORE_LOGGER.debugEndpoint("Region '{}' found in default bootstrap list.", region);
             return true;
         }
 
         if (customBootstrapRegion != null) {
+            SDK_CORE_LOGGER.debugEndpoint("Region '{}' found in custom bootstrap list.", region);
             return customBootstrapRegion.contains(region);
         }
+
+        SDK_CORE_LOGGER.debugEndpoint("Region '{}' not found in any bootstrap list.", region);
 
         return false;
     }
@@ -191,7 +199,9 @@ public class DefaultEndpointProvider implements EndpointResolver {
         ServiceEndpointInfo endpointInfo = DEFAULT_ENDPOINT_MAP.get(service);
 
         if (!inBootstrapRegionList(regionCode, customBootstrapRegion)) {
+            SDK_CORE_LOGGER.debugEndpoint("Region '{}' not in bootstrap region list, fallback to default: {}", regionCode, resultEndpoint);
             if (endpointInfo == null) {
+                SDK_CORE_LOGGER.debugEndpoint("Service '{}' not found in default endpoint map, fallback to default: {}", regionCode, resultEndpoint);
                 return resultEndpoint;
             }
 
@@ -199,18 +209,23 @@ public class DefaultEndpointProvider implements EndpointResolver {
         }
 
         String endpointSuffix = hasEnabledDualstack(useDualStack) ? DUALSTACK_ENDPOINT_SUFFIX : ENDPOINT_SUFFIX;
+        SDK_CORE_LOGGER.debugEndpoint("Endpoint suffix is: " + endpointSuffix);
 
         if (endpointInfo == null) {
+            SDK_CORE_LOGGER.debugEndpoint("Service '{}' not found in default endpoint map, fallback to default: {}", regionCode, resultEndpoint);
             return resultEndpoint;
         }
 
         if (endpointInfo.isGlobal) {
             if (!endpointInfo.globalEndpoint.isEmpty()) {
+                SDK_CORE_LOGGER.debugEndpoint("Service '{}' is global, using predefined global endpoint: {}", service, resultEndpoint);
                 resultEndpoint = endpointInfo.globalEndpoint;
                 return resultEndpoint;
             }
 
             resultEndpoint = standardizeDomainServiceCode(service) + endpointSuffix;
+            SDK_CORE_LOGGER.debugEndpoint("Service '{}' is global, constructing endpoint: {}", service, resultEndpoint);
+
             return resultEndpoint;
         }
 
@@ -218,14 +233,18 @@ public class DefaultEndpointProvider implements EndpointResolver {
             String regionEndpoint = endpointInfo.regionEndpointMap.get(regionCode);
             if (regionEndpoint != null) {
                 resultEndpoint = regionEndpoint;
+                SDK_CORE_LOGGER.debugEndpoint("Found predefined endpoint for service '{}' in region '{}': {}", service, regionCode, resultEndpoint);
                 return resultEndpoint;
             }
         }
 
         resultEndpoint = standardizeDomainServiceCode(service) + SEPARATOR + regionCode + endpointSuffix +
                 (isCNRegion(regionCode) ? ".cn" : "");
+
+        SDK_CORE_LOGGER.debugEndpoint("Constructing endpoint for service '{}' in region '{}': {}", service, regionCode, resultEndpoint);
         return resultEndpoint;
     }
+
 }
 
 

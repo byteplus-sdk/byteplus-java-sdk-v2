@@ -10,7 +10,16 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+
+import static com.byteplus.observability.debugger.SdkDebugLog.SDK_CORE_LOGGER;
 
 /**
  * xuyaming@bytedance.com
@@ -56,10 +65,13 @@ public class ByteplusSign implements Authentication {
         for (Pair p : queryParams) {
             params.put(p.getName(), p.getValue());
         }
+
+        SDK_CORE_LOGGER.debugSign("ByteplusSign start...");
+
         try {
             sign(params, headerParams, payload);
         } catch (Exception e) {
-            e.printStackTrace();
+            SDK_CORE_LOGGER.error(()->"ByteplusSign exception: ", e);
         }
     }
 
@@ -128,6 +140,7 @@ public class ByteplusSign implements Authentication {
         credentialScope.append(service);
         credentialScope.append("/request");
         signRequest.credentialScope = credentialScope;
+        SDK_CORE_LOGGER.debugSign("credentialScope: "+ signRequest.credentialScope);
     }
 
     private void buildStringToSign(Map<String, String> headerParams, SignRequest signRequest) throws Exception {
@@ -140,6 +153,7 @@ public class ByteplusSign implements Authentication {
         stringToSign.append("\n");
         stringToSign.append(getSHA256(signRequest.canonicalRequest.toString()));
         signRequest.stringToSign = stringToSign;
+        SDK_CORE_LOGGER.debugSign("stringToSign: "  + signRequest.stringToSign);
     }
 
     private void buildAuthorization(Map<String, String> headerParams, SignRequest signRequest) throws Exception {
@@ -161,6 +175,7 @@ public class ByteplusSign implements Authentication {
         authorization.append("Signature=");
         authorization.append(signature);
         headerParams.put("Authorization", authorization.toString());
+        SDK_CORE_LOGGER.debugSign("Authorization: " + authorization);
     }
 
     private void buildPayload(SignRequest signRequest, String payload) throws Exception {
@@ -169,6 +184,7 @@ public class ByteplusSign implements Authentication {
         signRequest.canonicalRequest.append(signRequest.signedHeaders.substring(0, signRequest.signedHeaders.length() - 1));
         signRequest.canonicalRequest.append("\n");
         signRequest.canonicalRequest.append(getSHA256(payload));
+        SDK_CORE_LOGGER.debugSign("canonicalRequest: " + signRequest.canonicalRequest);
     }
 
     private void buildSignedHeaders(Map<String, String> headerParams, SignRequest signRequest) {
@@ -190,6 +206,8 @@ public class ByteplusSign implements Authentication {
         }
         signRequest.canonicalHeaders = canonicalHeaders;
         signRequest.signedHeaders = signedHeaders;
+        SDK_CORE_LOGGER.debugSign("canonicalHeaders: \n" + signRequest.canonicalHeaders);
+        SDK_CORE_LOGGER.debugSign("signedHeaders: " + signRequest.signedHeaders);
     }
 
     private void initHeaders(Map<String, String> headerParams) {
@@ -221,6 +239,7 @@ public class ByteplusSign implements Authentication {
             canonicalQueryString.append(signStringEncoder(queryParams.get(key)));
             canonicalQueryString.append("&");
         }
+        SDK_CORE_LOGGER.debugSign("canonicalQueryString: " + canonicalQueryString);
         canonicalRequest.append(canonicalQueryString.substring(0, canonicalQueryString.length() - 1));
         canonicalRequest.append("\n");
 
@@ -233,15 +252,18 @@ public class ByteplusSign implements Authentication {
         // initHeader
         initHeaders(headerParams);
         // step 1
+        SDK_CORE_LOGGER.debugSign("step 1: buildCanonicalRequest start");
         buildCanonicalRequest(queryParams, signRequest);
         buildSignedHeaders(headerParams, signRequest);
         buildPayload(signRequest, payload);
 
         // step 2
+        SDK_CORE_LOGGER.debugSign("step 2: buildCredentialScope and buildStringToSign start");
         buildCredentialScope(headerParams, signRequest);
         buildStringToSign(headerParams, signRequest);
 
         // step 3
+        SDK_CORE_LOGGER.debugSign("step 3: buildAuthorization start");
         buildAuthorization(headerParams, signRequest);
 
     }
@@ -308,5 +330,6 @@ public class ByteplusSign implements Authentication {
         copySign.setMethod(this.method);
         return copySign;
     }
+
 }
 
