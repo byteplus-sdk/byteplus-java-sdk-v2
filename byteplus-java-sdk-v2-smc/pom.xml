@@ -7,9 +7,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>byteplus-java-sdk-v2-kms</artifactId>
-    <name>byteplus-java-sdk-v2-kms</name>
-    <description>The Java SDK for byteplus kms</description>
+    <artifactId>byteplus-java-sdk-v2-smc</artifactId>
+    <name>byteplus-java-sdk-v2-smc</name>
+    <description>The Java SDK for byteplus smc</description>
     <dependencies>
         <dependency>
             <groupId>com.byteplus</groupId>
@@ -24,7 +24,7 @@
                 <artifactId>maven-source-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>com/byteplus/kms/examples/**</exclude>
+                        <exclude>com/byteplus/smc/examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -33,7 +33,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>com/byteplus/kms/examples/**</exclude>
+                        <exclude>com/byteplus/smc/examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
