@@ -1,8 +1,6 @@
 package com.byteplus.ark.runtime;
 
-import com.byteplus.ark.runtime.model.completion.chat.ChatCompletionRequest;
-import com.byteplus.ark.runtime.model.completion.chat.ChatMessage;
-import com.byteplus.ark.runtime.model.completion.chat.ChatMessageRole;
+import com.byteplus.ark.runtime.model.embeddings.EmbeddingRequest;
 import com.byteplus.ark.runtime.service.ArkService;
 import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
@@ -15,11 +13,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class BatchChatCompletionsExample {
+public class BatchEmbeddingsExample {
 
     public static void main(String[] args) {
         // set a timeout for batch inference
-        Duration timeout = Duration.ofHours(24);
+        Duration timeout = Duration.ofHours(1);
         int maxConcurrency = 300;
         int taskNumPerWorker = 100;
         String apiKey = System.getenv("ARK_API_KEY");
@@ -44,28 +42,19 @@ public class BatchChatCompletionsExample {
 
         ExecutorService executorService = Executors.newFixedThreadPool(maxConcurrency);
         CountDownLatch latch = new CountDownLatch(maxConcurrency);
-        Runnable batchChatTask = () -> {
+        Runnable batchEmbeddingTask = () -> {
             System.out.println("Executing task in " + Thread.currentThread().getName());
             for (int i = 0; i < taskNumPerWorker; i++) {
                 try {
-                    final List<ChatMessage> messages = new ArrayList<>();
-                    final ChatMessage systemMessage = ChatMessage.builder()
-                            .role(ChatMessageRole.SYSTEM)
-                            .content("You are a helpful AI assistant.")
-                            .build();
-                    final ChatMessage userMessage = ChatMessage.builder()
-                            .role(ChatMessageRole.USER)
-                            .content("Hello, how are you?")
-                            .build();
-                    messages.add(systemMessage);
-                    messages.add(userMessage);
+                    final List<String> input = new ArrayList<>();
+                    input.add("常见的十字花科植物有哪些？");
 
-                    ChatCompletionRequest batchChatCompletionRequest = ChatCompletionRequest.builder()
+                    EmbeddingRequest batchEmbeddingsRequest = EmbeddingRequest.builder()
                             .model("${YOUR_ENDPOINT_ID}")
-                            .messages(messages)
+                            .input(input)
                             .build();
 
-                    service.createBatchChatCompletion(batchChatCompletionRequest);
+                    service.createBatchEmbeddings(batchEmbeddingsRequest);
                     System.out.println(Thread.currentThread().getName() + ": request " + i + " succeed");
                 } catch (Exception e) {
                     System.out.println(Thread.currentThread().getName() + ": request " + i + " failed " + e.getMessage());
@@ -75,18 +64,18 @@ public class BatchChatCompletionsExample {
             latch.countDown();
         };
         for (int i = 0; i < maxConcurrency; i++) {
-            executorService.submit(batchChatTask);
+            executorService.submit(batchEmbeddingTask);
         }
         try {
             latch.await();
         } catch (InterruptedException ignored) {
         }
         System.out.println("all threads finished");
-
         executorService.shutdown();
         System.out.println("thread pool shutdown");
 
         // shutdown service after all requests is finished
         service.shutdownExecutor();
     }
+
 }

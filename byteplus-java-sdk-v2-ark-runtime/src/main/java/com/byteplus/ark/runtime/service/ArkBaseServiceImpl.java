@@ -8,8 +8,12 @@ import com.byteplus.ark.runtime.model.content.generation.*;
 import com.byteplus.ark.runtime.model.context.CreateContextRequest;
 import com.byteplus.ark.runtime.model.context.CreateContextResult;
 import com.byteplus.ark.runtime.model.context.chat.ContextChatCompletionRequest;
+import com.byteplus.ark.runtime.model.embeddings.EmbeddingRequest;
+import com.byteplus.ark.runtime.model.embeddings.EmbeddingResult;
 import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
 import io.reactivex.Flowable;
 
 
@@ -26,6 +30,14 @@ public interface ArkBaseServiceImpl {
     ChatCompletionResult createContextChatCompletion(ContextChatCompletionRequest request);
 
     Flowable<ChatCompletionChunk> streamContextChatCompletion(ContextChatCompletionRequest request);
+
+    EmbeddingResult createEmbeddings(EmbeddingRequest request);
+
+    EmbeddingResult createBatchEmbeddings(EmbeddingRequest request);
+
+    MultimodalEmbeddingResult createMultiModalEmbeddings(MultimodalEmbeddingRequest request);
+
+    MultimodalEmbeddingResult createBatchMultiModalEmbeddings(MultimodalEmbeddingRequest request);
 
     ImagesResponse generateImages(GenerateImagesRequest request);
 

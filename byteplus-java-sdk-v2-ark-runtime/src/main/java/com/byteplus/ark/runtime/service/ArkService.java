@@ -2,8 +2,12 @@ package com.byteplus.ark.runtime.service;
 
 
 import com.byteplus.ark.runtime.model.content.generation.*;
+import com.byteplus.ark.runtime.model.embeddings.EmbeddingRequest;
+import com.byteplus.ark.runtime.model.embeddings.EmbeddingResult;
 import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -209,6 +213,37 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return stream(api.createContextChatCompletionStream(request, request.getModel(), customHeaders), ChatCompletionChunk.class);
     }
 
+    public EmbeddingResult createEmbeddings(EmbeddingRequest request) {
+        return execute(api.createEmbeddings(request, request.getModel(), new HashMap<>()));
+    }
+
+    public EmbeddingResult createEmbeddings(EmbeddingRequest request, Map<String, String> customHeaders) {
+        return execute(api.createEmbeddings(request, request.getModel(), customHeaders));
+    }
+
+    public EmbeddingResult createBatchEmbeddings(EmbeddingRequest request) {
+        return execute(api.createBatchEmbeddings(request, request.getModel(), new HashMap<>()));
+    }
+
+    public EmbeddingResult createBatchEmbeddings(EmbeddingRequest request, Map<String, String> customHeaders) {
+        return execute(api.createBatchEmbeddings(request, request.getModel(), customHeaders));
+    }
+
+    public MultimodalEmbeddingResult createMultiModalEmbeddings(MultimodalEmbeddingRequest request) {
+        return execute(api.createMultiModalEmbeddings(request, request.getModel(), new HashMap<>()));
+    }
+
+    public MultimodalEmbeddingResult createMultiModalEmbeddings(MultimodalEmbeddingRequest request, Map<String, String> customHeaders) {
+        return execute(api.createMultiModalEmbeddings(request, request.getModel(), customHeaders));
+    }
+
+    public MultimodalEmbeddingResult createBatchMultiModalEmbeddings(MultimodalEmbeddingRequest request) {
+        return execute(api.createBatchMultiModalEmbeddings(request, request.getModel(), new HashMap<>()));
+    }
+
+    public MultimodalEmbeddingResult createBatchMultiModalEmbeddings(MultimodalEmbeddingRequest request, Map<String, String> customHeaders) {
+        return execute(api.createBatchMultiModalEmbeddings(request, request.getModel(), customHeaders));
+    }
 
     public ImagesResponse generateImages(GenerateImagesRequest request) {
         return execute(api.generateImages(request, request.getModel(), new HashMap<>()));

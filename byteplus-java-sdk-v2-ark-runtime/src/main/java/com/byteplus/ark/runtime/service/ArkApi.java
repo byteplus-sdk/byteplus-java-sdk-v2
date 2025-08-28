@@ -7,8 +7,12 @@ import com.byteplus.ark.runtime.model.content.generation.*;
 import com.byteplus.ark.runtime.model.context.CreateContextRequest;
 import com.byteplus.ark.runtime.model.context.CreateContextResult;
 import com.byteplus.ark.runtime.model.context.chat.ContextChatCompletionRequest;
+import com.byteplus.ark.runtime.model.embeddings.EmbeddingRequest;
+import com.byteplus.ark.runtime.model.embeddings.EmbeddingResult;
 import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
 import okhttp3.ResponseBody;
 import retrofit2.http.*;
 import retrofit2.Call;
@@ -38,6 +42,18 @@ public interface ArkApi {
     @Streaming
     @POST("/api/v3/context/chat/completions")
     Call<ResponseBody> createContextChatCompletionStream(@Body ContextChatCompletionRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);
+
+    @POST("/api/v3/embeddings")
+    Single<EmbeddingResult> createEmbeddings(@Body EmbeddingRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);
+
+    @POST("/api/v3/batch/embeddings")
+    Single<EmbeddingResult> createBatchEmbeddings(@Body EmbeddingRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);
+
+    @POST("/api/v3/embeddings/multimodal")
+    Single<MultimodalEmbeddingResult> createMultiModalEmbeddings(@Body MultimodalEmbeddingRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);
+
+    @POST("/api/v3/batch/embeddings/multimodal")
+    Single<MultimodalEmbeddingResult> createBatchMultiModalEmbeddings(@Body MultimodalEmbeddingRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);
 
     @POST("/api/v3/images/generations")
     Single<ImagesResponse> generateImages(@Body GenerateImagesRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);

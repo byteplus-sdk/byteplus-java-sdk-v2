@@ -1,8 +1,7 @@
 package com.byteplus.ark.runtime;
 
-import com.byteplus.ark.runtime.model.completion.chat.ChatCompletionRequest;
-import com.byteplus.ark.runtime.model.completion.chat.ChatMessage;
-import com.byteplus.ark.runtime.model.completion.chat.ChatMessageRole;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingInput;
+import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
 import com.byteplus.ark.runtime.service.ArkService;
 import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
@@ -15,13 +14,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class BatchChatCompletionsExample {
+public class BatchMultiModalEmbeddingsExample {
 
     public static void main(String[] args) {
         // set a timeout for batch inference
-        Duration timeout = Duration.ofHours(24);
-        int maxConcurrency = 300;
-        int taskNumPerWorker = 100;
+        Duration timeout = Duration.ofHours(1);
+        int maxConcurrency = 3;
+        int taskNumPerWorker = 10;
         String apiKey = System.getenv("ARK_API_KEY");
         ConnectionPool connectionPool = new ConnectionPool(maxConcurrency, 10, TimeUnit.MINUTES);
 
@@ -44,28 +43,28 @@ public class BatchChatCompletionsExample {
 
         ExecutorService executorService = Executors.newFixedThreadPool(maxConcurrency);
         CountDownLatch latch = new CountDownLatch(maxConcurrency);
-        Runnable batchChatTask = () -> {
+        Runnable batchEmbeddingTask = () -> {
             System.out.println("Executing task in " + Thread.currentThread().getName());
             for (int i = 0; i < taskNumPerWorker; i++) {
                 try {
-                    final List<ChatMessage> messages = new ArrayList<>();
-                    final ChatMessage systemMessage = ChatMessage.builder()
-                            .role(ChatMessageRole.SYSTEM)
-                            .content("You are a helpful AI assistant.")
-                            .build();
-                    final ChatMessage userMessage = ChatMessage.builder()
-                            .role(ChatMessageRole.USER)
-                            .content("Hello, how are you?")
-                            .build();
-                    messages.add(systemMessage);
-                    messages.add(userMessage);
+                    final List<MultimodalEmbeddingInput> input = new ArrayList<>();
+                    input.add(MultimodalEmbeddingInput.builder()
+                            .type("text")
+                            .text("What is the weather like today?")
+                            .build()
+                    );
+                    input.add(MultimodalEmbeddingInput.builder()
+                            .type("image_url")
+                            .imageUrl(new MultimodalEmbeddingInput.MultiModalEmbeddingContentPartImageURL("https://ark-project.tos-cn-beijing.volces.com/images/view.jpeg"))
+                            .build()
+                    );
 
-                    ChatCompletionRequest batchChatCompletionRequest = ChatCompletionRequest.builder()
+                    MultimodalEmbeddingRequest batchEmbeddingsRequest = MultimodalEmbeddingRequest.builder()
                             .model("${YOUR_ENDPOINT_ID}")
-                            .messages(messages)
+                            .input(input)
                             .build();
 
-                    service.createBatchChatCompletion(batchChatCompletionRequest);
+                    service.createBatchMultiModalEmbeddings(batchEmbeddingsRequest);
                     System.out.println(Thread.currentThread().getName() + ": request " + i + " succeed");
                 } catch (Exception e) {
                     System.out.println(Thread.currentThread().getName() + ": request " + i + " failed " + e.getMessage());
@@ -75,18 +74,18 @@ public class BatchChatCompletionsExample {
             latch.countDown();
         };
         for (int i = 0; i < maxConcurrency; i++) {
-            executorService.submit(batchChatTask);
+            executorService.submit(batchEmbeddingTask);
         }
         try {
             latch.await();
         } catch (InterruptedException ignored) {
         }
         System.out.println("all threads finished");
-
         executorService.shutdown();
         System.out.println("thread pool shutdown");
 
         // shutdown service after all requests is finished
         service.shutdownExecutor();
     }
+
 }
