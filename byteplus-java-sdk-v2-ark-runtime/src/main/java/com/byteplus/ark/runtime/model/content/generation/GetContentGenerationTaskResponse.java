@@ -33,6 +33,12 @@ public class GetContentGenerationTaskResponse {
     @JsonProperty("updated_at")
     private java.lang.Long updatedAt;
 
+    @JsonProperty("seed")
+    private java.lang.Long seed;
+
+    @JsonProperty("revised_prompt")
+    private String revisedPrompt;
+
     public String getId() {
         return id;
     }
@@ -95,6 +101,22 @@ public class GetContentGenerationTaskResponse {
         this.updatedAt = updatedAt;
     }
 
+    public java.lang.Long getSeed() {
+        return seed;
+    }
+
+    public void setSeed(java.lang.Long seed) {
+        this.seed = seed;
+    }
+
+    public String getRevisedPrompt() {
+        return revisedPrompt;
+    }
+
+    public void setRevisedPrompt(String revisedPrompt) {
+        this.revisedPrompt = revisedPrompt;
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Content {
 
@@ -109,10 +131,22 @@ public class GetContentGenerationTaskResponse {
             this.videoUrl = videoUrl;
         }
 
+        @JsonProperty("last_frame_url")
+        private String lastFrameUrl;
+
+        public String getLastFrameUrl() {
+            return lastFrameUrl;
+        }
+
+        public void setLastFrameUrl(String lastFrameUrl) {
+            this.lastFrameUrl = lastFrameUrl;
+        }
+
         @Override
         public String toString() {
             return "Content{" +
                     "videoUrl='" + videoUrl + '\'' +
+                    ", lastFrameUrl='" + lastFrameUrl + '\'' +
                     '}';
         }
     }
@@ -176,6 +210,8 @@ public class GetContentGenerationTaskResponse {
                 ", usage=" + usage +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", seed=" + seed +
+                ", revisedPrompt=" + revisedPrompt +
                 '}';
     }
 }
