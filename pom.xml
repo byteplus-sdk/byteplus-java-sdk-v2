@@ -217,5 +217,6 @@
         <module>byteplus-java-sdk-v2-cr</module>
         <module>byteplus-java-sdk-v2-smc</module>
         <module>byteplus-java-sdk-v2-filenas</module>
+        <module>byteplus-java-sdk-v2-autoscaling</module>
     </modules>
 </project>
