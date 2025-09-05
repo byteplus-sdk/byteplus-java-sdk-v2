@@ -219,5 +219,6 @@
         <module>byteplus-java-sdk-v2-filenas</module>
         <module>byteplus-java-sdk-v2-autoscaling</module>
         <module>byteplus-java-sdk-v2-storageebs</module>
+        <module>byteplus-java-sdk-v2-dms</module>
     </modules>
 </project>
