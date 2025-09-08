@@ -220,5 +220,6 @@
         <module>byteplus-java-sdk-v2-autoscaling</module>
         <module>byteplus-java-sdk-v2-storageebs</module>
         <module>byteplus-java-sdk-v2-dms</module>
+        <module>byteplus-java-sdk-v2-vke</module>
     </modules>
 </project>
