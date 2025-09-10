@@ -103,6 +103,12 @@
                 <optional>false</optional>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-apig20221112</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
