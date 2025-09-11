@@ -222,5 +222,6 @@
         <module>byteplus-java-sdk-v2-dms</module>
         <module>byteplus-java-sdk-v2-vke</module>
         <module>byteplus-java-sdk-v2-apig</module>
+        <module>byteplus-java-sdk-v2-apig20221112</module>
     </modules>
 </project>
