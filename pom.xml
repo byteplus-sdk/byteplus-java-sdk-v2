@@ -4,7 +4,7 @@
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.25</version>
+    <version>0.1.26</version>
     <name>byteplus-java-sdk-v2</name>
     <url>https://open.byteplusapi.com</url>
     <description>The Java SDK For byteplus</description>
@@ -223,5 +223,6 @@
         <module>byteplus-java-sdk-v2-vke</module>
         <module>byteplus-java-sdk-v2-apig</module>
         <module>byteplus-java-sdk-v2-apig20221112</module>
+        <module>byteplus-java-sdk-v2-cloudmonitor</module>
     </modules>
 </project>
