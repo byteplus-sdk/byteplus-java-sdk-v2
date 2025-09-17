@@ -26,7 +26,6 @@ import com.byteplus.ark.runtime.model.completion.chat.*;
 import com.byteplus.ark.runtime.model.context.CreateContextRequest;
 import com.byteplus.ark.runtime.model.context.CreateContextResult;
 import com.byteplus.ark.runtime.model.context.chat.ContextChatCompletionRequest;
-import com.byteplus.ark.runtime.model.images.generation.ImageGenStreamEvent;
 import com.byteplus.ark.runtime.model.responses.event.StreamEvent;
 import com.byteplus.ark.runtime.model.responses.request.DeleteResponseRequest;
 import com.byteplus.ark.runtime.model.responses.request.GetResponseRequest;
@@ -259,10 +258,6 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.generateImages(request, request.getModel(), new HashMap<>()));
     }
 
-    public Flowable<ImageGenStreamEvent> streamGenerateImages(GenerateImagesRequest request) {
-        request.setStream(true);
-        return stream(api.streamGenerateImages(request, request.getModel(), new HashMap<>()), ImageGenStreamEvent.class);
-    }
 
     public CreateContentGenerationTaskResult createContentGenerationTask(CreateContentGenerationTaskRequest request) {
         return execute(api.createContentGenerationTask(request, request.getModel(), new HashMap<>()));
