@@ -7,9 +7,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>byteplus-java-sdk-v2-vpc</artifactId>
-    <name>byteplus-java-sdk-v2-vpc</name>
-    <description>The Java SDK for byteplus vpc</description>
+    <artifactId>byteplus-java-sdk-v2-ecopartner</artifactId>
+    <name>byteplus-java-sdk-v2-ecopartner</name>
+    <description>The Java SDK for byteplus ecopartner</description>
     <dependencies>
         <dependency>
             <groupId>com.byteplus</groupId>
@@ -24,7 +24,7 @@
                 <artifactId>maven-source-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>com/byteplus/vpc/examples/**</exclude>
+                        <exclude>com/byteplus/ecopartner/examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -33,7 +33,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>com/byteplus/vpc/examples/**</exclude>
+                        <exclude>com/byteplus/ecopartner/examples/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
