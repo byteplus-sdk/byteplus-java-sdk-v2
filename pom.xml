@@ -216,6 +216,7 @@
         <module>byteplus-java-sdk-v2-kms</module>
         <module>byteplus-java-sdk-v2-cr</module>
         <module>byteplus-java-sdk-v2-smc</module>
+        <module>byteplus-java-sdk-v2-kafka</module>
         <module>byteplus-java-sdk-v2-filenas</module>
         <module>byteplus-java-sdk-v2-autoscaling</module>
         <module>byteplus-java-sdk-v2-storageebs</module>
@@ -224,5 +225,6 @@
         <module>byteplus-java-sdk-v2-apig</module>
         <module>byteplus-java-sdk-v2-apig20221112</module>
         <module>byteplus-java-sdk-v2-rdspostgresql</module>
+        <module>byteplus-java-sdk-v2-vefaas</module>
     </modules>
 </project>

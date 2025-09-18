@@ -65,7 +65,9 @@ public class ResponseBodyCallback implements Callback<ResponseBody> {
             SSE sse = null;
 
             while (!emitter.isCancelled() && (line = reader.readLine()) != null) {
-                if (line.startsWith("data:")) {
+                if (line.startsWith("event:")) {
+                    // do nothing
+                } else if (line.startsWith("data:")) {
                     String data = line.substring(5).trim();
 
                     try {
