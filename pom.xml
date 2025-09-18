@@ -230,5 +230,6 @@
         <module>byteplus-java-sdk-v2-rdsmssql</module>
         <module>byteplus-java-sdk-v2-rdsmysqlv2</module>
         <module>byteplus-java-sdk-v2-vefaas</module>
+        <module>byteplus-java-sdk-v2-escloud</module>
     </modules>
 </project>

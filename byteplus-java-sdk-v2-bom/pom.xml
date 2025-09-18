@@ -117,6 +117,12 @@
             </dependency>
             <dependency>
                 <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-escloud</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
                 <artifactId>byteplus-java-sdk-v2-rdspostgresql</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>
