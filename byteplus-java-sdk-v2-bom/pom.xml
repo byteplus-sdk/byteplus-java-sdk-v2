@@ -69,6 +69,12 @@
             </dependency>
             <dependency>
                 <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-kafka</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
                 <artifactId>byteplus-java-sdk-v2-filenas</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>
@@ -112,6 +118,30 @@
             <dependency>
                 <groupId>com.byteplus</groupId>
                 <artifactId>byteplus-java-sdk-v2-vedbm</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-ecopartner</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-rdsmssql</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-rdsmysqlv2</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-vefaas</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>
             </dependency>
