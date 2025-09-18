@@ -117,6 +117,12 @@
             </dependency>
             <dependency>
                 <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-rdsmysqlv2</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
                 <artifactId>byteplus-java-sdk-v2-vefaas</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>
