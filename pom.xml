@@ -4,7 +4,7 @@
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.26</version>
+    <version>0.1.27</version>
     <name>byteplus-java-sdk-v2</name>
     <url>https://open.byteplusapi.com</url>
     <description>The Java SDK For byteplus</description>
@@ -230,5 +230,6 @@
         <module>byteplus-java-sdk-v2-rdsmssql</module>
         <module>byteplus-java-sdk-v2-rdsmysqlv2</module>
         <module>byteplus-java-sdk-v2-vefaas</module>
+        <module>byteplus-java-sdk-v2-escloud</module>
     </modules>
 </project>
