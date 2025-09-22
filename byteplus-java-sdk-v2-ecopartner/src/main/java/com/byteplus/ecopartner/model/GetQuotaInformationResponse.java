@@ -46,7 +46,7 @@ public class GetQuotaInformationResponse extends com.byteplus.model.AbstractResp
   private String quotaUnit = null;
 
   @SerializedName("Uid")
-  private Integer uid = null;
+  private Long uid = null;
 
   public GetQuotaInformationResponse lastUpdatedTime(String lastUpdatedTime) {
     this.lastUpdatedTime = lastUpdatedTime;
@@ -138,7 +138,7 @@ public class GetQuotaInformationResponse extends com.byteplus.model.AbstractResp
     this.quotaUnit = quotaUnit;
   }
 
-  public GetQuotaInformationResponse uid(Integer uid) {
+  public GetQuotaInformationResponse uid(Long uid) {
     this.uid = uid;
     return this;
   }
@@ -148,11 +148,11 @@ public class GetQuotaInformationResponse extends com.byteplus.model.AbstractResp
    * @return uid
   **/
   @Schema(description = "")
-  public Integer getUid() {
+  public Long getUid() {
     return uid;
   }
 
-  public void setUid(Integer uid) {
+  public void setUid(Long uid) {
     this.uid = uid;
   }
 

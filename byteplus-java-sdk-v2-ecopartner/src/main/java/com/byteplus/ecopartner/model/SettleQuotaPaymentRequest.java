@@ -37,7 +37,7 @@ public class SettleQuotaPaymentRequest {
   private Float repaymentAmount = null;
 
   @SerializedName("Uid")
-  private Integer uid = null;
+  private Long uid = null;
 
   public SettleQuotaPaymentRequest remarks(String remarks) {
     this.remarks = remarks;
@@ -76,24 +76,22 @@ public class SettleQuotaPaymentRequest {
     this.repaymentAmount = repaymentAmount;
   }
 
-  public SettleQuotaPaymentRequest uid(Integer uid) {
+  public SettleQuotaPaymentRequest uid(Long uid) {
     this.uid = uid;
     return this;
   }
 
    /**
    * Get uid
-   * minimum: 10
-   * maximum: 10
    * @return uid
   **/
   @NotNull
- @Min(10) @Max(10)  @Schema(required = true, description = "")
-  public Integer getUid() {
+  @Schema(required = true, description = "")
+  public Long getUid() {
     return uid;
   }
 
-  public void setUid(Integer uid) {
+  public void setUid(Long uid) {
     this.uid = uid;
   }
 

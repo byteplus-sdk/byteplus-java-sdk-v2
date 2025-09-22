@@ -34,7 +34,7 @@ public class CheckInvitationStatusResponse extends com.byteplus.model.AbstractRe
   private String claimedTime = null;
 
   @SerializedName("ClaimedUserUid")
-  private Integer claimedUserUid = null;
+  private Long claimedUserUid = null;
 
   @SerializedName("CreatedTime")
   private String createdTime = null;
@@ -46,7 +46,7 @@ public class CheckInvitationStatusResponse extends com.byteplus.model.AbstractRe
   private String failureReason = null;
 
   @SerializedName("PartnerUid")
-  private Integer partnerUid = null;
+  private Long partnerUid = null;
 
   @SerializedName("Status")
   private String status = null;
@@ -72,7 +72,7 @@ public class CheckInvitationStatusResponse extends com.byteplus.model.AbstractRe
     this.claimedTime = claimedTime;
   }
 
-  public CheckInvitationStatusResponse claimedUserUid(Integer claimedUserUid) {
+  public CheckInvitationStatusResponse claimedUserUid(Long claimedUserUid) {
     this.claimedUserUid = claimedUserUid;
     return this;
   }
@@ -82,11 +82,11 @@ public class CheckInvitationStatusResponse extends com.byteplus.model.AbstractRe
    * @return claimedUserUid
   **/
   @Schema(description = "")
-  public Integer getClaimedUserUid() {
+  public Long getClaimedUserUid() {
     return claimedUserUid;
   }
 
-  public void setClaimedUserUid(Integer claimedUserUid) {
+  public void setClaimedUserUid(Long claimedUserUid) {
     this.claimedUserUid = claimedUserUid;
   }
 
@@ -144,7 +144,7 @@ public class CheckInvitationStatusResponse extends com.byteplus.model.AbstractRe
     this.failureReason = failureReason;
   }
 
-  public CheckInvitationStatusResponse partnerUid(Integer partnerUid) {
+  public CheckInvitationStatusResponse partnerUid(Long partnerUid) {
     this.partnerUid = partnerUid;
     return this;
   }
@@ -154,11 +154,11 @@ public class CheckInvitationStatusResponse extends com.byteplus.model.AbstractRe
    * @return partnerUid
   **/
   @Schema(description = "")
-  public Integer getPartnerUid() {
+  public Long getPartnerUid() {
     return partnerUid;
   }
 
-  public void setPartnerUid(Integer partnerUid) {
+  public void setPartnerUid(Long partnerUid) {
     this.partnerUid = partnerUid;
   }
 

@@ -81,7 +81,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/CheckInvitationStatus/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/CheckInvitationStatus/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -205,7 +205,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/CreateInvitationLink/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/CreateInvitationLink/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -329,7 +329,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/CreateUniqueInvitationLink/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/CreateUniqueInvitationLink/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -453,7 +453,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/GetCustomerDetailsByType/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/GetCustomerDetailsByType/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -577,7 +577,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/GetCustomerDetailsByUID/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/GetCustomerDetailsByUID/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -701,7 +701,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/GetQuotaInformation/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/GetQuotaInformation/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -825,7 +825,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/ModifyQuota/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/ModifyQuota/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -949,7 +949,7 @@ public class EcoPartnerApi {
         Object localVarPostBody = body;
         
         // create path and map variables
-        String localVarPath = "/SettleQuotaPayment/2025-05-29/eco_partner/get/text_plain/";
+        String localVarPath = "/SettleQuotaPayment/2025-05-29/eco_partner/post/application_json/";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();

@@ -85,7 +85,7 @@ public class GetCustomerDetailsByTypeRequest {
    * Get customerType
    * @return customerType
   **/
-  @Schema(description = "")
+ @Size(max=50)  @Schema(description = "")
   public CustomerTypeEnum getCustomerType() {
     return customerType;
   }
