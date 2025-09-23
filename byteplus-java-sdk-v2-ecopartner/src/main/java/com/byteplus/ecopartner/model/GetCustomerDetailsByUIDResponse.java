@@ -58,7 +58,7 @@ public class GetCustomerDetailsByUIDResponse extends com.byteplus.model.Abstract
   private String parentOrganizationName = null;
 
   @SerializedName("ParentPartnerUid")
-  private Integer parentPartnerUid = null;
+  private Long parentPartnerUid = null;
 
   @SerializedName("ParentPartnerUsername")
   private String parentPartnerUsername = null;
@@ -82,7 +82,7 @@ public class GetCustomerDetailsByUIDResponse extends com.byteplus.model.Abstract
   private String suspensionPolicy = null;
 
   @SerializedName("Uid")
-  private Integer uid = null;
+  private Long uid = null;
 
   public GetCustomerDetailsByUIDResponse accountType(String accountType) {
     this.accountType = accountType;
@@ -246,7 +246,7 @@ public class GetCustomerDetailsByUIDResponse extends com.byteplus.model.Abstract
     this.parentOrganizationName = parentOrganizationName;
   }
 
-  public GetCustomerDetailsByUIDResponse parentPartnerUid(Integer parentPartnerUid) {
+  public GetCustomerDetailsByUIDResponse parentPartnerUid(Long parentPartnerUid) {
     this.parentPartnerUid = parentPartnerUid;
     return this;
   }
@@ -256,11 +256,11 @@ public class GetCustomerDetailsByUIDResponse extends com.byteplus.model.Abstract
    * @return parentPartnerUid
   **/
   @Schema(description = "")
-  public Integer getParentPartnerUid() {
+  public Long getParentPartnerUid() {
     return parentPartnerUid;
   }
 
-  public void setParentPartnerUid(Integer parentPartnerUid) {
+  public void setParentPartnerUid(Long parentPartnerUid) {
     this.parentPartnerUid = parentPartnerUid;
   }
 
@@ -390,7 +390,7 @@ public class GetCustomerDetailsByUIDResponse extends com.byteplus.model.Abstract
     this.suspensionPolicy = suspensionPolicy;
   }
 
-  public GetCustomerDetailsByUIDResponse uid(Integer uid) {
+  public GetCustomerDetailsByUIDResponse uid(Long uid) {
     this.uid = uid;
     return this;
   }
@@ -400,11 +400,11 @@ public class GetCustomerDetailsByUIDResponse extends com.byteplus.model.Abstract
    * @return uid
   **/
   @Schema(description = "")
-  public Integer getUid() {
+  public Long getUid() {
     return uid;
   }
 
-  public void setUid(Integer uid) {
+  public void setUid(Long uid) {
     this.uid = uid;
   }
 

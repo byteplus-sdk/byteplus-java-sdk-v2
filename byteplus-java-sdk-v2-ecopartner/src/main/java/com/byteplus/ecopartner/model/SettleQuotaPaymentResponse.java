@@ -51,8 +51,11 @@ public class SettleQuotaPaymentResponse extends com.byteplus.model.AbstractRespo
   @SerializedName("RepaymentAmount")
   private Float repaymentAmount = null;
 
+  @SerializedName("Success")
+  private Boolean success = null;
+
   @SerializedName("Uid")
-  private Integer uid = null;
+  private Long uid = null;
 
   public SettleQuotaPaymentResponse lastUpdatedTime(String lastUpdatedTime) {
     this.lastUpdatedTime = lastUpdatedTime;
@@ -180,7 +183,25 @@ public class SettleQuotaPaymentResponse extends com.byteplus.model.AbstractRespo
     this.repaymentAmount = repaymentAmount;
   }
 
-  public SettleQuotaPaymentResponse uid(Integer uid) {
+  public SettleQuotaPaymentResponse success(Boolean success) {
+    this.success = success;
+    return this;
+  }
+
+   /**
+   * Get success
+   * @return success
+  **/
+  @Schema(description = "")
+  public Boolean isSuccess() {
+    return success;
+  }
+
+  public void setSuccess(Boolean success) {
+    this.success = success;
+  }
+
+  public SettleQuotaPaymentResponse uid(Long uid) {
     this.uid = uid;
     return this;
   }
@@ -190,11 +211,11 @@ public class SettleQuotaPaymentResponse extends com.byteplus.model.AbstractRespo
    * @return uid
   **/
   @Schema(description = "")
-  public Integer getUid() {
+  public Long getUid() {
     return uid;
   }
 
-  public void setUid(Integer uid) {
+  public void setUid(Long uid) {
     this.uid = uid;
   }
 
@@ -215,12 +236,13 @@ public class SettleQuotaPaymentResponse extends com.byteplus.model.AbstractRespo
         Objects.equals(this.quotaBalance, settleQuotaPaymentResponse.quotaBalance) &&
         Objects.equals(this.quotaUnit, settleQuotaPaymentResponse.quotaUnit) &&
         Objects.equals(this.repaymentAmount, settleQuotaPaymentResponse.repaymentAmount) &&
+        Objects.equals(this.success, settleQuotaPaymentResponse.success) &&
         Objects.equals(this.uid, settleQuotaPaymentResponse.uid);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(lastUpdatedTime, outstandingAmountAfter, outstandingAmountBefore, quotaAllocated, quotaBalance, quotaUnit, repaymentAmount, uid);
+    return Objects.hash(lastUpdatedTime, outstandingAmountAfter, outstandingAmountBefore, quotaAllocated, quotaBalance, quotaUnit, repaymentAmount, success, uid);
   }
 
 
@@ -236,6 +258,7 @@ public class SettleQuotaPaymentResponse extends com.byteplus.model.AbstractRespo
     sb.append("    quotaBalance: ").append(toIndentedString(quotaBalance)).append("\n");
     sb.append("    quotaUnit: ").append(toIndentedString(quotaUnit)).append("\n");
     sb.append("    repaymentAmount: ").append(toIndentedString(repaymentAmount)).append("\n");
+    sb.append("    success: ").append(toIndentedString(success)).append("\n");
     sb.append("    uid: ").append(toIndentedString(uid)).append("\n");
     sb.append("}");
     return sb.toString();

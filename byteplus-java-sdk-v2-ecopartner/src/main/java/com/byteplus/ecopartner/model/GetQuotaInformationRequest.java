@@ -31,26 +31,24 @@ import javax.validation.Valid;
 
 public class GetQuotaInformationRequest {
   @SerializedName("Uid")
-  private Integer uid = null;
+  private Long uid = null;
 
-  public GetQuotaInformationRequest uid(Integer uid) {
+  public GetQuotaInformationRequest uid(Long uid) {
     this.uid = uid;
     return this;
   }
 
    /**
    * Get uid
-   * minimum: 10
-   * maximum: 10
    * @return uid
   **/
   @NotNull
- @Min(10) @Max(10)  @Schema(required = true, description = "")
-  public Integer getUid() {
+  @Schema(required = true, description = "")
+  public Long getUid() {
     return uid;
   }
 
-  public void setUid(Integer uid) {
+  public void setUid(Long uid) {
     this.uid = uid;
   }
 

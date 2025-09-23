@@ -3,7 +3,7 @@
     <parent>
         <artifactId>byteplus-java-sdk-v2</artifactId>
         <groupId>com.byteplus</groupId>
-        <version>0.1.27</version>
+        <version>0.1.28</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <build>
