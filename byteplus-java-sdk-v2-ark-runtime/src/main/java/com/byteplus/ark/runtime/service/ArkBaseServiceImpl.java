@@ -14,6 +14,14 @@ import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
+import com.byteplus.ark.runtime.model.responses.event.StreamEvent;
+import com.byteplus.ark.runtime.model.responses.request.DeleteResponseRequest;
+import com.byteplus.ark.runtime.model.responses.request.GetResponseRequest;
+import com.byteplus.ark.runtime.model.responses.request.ListInputItemsRequest;
+import com.byteplus.ark.runtime.model.responses.request.CreateResponsesRequest;
+import com.byteplus.ark.runtime.model.responses.response.DeleteResponseResponse;
+import com.byteplus.ark.runtime.model.responses.response.ListInputItemsResponse;
+import com.byteplus.ark.runtime.model.responses.response.ResponseObject;
 import io.reactivex.Flowable;
 
 
@@ -28,6 +36,10 @@ public interface ArkBaseServiceImpl {
     CreateContextResult createContext(CreateContextRequest request);
 
     ChatCompletionResult createContextChatCompletion(ContextChatCompletionRequest request);
+
+    ResponseObject createResponse(CreateResponsesRequest request);
+
+    Flowable<StreamEvent> streamResponse(CreateResponsesRequest request);
 
     Flowable<ChatCompletionChunk> streamContextChatCompletion(ContextChatCompletionRequest request);
 
@@ -48,4 +60,10 @@ public interface ArkBaseServiceImpl {
     ListContentGenerationTasksResponse listContentGenerationTasks(ListContentGenerationTasksRequest request);
 
     DeleteContentGenerationTaskResponse deleteContentGenerationTask(DeleteContentGenerationTaskRequest request);
+
+    ResponseObject getResponse(GetResponseRequest request);
+
+    DeleteResponseResponse deleteResponse(DeleteResponseRequest request);
+
+    ListInputItemsResponse listResponseInputItems(ListInputItemsRequest request);
 }
