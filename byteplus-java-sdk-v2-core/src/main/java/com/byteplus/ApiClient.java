@@ -445,7 +445,7 @@ public class ApiClient extends BaseClient{
 
     /**
      * Enable/disable debugging for this API client.
-     * @Deprecated
+     * @deprecated
      * @param debugging To enable (true) or disable (false) debugging
      * @return ApiClient
      */
