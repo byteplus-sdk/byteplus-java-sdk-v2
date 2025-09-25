@@ -1,16 +1,15 @@
 package com.byteplus.interceptor;
 
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.byteplus.ApiException;
 import com.byteplus.Pair;
 import com.byteplus.ProgressRequestBody;
 import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.CredentialValue;
+import com.byteplus.sign.ByteplusSign;
 import com.byteplus.sign.Credentials;
 import com.byteplus.sign.ServiceInfo;
-import com.byteplus.sign.ByteplusSign;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import okio.Buffer;
 import org.apache.commons.lang.StringUtils;
 

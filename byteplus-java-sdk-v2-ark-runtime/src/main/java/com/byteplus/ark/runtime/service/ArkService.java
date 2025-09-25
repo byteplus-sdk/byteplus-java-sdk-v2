@@ -6,6 +6,7 @@ import com.byteplus.ark.runtime.model.embeddings.EmbeddingRequest;
 import com.byteplus.ark.runtime.model.embeddings.EmbeddingResult;
 import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
+import com.byteplus.ark.runtime.model.images.generation.ImageGenStreamEvent;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,6 +26,14 @@ import com.byteplus.ark.runtime.model.completion.chat.*;
 import com.byteplus.ark.runtime.model.context.CreateContextRequest;
 import com.byteplus.ark.runtime.model.context.CreateContextResult;
 import com.byteplus.ark.runtime.model.context.chat.ContextChatCompletionRequest;
+import com.byteplus.ark.runtime.model.responses.event.StreamEvent;
+import com.byteplus.ark.runtime.model.responses.request.DeleteResponseRequest;
+import com.byteplus.ark.runtime.model.responses.request.GetResponseRequest;
+import com.byteplus.ark.runtime.model.responses.request.ListInputItemsRequest;
+import com.byteplus.ark.runtime.model.responses.request.CreateResponsesRequest;
+import com.byteplus.ark.runtime.model.responses.response.DeleteResponseResponse;
+import com.byteplus.ark.runtime.model.responses.response.ListInputItemsResponse;
+import com.byteplus.ark.runtime.model.responses.response.ResponseObject;
 import com.byteplus.ark.runtime.utils.ResponseBodyCallback;
 import com.byteplus.ark.runtime.utils.SSE;
 import io.reactivex.BackpressureStrategy;
@@ -249,6 +258,7 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.generateImages(request, request.getModel(), new HashMap<>()));
     }
 
+
     public CreateContentGenerationTaskResult createContentGenerationTask(CreateContentGenerationTaskRequest request) {
         return execute(api.createContentGenerationTask(request, request.getModel(), new HashMap<>()));
     }
@@ -305,6 +315,45 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.deleteContentGenerationTask(request.getTaskId(), customHeaders));
     }
 
+    @Override
+    public ResponseObject createResponse(CreateResponsesRequest request) {
+        return execute(api.createResponse(request, request.getModel(), new HashMap<>()));
+    }
+
+    public ResponseObject createResponse(CreateResponsesRequest request, Map<String, String> customHeaders) {
+        return execute(api.createResponse(request, request.getModel(), customHeaders));
+    }
+
+    @Override
+    public Flowable<StreamEvent> streamResponse(CreateResponsesRequest request) {
+        return stream(api.streamResponse(request, request.getModel(), new HashMap<>()), StreamEvent.class);
+    }
+
+    public Flowable<StreamEvent> streamResponse(CreateResponsesRequest request, Map<String, String> customHeaders) {
+        return stream(api.streamResponse(request, request.getModel(), customHeaders), StreamEvent.class);
+    }
+
+    @Override
+    public ResponseObject getResponse(GetResponseRequest request) {
+        return execute(api.getResponse(request.getResponseId(), new HashMap<>()));
+    }
+
+    @Override
+    public DeleteResponseResponse deleteResponse(DeleteResponseRequest request) {
+        return execute(api.deleteResponse(request.getResponseId(), new HashMap<>()));
+    }
+
+    @Override
+    public ListInputItemsResponse listResponseInputItems(ListInputItemsRequest request) {
+        return execute(api.listResponseInputItems(
+                request.getResponseId(),
+                request.getAfter(),
+                request.getBefore(),
+                request.getLimit(),
+                request.getInclude(),
+                new HashMap<>()
+        ));
+    }
 
     public void shutdownExecutor() {
         Objects.requireNonNull(this.executorService, "executorService must be set in order to shut down");
