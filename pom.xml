@@ -231,6 +231,7 @@
         <module>byteplus-java-sdk-v2-vke</module>
         <module>byteplus-java-sdk-v2-apig</module>
         <module>byteplus-java-sdk-v2-apig20221112</module>
+        <module>byteplus-java-sdk-v2-cloudmonitor</module>
         <module>byteplus-java-sdk-v2-alb</module>
         <module>byteplus-java-sdk-v2-cen</module>
         <module>byteplus-java-sdk-v2-rdspostgresql</module>
