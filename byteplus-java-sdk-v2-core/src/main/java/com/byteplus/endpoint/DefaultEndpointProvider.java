@@ -105,6 +105,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 createRegionEndpointMap()
         ));
 
+        DEFAULT_ENDPOINT_MAP.put("eco_partner", new ServiceEndpointInfo(
+                "eco_partner",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+
     }
 
     // 创建区域端点映射的辅助方法

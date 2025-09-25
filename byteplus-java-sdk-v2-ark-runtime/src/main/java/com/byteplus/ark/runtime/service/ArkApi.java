@@ -13,6 +13,10 @@ import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
+import com.byteplus.ark.runtime.model.responses.request.CreateResponsesRequest;
+import com.byteplus.ark.runtime.model.responses.response.DeleteResponseResponse;
+import com.byteplus.ark.runtime.model.responses.response.ListInputItemsResponse;
+import com.byteplus.ark.runtime.model.responses.response.ResponseObject;
 import okhttp3.ResponseBody;
 import retrofit2.http.*;
 import retrofit2.Call;
@@ -80,4 +84,28 @@ public interface ArkApi {
 
     @DELETE("/api/v3/contents/generations/tasks/{taskId}")
     Single<DeleteContentGenerationTaskResponse> deleteContentGenerationTask(@Path("taskId") String taskId, @HeaderMap Map<String, String> customHeaders);
+
+
+    @POST("/api/v3/responses")
+    Single<ResponseObject> createResponse(@Body CreateResponsesRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);
+
+    @Streaming
+    @POST("/api/v3/responses")
+    Call<ResponseBody> streamResponse(@Body CreateResponsesRequest request, @Header(Const.REQUEST_MODEL) String model, @HeaderMap Map<String, String> customHeaders);
+
+    @GET("/api/v3/responses/{responseId}")
+    Single<ResponseObject> getResponse(@Path("responseId") String responsesId, @HeaderMap Map<String, String> customHeaders);
+
+    @DELETE("/api/v3/responses/{responseId}")
+    Single<DeleteResponseResponse> deleteResponse(@Path("responseId") String responsesId, @HeaderMap Map<String, String> customHeaders);
+
+    @GET("/api/v3/responses/{responseId}/input_items")
+    Single<ListInputItemsResponse> listResponseInputItems(
+            @Path("responseId") String responsesId,
+            @Query("after") String after,
+            @Query("before") String before,
+            @Query("limit") Integer limit,
+            @Query("include[]") List<String> include,
+            @HeaderMap Map<String, String> customHeaders
+    );
 }

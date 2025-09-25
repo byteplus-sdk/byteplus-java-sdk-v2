@@ -224,6 +224,8 @@
         <module>byteplus-java-sdk-v2-vke</module>
         <module>byteplus-java-sdk-v2-apig</module>
         <module>byteplus-java-sdk-v2-apig20221112</module>
+        <module>byteplus-java-sdk-v2-alb</module>
+        <module>byteplus-java-sdk-v2-cen</module>
         <module>byteplus-java-sdk-v2-rdspostgresql</module>
         <module>byteplus-java-sdk-v2-vedbm</module>
         <module>byteplus-java-sdk-v2-ecopartner</module>
@@ -232,5 +234,6 @@
         <module>byteplus-java-sdk-v2-vefaas</module>
         <module>byteplus-java-sdk-v2-escloud</module>
         <module>byteplus-java-sdk-v2-transitrouter</module>
+        <module>byteplus-java-sdk-v2-vpn</module>
     </modules>
 </project>
