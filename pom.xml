@@ -233,6 +233,7 @@
         <module>byteplus-java-sdk-v2-rdsmysqlv2</module>
         <module>byteplus-java-sdk-v2-vefaas</module>
         <module>byteplus-java-sdk-v2-escloud</module>
+        <module>byteplus-java-sdk-v2-transitrouter</module>
         <module>byteplus-java-sdk-v2-vpn</module>
     </modules>
 </project>
