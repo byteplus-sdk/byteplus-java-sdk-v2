@@ -177,6 +177,7 @@
             </dependency>
             <dependency>
                 <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-redis</artifactId>
                 <artifactId>byteplus-java-sdk-v2-directconnect</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>
