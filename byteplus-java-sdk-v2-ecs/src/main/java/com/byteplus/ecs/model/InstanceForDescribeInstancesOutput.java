@@ -20,6 +20,7 @@ import com.byteplus.ecs.model.LocalVolumeForDescribeInstancesOutput;
 import com.byteplus.ecs.model.MetadataOptionsForDescribeInstancesOutput;
 import com.byteplus.ecs.model.NetworkInterfaceForDescribeInstancesOutput;
 import com.byteplus.ecs.model.PlacementForDescribeInstancesOutput;
+import com.byteplus.ecs.model.RdmaNetworkInterfaceDetailForDescribeInstancesOutput;
 import com.byteplus.ecs.model.TagForDescribeInstancesOutput;
 import com.byteplus.ecs.model.VolumeForDescribeInstancesOutput;
 import com.google.gson.TypeAdapter;
@@ -69,6 +70,9 @@ public class InstanceForDescribeInstancesOutput {
 
   @SerializedName("ElasticScheduledInstanceType")
   private String elasticScheduledInstanceType = null;
+
+  @SerializedName("EnableJumboFrame")
+  private Boolean enableJumboFrame = null;
 
   @SerializedName("ExpiredAt")
   private String expiredAt = null;
@@ -129,6 +133,9 @@ public class InstanceForDescribeInstancesOutput {
 
   @SerializedName("RdmaIpAddresses")
   private List<String> rdmaIpAddresses = null;
+
+  @SerializedName("RdmaNetworkInterfaceDetails")
+  private List<RdmaNetworkInterfaceDetailForDescribeInstancesOutput> rdmaNetworkInterfaceDetails = null;
 
   @SerializedName("ScheduledInstanceId")
   private String scheduledInstanceId = null;
@@ -343,6 +350,24 @@ public class InstanceForDescribeInstancesOutput {
 
   public void setElasticScheduledInstanceType(String elasticScheduledInstanceType) {
     this.elasticScheduledInstanceType = elasticScheduledInstanceType;
+  }
+
+  public InstanceForDescribeInstancesOutput enableJumboFrame(Boolean enableJumboFrame) {
+    this.enableJumboFrame = enableJumboFrame;
+    return this;
+  }
+
+   /**
+   * Get enableJumboFrame
+   * @return enableJumboFrame
+  **/
+  @Schema(description = "")
+  public Boolean isEnableJumboFrame() {
+    return enableJumboFrame;
+  }
+
+  public void setEnableJumboFrame(Boolean enableJumboFrame) {
+    this.enableJumboFrame = enableJumboFrame;
   }
 
   public InstanceForDescribeInstancesOutput expiredAt(String expiredAt) {
@@ -733,6 +758,33 @@ public class InstanceForDescribeInstancesOutput {
     this.rdmaIpAddresses = rdmaIpAddresses;
   }
 
+  public InstanceForDescribeInstancesOutput rdmaNetworkInterfaceDetails(List<RdmaNetworkInterfaceDetailForDescribeInstancesOutput> rdmaNetworkInterfaceDetails) {
+    this.rdmaNetworkInterfaceDetails = rdmaNetworkInterfaceDetails;
+    return this;
+  }
+
+  public InstanceForDescribeInstancesOutput addRdmaNetworkInterfaceDetailsItem(RdmaNetworkInterfaceDetailForDescribeInstancesOutput rdmaNetworkInterfaceDetailsItem) {
+    if (this.rdmaNetworkInterfaceDetails == null) {
+      this.rdmaNetworkInterfaceDetails = new ArrayList<RdmaNetworkInterfaceDetailForDescribeInstancesOutput>();
+    }
+    this.rdmaNetworkInterfaceDetails.add(rdmaNetworkInterfaceDetailsItem);
+    return this;
+  }
+
+   /**
+   * Get rdmaNetworkInterfaceDetails
+   * @return rdmaNetworkInterfaceDetails
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<RdmaNetworkInterfaceDetailForDescribeInstancesOutput> getRdmaNetworkInterfaceDetails() {
+    return rdmaNetworkInterfaceDetails;
+  }
+
+  public void setRdmaNetworkInterfaceDetails(List<RdmaNetworkInterfaceDetailForDescribeInstancesOutput> rdmaNetworkInterfaceDetails) {
+    this.rdmaNetworkInterfaceDetails = rdmaNetworkInterfaceDetails;
+  }
+
   public InstanceForDescribeInstancesOutput scheduledInstanceId(String scheduledInstanceId) {
     this.scheduledInstanceId = scheduledInstanceId;
     return this;
@@ -969,6 +1021,7 @@ public class InstanceForDescribeInstancesOutput {
         Objects.equals(this.description, instanceForDescribeInstancesOutput.description) &&
         Objects.equals(this.eipAddress, instanceForDescribeInstancesOutput.eipAddress) &&
         Objects.equals(this.elasticScheduledInstanceType, instanceForDescribeInstancesOutput.elasticScheduledInstanceType) &&
+        Objects.equals(this.enableJumboFrame, instanceForDescribeInstancesOutput.enableJumboFrame) &&
         Objects.equals(this.expiredAt, instanceForDescribeInstancesOutput.expiredAt) &&
         Objects.equals(this.hostName, instanceForDescribeInstancesOutput.hostName) &&
         Objects.equals(this.hostname, instanceForDescribeInstancesOutput.hostname) &&
@@ -989,6 +1042,7 @@ public class InstanceForDescribeInstancesOutput {
         Objects.equals(this.placement, instanceForDescribeInstancesOutput.placement) &&
         Objects.equals(this.projectName, instanceForDescribeInstancesOutput.projectName) &&
         Objects.equals(this.rdmaIpAddresses, instanceForDescribeInstancesOutput.rdmaIpAddresses) &&
+        Objects.equals(this.rdmaNetworkInterfaceDetails, instanceForDescribeInstancesOutput.rdmaNetworkInterfaceDetails) &&
         Objects.equals(this.scheduledInstanceId, instanceForDescribeInstancesOutput.scheduledInstanceId) &&
         Objects.equals(this.spotPriceLimit, instanceForDescribeInstancesOutput.spotPriceLimit) &&
         Objects.equals(this.spotStrategy, instanceForDescribeInstancesOutput.spotStrategy) &&
@@ -1004,7 +1058,7 @@ public class InstanceForDescribeInstancesOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(affinityGroupId, cpuOptions, cpus, createdAt, deletionProtection, deploymentSetGroupNumber, deploymentSetId, description, eipAddress, elasticScheduledInstanceType, expiredAt, hostName, hostname, hpcClusterId, imageId, instanceChargeType, instanceId, instanceName, instanceTypeId, keyPairId, keyPairName, localVolumes, memorySize, metadataOptions, networkInterfaces, osName, osType, placement, projectName, rdmaIpAddresses, scheduledInstanceId, spotPriceLimit, spotStrategy, status, stoppedMode, tags, updatedAt, uuid, volumes, vpcId, zoneId);
+    return Objects.hash(affinityGroupId, cpuOptions, cpus, createdAt, deletionProtection, deploymentSetGroupNumber, deploymentSetId, description, eipAddress, elasticScheduledInstanceType, enableJumboFrame, expiredAt, hostName, hostname, hpcClusterId, imageId, instanceChargeType, instanceId, instanceName, instanceTypeId, keyPairId, keyPairName, localVolumes, memorySize, metadataOptions, networkInterfaces, osName, osType, placement, projectName, rdmaIpAddresses, rdmaNetworkInterfaceDetails, scheduledInstanceId, spotPriceLimit, spotStrategy, status, stoppedMode, tags, updatedAt, uuid, volumes, vpcId, zoneId);
   }
 
 
@@ -1023,6 +1077,7 @@ public class InstanceForDescribeInstancesOutput {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    eipAddress: ").append(toIndentedString(eipAddress)).append("\n");
     sb.append("    elasticScheduledInstanceType: ").append(toIndentedString(elasticScheduledInstanceType)).append("\n");
+    sb.append("    enableJumboFrame: ").append(toIndentedString(enableJumboFrame)).append("\n");
     sb.append("    expiredAt: ").append(toIndentedString(expiredAt)).append("\n");
     sb.append("    hostName: ").append(toIndentedString(hostName)).append("\n");
     sb.append("    hostname: ").append(toIndentedString(hostname)).append("\n");
@@ -1043,6 +1098,7 @@ public class InstanceForDescribeInstancesOutput {
     sb.append("    placement: ").append(toIndentedString(placement)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    rdmaIpAddresses: ").append(toIndentedString(rdmaIpAddresses)).append("\n");
+    sb.append("    rdmaNetworkInterfaceDetails: ").append(toIndentedString(rdmaNetworkInterfaceDetails)).append("\n");
     sb.append("    scheduledInstanceId: ").append(toIndentedString(scheduledInstanceId)).append("\n");
     sb.append("    spotPriceLimit: ").append(toIndentedString(spotPriceLimit)).append("\n");
     sb.append("    spotStrategy: ").append(toIndentedString(spotStrategy)).append("\n");

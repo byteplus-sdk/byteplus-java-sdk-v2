@@ -31,6 +31,7 @@ English | [简体中文](./SDK_Integration_zh.md)
     - [Custom backoff strategy](#custom-backoff-strategy)
 - [Error Handling](#error-handling)
 - [Debugging](#debugging)
+    - [Enable Debug Mode](#enable-debug-mode)
 
 ---
 
@@ -656,21 +657,16 @@ public class SampleCode {
 # Debugging
 The Java SDK uses `com.squareup.okhttp.OkHttpClient`, and you can enable debug mode by setting `debugging`.
 
->**Default**      
-> * `debug` - `False`
+## Enable Debug Mode
 
-```java
-import com.byteplus.ApiClient;
-import com.byteplus.sign.Credentials;
+> **Default**
+> * `debug` - `false` (Indicates that debug mode is not enabled)
 
-public class SampleCode {
-    public static void main(String[] args) {
-        String regionId = "ap-southeast-2";
-        ApiClient apiClient = new ApiClient()
-                .setCredentials(Credentials.getEnvCredentials())
-                .setRegion(regionId)
-                .setDebugging(true);
-    }
-}
+The Java SDK log uses slf4j and depends on the customer's configuration file. Customers can configure the log level according to their needs.
+
+**配置示例：**
+
+```xml
+<!--Enable Debug Mode-->
+<logger name="com.byteplus.sdkcore" level="debug"/>
 ```
-
