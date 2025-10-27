@@ -258,6 +258,10 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.generateImages(request, request.getModel(), new HashMap<>()));
     }
 
+    public Flowable<ImageGenStreamEvent> streamGenerateImages(GenerateImagesRequest request) {
+        request.setStream(true);
+        return stream(api.streamGenerateImages(request, request.getModel(), new HashMap<>()), ImageGenStreamEvent.class);
+    }
 
     public CreateContentGenerationTaskResult createContentGenerationTask(CreateContentGenerationTaskRequest request) {
         return execute(api.createContentGenerationTask(request, request.getModel(), new HashMap<>()));
