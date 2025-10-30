@@ -105,6 +105,13 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 createRegionEndpointMap()
         ));
 
+        DEFAULT_ENDPOINT_MAP.put("natgateway", new ServiceEndpointInfo(
+                "natgateway",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
