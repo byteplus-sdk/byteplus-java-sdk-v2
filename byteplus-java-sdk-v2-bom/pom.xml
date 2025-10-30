@@ -117,6 +117,12 @@
             </dependency>
             <dependency>
                 <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-natgateway</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
                 <artifactId>byteplus-java-sdk-v2-cloudmonitor</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>

@@ -107,6 +107,13 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 createRegionEndpointMap()
         ));
 
+        DEFAULT_ENDPOINT_MAP.put("natgateway", new ServiceEndpointInfo(
+                "natgateway",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         DEFAULT_ENDPOINT_MAP.put("eco_partner", new ServiceEndpointInfo(
                 "eco_partner",
                 true,
