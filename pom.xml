@@ -246,5 +246,6 @@
         <module>byteplus-java-sdk-v2-transitrouter</module>
         <module>byteplus-java-sdk-v2-vpn</module>
         <module>byteplus-java-sdk-v2-vmp</module>
+        <module>byteplus-java-sdk-v2-llmshield</module>
     </modules>
 </project>
