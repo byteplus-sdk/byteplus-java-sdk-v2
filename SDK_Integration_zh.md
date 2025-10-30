@@ -33,6 +33,7 @@
   - [退避策略](#退避策略)
 - [异常处理](#异常处理)
 - [Debug机制](#debug机制)
+    - [开启Debug模式](#开启debug模式)
 
 # 集成SDK
 
@@ -666,24 +667,17 @@ public class SampleCode {
 
 为便于客户在处理请求时进行问题排查和调试，SDK 支持日志功能，并提供多种日志级别设置。客户可根据实际需求配置日志级别，获取详细的请求与响应信息，以提升排障效率和系统可 observability（可观测性）。
 
+## 开启Debug模式
+
 > **默认**
->
-> * `debugging` - `false` (表示不开启debug模式)
+> * `debug` - `false` (表示不开启debug模式)
 
-Java SDK使用的是`com.squareup.okhttp.OkHttpClient`，可以通过设置`debugging`来开启debug模式。
+Java SDK日志使用的是slf4j，需要依赖客户的配置文件，客户可以根据自己的需求，配置日志级别。
 
-```java
-import com.byteplus.ApiClient;
-import com.byteplus.sign.Credentials;
+**配置示例：**
 
-public class SampleCode {
-  public static void main(String[] args) {
-      String regionId = "ap-southeast-2";
-      ApiClient apiClient = new ApiClient()
-              .setCredentials(Credentials.getEnvCredentials())
-              .setRegion(regionId)
-              .setDebugging(true);
-  }
-}
-
+```xml
+<!--开启debug日志-->
+<logger name="com.byteplus.sdkcore" level="debug"/>
 ```
+

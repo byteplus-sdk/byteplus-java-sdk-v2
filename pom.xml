@@ -43,6 +43,7 @@
         <common-lang-version>2.6</common-lang-version>
         <javax.annotation-version>1.3.2</javax.annotation-version>
         <javax.validation-version>2.0.1.Final</javax.validation-version>
+        <org.slf4j.version>1.7.36</org.slf4j.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -90,6 +91,12 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${javax.validation-version}</version>
+            </dependency>
+            <!-- The SDK provides a logging interface -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${org.slf4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -216,6 +223,7 @@
         <module>byteplus-java-sdk-v2-kms</module>
         <module>byteplus-java-sdk-v2-cr</module>
         <module>byteplus-java-sdk-v2-smc</module>
+        <module>byteplus-java-sdk-v2-kafka</module>
         <module>byteplus-java-sdk-v2-filenas</module>
         <module>byteplus-java-sdk-v2-autoscaling</module>
         <module>byteplus-java-sdk-v2-storageebs</module>
@@ -224,5 +232,21 @@
         <module>byteplus-java-sdk-v2-apig</module>
         <module>byteplus-java-sdk-v2-apig20221112</module>
         <module>byteplus-java-sdk-v2-natgateway</module>
+        <module>byteplus-java-sdk-v2-cloudmonitor</module>
+        <module>byteplus-java-sdk-v2-alb</module>
+        <module>byteplus-java-sdk-v2-cen</module>
+        <module>byteplus-java-sdk-v2-rdspostgresql</module>
+        <module>byteplus-java-sdk-v2-vedbm</module>
+        <module>byteplus-java-sdk-v2-ecopartner</module>
+        <module>byteplus-java-sdk-v2-rdsmssql</module>
+        <module>byteplus-java-sdk-v2-rdsmysqlv2</module>
+        <module>byteplus-java-sdk-v2-vefaas</module>
+        <module>byteplus-java-sdk-v2-escloud</module>
+        <module>byteplus-java-sdk-v2-redis</module>
+        <module>byteplus-java-sdk-v2-directconnect</module>
+        <module>byteplus-java-sdk-v2-transitrouter</module>
+        <module>byteplus-java-sdk-v2-vpn</module>
+        <module>byteplus-java-sdk-v2-vmp</module>
+        <module>byteplus-java-sdk-v2-llmshield</module>
     </modules>
 </project>
