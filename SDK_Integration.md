@@ -13,6 +13,7 @@ English | [简体中文](./SDK_Integration_zh.md)
   - [Custom RegionId](#custom-regionid)
   - [Automatic Endpoint Resolution](#automatic-endpoint-resolution)
     - [Default Endpoint Resolution](#default-endpoint-resolution)
+    - [Standard Endpoint Resolution](#standard-endpoint-resolution)
 - [HTTP Connection-Pool Settings](#http-connection-pool-settings)
 - [HTTPS Request Settings](#https-request-settings)
   - [Specify the Scheme](#specify-the-scheme)
@@ -302,6 +303,41 @@ public class SampleCode {
                     add("custom_example_region1");
                     add("custom_example_region2");
                 }}); // Customize the automatic addressing Region list; you can also use the environment variable BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF
+    }
+}
+```
+
+### Standard Endpoint Resolution
+**Standard Endpoint Resolution Rules**
+
+Currently, only `cn-hongkong` indicates regions outside mainland China; other regions starting with `cn` indicate regions outside mainland China.
+
+| Global Services | Dual stack | Format                                                                                                | 备注             |
+|--------------|-----------|-------------------------------------------------------------------------------------------------------|----------------|
+| Yes          | Yes       | `{Service}.byteplus-api.com`                                                                          |                |
+| Yes             | No        | `{Service}.byteplusapi.com`                                                                           |                |
+| No             | Yes       | Non-mainland China(cn-hongkong)：`{Service}.{region}.byteplus-api.com` <br/>  Chinese mainland：`{Service}.{region}.byteplus-api.com.cn` | For non-global services, "cn" will be added to the end. |
+| No             | No          | Non-mainland China(cn-hongkong)：`{Service}.{region}.byteplusapi.com` <br/> Chinese mainland：`{Service}.{region}.byteplusapi.com.cn` | For non-global services, "cn" will be added to the end.        |
+
+**Code Example：**
+
+Whether a service is global depends on the specific service being called, and whether it is global cannot be modified.  
+You can refer to the list:[./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#SERVICE_INFOS](./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#L150)
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.sign.Credentials;
+import java.util.HashSet;
+import com.byteplus.endpoint.StandardEndpointProvider;
+
+public class SampleCode {
+    public static void main(String[] args) {
+        String regionId = "cn-hongkong";
+        ApiClient apiClient = new ApiClient()
+                .setCredentials(Credentials.getEnvCredentials())
+                .setEndpointResolver(new StandardEndpointProvider()) //  Configure standard  Endpoint Resolution
+                .setRegion(regionId)   // Configure region
+                .setUseDualStack(true) // Configure whether to use dual stack
+                ; 
     }
 }
 ```

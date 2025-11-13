@@ -18,6 +18,7 @@
   - [自定义RegionId](#自定义regionid)
   - [自动化Endpoint寻址](#自动化endpoint寻址)
     - [Endpoint默认寻址逻辑](#endpoint默认寻址)
+    - [Endpoint标准寻址](#endpoint标准寻址)
 - [HTTP连接池配置](#http连接池配置)
 - [HTTPS请求配置](#https请求配置)
   - [指定Scheme](#指定scheme)
@@ -295,6 +296,42 @@ public class SampleCode {
     }
 }
 ```
+
+### Endpoint标准寻址
+**标准寻址规则**
+
+目前为止只有`cn-hongkong`表示非大陆地区，其它`cn`开头的region表示大陆地区。
+
+| Global服务 | 双栈 | 格式                                                                                                       | 备注             |
+|----------|----|----------------------------------------------------------------------------------------------------------|----------------|
+| 是        | 是  | `{Service}.byteplus-api.com`                                                                               |                |
+| 是        | 否  | `{Service}.byteplusapi.com`                                                                                |                |
+| 否        | 是  | 非中国大陆(cn-hongkong)：`{Service}.{region}.byteplus-api.com` <br/>  中国大陆：`{Service}.{region}.byteplus-api.com.cn` | 非gloabl服务，中国大陆地区会在末尾加上cn |
+| 否        | 否  | 非中国大陆(cn-hongkong)：`{Service}.{region}.byteplusapi.com` <br/> 中国大陆：`{Service}.{region}.byteplusapi.com.cn`   | 非gloabl服务，中国大陆地区会在末尾加上cn        |
+
+**代码示例：**
+
+是否global服务根据具体调用的服务决定的，是否global无法修改的。  
+可以参考列表：[./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#SERVICE_INFOS](./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#L150)
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.sign.Credentials;
+import java.util.HashSet;
+import com.byteplus.endpoint.StandardEndpointProvider;
+
+public class SampleCode {
+    public static void main(String[] args) {
+        String regionId = "cn-hongkong";
+        ApiClient apiClient = new ApiClient()
+                .setCredentials(Credentials.getEnvCredentials())
+                .setEndpointResolver(new StandardEndpointProvider()) // 设置标准寻址
+                .setRegion(regionId)   // 设置region
+                .setUseDualStack(true) // 设置是否双栈
+                ; 
+    }
+}
+```
+
 
 # Http连接池配置
 
