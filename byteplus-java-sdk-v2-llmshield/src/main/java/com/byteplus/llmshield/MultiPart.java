@@ -18,6 +18,7 @@ public class MultiPart {
         this.contentType = other.contentType;
     }
 
+    public MultiPart() {}
     public String getContent() {
         return content;
     }

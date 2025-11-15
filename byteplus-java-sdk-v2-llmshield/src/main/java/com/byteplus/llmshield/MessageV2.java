@@ -66,4 +66,13 @@ public class MessageV2 {
     public void setMultiPart(List<MultiPart> multiPart) {
         this.multiPart = multiPart;
     }
+
+    // 追加单条消息
+    public MessageV2 appendMultiPart(MultiPart contPart) {
+        if (this.multiPart == null) {
+            this.multiPart = new ArrayList<>();
+        }
+        this.multiPart.add(contPart);
+        return this; // 支持链式调用
+    }
 }
