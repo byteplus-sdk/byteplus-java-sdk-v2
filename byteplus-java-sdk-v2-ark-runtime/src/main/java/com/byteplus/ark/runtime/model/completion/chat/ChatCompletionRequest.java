@@ -1,6 +1,5 @@
 package com.byteplus.ark.runtime.model.completion.chat;
 
-import com.byteplus.ark.runtime.utils.JacksonUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -77,6 +76,12 @@ public class ChatCompletionRequest {
      */
     @JsonProperty("max_tokens")
     Integer maxTokens;
+
+    /**
+     * The maximum number of tokens allowed for the generated answer, including reasoning tokens.
+     */
+    @JsonProperty("max_completion_tokens")
+    Integer maxCompletionTokens;
 
     /**
      * Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
@@ -156,6 +161,69 @@ public class ChatCompletionRequest {
      */
     @JsonProperty("response_format")
     ChatCompletionRequestResponseFormat responseFormat;
+
+    @JsonProperty("thinking")
+    ChatCompletionRequestThinking thinking;
+
+    @JsonProperty("reasoning_effort")
+    String reasoningEffort;
+
+
+    @Override
+    public String toString() {
+        return "ChatCompletionRequest{" +
+                "model='" + model + '\'' +
+                ", messages=" + messages +
+                ", temperature=" + temperature +
+                ", topP=" + topP +
+                ", stream=" + stream +
+                ", streamOptions=" + streamOptions +
+                ", serviceTier='" + serviceTier + '\'' +
+                ", stop=" + stop +
+                ", maxTokens=" + maxTokens +
+                ", maxCompletionTokens=" + maxCompletionTokens +
+                ", presencePenalty=" + presencePenalty +
+                ", frequencyPenalty=" + frequencyPenalty +
+                ", logitBias=" + logitBias +
+                ", user='" + user + '\'' +
+                ", tools=" + tools +
+                ", functionCall=" + functionCall +
+                ", logprobs=" + logprobs +
+                ", topLogprobs=" + topLogprobs +
+                ", repetitionPenalty=" + repetitionPenalty +
+                ", n=" + n +
+                ", parallelToolCalls=" + parallelToolCalls +
+                ", toolChoice=" + toolChoice +
+                ", responseFormat=" + responseFormat +
+                ", thinking=" + thinking +
+                ", reasoningEffort='" + reasoningEffort + '\'' +
+                '}';
+    }
+
+
+    public String getReasoningEffort() {
+        return reasoningEffort;
+    }
+
+    public void setReasoningEffort(String reasoningEffort) {
+        this.reasoningEffort = reasoningEffort;
+    }
+
+    public Integer getMaxCompletionTokens() {
+        return maxCompletionTokens;
+    }
+
+    public void setMaxCompletionTokens(Integer maxCompletionTokens) {
+        this.maxCompletionTokens = maxCompletionTokens;
+    }
+
+    public ChatCompletionRequestThinking getThinking() {
+        return thinking;
+    }
+
+    public void setThinking(ChatCompletionRequestThinking thinking) {
+        this.thinking = thinking;
+    }
 
     public String getModel() {
         return model;
@@ -333,34 +401,6 @@ public class ChatCompletionRequest {
         this.responseFormat = responseFormat;
     }
 
-    @Override
-    public String toString() {
-        return "ChatCompletionRequest{" +
-                "model='" + model + '\'' +
-                ", messages=" + messages +
-                ", temperature=" + temperature +
-                ", topP=" + topP +
-                ", stream=" + stream +
-                ", streamOptions=" + streamOptions +
-                ", serviceTier=" + serviceTier +
-                ", stop=" + stop +
-                ", maxTokens=" + maxTokens +
-                ", presencePenalty=" + presencePenalty +
-                ", frequencyPenalty=" + frequencyPenalty +
-                ", logitBias=" + logitBias +
-                ", user='" + user + '\'' +
-                ", tools=" + tools +
-                ", functionCall=" + functionCall +
-                ", logprobs=" + logprobs +
-                ", topLogprobs=" + topLogprobs +
-                ", repetitionPenalty=" + repetitionPenalty +
-                ", n=" + n +
-                ", parallelToolCalls=" + parallelToolCalls +
-                ", toolChoice=" + toolChoice +
-                ", responseFormat=" + responseFormat +
-                '}';
-    }
-
     public static class ChatCompletionRequestFunctionCall {
         String name;
 
@@ -424,16 +464,10 @@ public class ChatCompletionRequest {
 
     public static class ChatCompletionRequestResponseFormat {
         String type;
+        ResponseFormatJSONSchemaJSONSchemaParam jsonSchema;
+
+        @Deprecated
         JsonNode schema;
-
-        public ChatCompletionRequestResponseFormat(String type) {
-            this.type = type;
-        }
-
-        public ChatCompletionRequestResponseFormat(String type, Object schema) {
-            this.type = type;
-            this.schema = JacksonUtil.clsToJsonNode(schema);
-        }
 
         public String getType() {
             return type;
@@ -443,13 +477,23 @@ public class ChatCompletionRequest {
             this.type = type;
         }
 
-        public JsonNode getSchema() {
-            return schema;
+        public ResponseFormatJSONSchemaJSONSchemaParam getJsonSchema() {
+            return jsonSchema;
         }
 
-        public void setSchema(JsonNode schema) {
-            this.schema = schema;
+        public void setJsonSchema(ResponseFormatJSONSchemaJSONSchemaParam jsonSchema) {
+            this.jsonSchema = jsonSchema;
         }
+
+        public ChatCompletionRequestResponseFormat(String type) {
+            this.type = type;
+        }
+
+        public ChatCompletionRequestResponseFormat(String type,ResponseFormatJSONSchemaJSONSchemaParam jsonSchema) {
+            this.jsonSchema = jsonSchema;
+            this.type = type;
+        }
+
     }
 
     public static class ChatCompletionRequestToolChoice {
@@ -477,6 +521,22 @@ public class ChatCompletionRequest {
             this.function = function;
         }
 
+    }
+
+    public static class ChatCompletionRequestThinking{
+        public ChatCompletionRequestThinking(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        String type;
     }
 
     public static class ChatCompletionRequestToolChoiceFunction {
@@ -522,6 +582,9 @@ public class ChatCompletionRequest {
         private Boolean parallelToolCalls;
         private Object toolChoice;
         private ChatCompletionRequestResponseFormat responseFormat;
+        private ChatCompletionRequestThinking thinking;
+        private Integer maxCompletionTokens;
+        private String reasoningEffort;
 
         public ChatCompletionRequest.Builder model(String model) {
             this.model = model;
@@ -565,6 +628,11 @@ public class ChatCompletionRequest {
 
         public ChatCompletionRequest.Builder maxTokens(Integer maxTokens) {
             this.maxTokens = maxTokens;
+            return this;
+        }
+
+        public ChatCompletionRequest.Builder maxCompletionTokens(Integer maxCompletionTokens) {
+            this.maxCompletionTokens = maxCompletionTokens;
             return this;
         }
 
@@ -638,6 +706,16 @@ public class ChatCompletionRequest {
             return this;
         }
 
+        public ChatCompletionRequest.Builder thinking(ChatCompletionRequestThinking thinking) {
+            this.thinking = thinking;
+            return this;
+        }
+
+        public ChatCompletionRequest.Builder reasoningEffort(String reasoningEffort) {
+            this.reasoningEffort = reasoningEffort;
+            return this;
+        }
+
         public ChatCompletionRequest build() {
             ChatCompletionRequest chatCompletionRequest = new ChatCompletionRequest();
             chatCompletionRequest.setModel(model);
@@ -662,6 +740,9 @@ public class ChatCompletionRequest {
             chatCompletionRequest.setParallelToolCalls(parallelToolCalls);
             chatCompletionRequest.setToolChoice(toolChoice);
             chatCompletionRequest.setResponseFormat(responseFormat);
+            chatCompletionRequest.setThinking(thinking);
+            chatCompletionRequest.setMaxCompletionTokens(maxCompletionTokens);
+            chatCompletionRequest.setReasoningEffort(reasoningEffort);
             return chatCompletionRequest;
         }
     }
