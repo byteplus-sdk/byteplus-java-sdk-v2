@@ -24,53 +24,52 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ActiveFlowLogRequest
+ * TagForDescribeIpv6GatewayAttributeOutput
  */
 
 
 
-public class ActiveFlowLogRequest {
-  @SerializedName("ClientToken")
-  private String clientToken = null;
+public class TagForDescribeIpv6GatewayAttributeOutput {
+  @SerializedName("Key")
+  private String key = null;
 
-  @SerializedName("FlowLogId")
-  private String flowLogId = null;
+  @SerializedName("Value")
+  private String value = null;
 
-  public ActiveFlowLogRequest clientToken(String clientToken) {
-    this.clientToken = clientToken;
+  public TagForDescribeIpv6GatewayAttributeOutput key(String key) {
+    this.key = key;
     return this;
   }
 
    /**
-   * Get clientToken
-   * @return clientToken
+   * Get key
+   * @return key
   **/
   @Schema(description = "")
-  public String getClientToken() {
-    return clientToken;
+  public String getKey() {
+    return key;
   }
 
-  public void setClientToken(String clientToken) {
-    this.clientToken = clientToken;
+  public void setKey(String key) {
+    this.key = key;
   }
 
-  public ActiveFlowLogRequest flowLogId(String flowLogId) {
-    this.flowLogId = flowLogId;
+  public TagForDescribeIpv6GatewayAttributeOutput value(String value) {
+    this.value = value;
     return this;
   }
 
    /**
-   * Get flowLogId
-   * @return flowLogId
+   * Get value
+   * @return value
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public String getFlowLogId() {
-    return flowLogId;
+  @Schema(description = "")
+  public String getValue() {
+    return value;
   }
 
-  public void setFlowLogId(String flowLogId) {
-    this.flowLogId = flowLogId;
+  public void setValue(String value) {
+    this.value = value;
   }
 
 
@@ -82,24 +81,24 @@ public class ActiveFlowLogRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ActiveFlowLogRequest activeFlowLogRequest = (ActiveFlowLogRequest) o;
-    return Objects.equals(this.clientToken, activeFlowLogRequest.clientToken) &&
-        Objects.equals(this.flowLogId, activeFlowLogRequest.flowLogId);
+    TagForDescribeIpv6GatewayAttributeOutput tagForDescribeIpv6GatewayAttributeOutput = (TagForDescribeIpv6GatewayAttributeOutput) o;
+    return Objects.equals(this.key, tagForDescribeIpv6GatewayAttributeOutput.key) &&
+        Objects.equals(this.value, tagForDescribeIpv6GatewayAttributeOutput.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientToken, flowLogId);
+    return Objects.hash(key, value);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ActiveFlowLogRequest {\n");
+    sb.append("class TagForDescribeIpv6GatewayAttributeOutput {\n");
     
-    sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
-    sb.append("    flowLogId: ").append(toIndentedString(flowLogId)).append("\n");
+    sb.append("    key: ").append(toIndentedString(key)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }
