@@ -4,6 +4,7 @@ import com.byteplus.ark.runtime.model.content.generation.*;
 import com.byteplus.ark.runtime.model.content.generation.CreateContentGenerationTaskRequest.Content;
 import com.byteplus.ark.runtime.model.content.generation.DeleteContentGenerationTaskResponse;
 import com.byteplus.ark.runtime.service.ArkService;
+import com.byteplus.ark.runtime.exception.ArkHttpException;
 import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
 
@@ -49,6 +50,8 @@ public class ContentGenerationTaskExample {
         CreateContentGenerationTaskRequest createRequest = CreateContentGenerationTaskRequest.builder()
                 .model(model)
                 .content(contents)
+                .serviceTier("default")
+                .executionExpiresAfter(3600L)
 //                .callbackUrl("${YOUR_CALLBACK_URL}")
                 .build();
 
@@ -67,15 +70,14 @@ public class ContentGenerationTaskExample {
 
         System.out.println("\n----- LIST Task Request -----");
 
-        ListContentGenerationTasksRequest listRequest = ListContentGenerationTasksRequest.builder()
-                .pageNum(1)
-                .pageSize(10)
-                .status(TaskStatus.RUNNING)
-                .addTaskId(createResult.getId())
-                // for multiple IDs, you could use:
-                // .taskIds(Arrays.asList("test-id-1", "test-id-2"))
-                .model(model)
-                .build();
+            ListContentGenerationTasksRequest listRequest = ListContentGenerationTasksRequest.builder()
+                    .pageNum(1)
+                    .pageSize(10)
+                    .status(TaskStatus.RUNNING)
+                    .addTaskId(createResult.getId())
+                    .model(model)
+                    .serviceTier("default")
+                    .build();
 
         ListContentGenerationTasksResponse listResponse = service.listContentGenerationTasks(listRequest);
         System.out.println(listResponse);
@@ -86,11 +88,99 @@ public class ContentGenerationTaskExample {
                 .taskId(getResult.getId())
                 .build();
 
-        try {
-            DeleteContentGenerationTaskResponse deleteResult = service.deleteContentGenerationTask(deleteRequest);
-            System.out.println(deleteResult);
+            try {
+                DeleteContentGenerationTaskResponse deleteResult = service.deleteContentGenerationTask(deleteRequest);
+                System.out.println(deleteResult);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (ArkHttpException e) {
+            System.out.println("HTTP status=" + e.statusCode + ", code=" + e.code + ", msg=" + e.getMessage());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Unexpected error: " + e.getMessage());
+        }
+
+        System.out.println("\n----- CREATE Flex Task Request -----");
+        List<Content> flexContents = new ArrayList<>();
+
+        // Text content
+        flexContents.add(Content.builder()
+                .type("text")
+                .text("Bird soaring above vast grasslands")
+                .build());
+
+        // Image URL content
+        flexContents.add(Content.builder()
+                .type("image_url")
+                .imageUrl(CreateContentGenerationTaskRequest.ImageUrl.builder()
+                        .url("${IMAGE URL HERE}")
+                        .build())
+                .build());
+
+        CreateContentGenerationTaskRequest flexCreateRequest = CreateContentGenerationTaskRequest.builder()
+                .model(model)
+                .content(flexContents)
+                .serviceTier("flex")
+                .executionExpiresAfter(3600L)
+//                .callbackUrl("${YOUR_CALLBACK_URL}")
+                .build();
+
+        // send create request
+        CreateContentGenerationTaskResult flexCreateResult;
+        try {
+            flexCreateResult = service.createContentGenerationTask(flexCreateRequest);
+            System.out.println(flexCreateResult);
+        } catch (ArkHttpException e) {
+            System.out.println("HTTP status=" + e.statusCode + ", code=" + e.code + ", msg=" + e.getMessage());
+            service.shutdownExecutor();
+            return;
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
+            service.shutdownExecutor();
+            return;
+        }
+
+        System.out.println("\n----- GET Flex Task Request -----");
+
+        GetContentGenerationTaskRequest flexGetRequest = GetContentGenerationTaskRequest.builder()
+                .taskId(flexCreateResult.getId())
+                .build();
+
+        try {
+            GetContentGenerationTaskResponse flexGetResult = service.getContentGenerationTask(flexGetRequest);
+            System.out.println(flexGetResult);
+            System.out.println("service_tier=" + flexGetResult.getServiceTier() + ", execution_expires_after=" + flexGetResult.getExecutionExpiresAfter());
+
+            System.out.println("\n----- LIST Flex Task Request -----");
+
+            ListContentGenerationTasksRequest flexListRequest = ListContentGenerationTasksRequest.builder()
+                    .pageNum(1)
+                    .pageSize(10)
+                    .status(TaskStatus.RUNNING)
+                    .addTaskId(flexCreateResult.getId())
+                    .model(model)
+                    .serviceTier("flex")
+                    .build();
+
+            ListContentGenerationTasksResponse flexListResponse = service.listContentGenerationTasks(flexListRequest);
+            System.out.println(flexListResponse);
+
+            System.out.println("\n----- DELETE Flex Task Request -----");
+
+            DeleteContentGenerationTaskRequest flexDeleteRequest = DeleteContentGenerationTaskRequest.builder()
+                    .taskId(flexGetResult.getId())
+                    .build();
+
+            try {
+                DeleteContentGenerationTaskResponse flexDeleteResult = service.deleteContentGenerationTask(flexDeleteRequest);
+                System.out.println(flexDeleteResult);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (ArkHttpException e) {
+            System.out.println("HTTP status=" + e.statusCode + ", code=" + e.code + ", msg=" + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
         }
 
         service.shutdownExecutor();
