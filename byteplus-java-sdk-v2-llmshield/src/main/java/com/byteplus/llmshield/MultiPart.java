@@ -2,8 +2,6 @@ package com.byteplus.llmshield;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class MultiPart {
     @JsonProperty("Content")
     private String content;     // 内容文本或链接
@@ -18,18 +16,13 @@ public class MultiPart {
         this.contentType = other.contentType;
     }
 
+    // 无参构造方法（保留，用于JSON反序列化等场景）
     public MultiPart() {}
-    public String getContent() {
-        return content;
-    }
+    public String getContent() { return content; }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public void setContent(String content) { this.content = content; }
 
     public ContentTypeV2 getContentType() { return contentType; }
 
-    public void setContentType(ContentTypeV2 contentType) {
-        this.contentType = contentType;
-    }
+    public void setContentType(ContentTypeV2 contentType) { this.contentType = contentType; }
 }

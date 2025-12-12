@@ -25,6 +25,7 @@ public class MessageV2 {
         this.role = other.role;
         this.content = other.content;
         this.contentType = other.contentType;
+
         // List<multiPart>：新建List并对每个元素深拷贝
         if (other.multiPart != null) {
             this.multiPart = new ArrayList<>();
@@ -63,11 +64,9 @@ public class MessageV2 {
 
     public List<MultiPart> getMultiPart() { return multiPart; }
 
-    public void setMultiPart(List<MultiPart> multiPart) {
-        this.multiPart = multiPart;
-    }
+    public void setMultiPart(List<MultiPart> multiPart) { this.multiPart = multiPart; }
 
-    // 追加单条消息
+    // 追加单条历史消息
     public MessageV2 appendMultiPart(MultiPart contPart) {
         if (this.multiPart == null) {
             this.multiPart = new ArrayList<>();

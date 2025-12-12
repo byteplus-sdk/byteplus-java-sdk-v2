@@ -3,6 +3,7 @@ package com.byteplus.llmshield;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
@@ -16,17 +17,15 @@ import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-
 // 客户端类
 
 public class ApiClient {
     private final String CONTENT_TYPE_HEADER = "application/json";
-
     private final String url;
     private final String ak;
     private final String sk;
     private final String region;
-    private final CloseableHttpClient httpClient;
+    private CloseableHttpClient httpClient;
 
     private ApiClient(String url, String ak, String sk, String region, long timeout) {
         this.url = url;
@@ -89,17 +88,19 @@ public class ApiClient {
      * @param ak      访问密钥
      * @param sk      密钥
      * @param region  区域
-     * @param proxy   代理地址
+     * @param proxy   代理地址（如 http://127.0.0.1:8080，无代理则传 null）
+     * @param connMax 最大连接数
      * @param timeout 连接超时时间（毫秒）
      * @return 客户端实例
+     * @throws MalformedURLException 如果 URL 格式不正确
      */
     public static ApiClient New(String url, String ak, String sk, String region, long timeout, String proxy, int connMax) throws MalformedURLException {
         return new ApiClient(url, ak, sk, region, timeout, proxy, connMax);
     }
+
     /**
      * 关闭客户端
-     *
-     * @return 无
+     * @throws IOException 如果关闭时发生 IO 异常
      */
     public void Close() throws IOException {
         try {
@@ -112,12 +113,15 @@ public class ApiClient {
     /**
      * 设置环境
      * @param IsDev 是否为dev环境
-     * @return 无
      */
     public void SetServiceDev(boolean IsDev)  {
         Sign.setServiceDev(IsDev);
     }
 
+    /**
+     * 设置环境
+     * @return 返回运行环境信息
+     */
     public String GetServiceCode()  {
         return Sign.getServiceCode();
     }
@@ -166,6 +170,7 @@ public class ApiClient {
 
     public ModerateV2Response ModerateStream(ModerateV2Request request, ModerateV2StreamSession session) throws Exception {
         if (request == null) {
+
             request = new ModerateV2Request();
         }
         // 本接口不支持非流式调用
@@ -250,5 +255,4 @@ public class ApiClient {
             return new GenerateStreamV2Response(response.getEntity().getContent());
         }
     }
-
 }
