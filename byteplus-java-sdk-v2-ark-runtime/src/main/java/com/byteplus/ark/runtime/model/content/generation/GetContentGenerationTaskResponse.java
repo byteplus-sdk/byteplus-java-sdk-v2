@@ -57,6 +57,9 @@ public class GetContentGenerationTaskResponse {
     @JsonProperty("execution_expires_after")
     private java.lang.Long executionExpiresAfter;
 
+    @JsonProperty("generate_audio")
+    private Boolean generateAudio;
+
     public String getId() {
         return id;
     }
@@ -183,6 +186,14 @@ public class GetContentGenerationTaskResponse {
         this.executionExpiresAfter = executionExpiresAfter;
     }
 
+    public Boolean getGenerateAudio() {
+        return generateAudio;
+    }
+
+    public void setGenerateAudio(Boolean generateAudio) {
+        this.generateAudio = generateAudio;
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Content {
 
@@ -296,6 +307,7 @@ public class GetContentGenerationTaskResponse {
                 ", revisedPrompt='" + revisedPrompt + '\'' +
                 ", serviceTier='" + serviceTier + '\'' +
                 ", executionExpiresAfter=" + executionExpiresAfter +
+                ", generateAudio=" + generateAudio +
                 '}';
     }
 }
