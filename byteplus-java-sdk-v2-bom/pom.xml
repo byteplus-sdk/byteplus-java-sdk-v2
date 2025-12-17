@@ -3,7 +3,7 @@
     <parent>
         <artifactId>byteplus-java-sdk-v2</artifactId>
         <groupId>com.byteplus</groupId>
-        <version>0.1.39</version>
+        <version>0.1.40</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -214,6 +214,12 @@
             <dependency>
                 <groupId>com.byteplus</groupId>
                 <artifactId>byteplus-java-sdk-v2-vod20250701</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-vepfs</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>
             </dependency>
