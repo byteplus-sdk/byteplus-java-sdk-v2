@@ -1,31 +1,30 @@
 package com.byteplus.ark.runtime.service;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.byteplus.ark.runtime.Const;
+import com.byteplus.ark.runtime.exception.ArkAPIError;
+import com.byteplus.ark.runtime.exception.ArkException;
+import com.byteplus.ark.runtime.exception.ArkHttpException;
+import com.byteplus.ark.runtime.interceptor.*;
+import com.byteplus.ark.runtime.model.content.generation.DeleteContentGenerationTaskResponse;
+import com.byteplus.ark.runtime.model.completion.chat.*;
 import com.byteplus.ark.runtime.model.content.generation.*;
+import com.byteplus.ark.runtime.model.context.CreateContextRequest;
+import com.byteplus.ark.runtime.model.context.CreateContextResult;
+import com.byteplus.ark.runtime.model.context.chat.ContextChatCompletionRequest;
+import com.byteplus.ark.runtime.utils.MultipartBodyUtils;
 import com.byteplus.ark.runtime.model.embeddings.EmbeddingRequest;
 import com.byteplus.ark.runtime.model.embeddings.EmbeddingResult;
+import com.byteplus.ark.runtime.model.files.*;
 import com.byteplus.ark.runtime.model.images.generation.GenerateImagesRequest;
 import com.byteplus.ark.runtime.model.images.generation.ImagesResponse;
 import com.byteplus.ark.runtime.model.images.generation.ImageGenStreamEvent;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingRequest;
 import com.byteplus.ark.runtime.model.multimodalembeddings.MultimodalEmbeddingResult;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.byteplus.ark.runtime.*;
-import com.byteplus.ark.runtime.exception.ArkAPIError;
-import com.byteplus.ark.runtime.exception.ArkException;
-import com.byteplus.ark.runtime.exception.ArkHttpException;
-import com.byteplus.ark.runtime.interceptor.AuthenticationInterceptor;
-import com.byteplus.ark.runtime.interceptor.ArkResourceStsAuthenticationInterceptor;
-import com.byteplus.ark.runtime.interceptor.RequestIdInterceptor;
-import com.byteplus.ark.runtime.interceptor.RetryInterceptor;
-import com.byteplus.ark.runtime.interceptor.*;
-import com.byteplus.ark.runtime.model.completion.chat.*;
-import com.byteplus.ark.runtime.model.context.CreateContextRequest;
-import com.byteplus.ark.runtime.model.context.CreateContextResult;
-import com.byteplus.ark.runtime.model.context.chat.ContextChatCompletionRequest;
 import com.byteplus.ark.runtime.model.responses.event.StreamEvent;
 import com.byteplus.ark.runtime.model.responses.request.DeleteResponseRequest;
 import com.byteplus.ark.runtime.model.responses.request.GetResponseRequest;
@@ -45,11 +44,11 @@ import retrofit2.HttpException;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.Retrofit;
-
 import java.io.IOException;
 import java.net.Proxy;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -66,7 +65,7 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
     public ArkService(final String apiKey, final Duration timeout) {
         ObjectMapper mapper = defaultObjectMapper();
         OkHttpClient client = defaultApiKeyClient(apiKey, timeout);
-        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL);
+        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL, null);
 
         this.api = retrofit.create(ArkApi.class);
         this.executorService = client.dispatcher().executorService();
@@ -79,7 +78,7 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
     public ArkService(final String ak, final String sk, final Duration timeout) {
         ObjectMapper mapper = defaultObjectMapper();
         OkHttpClient client = defaultResourceStsClient(ak, sk, timeout, BASE_REGION);
-        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL);
+        Retrofit retrofit = defaultRetrofit(client, mapper, BASE_URL, null);
 
         this.api = retrofit.create(ArkApi.class);
         this.executorService = client.dispatcher().executorService();
@@ -123,13 +122,19 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
                 .build();
     }
 
-    public static Retrofit defaultRetrofit(OkHttpClient client, ObjectMapper mapper, String baseUrl) {
-        return new Retrofit.Builder()
+    public static Retrofit defaultRetrofit(OkHttpClient client, ObjectMapper mapper, String baseUrl, Executor callbackExecutor) {
+        Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+
+        if (callbackExecutor != null) {
+            // to avoid NPE
+            builder.callbackExecutor(callbackExecutor);
+        }
+
+        return builder.build();
     }
 
     public static <T> T execute(Single<T> apiCall) {
@@ -141,7 +146,8 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
             try {
                 Headers headers = e.response().raw().request().headers();
                 requestId = headers.get(Const.CLIENT_REQUEST_HEADER);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
 
             try {
                 if (e.response() == null || e.response().errorBody() == null) {
@@ -173,12 +179,16 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.createChatCompletion(request, request.getModel(), new HashMap<>()));
     }
 
+    public ChatCompletionResult createBatchChatCompletion(ChatCompletionRequest request) {
+        return execute(api.createBatchChatCompletion(request, request.getModel(), new HashMap<>()));
+    }
+
     public ChatCompletionResult createChatCompletion(ChatCompletionRequest request, Map<String, String> customHeaders) {
         return execute(api.createChatCompletion(request, request.getModel(), customHeaders));
     }
 
-    public ChatCompletionResult createBatchChatCompletion(ChatCompletionRequest request) {
-        return execute(api.createBatchChatCompletion(request, request.getModel(), new HashMap<>()));
+    public ChatCompletionResult createBatchChatCompletion(ChatCompletionRequest request, Map<String, String> customHeaders) {
+        return execute(api.createBatchChatCompletion(request, request.getModel(), customHeaders));
     }
 
     public Flowable<ChatCompletionChunk> streamChatCompletion(ChatCompletionRequest request) {
@@ -191,35 +201,6 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         request.setStream(true);
 
         return stream(api.createChatCompletionStream(request, request.getModel(), customHeaders), ChatCompletionChunk.class);
-    }
-
-    @Override
-    public CreateContextResult createContext(CreateContextRequest request) {
-        return execute(api.createContext(request, request.getModel(), new HashMap<>()));
-    }
-
-    public CreateContextResult createContext(CreateContextRequest request, Map<String, String> customHeaders) {
-        return execute(api.createContext(request, request.getModel(), customHeaders));
-    }
-
-    @Override
-    public ChatCompletionResult createContextChatCompletion(ContextChatCompletionRequest request) {
-        return execute(api.createContextChatCompletion(request, request.getModel(), new HashMap<>()));
-    }
-
-    public ChatCompletionResult createContextChatCompletion(ContextChatCompletionRequest request, Map<String, String> customHeaders) {
-        return execute(api.createContextChatCompletion(request, request.getModel(), customHeaders));
-    }
-
-    @Override
-    public Flowable<ChatCompletionChunk> streamContextChatCompletion(ContextChatCompletionRequest request) {
-        request.setStream(true);
-        return stream(api.createContextChatCompletionStream(request, request.getModel(), new HashMap<>()), ChatCompletionChunk.class);
-    }
-
-    public Flowable<ChatCompletionChunk> streamContextChatCompletion(ContextChatCompletionRequest request, Map<String, String> customHeaders) {
-        request.setStream(true);
-        return stream(api.createContextChatCompletionStream(request, request.getModel(), customHeaders), ChatCompletionChunk.class);
     }
 
     public EmbeddingResult createEmbeddings(EmbeddingRequest request) {
@@ -252,6 +233,35 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
 
     public MultimodalEmbeddingResult createBatchMultiModalEmbeddings(MultimodalEmbeddingRequest request, Map<String, String> customHeaders) {
         return execute(api.createBatchMultiModalEmbeddings(request, request.getModel(), customHeaders));
+    }
+
+    @Override
+    public CreateContextResult createContext(CreateContextRequest request) {
+        return execute(api.createContext(request, request.getModel(), new HashMap<>()));
+    }
+
+    public CreateContextResult createContext(CreateContextRequest request, Map<String, String> customHeaders) {
+        return execute(api.createContext(request, request.getModel(), customHeaders));
+    }
+
+    @Override
+    public ChatCompletionResult createContextChatCompletion(ContextChatCompletionRequest request) {
+        return execute(api.createContextChatCompletion(request, request.getModel(), new HashMap<>()));
+    }
+
+    public ChatCompletionResult createContextChatCompletion(ContextChatCompletionRequest request, Map<String, String> customHeaders) {
+        return execute(api.createContextChatCompletion(request, request.getModel(), customHeaders));
+    }
+
+    @Override
+    public Flowable<ChatCompletionChunk> streamContextChatCompletion(ContextChatCompletionRequest request) {
+        request.setStream(true);
+        return stream(api.createContextChatCompletionStream(request, request.getModel(), new HashMap<>()), ChatCompletionChunk.class);
+    }
+
+    public Flowable<ChatCompletionChunk> streamContextChatCompletion(ContextChatCompletionRequest request, Map<String, String> customHeaders) {
+        request.setStream(true);
+        return stream(api.createContextChatCompletionStream(request, request.getModel(), customHeaders), ChatCompletionChunk.class);
     }
 
     public ImagesResponse generateImages(GenerateImagesRequest request) {
@@ -330,6 +340,7 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         return execute(api.deleteContentGenerationTask(request.getTaskId(), customHeaders));
     }
 
+
     @Override
     public ResponseObject createResponse(CreateResponsesRequest request) {
         return execute(api.createResponse(request, request.getModel(), new HashMap<>()));
@@ -370,13 +381,49 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         ));
     }
 
+    @Override
+    public FileMeta uploadFile(UploadFileRequest request) {
+        MultipartBody.Part fileBody = MultipartBodyUtils.getPart(request.getFile(), "file");
+        RequestBody purpose = RequestBody.create(MultipartBodyUtils.TYPE, request.getPurpose());
+        RequestBody expireAt = null;
+        if (request.getExpireAt() != null) {
+            expireAt = RequestBody.create(MultipartBodyUtils.TYPE, String.valueOf(request.getExpireAt()));
+        }
+        RequestBody fps = null;
+        if (request.getPreprocessConfigs() != null && request.getPreprocessConfigs().getVideo() != null && request.getPreprocessConfigs().getVideo().getFps() != null) {
+            fps = RequestBody.create(MultipartBodyUtils.TYPE, String.valueOf(request.getPreprocessConfigs().getVideo().getFps()));
+        }
+        return execute(api.uploadFile(fileBody, purpose, expireAt, fps, new HashMap<>()));
+    }
+
+    @Override
+    public FileMeta retrieveFile(String fileId) {
+        return execute(api.retrieveFile(fileId, new HashMap<>()));
+    }
+
+    @Override
+    public DeleteFileResponse deleteFile(String fileId) {
+        return execute(api.deleteFile(fileId, new HashMap<>()));
+    }
+
+    @Override
+    public ListFilesResponse listFiles(ListFilesRequest request) {
+        return execute(api.listFiles(
+                request.getLimit(),
+                request.getAfter(),
+                request.getPurpose(),
+                request.getOrder(),
+                new HashMap<>()
+        ));
+    }
+
     public void shutdownExecutor() {
         Objects.requireNonNull(this.executorService, "executorService must be set in order to shut down");
         this.executorService.shutdown();
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static ArkService.Builder builder() {
+        return new ArkService.Builder();
     }
 
     public static class Builder {
@@ -386,33 +433,35 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
         private String region = BASE_REGION;
         private String baseUrl = BASE_URL;
         private Duration timeout = DEFAULT_TIMEOUT;
+        private Duration callTimeout;
         private Duration connectTimeout = DEFAULT_CONNECT_TIMEOUT;
         private int retryTimes = DEFAULT_RETRY_TIMES;
         private Proxy proxy;
         private ConnectionPool connectionPool;
         private Dispatcher dispatcher;
+        private Executor callbackExecutor;
 
-        public Builder ak(String ak) {
+        public ArkService.Builder ak(String ak) {
             this.ak = ak;
             return this;
         }
 
-        public Builder sk(String sk) {
+        public ArkService.Builder sk(String sk) {
             this.sk = sk;
             return this;
         }
 
-        public Builder apiKey(String apiKey) {
+        public ArkService.Builder apiKey(String apiKey) {
             this.apiKey = apiKey;
             return this;
         }
 
-        public Builder region(String region) {
+        public ArkService.Builder region(String region) {
             this.region = region;
             return this;
         }
 
-        public Builder baseUrl(String baseUrl) {
+        public ArkService.Builder baseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
             if (!baseUrl.endsWith("/")) {
                 this.baseUrl = baseUrl + "/";
@@ -420,33 +469,43 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
             return this;
         }
 
-        public Builder timeout(Duration timeout) {
+        public ArkService.Builder timeout(Duration timeout) {
             this.timeout = timeout;
             return this;
         }
 
-        public Builder connectTimeout(Duration connectTimeout) {
+        public ArkService.Builder callTimeout(Duration callTimeout) {
+            this.callTimeout = callTimeout;
+            return this;
+        }
+
+        public ArkService.Builder connectTimeout(Duration connectTimeout) {
             this.connectTimeout = connectTimeout;
             return this;
         }
 
-        public Builder retryTimes(int retryTimes) {
+        public ArkService.Builder retryTimes(int retryTimes) {
             this.retryTimes = retryTimes;
             return this;
         }
 
-        public Builder proxy(Proxy proxy) {
+        public ArkService.Builder proxy(Proxy proxy) {
             this.proxy = proxy;
             return this;
         }
 
-        public Builder connectionPool(ConnectionPool connectionPool) {
+        public ArkService.Builder connectionPool(ConnectionPool connectionPool) {
             this.connectionPool = connectionPool;
             return this;
         }
 
-        public Builder dispatcher(Dispatcher dispatcher) {
+        public ArkService.Builder dispatcher(Dispatcher dispatcher) {
             this.dispatcher = dispatcher;
+            return this;
+        }
+
+        public ArkService.Builder callbackExecutor(Executor callbackExecutor) {
+            this.callbackExecutor = callbackExecutor;
             return this;
         }
 
@@ -480,11 +539,10 @@ public class ArkService extends ArkBaseService implements ArkBaseServiceImpl {
                     .addInterceptor(new RetryInterceptor(retryTimes))
                     .addInterceptor(new BatchInterceptor())
                     .readTimeout(timeout.toMillis(), TimeUnit.MILLISECONDS)
-                    .callTimeout(timeout.toMillis(), TimeUnit.MILLISECONDS)
+                    .callTimeout(callTimeout == null ? timeout.toMillis() : callTimeout.toMillis(), TimeUnit.MILLISECONDS)
                     .connectTimeout(connectTimeout)
                     .build();
-            Retrofit retrofit = defaultRetrofit(client, mapper, baseUrl);
-
+            Retrofit retrofit = defaultRetrofit(client, mapper, baseUrl, callbackExecutor);
             return new ArkService(
                     retrofit.create(ArkApi.class),
                     client.dispatcher().executorService()
