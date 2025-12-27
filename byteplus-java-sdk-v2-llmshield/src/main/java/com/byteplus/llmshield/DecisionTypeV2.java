@@ -1,5 +1,6 @@
 package com.byteplus.llmshield;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 // 决策类型枚举
 public enum DecisionTypeV2 {
     PASS(1),        // 通过
