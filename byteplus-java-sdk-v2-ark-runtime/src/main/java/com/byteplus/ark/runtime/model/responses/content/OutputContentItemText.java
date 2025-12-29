@@ -1,8 +1,8 @@
 package com.byteplus.ark.runtime.model.responses.content;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.byteplus.ark.runtime.model.responses.tool.websearch.Annotation;
 import com.byteplus.ark.runtime.model.responses.constant.ResponsesConstants;
+import com.byteplus.ark.runtime.model.responses.tool.websearch.Annotation;
 
 import java.util.List;
 
