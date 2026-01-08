@@ -237,6 +237,18 @@
             </dependency>
             <dependency>
                 <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-resourceshare</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-tag</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
                 <artifactId>byteplus-java-sdk-v2-iam20210801</artifactId>
                 <optional>false</optional>
                 <version>${project.version}</version>

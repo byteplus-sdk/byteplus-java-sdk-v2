@@ -252,6 +252,8 @@
         <module>byteplus-java-sdk-v2-vepfs</module>
         <module>byteplus-java-sdk-v2-mlplatform20240701</module>
         <module>byteplus-java-sdk-v2-rabbitmq</module>
+        <module>byteplus-java-sdk-v2-resourceshare</module>
+        <module>byteplus-java-sdk-v2-tag</module>
         <module>byteplus-java-sdk-v2-iam20210801</module>
     </modules>
 </project>
