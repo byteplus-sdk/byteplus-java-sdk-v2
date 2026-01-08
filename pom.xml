@@ -254,5 +254,6 @@
         <module>byteplus-java-sdk-v2-rabbitmq</module>
         <module>byteplus-java-sdk-v2-resourceshare</module>
         <module>byteplus-java-sdk-v2-tag</module>
+        <module>byteplus-java-sdk-v2-quota</module>
     </modules>
 </project>
