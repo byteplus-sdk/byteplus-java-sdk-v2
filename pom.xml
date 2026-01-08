@@ -251,5 +251,6 @@
         <module>byteplus-java-sdk-v2-vod20250701</module>
         <module>byteplus-java-sdk-v2-vepfs</module>
         <module>byteplus-java-sdk-v2-mlplatform20240701</module>
+        <module>byteplus-java-sdk-v2-rabbitmq</module>
     </modules>
 </project>
