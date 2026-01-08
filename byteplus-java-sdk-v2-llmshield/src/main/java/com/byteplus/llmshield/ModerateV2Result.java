@@ -16,6 +16,9 @@ public class ModerateV2Result {
     @JsonProperty("PermitInfo")
     private PermitInfoV2 permitInfo;  // 放行信息
 
+    @JsonProperty("ContentInfo")
+    private String contentInfo;  // 提交内容信息
+
     @JsonProperty("Degraded")
     private boolean degraded;   // 是否降级
 
@@ -56,6 +59,14 @@ public class ModerateV2Result {
 
     public void setPermitInfo(PermitInfoV2 permitInfo) {
         this.permitInfo = permitInfo;
+    }
+
+    public String getContentInfo() {
+        return contentInfo;
+    }
+
+    public void setContentInfo(String contentInfo) {
+        this.contentInfo = contentInfo;
     }
 
     public boolean isDegraded() {
