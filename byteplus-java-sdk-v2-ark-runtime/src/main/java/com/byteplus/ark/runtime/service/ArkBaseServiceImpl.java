@@ -22,6 +22,7 @@ import com.byteplus.ark.runtime.model.responses.request.CreateResponsesRequest;
 import com.byteplus.ark.runtime.model.responses.response.DeleteResponseResponse;
 import com.byteplus.ark.runtime.model.responses.response.ListInputItemsResponse;
 import com.byteplus.ark.runtime.model.responses.response.ResponseObject;
+import com.byteplus.ark.runtime.model.files.*;
 import io.reactivex.Flowable;
 
 
@@ -66,4 +67,12 @@ public interface ArkBaseServiceImpl {
     DeleteResponseResponse deleteResponse(DeleteResponseRequest request);
 
     ListInputItemsResponse listResponseInputItems(ListInputItemsRequest request);
+
+    FileMeta uploadFile(UploadFileRequest file);
+
+    FileMeta retrieveFile(String fileId);
+
+    DeleteFileResponse deleteFile(String fileId);
+
+    ListFilesResponse listFiles(ListFilesRequest request);
 }

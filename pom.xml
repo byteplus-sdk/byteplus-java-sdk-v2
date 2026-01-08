@@ -4,7 +4,7 @@
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.41</version>
+    <version>0.1.42</version>
     <name>byteplus-java-sdk-v2</name>
     <url>https://open.byteplusapi.com</url>
     <description>The Java SDK For byteplus</description>
@@ -250,6 +250,9 @@
         <module>byteplus-java-sdk-v2-llmshield</module>
         <module>byteplus-java-sdk-v2-vod20250701</module>
         <module>byteplus-java-sdk-v2-vepfs</module>
+        <module>byteplus-java-sdk-v2-mlplatform20240701</module>
+        <module>byteplus-java-sdk-v2-rabbitmq</module>
+        <module>byteplus-java-sdk-v2-resourceshare</module>
         <module>byteplus-java-sdk-v2-tag</module>
     </modules>
 </project>
