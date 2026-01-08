@@ -34,13 +34,18 @@ import java.net.URLEncoder;
  */
 public class Sign {
     // 常量定义
+    private static final String SERVICE_CODE_DEV = "llmshield_dev";
+    private static final String SERVICE_CODE_ONLINE = "llmshield";
+
     private static final String VERSION = "2025-08-31";
-    private static final String SERVICE = "llmshield";
     private static final BitSet URLENCODER = new BitSet(256);
     private static final String CONST_ENCODE = "0123456789ABCDEF";
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
     // 默认 Content-Type（可根据实际需求调整，若请求体为 JSON 可改为 application/json）
     private static final String DEFAULT_CONTENT_TYPE = "application/json";
+
+    private static boolean isModified = false; //记录是否已修改过
+    private static String SERVICE = SERVICE_CODE_ONLINE;
 
     // 静态初始化 URL 编码允许的字符（复用原逻辑）
     static {
@@ -62,17 +67,33 @@ public class Sign {
         URLENCODER.set('~');
     }
 
+    public static synchronized void setServiceDev(boolean IsDev) {
+        if (!isModified) {
+            if (IsDev) {
+                SERVICE = SERVICE_CODE_DEV;
+            } else {
+                SERVICE = SERVICE_CODE_ONLINE;
+            }
+            isModified = true;
+        }
+    }
+
+    public static String getServiceCode() {
+        return SERVICE;
+    }
+
     /**
      * 核心加签方法：为 HttpPost 请求添加火山引擎 API 签名
      *
      * @param httpPost 待加签的 HttpPost 请求（需提前设置请求体，若有）
-     * @param uri      请求的 URI（包含 host、path、query 参数）
+     * @param uri      请求的 URI（包含 host、path、query 参数，如 https://iam.volcengineapi.com/?Limit=1）
+     * @param action   请求方法
      * @param ak       访问密钥 AK
      * @param sk       密钥 SK
      * @param region   地域（如 cn-beijing，需与 API 所属地域一致）
      * @throws Exception 加签过程中异常（如加密算法异常、请求体读取异常）
      */
-    public void DoSignRequest(HttpPost httpPost, URI uri,String action, String ak, String sk,
+    public void DoSignRequest(HttpPost httpPost, URI uri, String action, String ak, String sk,
                               String region) throws Exception{
         String method = httpPost.getMethod();
         String path = uri.getPath();
