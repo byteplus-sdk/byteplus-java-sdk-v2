@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.byteplus</groupId>
         <artifactId>byteplus-java-sdk-v2</artifactId>
-        <version>0.1.46</version>
+        <version>0.1.47</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>byteplus-java-sdk-v2-llmshield</artifactId>
