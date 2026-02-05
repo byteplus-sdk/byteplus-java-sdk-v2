@@ -256,5 +256,6 @@
         <module>byteplus-java-sdk-v2-tag</module>
         <module>byteplus-java-sdk-v2-iam20210801</module>
         <module>byteplus-java-sdk-v2-quota</module>
+        <module>byteplus-java-sdk-v2-privatezone</module>
     </modules>
 </project>
