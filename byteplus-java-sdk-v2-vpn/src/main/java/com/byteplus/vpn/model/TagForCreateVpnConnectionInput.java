@@ -24,19 +24,19 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * TagForCreateVpnGatewayInput
+ * TagForCreateVpnConnectionInput
  */
 
 
 
-public class TagForCreateVpnGatewayInput {
+public class TagForCreateVpnConnectionInput {
   @SerializedName("Key")
   private String key = null;
 
   @SerializedName("Value")
   private String value = null;
 
-  public TagForCreateVpnGatewayInput key(String key) {
+  public TagForCreateVpnConnectionInput key(String key) {
     this.key = key;
     return this;
   }
@@ -54,7 +54,7 @@ public class TagForCreateVpnGatewayInput {
     this.key = key;
   }
 
-  public TagForCreateVpnGatewayInput value(String value) {
+  public TagForCreateVpnConnectionInput value(String value) {
     this.value = value;
     return this;
   }
@@ -63,8 +63,7 @@ public class TagForCreateVpnGatewayInput {
    * Get value
    * @return value
   **/
-  @NotNull
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   public String getValue() {
     return value;
   }
@@ -82,9 +81,9 @@ public class TagForCreateVpnGatewayInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TagForCreateVpnGatewayInput tagForCreateVpnGatewayInput = (TagForCreateVpnGatewayInput) o;
-    return Objects.equals(this.key, tagForCreateVpnGatewayInput.key) &&
-        Objects.equals(this.value, tagForCreateVpnGatewayInput.value);
+    TagForCreateVpnConnectionInput tagForCreateVpnConnectionInput = (TagForCreateVpnConnectionInput) o;
+    return Objects.equals(this.key, tagForCreateVpnConnectionInput.key) &&
+        Objects.equals(this.value, tagForCreateVpnConnectionInput.value);
   }
 
   @Override
@@ -96,7 +95,7 @@ public class TagForCreateVpnGatewayInput {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TagForCreateVpnGatewayInput {\n");
+    sb.append("class TagForCreateVpnConnectionInput {\n");
     
     sb.append("    key: ").append(toIndentedString(key)).append("\n");
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
