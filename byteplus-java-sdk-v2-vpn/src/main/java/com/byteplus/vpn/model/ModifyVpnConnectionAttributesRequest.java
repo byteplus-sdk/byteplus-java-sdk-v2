@@ -14,7 +14,7 @@ package com.byteplus.vpn.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.vpn.model.BgpConfigForModifyVpnConnectionAttributesInput;
+import com.byteplus.vpn.model.ConvertBgpConfigForModifyVpnConnectionAttributesInput;
 import com.byteplus.vpn.model.IkeConfigForModifyVpnConnectionAttributesInput;
 import com.byteplus.vpn.model.IpsecConfigForModifyVpnConnectionAttributesInput;
 import com.byteplus.vpn.model.TunnelOptionForModifyVpnConnectionAttributesInput;
@@ -37,7 +37,7 @@ import javax.validation.Valid;
 
 public class ModifyVpnConnectionAttributesRequest {
   @SerializedName("BgpConfig")
-  private BgpConfigForModifyVpnConnectionAttributesInput bgpConfig = null;
+  private ConvertBgpConfigForModifyVpnConnectionAttributesInput bgpConfig = null;
 
   @SerializedName("CustomerGatewayId")
   private String customerGatewayId = null;
@@ -45,8 +45,55 @@ public class ModifyVpnConnectionAttributesRequest {
   @SerializedName("Description")
   private String description = null;
 
-  @SerializedName("DpdAction")
-  private String dpdAction = null;
+  /**
+   * Gets or Sets dpdAction
+   */
+  @JsonAdapter(DpdActionEnum.Adapter.class)
+  public enum DpdActionEnum {
+    @SerializedName("none")
+    NONE("none"),
+    @SerializedName("clear")
+    CLEAR("clear"),
+    @SerializedName("hold")
+    HOLD("hold"),
+    @SerializedName("restart")
+    RESTART("restart");
+
+    private String value;
+
+    DpdActionEnum(String value) {
+      this.value = value;
+    }
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+    public static DpdActionEnum fromValue(String input) {
+      for (DpdActionEnum b : DpdActionEnum.values()) {
+        if (b.value.equals(input)) {
+          return b;
+        }
+      }
+      return null;
+    }
+    public static class Adapter extends TypeAdapter<DpdActionEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final DpdActionEnum enumeration) throws IOException {
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
+      }
+
+      @Override
+      public DpdActionEnum read(final JsonReader jsonReader) throws IOException {
+        Object value = jsonReader.nextString();
+        return DpdActionEnum.fromValue((String)(value));
+      }
+    }
+  }  @SerializedName("DpdAction")
+  private DpdActionEnum dpdAction = null;
 
   @SerializedName("EnableTunnelsBgp")
   private Boolean enableTunnelsBgp = null;
@@ -84,7 +131,7 @@ public class ModifyVpnConnectionAttributesRequest {
   @SerializedName("VpnConnectionName")
   private String vpnConnectionName = null;
 
-  public ModifyVpnConnectionAttributesRequest bgpConfig(BgpConfigForModifyVpnConnectionAttributesInput bgpConfig) {
+  public ModifyVpnConnectionAttributesRequest bgpConfig(ConvertBgpConfigForModifyVpnConnectionAttributesInput bgpConfig) {
     this.bgpConfig = bgpConfig;
     return this;
   }
@@ -95,11 +142,11 @@ public class ModifyVpnConnectionAttributesRequest {
   **/
   @Valid
   @Schema(description = "")
-  public BgpConfigForModifyVpnConnectionAttributesInput getBgpConfig() {
+  public ConvertBgpConfigForModifyVpnConnectionAttributesInput getBgpConfig() {
     return bgpConfig;
   }
 
-  public void setBgpConfig(BgpConfigForModifyVpnConnectionAttributesInput bgpConfig) {
+  public void setBgpConfig(ConvertBgpConfigForModifyVpnConnectionAttributesInput bgpConfig) {
     this.bgpConfig = bgpConfig;
   }
 
@@ -139,7 +186,7 @@ public class ModifyVpnConnectionAttributesRequest {
     this.description = description;
   }
 
-  public ModifyVpnConnectionAttributesRequest dpdAction(String dpdAction) {
+  public ModifyVpnConnectionAttributesRequest dpdAction(DpdActionEnum dpdAction) {
     this.dpdAction = dpdAction;
     return this;
   }
@@ -149,11 +196,11 @@ public class ModifyVpnConnectionAttributesRequest {
    * @return dpdAction
   **/
   @Schema(description = "")
-  public String getDpdAction() {
+  public DpdActionEnum getDpdAction() {
     return dpdAction;
   }
 
-  public void setDpdAction(String dpdAction) {
+  public void setDpdAction(DpdActionEnum dpdAction) {
     this.dpdAction = dpdAction;
   }
 
