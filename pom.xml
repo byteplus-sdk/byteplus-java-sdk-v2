@@ -258,5 +258,6 @@
         <module>byteplus-java-sdk-v2-quota</module>
         <module>byteplus-java-sdk-v2-milvus</module>
         <module>byteplus-java-sdk-v2-privatezone</module>
+        <module>byteplus-java-sdk-v2-id</module>
     </modules>
 </project>
