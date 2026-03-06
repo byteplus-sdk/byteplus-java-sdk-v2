@@ -24,19 +24,38 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DescribeInstanceAllowListsRequest
+ * DeleteDBAccountRequest
  */
 
 
 
-public class DescribeInstanceAllowListsRequest {
+public class DeleteDBAccountRequest {
+  @SerializedName("AccountName")
+  private String accountName = null;
+
   @SerializedName("InstanceId")
   private String instanceId = null;
 
-  @SerializedName("RegionId")
-  private String regionId = null;
+  public DeleteDBAccountRequest accountName(String accountName) {
+    this.accountName = accountName;
+    return this;
+  }
 
-  public DescribeInstanceAllowListsRequest instanceId(String instanceId) {
+   /**
+   * Get accountName
+   * @return accountName
+  **/
+  @NotNull
+  @Schema(required = true, description = "")
+  public String getAccountName() {
+    return accountName;
+  }
+
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
+  }
+
+  public DeleteDBAccountRequest instanceId(String instanceId) {
     this.instanceId = instanceId;
     return this;
   }
@@ -45,31 +64,14 @@ public class DescribeInstanceAllowListsRequest {
    * Get instanceId
    * @return instanceId
   **/
-  @Schema(description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getInstanceId() {
     return instanceId;
   }
 
   public void setInstanceId(String instanceId) {
     this.instanceId = instanceId;
-  }
-
-  public DescribeInstanceAllowListsRequest regionId(String regionId) {
-    this.regionId = regionId;
-    return this;
-  }
-
-   /**
-   * Get regionId
-   * @return regionId
-  **/
-  @Schema(description = "")
-  public String getRegionId() {
-    return regionId;
-  }
-
-  public void setRegionId(String regionId) {
-    this.regionId = regionId;
   }
 
 
@@ -81,24 +83,24 @@ public class DescribeInstanceAllowListsRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DescribeInstanceAllowListsRequest describeInstanceAllowListsRequest = (DescribeInstanceAllowListsRequest) o;
-    return Objects.equals(this.instanceId, describeInstanceAllowListsRequest.instanceId) &&
-        Objects.equals(this.regionId, describeInstanceAllowListsRequest.regionId);
+    DeleteDBAccountRequest deleteDBAccountRequest = (DeleteDBAccountRequest) o;
+    return Objects.equals(this.accountName, deleteDBAccountRequest.accountName) &&
+        Objects.equals(this.instanceId, deleteDBAccountRequest.instanceId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(instanceId, regionId);
+    return Objects.hash(accountName, instanceId);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DescribeInstanceAllowListsRequest {\n");
+    sb.append("class DeleteDBAccountRequest {\n");
     
+    sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
     sb.append("    instanceId: ").append(toIndentedString(instanceId)).append("\n");
-    sb.append("    regionId: ").append(toIndentedString(regionId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
