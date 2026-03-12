@@ -30,6 +30,9 @@ import javax.validation.Valid;
 
 
 public class TargetForStartExecutionInput {
+  @SerializedName("Bitrate")
+  private Integer bitrate = null;
+
   @SerializedName("Fps")
   private Float fps = null;
 
@@ -41,6 +44,24 @@ public class TargetForStartExecutionInput {
 
   @SerializedName("ScaleRatio")
   private Float scaleRatio = null;
+
+  public TargetForStartExecutionInput bitrate(Integer bitrate) {
+    this.bitrate = bitrate;
+    return this;
+  }
+
+   /**
+   * Get bitrate
+   * @return bitrate
+  **/
+  @Schema(description = "")
+  public Integer getBitrate() {
+    return bitrate;
+  }
+
+  public void setBitrate(Integer bitrate) {
+    this.bitrate = bitrate;
+  }
 
   public TargetForStartExecutionInput fps(Float fps) {
     this.fps = fps;
@@ -124,7 +145,8 @@ public class TargetForStartExecutionInput {
       return false;
     }
     TargetForStartExecutionInput targetForStartExecutionInput = (TargetForStartExecutionInput) o;
-    return Objects.equals(this.fps, targetForStartExecutionInput.fps) &&
+    return Objects.equals(this.bitrate, targetForStartExecutionInput.bitrate) &&
+        Objects.equals(this.fps, targetForStartExecutionInput.fps) &&
         Objects.equals(this.res, targetForStartExecutionInput.res) &&
         Objects.equals(this.resLimit, targetForStartExecutionInput.resLimit) &&
         Objects.equals(this.scaleRatio, targetForStartExecutionInput.scaleRatio);
@@ -132,7 +154,7 @@ public class TargetForStartExecutionInput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(fps, res, resLimit, scaleRatio);
+    return Objects.hash(bitrate, fps, res, resLimit, scaleRatio);
   }
 
 
@@ -141,6 +163,7 @@ public class TargetForStartExecutionInput {
     StringBuilder sb = new StringBuilder();
     sb.append("class TargetForStartExecutionInput {\n");
     
+    sb.append("    bitrate: ").append(toIndentedString(bitrate)).append("\n");
     sb.append("    fps: ").append(toIndentedString(fps)).append("\n");
     sb.append("    res: ").append(toIndentedString(res)).append("\n");
     sb.append("    resLimit: ").append(toIndentedString(resLimit)).append("\n");
