@@ -47,6 +47,8 @@ import com.byteplus.privatezone.model.CreateResolverEndpointRequest;
 import com.byteplus.privatezone.model.CreateResolverEndpointResponse;
 import com.byteplus.privatezone.model.CreateResolverRuleRequest;
 import com.byteplus.privatezone.model.CreateResolverRuleResponse;
+import com.byteplus.privatezone.model.CreateResourceAssociationAuthorizationRequest;
+import com.byteplus.privatezone.model.CreateResourceAssociationAuthorizationResponse;
 import com.byteplus.privatezone.model.DeleteAuthorizedUserRequest;
 import com.byteplus.privatezone.model.DeleteAuthorizedUserResponse;
 import com.byteplus.privatezone.model.DeletePrivateZoneRequest;
@@ -57,6 +59,8 @@ import com.byteplus.privatezone.model.DeleteResolverEndpointRequest;
 import com.byteplus.privatezone.model.DeleteResolverEndpointResponse;
 import com.byteplus.privatezone.model.DeleteResolverRuleRequest;
 import com.byteplus.privatezone.model.DeleteResolverRuleResponse;
+import com.byteplus.privatezone.model.DeleteResourceAssociationAuthorizationRequest;
+import com.byteplus.privatezone.model.DeleteResourceAssociationAuthorizationResponse;
 import com.byteplus.privatezone.model.IncBindVPCRequest;
 import com.byteplus.privatezone.model.IncBindVPCResponse;
 import com.byteplus.privatezone.model.ListAuthorizedUsersRequest;
@@ -77,10 +81,14 @@ import com.byteplus.privatezone.model.ListResolverEndpointsRequest;
 import com.byteplus.privatezone.model.ListResolverEndpointsResponse;
 import com.byteplus.privatezone.model.ListResolverRulesRequest;
 import com.byteplus.privatezone.model.ListResolverRulesResponse;
+import com.byteplus.privatezone.model.ListResourceAssociationAuthorizationsRequest;
+import com.byteplus.privatezone.model.ListResourceAssociationAuthorizationsResponse;
 import com.byteplus.privatezone.model.ListTagsForResourcesRequest;
 import com.byteplus.privatezone.model.ListTagsForResourcesResponse;
 import com.byteplus.privatezone.model.ListUserVPCRequest;
 import com.byteplus.privatezone.model.ListUserVPCResponse;
+import com.byteplus.privatezone.model.ListZonesByVPCRequest;
+import com.byteplus.privatezone.model.ListZonesByVPCResponse;
 import com.byteplus.privatezone.model.QueryEcsHostSyncTaskRequest;
 import com.byteplus.privatezone.model.QueryEcsHostSyncTaskResponse;
 import com.byteplus.privatezone.model.QueryPrivateZoneRequest;
@@ -1380,6 +1388,130 @@ public class PrivateZoneApi {
         return call;
     }
     /**
+     * Build call for createResourceAssociationAuthorization
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call createResourceAssociationAuthorizationCall(CreateResourceAssociationAuthorizationRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+        
+        // create path and map variables
+        String localVarPath = "/CreateResourceAssociationAuthorization/2022-06-01/private_zone/post/application_json/";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "text/plain"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "byteplusSign" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call createResourceAssociationAuthorizationValidateBeforeCall(CreateResourceAssociationAuthorizationRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling createResourceAssociationAuthorization(Async)");
+        }
+        
+        com.squareup.okhttp.Call call = createResourceAssociationAuthorizationCall(body, progressListener, progressRequestListener);
+        return call;
+
+        
+        
+        
+        
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return CreateResourceAssociationAuthorizationResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public CreateResourceAssociationAuthorizationResponse createResourceAssociationAuthorization(CreateResourceAssociationAuthorizationRequest body) throws ApiException {
+        ApiResponse<CreateResourceAssociationAuthorizationResponse> resp = createResourceAssociationAuthorizationWithHttpInfo(body);
+        return resp.getData();
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;CreateResourceAssociationAuthorizationResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<CreateResourceAssociationAuthorizationResponse> createResourceAssociationAuthorizationWithHttpInfo( @NotNull CreateResourceAssociationAuthorizationRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = createResourceAssociationAuthorizationValidateBeforeCall(body, null, null);
+        Type localVarReturnType = new TypeToken<CreateResourceAssociationAuthorizationResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * 
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call createResourceAssociationAuthorizationAsync(CreateResourceAssociationAuthorizationRequest body, final ApiCallback<CreateResourceAssociationAuthorizationResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = createResourceAssociationAuthorizationValidateBeforeCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<CreateResourceAssociationAuthorizationResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for deleteAuthorizedUser
      * @param body  (required)
      * @param progressListener Progress listener
@@ -1996,6 +2128,130 @@ public class PrivateZoneApi {
 
         com.squareup.okhttp.Call call = deleteResolverRuleValidateBeforeCall(body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<DeleteResolverRuleResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for deleteResourceAssociationAuthorization
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call deleteResourceAssociationAuthorizationCall(DeleteResourceAssociationAuthorizationRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+        
+        // create path and map variables
+        String localVarPath = "/DeleteResourceAssociationAuthorization/2022-06-01/private_zone/post/application_json/";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "text/plain"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "byteplusSign" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call deleteResourceAssociationAuthorizationValidateBeforeCall(DeleteResourceAssociationAuthorizationRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling deleteResourceAssociationAuthorization(Async)");
+        }
+        
+        com.squareup.okhttp.Call call = deleteResourceAssociationAuthorizationCall(body, progressListener, progressRequestListener);
+        return call;
+
+        
+        
+        
+        
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return DeleteResourceAssociationAuthorizationResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public DeleteResourceAssociationAuthorizationResponse deleteResourceAssociationAuthorization(DeleteResourceAssociationAuthorizationRequest body) throws ApiException {
+        ApiResponse<DeleteResourceAssociationAuthorizationResponse> resp = deleteResourceAssociationAuthorizationWithHttpInfo(body);
+        return resp.getData();
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;DeleteResourceAssociationAuthorizationResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<DeleteResourceAssociationAuthorizationResponse> deleteResourceAssociationAuthorizationWithHttpInfo( @NotNull DeleteResourceAssociationAuthorizationRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = deleteResourceAssociationAuthorizationValidateBeforeCall(body, null, null);
+        Type localVarReturnType = new TypeToken<DeleteResourceAssociationAuthorizationResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * 
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call deleteResourceAssociationAuthorizationAsync(DeleteResourceAssociationAuthorizationRequest body, final ApiCallback<DeleteResourceAssociationAuthorizationResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = deleteResourceAssociationAuthorizationValidateBeforeCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<DeleteResourceAssociationAuthorizationResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -3240,6 +3496,130 @@ public class PrivateZoneApi {
         return call;
     }
     /**
+     * Build call for listResourceAssociationAuthorizations
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call listResourceAssociationAuthorizationsCall(ListResourceAssociationAuthorizationsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+        
+        // create path and map variables
+        String localVarPath = "/ListResourceAssociationAuthorizations/2022-06-01/private_zone/get/text_plain/";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "text/plain"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "byteplusSign" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call listResourceAssociationAuthorizationsValidateBeforeCall(ListResourceAssociationAuthorizationsRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling listResourceAssociationAuthorizations(Async)");
+        }
+        
+        com.squareup.okhttp.Call call = listResourceAssociationAuthorizationsCall(body, progressListener, progressRequestListener);
+        return call;
+
+        
+        
+        
+        
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return ListResourceAssociationAuthorizationsResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ListResourceAssociationAuthorizationsResponse listResourceAssociationAuthorizations(ListResourceAssociationAuthorizationsRequest body) throws ApiException {
+        ApiResponse<ListResourceAssociationAuthorizationsResponse> resp = listResourceAssociationAuthorizationsWithHttpInfo(body);
+        return resp.getData();
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;ListResourceAssociationAuthorizationsResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<ListResourceAssociationAuthorizationsResponse> listResourceAssociationAuthorizationsWithHttpInfo( @NotNull ListResourceAssociationAuthorizationsRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = listResourceAssociationAuthorizationsValidateBeforeCall(body, null, null);
+        Type localVarReturnType = new TypeToken<ListResourceAssociationAuthorizationsResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * 
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call listResourceAssociationAuthorizationsAsync(ListResourceAssociationAuthorizationsRequest body, final ApiCallback<ListResourceAssociationAuthorizationsResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = listResourceAssociationAuthorizationsValidateBeforeCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<ListResourceAssociationAuthorizationsResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for listTagsForResources
      * @param body  (required)
      * @param progressListener Progress listener
@@ -3484,6 +3864,130 @@ public class PrivateZoneApi {
 
         com.squareup.okhttp.Call call = listUserVPCValidateBeforeCall(body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<ListUserVPCResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for listZonesByVPC
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call listZonesByVPCCall(ListZonesByVPCRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+        
+        // create path and map variables
+        String localVarPath = "/ListZonesByVPC/2022-06-01/private_zone/get/text_plain/";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "text/plain"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "byteplusSign" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call listZonesByVPCValidateBeforeCall(ListZonesByVPCRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling listZonesByVPC(Async)");
+        }
+        
+        com.squareup.okhttp.Call call = listZonesByVPCCall(body, progressListener, progressRequestListener);
+        return call;
+
+        
+        
+        
+        
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return ListZonesByVPCResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ListZonesByVPCResponse listZonesByVPC(ListZonesByVPCRequest body) throws ApiException {
+        ApiResponse<ListZonesByVPCResponse> resp = listZonesByVPCWithHttpInfo(body);
+        return resp.getData();
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @return ApiResponse&lt;ListZonesByVPCResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<ListZonesByVPCResponse> listZonesByVPCWithHttpInfo( @NotNull ListZonesByVPCRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = listZonesByVPCValidateBeforeCall(body, null, null);
+        Type localVarReturnType = new TypeToken<ListZonesByVPCResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * 
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call listZonesByVPCAsync(ListZonesByVPCRequest body, final ApiCallback<ListZonesByVPCResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = listZonesByVPCValidateBeforeCall(body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<ListZonesByVPCResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
