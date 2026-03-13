@@ -17,6 +17,7 @@ import java.util.Arrays;
 import com.byteplus.vepfs.model.DeletePolicyForDescribeDataFlowTasksOutput;
 import com.byteplus.vepfs.model.EntryListFileInfoForDescribeDataFlowTasksOutput;
 import com.byteplus.vepfs.model.ReportForDescribeDataFlowTasksOutput;
+import com.byteplus.vepfs.model.TlsInfoForDescribeDataFlowTasksOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -336,6 +337,9 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
     }
   }  @SerializedName("TaskAction")
   private TaskActionEnum taskAction = null;
+
+  @SerializedName("TlsInfo")
+  private TlsInfoForDescribeDataFlowTasksOutput tlsInfo = null;
 
   @SerializedName("TotalSize")
   private String totalSize = null;
@@ -768,6 +772,25 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
     this.taskAction = taskAction;
   }
 
+  public DataFlowTaskForDescribeDataFlowTasksOutput tlsInfo(TlsInfoForDescribeDataFlowTasksOutput tlsInfo) {
+    this.tlsInfo = tlsInfo;
+    return this;
+  }
+
+   /**
+   * Get tlsInfo
+   * @return tlsInfo
+  **/
+  @Valid
+  @Schema(description = "")
+  public TlsInfoForDescribeDataFlowTasksOutput getTlsInfo() {
+    return tlsInfo;
+  }
+
+  public void setTlsInfo(TlsInfoForDescribeDataFlowTasksOutput tlsInfo) {
+    this.tlsInfo = tlsInfo;
+  }
+
   public DataFlowTaskForDescribeDataFlowTasksOutput totalSize(String totalSize) {
     this.totalSize = totalSize;
     return this;
@@ -837,13 +860,14 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
         Objects.equals(this.status, dataFlowTaskForDescribeDataFlowTasksOutput.status) &&
         Objects.equals(this.subPath, dataFlowTaskForDescribeDataFlowTasksOutput.subPath) &&
         Objects.equals(this.taskAction, dataFlowTaskForDescribeDataFlowTasksOutput.taskAction) &&
+        Objects.equals(this.tlsInfo, dataFlowTaskForDescribeDataFlowTasksOutput.tlsInfo) &&
         Objects.equals(this.totalSize, dataFlowTaskForDescribeDataFlowTasksOutput.totalSize) &&
         Objects.equals(this.updateTime, dataFlowTaskForDescribeDataFlowTasksOutput.updateTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(createTime, dataFlowTaskId, dataStorage, dataStoragePath, dataType, deletePolicy, endTime, entryListFileInfo, entryListFileUrl, execCount, execSize, exportSymlinkPolicy, failedCount, fileSystemId, filesetId, filesetPath, queueCount, reports, sameNameFilePolicy, startTime, status, subPath, taskAction, totalSize, updateTime);
+    return Objects.hash(createTime, dataFlowTaskId, dataStorage, dataStoragePath, dataType, deletePolicy, endTime, entryListFileInfo, entryListFileUrl, execCount, execSize, exportSymlinkPolicy, failedCount, fileSystemId, filesetId, filesetPath, queueCount, reports, sameNameFilePolicy, startTime, status, subPath, taskAction, tlsInfo, totalSize, updateTime);
   }
 
 
@@ -875,6 +899,7 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    subPath: ").append(toIndentedString(subPath)).append("\n");
     sb.append("    taskAction: ").append(toIndentedString(taskAction)).append("\n");
+    sb.append("    tlsInfo: ").append(toIndentedString(tlsInfo)).append("\n");
     sb.append("    totalSize: ").append(toIndentedString(totalSize)).append("\n");
     sb.append("    updateTime: ").append(toIndentedString(updateTime)).append("\n");
     sb.append("}");
