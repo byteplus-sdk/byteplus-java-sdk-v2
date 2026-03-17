@@ -55,6 +55,9 @@ public class RestoreToNewInstanceRequest {
   @SerializedName("DeletionProtection")
   private String deletionProtection = null;
 
+  @SerializedName("EnableExternalReplication")
+  private Boolean enableExternalReplication = null;
+
   @SerializedName("InstanceName")
   private String instanceName = null;
 
@@ -66,6 +69,9 @@ public class RestoreToNewInstanceRequest {
 
   @SerializedName("Port")
   private Integer port = null;
+
+  @SerializedName("PrivateIpAddress")
+  private String privateIpAddress = null;
 
   @SerializedName("ProjectName")
   private String projectName = null;
@@ -209,6 +215,24 @@ public class RestoreToNewInstanceRequest {
     this.deletionProtection = deletionProtection;
   }
 
+  public RestoreToNewInstanceRequest enableExternalReplication(Boolean enableExternalReplication) {
+    this.enableExternalReplication = enableExternalReplication;
+    return this;
+  }
+
+   /**
+   * Get enableExternalReplication
+   * @return enableExternalReplication
+  **/
+  @Schema(description = "")
+  public Boolean isEnableExternalReplication() {
+    return enableExternalReplication;
+  }
+
+  public void setEnableExternalReplication(Boolean enableExternalReplication) {
+    this.enableExternalReplication = enableExternalReplication;
+  }
+
   public RestoreToNewInstanceRequest instanceName(String instanceName) {
     this.instanceName = instanceName;
     return this;
@@ -297,6 +321,24 @@ public class RestoreToNewInstanceRequest {
 
   public void setPort(Integer port) {
     this.port = port;
+  }
+
+  public RestoreToNewInstanceRequest privateIpAddress(String privateIpAddress) {
+    this.privateIpAddress = privateIpAddress;
+    return this;
+  }
+
+   /**
+   * Get privateIpAddress
+   * @return privateIpAddress
+  **/
+  @Schema(description = "")
+  public String getPrivateIpAddress() {
+    return privateIpAddress;
+  }
+
+  public void setPrivateIpAddress(String privateIpAddress) {
+    this.privateIpAddress = privateIpAddress;
   }
 
   public RestoreToNewInstanceRequest projectName(String projectName) {
@@ -464,10 +506,12 @@ public class RestoreToNewInstanceRequest {
         Objects.equals(this.chargeInfo, restoreToNewInstanceRequest.chargeInfo) &&
         Objects.equals(this.dbParamGroupId, restoreToNewInstanceRequest.dbParamGroupId) &&
         Objects.equals(this.deletionProtection, restoreToNewInstanceRequest.deletionProtection) &&
+        Objects.equals(this.enableExternalReplication, restoreToNewInstanceRequest.enableExternalReplication) &&
         Objects.equals(this.instanceName, restoreToNewInstanceRequest.instanceName) &&
         Objects.equals(this.instanceTags, restoreToNewInstanceRequest.instanceTags) &&
         Objects.equals(this.nodeInfo, restoreToNewInstanceRequest.nodeInfo) &&
         Objects.equals(this.port, restoreToNewInstanceRequest.port) &&
+        Objects.equals(this.privateIpAddress, restoreToNewInstanceRequest.privateIpAddress) &&
         Objects.equals(this.projectName, restoreToNewInstanceRequest.projectName) &&
         Objects.equals(this.proxyNodeCustom, restoreToNewInstanceRequest.proxyNodeCustom) &&
         Objects.equals(this.restoreTime, restoreToNewInstanceRequest.restoreTime) &&
@@ -480,7 +524,7 @@ public class RestoreToNewInstanceRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(allowListIds, autoStorageScalingConfig, backupId, chargeInfo, dbParamGroupId, deletionProtection, instanceName, instanceTags, nodeInfo, port, projectName, proxyNodeCustom, restoreTime, srcInstanceId, storageSpace, storageType, subnetId, vpcId);
+    return Objects.hash(allowListIds, autoStorageScalingConfig, backupId, chargeInfo, dbParamGroupId, deletionProtection, enableExternalReplication, instanceName, instanceTags, nodeInfo, port, privateIpAddress, projectName, proxyNodeCustom, restoreTime, srcInstanceId, storageSpace, storageType, subnetId, vpcId);
   }
 
 
@@ -495,10 +539,12 @@ public class RestoreToNewInstanceRequest {
     sb.append("    chargeInfo: ").append(toIndentedString(chargeInfo)).append("\n");
     sb.append("    dbParamGroupId: ").append(toIndentedString(dbParamGroupId)).append("\n");
     sb.append("    deletionProtection: ").append(toIndentedString(deletionProtection)).append("\n");
+    sb.append("    enableExternalReplication: ").append(toIndentedString(enableExternalReplication)).append("\n");
     sb.append("    instanceName: ").append(toIndentedString(instanceName)).append("\n");
     sb.append("    instanceTags: ").append(toIndentedString(instanceTags)).append("\n");
     sb.append("    nodeInfo: ").append(toIndentedString(nodeInfo)).append("\n");
     sb.append("    port: ").append(toIndentedString(port)).append("\n");
+    sb.append("    privateIpAddress: ").append(toIndentedString(privateIpAddress)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    proxyNodeCustom: ").append(toIndentedString(proxyNodeCustom)).append("\n");
     sb.append("    restoreTime: ").append(toIndentedString(restoreTime)).append("\n");
