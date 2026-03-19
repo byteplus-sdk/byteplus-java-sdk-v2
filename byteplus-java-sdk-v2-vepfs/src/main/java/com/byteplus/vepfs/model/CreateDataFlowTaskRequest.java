@@ -14,6 +14,7 @@ package com.byteplus.vepfs.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.vepfs.model.DeletePolicyForCreateDataFlowTaskInput;
 import com.byteplus.vepfs.model.EntryListFileInfoForCreateDataFlowTaskInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -82,6 +83,12 @@ public class CreateDataFlowTaskRequest {
     }
   }  @SerializedName("DataType")
   private DataTypeEnum dataType = null;
+
+  @SerializedName("DeletePolicy")
+  private DeletePolicyForCreateDataFlowTaskInput deletePolicy = null;
+
+  @SerializedName("EnableTlsLog")
+  private Boolean enableTlsLog = null;
 
   @SerializedName("EntryListFileInfo")
   private EntryListFileInfoForCreateDataFlowTaskInput entryListFileInfo = null;
@@ -199,7 +206,9 @@ public class CreateDataFlowTaskRequest {
     @SerializedName("Export")
     EXPORT("Export"),
     @SerializedName("Inventory")
-    INVENTORY("Inventory");
+    INVENTORY("Inventory"),
+    @SerializedName("Delete")
+    DELETE("Delete");
 
     private String value;
 
@@ -290,6 +299,43 @@ public class CreateDataFlowTaskRequest {
 
   public void setDataType(DataTypeEnum dataType) {
     this.dataType = dataType;
+  }
+
+  public CreateDataFlowTaskRequest deletePolicy(DeletePolicyForCreateDataFlowTaskInput deletePolicy) {
+    this.deletePolicy = deletePolicy;
+    return this;
+  }
+
+   /**
+   * Get deletePolicy
+   * @return deletePolicy
+  **/
+  @Valid
+  @Schema(description = "")
+  public DeletePolicyForCreateDataFlowTaskInput getDeletePolicy() {
+    return deletePolicy;
+  }
+
+  public void setDeletePolicy(DeletePolicyForCreateDataFlowTaskInput deletePolicy) {
+    this.deletePolicy = deletePolicy;
+  }
+
+  public CreateDataFlowTaskRequest enableTlsLog(Boolean enableTlsLog) {
+    this.enableTlsLog = enableTlsLog;
+    return this;
+  }
+
+   /**
+   * Get enableTlsLog
+   * @return enableTlsLog
+  **/
+  @Schema(description = "")
+  public Boolean isEnableTlsLog() {
+    return enableTlsLog;
+  }
+
+  public void setEnableTlsLog(Boolean enableTlsLog) {
+    this.enableTlsLog = enableTlsLog;
   }
 
   public CreateDataFlowTaskRequest entryListFileInfo(EntryListFileInfoForCreateDataFlowTaskInput entryListFileInfo) {
@@ -434,6 +480,8 @@ public class CreateDataFlowTaskRequest {
     return Objects.equals(this.dataStorage, createDataFlowTaskRequest.dataStorage) &&
         Objects.equals(this.dataStoragePath, createDataFlowTaskRequest.dataStoragePath) &&
         Objects.equals(this.dataType, createDataFlowTaskRequest.dataType) &&
+        Objects.equals(this.deletePolicy, createDataFlowTaskRequest.deletePolicy) &&
+        Objects.equals(this.enableTlsLog, createDataFlowTaskRequest.enableTlsLog) &&
         Objects.equals(this.entryListFileInfo, createDataFlowTaskRequest.entryListFileInfo) &&
         Objects.equals(this.exportSymlinkPolicy, createDataFlowTaskRequest.exportSymlinkPolicy) &&
         Objects.equals(this.fileSystemId, createDataFlowTaskRequest.fileSystemId) &&
@@ -445,7 +493,7 @@ public class CreateDataFlowTaskRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataStorage, dataStoragePath, dataType, entryListFileInfo, exportSymlinkPolicy, fileSystemId, filesetId, sameNameFilePolicy, subPath, taskAction);
+    return Objects.hash(dataStorage, dataStoragePath, dataType, deletePolicy, enableTlsLog, entryListFileInfo, exportSymlinkPolicy, fileSystemId, filesetId, sameNameFilePolicy, subPath, taskAction);
   }
 
 
@@ -457,6 +505,8 @@ public class CreateDataFlowTaskRequest {
     sb.append("    dataStorage: ").append(toIndentedString(dataStorage)).append("\n");
     sb.append("    dataStoragePath: ").append(toIndentedString(dataStoragePath)).append("\n");
     sb.append("    dataType: ").append(toIndentedString(dataType)).append("\n");
+    sb.append("    deletePolicy: ").append(toIndentedString(deletePolicy)).append("\n");
+    sb.append("    enableTlsLog: ").append(toIndentedString(enableTlsLog)).append("\n");
     sb.append("    entryListFileInfo: ").append(toIndentedString(entryListFileInfo)).append("\n");
     sb.append("    exportSymlinkPolicy: ").append(toIndentedString(exportSymlinkPolicy)).append("\n");
     sb.append("    fileSystemId: ").append(toIndentedString(fileSystemId)).append("\n");

@@ -14,8 +14,10 @@ package com.byteplus.vepfs.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.vepfs.model.DeletePolicyForDescribeDataFlowTasksOutput;
 import com.byteplus.vepfs.model.EntryListFileInfoForDescribeDataFlowTasksOutput;
 import com.byteplus.vepfs.model.ReportForDescribeDataFlowTasksOutput;
+import com.byteplus.vepfs.model.TlsInfoForDescribeDataFlowTasksOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -91,6 +93,9 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
     }
   }  @SerializedName("DataType")
   private DataTypeEnum dataType = null;
+
+  @SerializedName("DeletePolicy")
+  private DeletePolicyForDescribeDataFlowTasksOutput deletePolicy = null;
 
   @SerializedName("EndTime")
   private String endTime = null;
@@ -333,6 +338,9 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
   }  @SerializedName("TaskAction")
   private TaskActionEnum taskAction = null;
 
+  @SerializedName("TlsInfo")
+  private TlsInfoForDescribeDataFlowTasksOutput tlsInfo = null;
+
   @SerializedName("TotalSize")
   private String totalSize = null;
 
@@ -427,6 +435,25 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
 
   public void setDataType(DataTypeEnum dataType) {
     this.dataType = dataType;
+  }
+
+  public DataFlowTaskForDescribeDataFlowTasksOutput deletePolicy(DeletePolicyForDescribeDataFlowTasksOutput deletePolicy) {
+    this.deletePolicy = deletePolicy;
+    return this;
+  }
+
+   /**
+   * Get deletePolicy
+   * @return deletePolicy
+  **/
+  @Valid
+  @Schema(description = "")
+  public DeletePolicyForDescribeDataFlowTasksOutput getDeletePolicy() {
+    return deletePolicy;
+  }
+
+  public void setDeletePolicy(DeletePolicyForDescribeDataFlowTasksOutput deletePolicy) {
+    this.deletePolicy = deletePolicy;
   }
 
   public DataFlowTaskForDescribeDataFlowTasksOutput endTime(String endTime) {
@@ -745,6 +772,25 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
     this.taskAction = taskAction;
   }
 
+  public DataFlowTaskForDescribeDataFlowTasksOutput tlsInfo(TlsInfoForDescribeDataFlowTasksOutput tlsInfo) {
+    this.tlsInfo = tlsInfo;
+    return this;
+  }
+
+   /**
+   * Get tlsInfo
+   * @return tlsInfo
+  **/
+  @Valid
+  @Schema(description = "")
+  public TlsInfoForDescribeDataFlowTasksOutput getTlsInfo() {
+    return tlsInfo;
+  }
+
+  public void setTlsInfo(TlsInfoForDescribeDataFlowTasksOutput tlsInfo) {
+    this.tlsInfo = tlsInfo;
+  }
+
   public DataFlowTaskForDescribeDataFlowTasksOutput totalSize(String totalSize) {
     this.totalSize = totalSize;
     return this;
@@ -796,6 +842,7 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
         Objects.equals(this.dataStorage, dataFlowTaskForDescribeDataFlowTasksOutput.dataStorage) &&
         Objects.equals(this.dataStoragePath, dataFlowTaskForDescribeDataFlowTasksOutput.dataStoragePath) &&
         Objects.equals(this.dataType, dataFlowTaskForDescribeDataFlowTasksOutput.dataType) &&
+        Objects.equals(this.deletePolicy, dataFlowTaskForDescribeDataFlowTasksOutput.deletePolicy) &&
         Objects.equals(this.endTime, dataFlowTaskForDescribeDataFlowTasksOutput.endTime) &&
         Objects.equals(this.entryListFileInfo, dataFlowTaskForDescribeDataFlowTasksOutput.entryListFileInfo) &&
         Objects.equals(this.entryListFileUrl, dataFlowTaskForDescribeDataFlowTasksOutput.entryListFileUrl) &&
@@ -813,13 +860,14 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
         Objects.equals(this.status, dataFlowTaskForDescribeDataFlowTasksOutput.status) &&
         Objects.equals(this.subPath, dataFlowTaskForDescribeDataFlowTasksOutput.subPath) &&
         Objects.equals(this.taskAction, dataFlowTaskForDescribeDataFlowTasksOutput.taskAction) &&
+        Objects.equals(this.tlsInfo, dataFlowTaskForDescribeDataFlowTasksOutput.tlsInfo) &&
         Objects.equals(this.totalSize, dataFlowTaskForDescribeDataFlowTasksOutput.totalSize) &&
         Objects.equals(this.updateTime, dataFlowTaskForDescribeDataFlowTasksOutput.updateTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(createTime, dataFlowTaskId, dataStorage, dataStoragePath, dataType, endTime, entryListFileInfo, entryListFileUrl, execCount, execSize, exportSymlinkPolicy, failedCount, fileSystemId, filesetId, filesetPath, queueCount, reports, sameNameFilePolicy, startTime, status, subPath, taskAction, totalSize, updateTime);
+    return Objects.hash(createTime, dataFlowTaskId, dataStorage, dataStoragePath, dataType, deletePolicy, endTime, entryListFileInfo, entryListFileUrl, execCount, execSize, exportSymlinkPolicy, failedCount, fileSystemId, filesetId, filesetPath, queueCount, reports, sameNameFilePolicy, startTime, status, subPath, taskAction, tlsInfo, totalSize, updateTime);
   }
 
 
@@ -833,6 +881,7 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
     sb.append("    dataStorage: ").append(toIndentedString(dataStorage)).append("\n");
     sb.append("    dataStoragePath: ").append(toIndentedString(dataStoragePath)).append("\n");
     sb.append("    dataType: ").append(toIndentedString(dataType)).append("\n");
+    sb.append("    deletePolicy: ").append(toIndentedString(deletePolicy)).append("\n");
     sb.append("    endTime: ").append(toIndentedString(endTime)).append("\n");
     sb.append("    entryListFileInfo: ").append(toIndentedString(entryListFileInfo)).append("\n");
     sb.append("    entryListFileUrl: ").append(toIndentedString(entryListFileUrl)).append("\n");
@@ -850,6 +899,7 @@ public class DataFlowTaskForDescribeDataFlowTasksOutput {
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    subPath: ").append(toIndentedString(subPath)).append("\n");
     sb.append("    taskAction: ").append(toIndentedString(taskAction)).append("\n");
+    sb.append("    tlsInfo: ").append(toIndentedString(tlsInfo)).append("\n");
     sb.append("    totalSize: ").append(toIndentedString(totalSize)).append("\n");
     sb.append("    updateTime: ").append(toIndentedString(updateTime)).append("\n");
     sb.append("}");
