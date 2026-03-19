@@ -14,7 +14,6 @@ package com.byteplus.rdsmysqlv2.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.rdsmysqlv2.model.CheckDetailForDescribeTaskDetailOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -31,9 +30,6 @@ import javax.validation.Valid;
 
 
 public class CheckItemForDescribeTaskDetailOutput {
-  @SerializedName("CheckDetail")
-  private CheckDetailForDescribeTaskDetailOutput checkDetail = null;
-
   @SerializedName("Description")
   private String description = null;
 
@@ -42,25 +38,6 @@ public class CheckItemForDescribeTaskDetailOutput {
 
   @SerializedName("RiskLevel")
   private String riskLevel = null;
-
-  public CheckItemForDescribeTaskDetailOutput checkDetail(CheckDetailForDescribeTaskDetailOutput checkDetail) {
-    this.checkDetail = checkDetail;
-    return this;
-  }
-
-   /**
-   * Get checkDetail
-   * @return checkDetail
-  **/
-  @Valid
-  @Schema(description = "")
-  public CheckDetailForDescribeTaskDetailOutput getCheckDetail() {
-    return checkDetail;
-  }
-
-  public void setCheckDetail(CheckDetailForDescribeTaskDetailOutput checkDetail) {
-    this.checkDetail = checkDetail;
-  }
 
   public CheckItemForDescribeTaskDetailOutput description(String description) {
     this.description = description;
@@ -126,15 +103,14 @@ public class CheckItemForDescribeTaskDetailOutput {
       return false;
     }
     CheckItemForDescribeTaskDetailOutput checkItemForDescribeTaskDetailOutput = (CheckItemForDescribeTaskDetailOutput) o;
-    return Objects.equals(this.checkDetail, checkItemForDescribeTaskDetailOutput.checkDetail) &&
-        Objects.equals(this.description, checkItemForDescribeTaskDetailOutput.description) &&
+    return Objects.equals(this.description, checkItemForDescribeTaskDetailOutput.description) &&
         Objects.equals(this.itemName, checkItemForDescribeTaskDetailOutput.itemName) &&
         Objects.equals(this.riskLevel, checkItemForDescribeTaskDetailOutput.riskLevel);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(checkDetail, description, itemName, riskLevel);
+    return Objects.hash(description, itemName, riskLevel);
   }
 
 
@@ -143,7 +119,6 @@ public class CheckItemForDescribeTaskDetailOutput {
     StringBuilder sb = new StringBuilder();
     sb.append("class CheckItemForDescribeTaskDetailOutput {\n");
     
-    sb.append("    checkDetail: ").append(toIndentedString(checkDetail)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    itemName: ").append(toIndentedString(itemName)).append("\n");
     sb.append("    riskLevel: ").append(toIndentedString(riskLevel)).append("\n");

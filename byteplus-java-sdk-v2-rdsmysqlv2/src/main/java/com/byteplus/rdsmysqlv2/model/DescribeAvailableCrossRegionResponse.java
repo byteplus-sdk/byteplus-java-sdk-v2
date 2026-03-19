@@ -21,55 +21,44 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * CheckDetailForDescribeTaskDetailOutput
+ * DescribeAvailableCrossRegionResponse
  */
 
 
 
-public class CheckDetailForDescribeTaskDetailOutput {
-  @SerializedName("Impact")
-  private String impact = null;
+public class DescribeAvailableCrossRegionResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("Regions")
+  private List<String> regions = null;
 
-  @SerializedName("Issue")
-  private String issue = null;
+  public DescribeAvailableCrossRegionResponse regions(List<String> regions) {
+    this.regions = regions;
+    return this;
+  }
 
-  public CheckDetailForDescribeTaskDetailOutput impact(String impact) {
-    this.impact = impact;
+  public DescribeAvailableCrossRegionResponse addRegionsItem(String regionsItem) {
+    if (this.regions == null) {
+      this.regions = new ArrayList<String>();
+    }
+    this.regions.add(regionsItem);
     return this;
   }
 
    /**
-   * Get impact
-   * @return impact
+   * Get regions
+   * @return regions
   **/
   @Schema(description = "")
-  public String getImpact() {
-    return impact;
+  public List<String> getRegions() {
+    return regions;
   }
 
-  public void setImpact(String impact) {
-    this.impact = impact;
-  }
-
-  public CheckDetailForDescribeTaskDetailOutput issue(String issue) {
-    this.issue = issue;
-    return this;
-  }
-
-   /**
-   * Get issue
-   * @return issue
-  **/
-  @Schema(description = "")
-  public String getIssue() {
-    return issue;
-  }
-
-  public void setIssue(String issue) {
-    this.issue = issue;
+  public void setRegions(List<String> regions) {
+    this.regions = regions;
   }
 
 
@@ -81,24 +70,22 @@ public class CheckDetailForDescribeTaskDetailOutput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CheckDetailForDescribeTaskDetailOutput checkDetailForDescribeTaskDetailOutput = (CheckDetailForDescribeTaskDetailOutput) o;
-    return Objects.equals(this.impact, checkDetailForDescribeTaskDetailOutput.impact) &&
-        Objects.equals(this.issue, checkDetailForDescribeTaskDetailOutput.issue);
+    DescribeAvailableCrossRegionResponse describeAvailableCrossRegionResponse = (DescribeAvailableCrossRegionResponse) o;
+    return Objects.equals(this.regions, describeAvailableCrossRegionResponse.regions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(impact, issue);
+    return Objects.hash(regions);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CheckDetailForDescribeTaskDetailOutput {\n");
+    sb.append("class DescribeAvailableCrossRegionResponse {\n");
     
-    sb.append("    impact: ").append(toIndentedString(impact)).append("\n");
-    sb.append("    issue: ").append(toIndentedString(issue)).append("\n");
+    sb.append("    regions: ").append(toIndentedString(regions)).append("\n");
     sb.append("}");
     return sb.toString();
   }
