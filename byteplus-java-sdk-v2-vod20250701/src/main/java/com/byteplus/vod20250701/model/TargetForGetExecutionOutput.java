@@ -30,6 +30,9 @@ import javax.validation.Valid;
 
 
 public class TargetForGetExecutionOutput {
+  @SerializedName("Bitrate")
+  private Integer bitrate = null;
+
   @SerializedName("Fps")
   private Float fps = null;
 
@@ -41,6 +44,24 @@ public class TargetForGetExecutionOutput {
 
   @SerializedName("ScaleRatio")
   private Float scaleRatio = null;
+
+  public TargetForGetExecutionOutput bitrate(Integer bitrate) {
+    this.bitrate = bitrate;
+    return this;
+  }
+
+   /**
+   * Get bitrate
+   * @return bitrate
+  **/
+  @Schema(description = "")
+  public Integer getBitrate() {
+    return bitrate;
+  }
+
+  public void setBitrate(Integer bitrate) {
+    this.bitrate = bitrate;
+  }
 
   public TargetForGetExecutionOutput fps(Float fps) {
     this.fps = fps;
@@ -124,7 +145,8 @@ public class TargetForGetExecutionOutput {
       return false;
     }
     TargetForGetExecutionOutput targetForGetExecutionOutput = (TargetForGetExecutionOutput) o;
-    return Objects.equals(this.fps, targetForGetExecutionOutput.fps) &&
+    return Objects.equals(this.bitrate, targetForGetExecutionOutput.bitrate) &&
+        Objects.equals(this.fps, targetForGetExecutionOutput.fps) &&
         Objects.equals(this.res, targetForGetExecutionOutput.res) &&
         Objects.equals(this.resLimit, targetForGetExecutionOutput.resLimit) &&
         Objects.equals(this.scaleRatio, targetForGetExecutionOutput.scaleRatio);
@@ -132,7 +154,7 @@ public class TargetForGetExecutionOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(fps, res, resLimit, scaleRatio);
+    return Objects.hash(bitrate, fps, res, resLimit, scaleRatio);
   }
 
 
@@ -141,6 +163,7 @@ public class TargetForGetExecutionOutput {
     StringBuilder sb = new StringBuilder();
     sb.append("class TargetForGetExecutionOutput {\n");
     
+    sb.append("    bitrate: ").append(toIndentedString(bitrate)).append("\n");
     sb.append("    fps: ").append(toIndentedString(fps)).append("\n");
     sb.append("    res: ").append(toIndentedString(res)).append("\n");
     sb.append("    resLimit: ").append(toIndentedString(resLimit)).append("\n");
