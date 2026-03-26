@@ -118,6 +118,9 @@ public class CreateRuleRequest {
   @SerializedName("EvaluationCount")
   private Integer evaluationCount = null;
 
+  @SerializedName("EvaluationInterval")
+  private Integer evaluationInterval = null;
+
   @SerializedName("Level")
   private String level = null;
 
@@ -138,6 +141,9 @@ public class CreateRuleRequest {
 
   @SerializedName("NotifyTemplates")
   private List<NotifyTemplateForCreateRuleInput> notifyTemplates = null;
+
+  @SerializedName("ObjectGroupId")
+  private String objectGroupId = null;
 
   @SerializedName("OriginalDimensions")
   private Map<String, List<String>> originalDimensions = null;
@@ -425,6 +431,24 @@ public class CreateRuleRequest {
     this.evaluationCount = evaluationCount;
   }
 
+  public CreateRuleRequest evaluationInterval(Integer evaluationInterval) {
+    this.evaluationInterval = evaluationInterval;
+    return this;
+  }
+
+   /**
+   * Get evaluationInterval
+   * @return evaluationInterval
+  **/
+  @Schema(description = "")
+  public Integer getEvaluationInterval() {
+    return evaluationInterval;
+  }
+
+  public void setEvaluationInterval(Integer evaluationInterval) {
+    this.evaluationInterval = evaluationInterval;
+  }
+
   public CreateRuleRequest level(String level) {
     this.level = level;
     return this;
@@ -570,6 +594,24 @@ public class CreateRuleRequest {
 
   public void setNotifyTemplates(List<NotifyTemplateForCreateRuleInput> notifyTemplates) {
     this.notifyTemplates = notifyTemplates;
+  }
+
+  public CreateRuleRequest objectGroupId(String objectGroupId) {
+    this.objectGroupId = objectGroupId;
+    return this;
+  }
+
+   /**
+   * Get objectGroupId
+   * @return objectGroupId
+  **/
+  @Schema(description = "")
+  public String getObjectGroupId() {
+    return objectGroupId;
+  }
+
+  public void setObjectGroupId(String objectGroupId) {
+    this.objectGroupId = objectGroupId;
   }
 
   public CreateRuleRequest originalDimensions(Map<String, List<String>> originalDimensions) {
@@ -829,6 +871,7 @@ public class CreateRuleRequest {
         Objects.equals(this.effectStartAt, createRuleRequest.effectStartAt) &&
         Objects.equals(this.enableState, createRuleRequest.enableState) &&
         Objects.equals(this.evaluationCount, createRuleRequest.evaluationCount) &&
+        Objects.equals(this.evaluationInterval, createRuleRequest.evaluationInterval) &&
         Objects.equals(this.level, createRuleRequest.level) &&
         Objects.equals(this.levelConditions, createRuleRequest.levelConditions) &&
         Objects.equals(this.multipleConditions, createRuleRequest.multipleConditions) &&
@@ -836,6 +879,7 @@ public class CreateRuleRequest {
         Objects.equals(this.noData, createRuleRequest.noData) &&
         Objects.equals(this.notificationId, createRuleRequest.notificationId) &&
         Objects.equals(this.notifyTemplates, createRuleRequest.notifyTemplates) &&
+        Objects.equals(this.objectGroupId, createRuleRequest.objectGroupId) &&
         Objects.equals(this.originalDimensions, createRuleRequest.originalDimensions) &&
         Objects.equals(this.projectName, createRuleRequest.projectName) &&
         Objects.equals(this.recoveryNotify, createRuleRequest.recoveryNotify) &&
@@ -851,7 +895,7 @@ public class CreateRuleRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(alertMethods, conditionOperator, conditions, contactGroupIds, description, dimensionConditions, effectEndAt, effectStartAt, enableState, evaluationCount, level, levelConditions, multipleConditions, namespace, noData, notificationId, notifyTemplates, originalDimensions, projectName, recoveryNotify, regions, ruleName, ruleType, silenceTime, subNamespace, tags, webhook, webhookIds);
+    return Objects.hash(alertMethods, conditionOperator, conditions, contactGroupIds, description, dimensionConditions, effectEndAt, effectStartAt, enableState, evaluationCount, evaluationInterval, level, levelConditions, multipleConditions, namespace, noData, notificationId, notifyTemplates, objectGroupId, originalDimensions, projectName, recoveryNotify, regions, ruleName, ruleType, silenceTime, subNamespace, tags, webhook, webhookIds);
   }
 
 
@@ -870,6 +914,7 @@ public class CreateRuleRequest {
     sb.append("    effectStartAt: ").append(toIndentedString(effectStartAt)).append("\n");
     sb.append("    enableState: ").append(toIndentedString(enableState)).append("\n");
     sb.append("    evaluationCount: ").append(toIndentedString(evaluationCount)).append("\n");
+    sb.append("    evaluationInterval: ").append(toIndentedString(evaluationInterval)).append("\n");
     sb.append("    level: ").append(toIndentedString(level)).append("\n");
     sb.append("    levelConditions: ").append(toIndentedString(levelConditions)).append("\n");
     sb.append("    multipleConditions: ").append(toIndentedString(multipleConditions)).append("\n");
@@ -877,6 +922,7 @@ public class CreateRuleRequest {
     sb.append("    noData: ").append(toIndentedString(noData)).append("\n");
     sb.append("    notificationId: ").append(toIndentedString(notificationId)).append("\n");
     sb.append("    notifyTemplates: ").append(toIndentedString(notifyTemplates)).append("\n");
+    sb.append("    objectGroupId: ").append(toIndentedString(objectGroupId)).append("\n");
     sb.append("    originalDimensions: ").append(toIndentedString(originalDimensions)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    recoveryNotify: ").append(toIndentedString(recoveryNotify)).append("\n");

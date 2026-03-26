@@ -18,6 +18,7 @@ import com.byteplus.cloudmonitor.model.ConditionForListRulesOutput;
 import com.byteplus.cloudmonitor.model.ConvertTagForListRulesOutput;
 import com.byteplus.cloudmonitor.model.DimensionConditionsForListRulesOutput;
 import com.byteplus.cloudmonitor.model.LevelConditionForListRulesOutput;
+import com.byteplus.cloudmonitor.model.NoDataForListRulesOutput;
 import com.byteplus.cloudmonitor.model.NotifyTemplateForListRulesOutput;
 import com.byteplus.cloudmonitor.model.RecoveryNotifyForListRulesOutput;
 import com.google.gson.TypeAdapter;
@@ -76,6 +77,9 @@ public class DataForListRulesOutput {
   @SerializedName("EvaluationCount")
   private Integer evaluationCount = null;
 
+  @SerializedName("EvaluationInterval")
+  private Integer evaluationInterval = null;
+
   @SerializedName("Id")
   private String id = null;
 
@@ -91,11 +95,17 @@ public class DataForListRulesOutput {
   @SerializedName("Namespace")
   private String namespace = null;
 
+  @SerializedName("NoData")
+  private NoDataForListRulesOutput noData = null;
+
   @SerializedName("NotificationId")
   private String notificationId = null;
 
   @SerializedName("NotifyTemplates")
   private List<NotifyTemplateForListRulesOutput> notifyTemplates = null;
+
+  @SerializedName("ObjectGroupId")
+  private String objectGroupId = null;
 
   @SerializedName("OriginalDimensions")
   private Map<String, List<String>> originalDimensions = null;
@@ -378,6 +388,24 @@ public class DataForListRulesOutput {
     this.evaluationCount = evaluationCount;
   }
 
+  public DataForListRulesOutput evaluationInterval(Integer evaluationInterval) {
+    this.evaluationInterval = evaluationInterval;
+    return this;
+  }
+
+   /**
+   * Get evaluationInterval
+   * @return evaluationInterval
+  **/
+  @Schema(description = "")
+  public Integer getEvaluationInterval() {
+    return evaluationInterval;
+  }
+
+  public void setEvaluationInterval(Integer evaluationInterval) {
+    this.evaluationInterval = evaluationInterval;
+  }
+
   public DataForListRulesOutput id(String id) {
     this.id = id;
     return this;
@@ -477,6 +505,25 @@ public class DataForListRulesOutput {
     this.namespace = namespace;
   }
 
+  public DataForListRulesOutput noData(NoDataForListRulesOutput noData) {
+    this.noData = noData;
+    return this;
+  }
+
+   /**
+   * Get noData
+   * @return noData
+  **/
+  @Valid
+  @Schema(description = "")
+  public NoDataForListRulesOutput getNoData() {
+    return noData;
+  }
+
+  public void setNoData(NoDataForListRulesOutput noData) {
+    this.noData = noData;
+  }
+
   public DataForListRulesOutput notificationId(String notificationId) {
     this.notificationId = notificationId;
     return this;
@@ -520,6 +567,24 @@ public class DataForListRulesOutput {
 
   public void setNotifyTemplates(List<NotifyTemplateForListRulesOutput> notifyTemplates) {
     this.notifyTemplates = notifyTemplates;
+  }
+
+  public DataForListRulesOutput objectGroupId(String objectGroupId) {
+    this.objectGroupId = objectGroupId;
+    return this;
+  }
+
+   /**
+   * Get objectGroupId
+   * @return objectGroupId
+  **/
+  @Schema(description = "")
+  public String getObjectGroupId() {
+    return objectGroupId;
+  }
+
+  public void setObjectGroupId(String objectGroupId) {
+    this.objectGroupId = objectGroupId;
   }
 
   public DataForListRulesOutput originalDimensions(Map<String, List<String>> originalDimensions) {
@@ -813,13 +878,16 @@ public class DataForListRulesOutput {
         Objects.equals(this.effectStartAt, dataForListRulesOutput.effectStartAt) &&
         Objects.equals(this.enableState, dataForListRulesOutput.enableState) &&
         Objects.equals(this.evaluationCount, dataForListRulesOutput.evaluationCount) &&
+        Objects.equals(this.evaluationInterval, dataForListRulesOutput.evaluationInterval) &&
         Objects.equals(this.id, dataForListRulesOutput.id) &&
         Objects.equals(this.level, dataForListRulesOutput.level) &&
         Objects.equals(this.levelConditions, dataForListRulesOutput.levelConditions) &&
         Objects.equals(this.multipleConditions, dataForListRulesOutput.multipleConditions) &&
         Objects.equals(this.namespace, dataForListRulesOutput.namespace) &&
+        Objects.equals(this.noData, dataForListRulesOutput.noData) &&
         Objects.equals(this.notificationId, dataForListRulesOutput.notificationId) &&
         Objects.equals(this.notifyTemplates, dataForListRulesOutput.notifyTemplates) &&
+        Objects.equals(this.objectGroupId, dataForListRulesOutput.objectGroupId) &&
         Objects.equals(this.originalDimensions, dataForListRulesOutput.originalDimensions) &&
         Objects.equals(this.projectName, dataForListRulesOutput.projectName) &&
         Objects.equals(this.recoveryNotify, dataForListRulesOutput.recoveryNotify) &&
@@ -837,7 +905,7 @@ public class DataForListRulesOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(alertMethods, alertState, conditionOperator, conditions, contactGroupIds, createdAt, description, dimensionConditions, effectEndAt, effectStartAt, enableState, evaluationCount, id, level, levelConditions, multipleConditions, namespace, notificationId, notifyTemplates, originalDimensions, projectName, recoveryNotify, regions, resourceType, ruleName, ruleType, silenceTime, subNamespace, tags, updatedAt, webHook, webhookIds);
+    return Objects.hash(alertMethods, alertState, conditionOperator, conditions, contactGroupIds, createdAt, description, dimensionConditions, effectEndAt, effectStartAt, enableState, evaluationCount, evaluationInterval, id, level, levelConditions, multipleConditions, namespace, noData, notificationId, notifyTemplates, objectGroupId, originalDimensions, projectName, recoveryNotify, regions, resourceType, ruleName, ruleType, silenceTime, subNamespace, tags, updatedAt, webHook, webhookIds);
   }
 
 
@@ -858,13 +926,16 @@ public class DataForListRulesOutput {
     sb.append("    effectStartAt: ").append(toIndentedString(effectStartAt)).append("\n");
     sb.append("    enableState: ").append(toIndentedString(enableState)).append("\n");
     sb.append("    evaluationCount: ").append(toIndentedString(evaluationCount)).append("\n");
+    sb.append("    evaluationInterval: ").append(toIndentedString(evaluationInterval)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    level: ").append(toIndentedString(level)).append("\n");
     sb.append("    levelConditions: ").append(toIndentedString(levelConditions)).append("\n");
     sb.append("    multipleConditions: ").append(toIndentedString(multipleConditions)).append("\n");
     sb.append("    namespace: ").append(toIndentedString(namespace)).append("\n");
+    sb.append("    noData: ").append(toIndentedString(noData)).append("\n");
     sb.append("    notificationId: ").append(toIndentedString(notificationId)).append("\n");
     sb.append("    notifyTemplates: ").append(toIndentedString(notifyTemplates)).append("\n");
+    sb.append("    objectGroupId: ").append(toIndentedString(objectGroupId)).append("\n");
     sb.append("    originalDimensions: ").append(toIndentedString(originalDimensions)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    recoveryNotify: ").append(toIndentedString(recoveryNotify)).append("\n");
