@@ -24,12 +24,12 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ConditionForUpdateAlertTemplateInput
+ * ConvertConditionForUpdateRuleInput
  */
 
 
 
-public class ConditionForUpdateAlertTemplateInput {
+public class ConvertConditionForUpdateRuleInput {
   @SerializedName("ComparisonOperator")
   private String comparisonOperator = null;
 
@@ -42,13 +42,16 @@ public class ConditionForUpdateAlertTemplateInput {
   @SerializedName("MetricUnit")
   private String metricUnit = null;
 
+  @SerializedName("Period")
+  private String period = null;
+
   @SerializedName("Statistics")
   private String statistics = null;
 
   @SerializedName("Threshold")
   private String threshold = null;
 
-  public ConditionForUpdateAlertTemplateInput comparisonOperator(String comparisonOperator) {
+  public ConvertConditionForUpdateRuleInput comparisonOperator(String comparisonOperator) {
     this.comparisonOperator = comparisonOperator;
     return this;
   }
@@ -66,7 +69,7 @@ public class ConditionForUpdateAlertTemplateInput {
     this.comparisonOperator = comparisonOperator;
   }
 
-  public ConditionForUpdateAlertTemplateInput evaluationWindow(Integer evaluationWindow) {
+  public ConvertConditionForUpdateRuleInput evaluationWindow(Integer evaluationWindow) {
     this.evaluationWindow = evaluationWindow;
     return this;
   }
@@ -84,7 +87,7 @@ public class ConditionForUpdateAlertTemplateInput {
     this.evaluationWindow = evaluationWindow;
   }
 
-  public ConditionForUpdateAlertTemplateInput metricName(String metricName) {
+  public ConvertConditionForUpdateRuleInput metricName(String metricName) {
     this.metricName = metricName;
     return this;
   }
@@ -102,7 +105,7 @@ public class ConditionForUpdateAlertTemplateInput {
     this.metricName = metricName;
   }
 
-  public ConditionForUpdateAlertTemplateInput metricUnit(String metricUnit) {
+  public ConvertConditionForUpdateRuleInput metricUnit(String metricUnit) {
     this.metricUnit = metricUnit;
     return this;
   }
@@ -120,7 +123,25 @@ public class ConditionForUpdateAlertTemplateInput {
     this.metricUnit = metricUnit;
   }
 
-  public ConditionForUpdateAlertTemplateInput statistics(String statistics) {
+  public ConvertConditionForUpdateRuleInput period(String period) {
+    this.period = period;
+    return this;
+  }
+
+   /**
+   * Get period
+   * @return period
+  **/
+  @Schema(description = "")
+  public String getPeriod() {
+    return period;
+  }
+
+  public void setPeriod(String period) {
+    this.period = period;
+  }
+
+  public ConvertConditionForUpdateRuleInput statistics(String statistics) {
     this.statistics = statistics;
     return this;
   }
@@ -138,7 +159,7 @@ public class ConditionForUpdateAlertTemplateInput {
     this.statistics = statistics;
   }
 
-  public ConditionForUpdateAlertTemplateInput threshold(String threshold) {
+  public ConvertConditionForUpdateRuleInput threshold(String threshold) {
     this.threshold = threshold;
     return this;
   }
@@ -165,30 +186,32 @@ public class ConditionForUpdateAlertTemplateInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConditionForUpdateAlertTemplateInput conditionForUpdateAlertTemplateInput = (ConditionForUpdateAlertTemplateInput) o;
-    return Objects.equals(this.comparisonOperator, conditionForUpdateAlertTemplateInput.comparisonOperator) &&
-        Objects.equals(this.evaluationWindow, conditionForUpdateAlertTemplateInput.evaluationWindow) &&
-        Objects.equals(this.metricName, conditionForUpdateAlertTemplateInput.metricName) &&
-        Objects.equals(this.metricUnit, conditionForUpdateAlertTemplateInput.metricUnit) &&
-        Objects.equals(this.statistics, conditionForUpdateAlertTemplateInput.statistics) &&
-        Objects.equals(this.threshold, conditionForUpdateAlertTemplateInput.threshold);
+    ConvertConditionForUpdateRuleInput convertConditionForUpdateRuleInput = (ConvertConditionForUpdateRuleInput) o;
+    return Objects.equals(this.comparisonOperator, convertConditionForUpdateRuleInput.comparisonOperator) &&
+        Objects.equals(this.evaluationWindow, convertConditionForUpdateRuleInput.evaluationWindow) &&
+        Objects.equals(this.metricName, convertConditionForUpdateRuleInput.metricName) &&
+        Objects.equals(this.metricUnit, convertConditionForUpdateRuleInput.metricUnit) &&
+        Objects.equals(this.period, convertConditionForUpdateRuleInput.period) &&
+        Objects.equals(this.statistics, convertConditionForUpdateRuleInput.statistics) &&
+        Objects.equals(this.threshold, convertConditionForUpdateRuleInput.threshold);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(comparisonOperator, evaluationWindow, metricName, metricUnit, statistics, threshold);
+    return Objects.hash(comparisonOperator, evaluationWindow, metricName, metricUnit, period, statistics, threshold);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConditionForUpdateAlertTemplateInput {\n");
+    sb.append("class ConvertConditionForUpdateRuleInput {\n");
     
     sb.append("    comparisonOperator: ").append(toIndentedString(comparisonOperator)).append("\n");
     sb.append("    evaluationWindow: ").append(toIndentedString(evaluationWindow)).append("\n");
     sb.append("    metricName: ").append(toIndentedString(metricName)).append("\n");
     sb.append("    metricUnit: ").append(toIndentedString(metricUnit)).append("\n");
+    sb.append("    period: ").append(toIndentedString(period)).append("\n");
     sb.append("    statistics: ").append(toIndentedString(statistics)).append("\n");
     sb.append("    threshold: ").append(toIndentedString(threshold)).append("\n");
     sb.append("}");
