@@ -24,12 +24,12 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * NoDataForCreateRuleInput
+ * NoDataForListRulesOutput
  */
 
 
 
-public class NoDataForCreateRuleInput {
+public class NoDataForListRulesOutput {
   @SerializedName("Enable")
   private Boolean enable = null;
 
@@ -39,7 +39,7 @@ public class NoDataForCreateRuleInput {
   @SerializedName("Level")
   private String level = null;
 
-  public NoDataForCreateRuleInput enable(Boolean enable) {
+  public NoDataForListRulesOutput enable(Boolean enable) {
     this.enable = enable;
     return this;
   }
@@ -57,7 +57,7 @@ public class NoDataForCreateRuleInput {
     this.enable = enable;
   }
 
-  public NoDataForCreateRuleInput evaluationCount(Integer evaluationCount) {
+  public NoDataForListRulesOutput evaluationCount(Integer evaluationCount) {
     this.evaluationCount = evaluationCount;
     return this;
   }
@@ -75,7 +75,7 @@ public class NoDataForCreateRuleInput {
     this.evaluationCount = evaluationCount;
   }
 
-  public NoDataForCreateRuleInput level(String level) {
+  public NoDataForListRulesOutput level(String level) {
     this.level = level;
     return this;
   }
@@ -102,10 +102,10 @@ public class NoDataForCreateRuleInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NoDataForCreateRuleInput noDataForCreateRuleInput = (NoDataForCreateRuleInput) o;
-    return Objects.equals(this.enable, noDataForCreateRuleInput.enable) &&
-        Objects.equals(this.evaluationCount, noDataForCreateRuleInput.evaluationCount) &&
-        Objects.equals(this.level, noDataForCreateRuleInput.level);
+    NoDataForListRulesOutput noDataForListRulesOutput = (NoDataForListRulesOutput) o;
+    return Objects.equals(this.enable, noDataForListRulesOutput.enable) &&
+        Objects.equals(this.evaluationCount, noDataForListRulesOutput.evaluationCount) &&
+        Objects.equals(this.level, noDataForListRulesOutput.level);
   }
 
   @Override
@@ -117,7 +117,7 @@ public class NoDataForCreateRuleInput {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NoDataForCreateRuleInput {\n");
+    sb.append("class NoDataForListRulesOutput {\n");
     
     sb.append("    enable: ").append(toIndentedString(enable)).append("\n");
     sb.append("    evaluationCount: ").append(toIndentedString(evaluationCount)).append("\n");
