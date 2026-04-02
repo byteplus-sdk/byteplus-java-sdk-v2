@@ -259,5 +259,6 @@
         <module>byteplus-java-sdk-v2-milvus</module>
         <module>byteplus-java-sdk-v2-privatezone</module>
         <module>byteplus-java-sdk-v2-id</module>
+        <module>byteplus-java-sdk-v2-mongodb</module>
     </modules>
 </project>
