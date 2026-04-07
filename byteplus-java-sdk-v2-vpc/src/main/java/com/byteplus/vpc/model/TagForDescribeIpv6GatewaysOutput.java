@@ -24,53 +24,52 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DeleteInstanceGroupRequest
+ * TagForDescribeIpv6GatewaysOutput
  */
 
 
 
-public class DeleteInstanceGroupRequest {
-  @SerializedName("ClientToken")
-  private String clientToken = null;
+public class TagForDescribeIpv6GatewaysOutput {
+  @SerializedName("Key")
+  private String key = null;
 
-  @SerializedName("InstanceGroupId")
-  private String instanceGroupId = null;
+  @SerializedName("Value")
+  private String value = null;
 
-  public DeleteInstanceGroupRequest clientToken(String clientToken) {
-    this.clientToken = clientToken;
+  public TagForDescribeIpv6GatewaysOutput key(String key) {
+    this.key = key;
     return this;
   }
 
    /**
-   * Get clientToken
-   * @return clientToken
+   * Get key
+   * @return key
   **/
   @Schema(description = "")
-  public String getClientToken() {
-    return clientToken;
+  public String getKey() {
+    return key;
   }
 
-  public void setClientToken(String clientToken) {
-    this.clientToken = clientToken;
+  public void setKey(String key) {
+    this.key = key;
   }
 
-  public DeleteInstanceGroupRequest instanceGroupId(String instanceGroupId) {
-    this.instanceGroupId = instanceGroupId;
+  public TagForDescribeIpv6GatewaysOutput value(String value) {
+    this.value = value;
     return this;
   }
 
    /**
-   * Get instanceGroupId
-   * @return instanceGroupId
+   * Get value
+   * @return value
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public String getInstanceGroupId() {
-    return instanceGroupId;
+  @Schema(description = "")
+  public String getValue() {
+    return value;
   }
 
-  public void setInstanceGroupId(String instanceGroupId) {
-    this.instanceGroupId = instanceGroupId;
+  public void setValue(String value) {
+    this.value = value;
   }
 
 
@@ -82,24 +81,24 @@ public class DeleteInstanceGroupRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeleteInstanceGroupRequest deleteInstanceGroupRequest = (DeleteInstanceGroupRequest) o;
-    return Objects.equals(this.clientToken, deleteInstanceGroupRequest.clientToken) &&
-        Objects.equals(this.instanceGroupId, deleteInstanceGroupRequest.instanceGroupId);
+    TagForDescribeIpv6GatewaysOutput tagForDescribeIpv6GatewaysOutput = (TagForDescribeIpv6GatewaysOutput) o;
+    return Objects.equals(this.key, tagForDescribeIpv6GatewaysOutput.key) &&
+        Objects.equals(this.value, tagForDescribeIpv6GatewaysOutput.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientToken, instanceGroupId);
+    return Objects.hash(key, value);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeleteInstanceGroupRequest {\n");
+    sb.append("class TagForDescribeIpv6GatewaysOutput {\n");
     
-    sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
-    sb.append("    instanceGroupId: ").append(toIndentedString(instanceGroupId)).append("\n");
+    sb.append("    key: ").append(toIndentedString(key)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }
