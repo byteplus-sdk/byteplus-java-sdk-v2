@@ -24,53 +24,52 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DeleteInstanceGroupRequest
+ * Ipv6CidrBlockForDescribeVpcsOutput
  */
 
 
 
-public class DeleteInstanceGroupRequest {
-  @SerializedName("ClientToken")
-  private String clientToken = null;
+public class Ipv6CidrBlockForDescribeVpcsOutput {
+  @SerializedName("Ipv6CidrBlock")
+  private String ipv6CidrBlock = null;
 
-  @SerializedName("InstanceGroupId")
-  private String instanceGroupId = null;
+  @SerializedName("Ipv6Isp")
+  private String ipv6Isp = null;
 
-  public DeleteInstanceGroupRequest clientToken(String clientToken) {
-    this.clientToken = clientToken;
+  public Ipv6CidrBlockForDescribeVpcsOutput ipv6CidrBlock(String ipv6CidrBlock) {
+    this.ipv6CidrBlock = ipv6CidrBlock;
     return this;
   }
 
    /**
-   * Get clientToken
-   * @return clientToken
+   * Get ipv6CidrBlock
+   * @return ipv6CidrBlock
   **/
   @Schema(description = "")
-  public String getClientToken() {
-    return clientToken;
+  public String getIpv6CidrBlock() {
+    return ipv6CidrBlock;
   }
 
-  public void setClientToken(String clientToken) {
-    this.clientToken = clientToken;
+  public void setIpv6CidrBlock(String ipv6CidrBlock) {
+    this.ipv6CidrBlock = ipv6CidrBlock;
   }
 
-  public DeleteInstanceGroupRequest instanceGroupId(String instanceGroupId) {
-    this.instanceGroupId = instanceGroupId;
+  public Ipv6CidrBlockForDescribeVpcsOutput ipv6Isp(String ipv6Isp) {
+    this.ipv6Isp = ipv6Isp;
     return this;
   }
 
    /**
-   * Get instanceGroupId
-   * @return instanceGroupId
+   * Get ipv6Isp
+   * @return ipv6Isp
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public String getInstanceGroupId() {
-    return instanceGroupId;
+  @Schema(description = "")
+  public String getIpv6Isp() {
+    return ipv6Isp;
   }
 
-  public void setInstanceGroupId(String instanceGroupId) {
-    this.instanceGroupId = instanceGroupId;
+  public void setIpv6Isp(String ipv6Isp) {
+    this.ipv6Isp = ipv6Isp;
   }
 
 
@@ -82,24 +81,24 @@ public class DeleteInstanceGroupRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeleteInstanceGroupRequest deleteInstanceGroupRequest = (DeleteInstanceGroupRequest) o;
-    return Objects.equals(this.clientToken, deleteInstanceGroupRequest.clientToken) &&
-        Objects.equals(this.instanceGroupId, deleteInstanceGroupRequest.instanceGroupId);
+    Ipv6CidrBlockForDescribeVpcsOutput ipv6CidrBlockForDescribeVpcsOutput = (Ipv6CidrBlockForDescribeVpcsOutput) o;
+    return Objects.equals(this.ipv6CidrBlock, ipv6CidrBlockForDescribeVpcsOutput.ipv6CidrBlock) &&
+        Objects.equals(this.ipv6Isp, ipv6CidrBlockForDescribeVpcsOutput.ipv6Isp);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientToken, instanceGroupId);
+    return Objects.hash(ipv6CidrBlock, ipv6Isp);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeleteInstanceGroupRequest {\n");
+    sb.append("class Ipv6CidrBlockForDescribeVpcsOutput {\n");
     
-    sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
-    sb.append("    instanceGroupId: ").append(toIndentedString(instanceGroupId)).append("\n");
+    sb.append("    ipv6CidrBlock: ").append(toIndentedString(ipv6CidrBlock)).append("\n");
+    sb.append("    ipv6Isp: ").append(toIndentedString(ipv6Isp)).append("\n");
     sb.append("}");
     return sb.toString();
   }
