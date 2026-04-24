@@ -917,7 +917,7 @@ The Java SDK uses `com.squareup.okhttp.OkHttpClient`, and you can enable debug m
 
 The Java SDK log uses slf4j and depends on the customer's configuration file. Customers can configure the log level according to their needs.
 
-**配置示例：**
+**Configuration Example:**
 
 ```xml
 <!--Enable Debug Mode-->
