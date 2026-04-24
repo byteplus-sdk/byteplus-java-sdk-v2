@@ -8,6 +8,13 @@ English | [简体中文](./SDK_Integration_zh.md)
     - [AK/SK](#aksk)
     - [STS Token](#sts-token-configuration)
     - [AssumeRole](#assumerole)
+    - [OIDC (AssumeRoleWithOIDC)](#oidc-assumerolewithoidc)
+    - [Environment Variable Credential Provider](#environment-variable-credential-provider)
+    - [CLI Config Credential Provider](#cli-config-credential-provider)
+    - [ECS Role Credential Provider](#ecs-role-credential-provider)
+    - [Default Credential Provider](#default-credential-provider)
+  - [Credential Providers Overview](#credential-providers-overview)
+  - [Supported BYTEPLUS Environment Variables](#supported-byteplus-environment-variables)
 - [Endpoint Configuration](#endpoint-configuration)
   - [Custom Endpoint](#custom-endpoint)
   - [Custom RegionId](#custom-regionid)
@@ -114,8 +121,8 @@ Open Command Prompt as Administrator and use the following commands to add envir
 ---
 # Credentials
 
-To ensure resource access security, BytePlus SDK supports three mainstream authentication methods: `AK/SK` and `STS temporary credentials` and `AssumeRole`.   
-Different authentication methods are suitable for different scenarios, and developers can choose the appropriate method to access according to business needs.    For environment variable settings, please refer to: [**Environment variable settings**](#Environment variable settings)
+BytePlus Java SDK supports explicit credentials and `CredentialProvider`-based automatic resolution.
+Different authentication methods are suitable for different scenarios, and developers can choose the appropriate method to access according to business needs. For environment variable settings, please refer to: [**Setting Environment Variables**](#setting-environment-variables)
 
 ## AK/SK
 
@@ -206,8 +213,8 @@ public class SampleCode {
             "YourRoleName",             // Name of the role
             "YourAccountId");           // The ID of the main account being played, that is, the ID of the main account to which the role belongs
 
-    // 选填字段
-    stsAssumeRoleProvider.setHost("sts.volcengineapi.com"); // STS服务地址，default: sts.volcengineapi.com
+    // Optional fields
+    stsAssumeRoleProvider.setHost("sts.byteplusapi.com"); // STS service endpoint, default: sts.byteplusapi.com
     stsAssumeRoleProvider.setRegion("cn-north-1"); // STS service region, default: cn-north-1
     stsAssumeRoleProvider.setTimeout(30); // STS request expiration time,default: 30 seconds
     stsAssumeRoleProvider.setDurationSeconds(3600); // STS temporary credential expiration time，default: 3600 seconds
@@ -220,6 +227,216 @@ public class SampleCode {
             .setRegion(region);
   }
 
+}
+```
+
+## Credential Providers Overview
+
+| Provider | Purpose | Auto Refresh | Typical Scenario |
+|---|---|---|---|
+| `StaticCredentialProvider` | Static AK/SK(/Token) | No | Long-lived server credentials |
+| `StsAssumeRoleProvider` | STS AssumeRole | Yes | IAM role-based temporary credentials |
+| `OidcCredentialProvider` | STS AssumeRoleWithOIDC | Yes | OIDC federation |
+| `EnvironmentVariableCredentialProvider` | Read AK/SK(/Token) from env | No | CI/CD and container env injection |
+| `CLIConfigCredentialProvider` | Read from `~/.byteplus/config.json` | Depends on mode | Reuse CLI profile and login state |
+| `EcsRoleCredentialProvider` | Read from ECS IMDS | Yes | ECS instance role credentials |
+| `DefaultCredentialProvider` | Default chain wrapper | Depends on delegated provider | No AK/SK in application code |
+
+## Supported BYTEPLUS Environment Variables
+
+- Basic credentials:
+  - `BYTEPLUS_ACCESS_KEY`
+  - `BYTEPLUS_SECRET_KEY`
+  - `BYTEPLUS_SESSION_TOKEN`
+- OIDC:
+  - `BYTEPLUS_OIDC_ROLE_TRN`
+  - `BYTEPLUS_OIDC_TOKEN_FILE`
+  - `BYTEPLUS_OIDC_ROLE_SESSION_NAME`
+  - `BYTEPLUS_OIDC_ROLE_POLICY`
+  - `BYTEPLUS_OIDC_STS_ENDPOINT`
+- CLI config:
+  - `BYTEPLUS_CLI_CONFIG_FILE`
+  - `BYTEPLUS_PROFILE`
+- ECS metadata:
+  - `BYTEPLUS_ECS_METADATA`
+  - `BYTEPLUS_ECS_METADATA_DISABLED`
+
+
+## OIDC (AssumeRoleWithOIDC)
+
+`OidcCredentialProvider` gets temporary credentials from STS via OIDC token.
+
+Reference: https://www.volcengine.com/docs/6257/1494877
+
+Explicit parameter example:
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.auth.CredentialProvider;
+import com.byteplus.auth.OidcCredentialProvider;
+
+public class SampleCode {
+  public static void main(String[] args) {
+    String region = "ap-southeast-1";
+
+    OidcCredentialProvider oidcProvider = new OidcCredentialProvider(
+            "trn:iam::1234567890:role/oidc-role", // roleTrn
+            null,                                 // roleSessionName (optional)
+            "/var/run/secrets/oidc/token",        // oidcTokenFile
+            null,                                 // rolePolicy (optional)
+            "sts.byteplusapi.com"                 // stsEndpoint (optional)
+    );
+    oidcProvider.setDurationSeconds(3600);
+    oidcProvider.setExpireBufferSeconds(60);
+
+    CredentialProvider credentialProvider = new CredentialProvider(oidcProvider);
+    ApiClient apiClient = new ApiClient()
+            .setCredentialProvider(credentialProvider)
+            .setRegion(region);
+  }
+}
+```
+
+Environment-variable example:
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.auth.CredentialProvider;
+import com.byteplus.auth.OidcCredentialProvider;
+
+public class SampleCode {
+  public static void main(String[] args) throws Exception {
+    // Required:
+    // BYTEPLUS_OIDC_ROLE_TRN
+    // BYTEPLUS_OIDC_TOKEN_FILE
+    OidcCredentialProvider oidcProvider = OidcCredentialProvider.fromEnvironment();
+    CredentialProvider credentialProvider = new CredentialProvider(oidcProvider);
+
+    ApiClient apiClient = new ApiClient()
+            .setCredentialProvider(credentialProvider)
+            .setRegion("ap-southeast-1");
+  }
+}
+```
+
+## Environment Variable Credential Provider
+
+`EnvironmentVariableCredentialProvider` reads:
+
+- `BYTEPLUS_ACCESS_KEY`
+- `BYTEPLUS_SECRET_KEY`
+- `BYTEPLUS_SESSION_TOKEN` (optional)
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.auth.CredentialProvider;
+import com.byteplus.auth.EnvironmentVariableCredentialProvider;
+
+public class SampleCode {
+  public static void main(String[] args) {
+    CredentialProvider credentialProvider =
+            new CredentialProvider(new EnvironmentVariableCredentialProvider());
+
+    ApiClient apiClient = new ApiClient()
+            .setCredentialProvider(credentialProvider)
+            .setRegion("ap-southeast-1");
+  }
+}
+```
+
+## CLI Config Credential Provider
+
+`CLIConfigCredentialProvider` reads `~/.byteplus/config.json` by default.
+
+- Config path priority: constructor `configPath` > `BYTEPLUS_CLI_CONFIG_FILE` > `~/.byteplus/config.json`
+- Profile priority: constructor `profileName` > `BYTEPLUS_PROFILE` > `current` in config > `default`
+
+Supported profile `mode`:
+
+- `AK` / empty
+- `StsToken`
+- `RamRoleArn` (delegates to `StsAssumeRoleProvider`)
+- `OIDC` (delegates to `OidcCredentialProvider`)
+- `EcsRole` (delegates to `EcsRoleCredentialProvider`)
+- `SSO`
+
+> Mode matching is case-insensitive.
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.auth.CLIConfigCredentialProvider;
+import com.byteplus.auth.CredentialProvider;
+
+public class SampleCode {
+  public static void main(String[] args) {
+    CLIConfigCredentialProvider cliProvider =
+            new CLIConfigCredentialProvider("prod", "~/.byteplus/config.json");
+    CredentialProvider credentialProvider = new CredentialProvider(cliProvider);
+
+    ApiClient apiClient = new ApiClient()
+            .setCredentialProvider(credentialProvider)
+            .setRegion("ap-southeast-1");
+  }
+}
+```
+
+## ECS Role Credential Provider
+
+`EcsRoleCredentialProvider` reads temporary credentials from ECS IMDS.
+
+- Role name priority: constructor arg > `BYTEPLUS_ECS_METADATA` > error (no auto-detect)
+- Disable switch: `BYTEPLUS_ECS_METADATA_DISABLED=true`
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.auth.CredentialProvider;
+import com.byteplus.auth.EcsRoleCredentialProvider;
+
+public class SampleCode {
+  public static void main(String[] args) throws Exception {
+    CredentialProvider credentialProvider =
+            new CredentialProvider(EcsRoleCredentialProvider.create("your-ecs-role-name"));
+
+    ApiClient apiClient = new ApiClient()
+            .setCredentialProvider(credentialProvider)
+            .setRegion("ap-southeast-1");
+  }
+}
+```
+
+## Default Credential Provider
+
+When `credentials` and `credentialProvider` are both unset, the SDK automatically uses `DefaultCredentialProvider` — no manual configuration is needed.
+
+You can also explicitly set it if you need to customize options (e.g., `roleName`).
+
+Default chain order:
+
+1. `EnvironmentVariableCredentialProvider`
+2. `OidcCredentialProvider` (from OIDC env vars)
+3. `CLIConfigCredentialProvider`
+4. `EcsRoleCredentialProvider`
+
+`reuseLastProviderEnabled` is `true` by default.
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.auth.CredentialProvider;
+import com.byteplus.auth.DefaultCredentialProvider;
+
+public class SampleCode {
+  public static void main(String[] args) {
+    DefaultCredentialProvider defaultProvider = DefaultCredentialProvider.builder()
+            .reuseLastProviderEnabled(true)
+            .roleName(null) // optional: used by ECS provider
+            .build();
+    // Or: DefaultCredentialProvider defaultProvider = DefaultCredentialProvider.create();
+
+    CredentialProvider credentialProvider = new CredentialProvider(defaultProvider);
+    ApiClient apiClient = new ApiClient()
+            .setCredentialProvider(credentialProvider)
+            .setRegion("ap-southeast-1");
+  }
 }
 ```
 
