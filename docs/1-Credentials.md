@@ -326,8 +326,11 @@ public class SampleCode {
 Supported profile `mode`:
 
 - `AK` / empty
-- `StsToken`
 - `RamRoleArn` (delegates to `StsAssumeRoleProvider`)
+  - Required: `access-key`, `secret-key`, `role-name`, `account-id`
+  - Optional: `session-token` — when the source `access-key` / `secret-key` are
+    themselves STS temporaries (e.g. issued by SSO/OIDC), this token is forwarded
+    to the chained AssumeRole call as `X-Security-Token`.
 - `OIDC` (delegates to `OidcCredentialProvider`)
 - `EcsRole` (delegates to `EcsRoleCredentialProvider`)
 - `SSO`
