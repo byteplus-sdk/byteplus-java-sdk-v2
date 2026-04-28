@@ -13,7 +13,12 @@ public class EnvironmentVariableCredentialProvider implements Provider {
 
     @Override
     public void refresh() throws ApiException {
-        // No-op: environment variable credentials do not expire.
+        String ak = getEnvWithFallback("BYTEPLUS_ACCESS_KEY");
+        String sk = getEnvWithFallback("BYTEPLUS_SECRET_KEY");
+        if (isNullOrEmpty(ak) || isNullOrEmpty(sk)) {
+            throw new ApiException(PROVIDER_NAME + ": required environment variables BYTEPLUS_ACCESS_KEY and "
+                    + "BYTEPLUS_SECRET_KEY are not set");
+        }
     }
 
     @Override
