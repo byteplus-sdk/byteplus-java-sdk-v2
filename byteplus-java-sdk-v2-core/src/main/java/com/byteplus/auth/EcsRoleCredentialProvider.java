@@ -26,9 +26,9 @@ public class EcsRoleCredentialProvider implements Provider {
 
     // IMDSv2 endpoint and paths
     private static final String DEFAULT_IMDS_ENDPOINT = "http://100.96.0.96";
-    private static final String IMDS_CREDENTIALS_PATH = "/volcstack/latest/iam/security_credentials/"; // POST
-    private static final String IMDS_ROLE_NAME_PATH = "/volcstack/latest/iam/security_credentials?type=user"; // GET
-    private static final String IMDS_TOKEN_PATH = "/latest/api/token"; // GET
+    private static final String IMDS_CREDENTIALS_PATH = "/volcstack/latest/iam/security_credentials/"; // GET
+    private static final String IMDS_ROLE_NAME_PATH = "/volcstack/latest/iam/security_credentials?fetchuserrole=true"; // GET
+    private static final String IMDS_TOKEN_PATH = "/latest/api/token"; // PUT
 
     // IMDSv2 headers
     private static final String IMDS_TOKEN_TTL_HEADER = "X-volc-ecs-metadata-token-ttl-seconds";
@@ -55,8 +55,8 @@ public class EcsRoleCredentialProvider implements Provider {
     private int expireBufferSeconds;
     private final String imdsEndpoint;
 
-    private volatile CredentialValue credentialValue;
-    private volatile long expirationTime;
+    private CredentialValue credentialValue;
+    private long expirationTime;
 
     public EcsRoleCredentialProvider(String roleName) {
         this(roleName, DEFAULT_CONNECT_TIMEOUT_MS, DEFAULT_READ_TIMEOUT_MS,
@@ -65,6 +65,10 @@ public class EcsRoleCredentialProvider implements Provider {
 
     public EcsRoleCredentialProvider(String roleName, int connectTimeoutMs, int readTimeoutMs,
                                      int maxRetries, int retryIntervalMs, int expireBufferSeconds) {
+        if (isDisabledByEnv()) {
+            throw new IllegalStateException(
+                    PROVIDER_NAME + ": IMDS is disabled via BYTEPLUS_ECS_METADATA_DISABLED=true");
+        }
         this.roleName = roleName;
         this.connectTimeoutMs = connectTimeoutMs;
         this.readTimeoutMs = readTimeoutMs;
@@ -74,17 +78,24 @@ public class EcsRoleCredentialProvider implements Provider {
         this.imdsEndpoint = DEFAULT_IMDS_ENDPOINT;
     }
 
-    public static EcsRoleCredentialProvider create(String roleName) throws ApiException {
-        if ("true".equalsIgnoreCase(System.getenv("BYTEPLUS_ECS_METADATA_DISABLED"))) {
-            throw new ApiException(PROVIDER_NAME + ": IMDS is disabled via BYTEPLUS_ECS_METADATA_DISABLED=true");
-        }
+    /**
+     * Returns true when {@code BYTEPLUS_ECS_METADATA_DISABLED=true} is set.
+     * Used by {@link DefaultCredentialProvider} to skip adding the IMDS step
+     * to the chain, and by the constructor to fail fast on direct {@code new}.
+     */
+    public static boolean isDisabledByEnv() {
+        return "true".equalsIgnoreCase(System.getenv("BYTEPLUS_ECS_METADATA_DISABLED"));
+    }
 
+    public static EcsRoleCredentialProvider create(String roleName) {
         String resolvedRoleName = roleName;
         if (isNullOrEmpty(resolvedRoleName)) {
             resolvedRoleName = System.getenv("BYTEPLUS_ECS_METADATA");
         }
 
-        // roleName can be null — will be auto-detected on first refresh
+        // roleName can be null — will be auto-detected on first refresh.
+        // The BYTEPLUS_ECS_METADATA_DISABLED kill-switch is enforced
+        // inside the constructor, so it applies to direct `new` calls too.
         return new EcsRoleCredentialProvider(resolvedRoleName);
     }
 
@@ -136,9 +147,9 @@ public class EcsRoleCredentialProvider implements Provider {
         // Step 2: Resolve role name
         String effectiveRoleName = resolveRoleName(imdsToken);
 
-        // Step 3: POST to get credentials
+        // Step 3: GET to get credentials
         String url = imdsEndpoint + IMDS_CREDENTIALS_PATH + effectiveRoleName;
-        String responseBody = doRequestWithRetry(url, "POST",
+        String responseBody = doRequestWithRetry(url, "GET",
                 new String[][]{{IMDS_TOKEN_HEADER, imdsToken}});
 
         Gson gson = new Gson();
@@ -179,17 +190,18 @@ public class EcsRoleCredentialProvider implements Provider {
 
     @Override
     public CredentialValue retrieve() throws ApiException {
-        if (isExpired()) {
-            refresh();
+        CredentialValue v = credentialValue;
+        if (v == null) {
+            throw new ApiException(PROVIDER_NAME + ": not refreshed; call refresh() first or use CredentialProvider");
         }
-        return credentialValue;
+        return v;
     }
 
     // --- IMDSv2 token ---
 
     private String getIMDSv2Token() throws ApiException {
         String url = imdsEndpoint + IMDS_TOKEN_PATH;
-        String body = doRequestWithRetry(url, "GET",
+        String body = doRequestWithRetry(url, "PUT",
                 new String[][]{{IMDS_TOKEN_TTL_HEADER, IMDS_TOKEN_TTL_SECONDS}});
         String token = body.trim();
         if (token.isEmpty()) {
@@ -286,8 +298,8 @@ public class EcsRoleCredentialProvider implements Provider {
                 }
             }
 
-            // For POST, we need to enable output even with empty body
-            if ("POST".equalsIgnoreCase(method)) {
+            // For POST/PUT, we need to enable output even with empty body
+            if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
                 conn.setDoOutput(true);
                 try (OutputStream os = conn.getOutputStream()) {
                     // empty body
