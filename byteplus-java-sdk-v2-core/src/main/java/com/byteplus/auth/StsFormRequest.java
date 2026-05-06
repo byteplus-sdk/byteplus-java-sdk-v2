@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
  */
 class StsFormRequest {
 
-    static final String DEFAULT_STS_ENDPOINT = "sts.byteplusapi.com";
+    static final String DEFAULT_STS_ENDPOINT = "sts.volcengineapi.com";
     static final int DEFAULT_CONNECT_TIMEOUT_MS = 3000;
     static final int DEFAULT_READ_TIMEOUT_MS = 3000;
     static final int DEFAULT_MAX_RETRIES = 3;

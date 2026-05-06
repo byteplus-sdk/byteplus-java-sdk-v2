@@ -14,7 +14,7 @@ public class StsAssumeRoleProvider implements Provider {
     private String sessionToken;
     private String roleName;
     private String accountId;
-    private String host = "sts.byteplusapi.com";
+    private String host = "sts.volcengineapi.com";
     private String region = "cn-north-1";
     private String schema = "https";
     //STS request timeout

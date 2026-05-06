@@ -255,7 +255,7 @@ public class CLIConfigCredentialProvider implements Provider {
         }
         String region = getStringValue(sessionData, "region");
         if (isNullOrEmpty(region)) {
-            region = "cn-beijing";
+            region = "ap-southeast-1";
         }
 
         // Step 3: Compute cache file path and load token cache

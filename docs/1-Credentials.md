@@ -176,7 +176,7 @@ public class SampleCode {
             "YourAccountId");
 
     // Optional fields
-    stsAssumeRoleProvider.setHost("sts.byteplusapi.com");
+    stsAssumeRoleProvider.setHost("sts.volcengineapi.com");
     stsAssumeRoleProvider.setRegion("cn-north-1");
     stsAssumeRoleProvider.setTimeout(30);
     stsAssumeRoleProvider.setDurationSeconds(3600);

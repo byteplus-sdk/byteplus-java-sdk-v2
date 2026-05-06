@@ -19,6 +19,20 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Provider that fetches temporary credentials from the ECS IMDS.
+ *
+ * <p>Follows the {@link Provider} CQS contract:
+ * <ul>
+ *   <li>{@link #isExpired()} / {@link #retrieve()} are pure reads.</li>
+ *   <li>{@link #refresh()} is the only method that mutates state.</li>
+ * </ul>
+ *
+ * <p>Intended to be wrapped in a {@link CredentialProvider}, which serializes
+ * refresh through a {@link java.util.concurrent.locks.ReadWriteLock} and
+ * guarantees the {@code isExpired → refresh → retrieve} sequence. Direct use
+ * (without wrapping) is not a supported mode.
+ */
 public class EcsRoleCredentialProvider implements Provider {
 
     private static final Logger LOGGER = Logger.getLogger(EcsRoleCredentialProvider.class.getName());
