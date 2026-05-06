@@ -122,6 +122,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 createRegionEndpointMap()
         ));
 
+        // --------------------------- iam ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(
+                "iam",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
