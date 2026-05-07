@@ -260,5 +260,6 @@
         <module>byteplus-java-sdk-v2-privatezone</module>
         <module>byteplus-java-sdk-v2-id</module>
         <module>byteplus-java-sdk-v2-mongodb</module>
+        <module>byteplus-java-sdk-v2-ecs20251101</module>
     </modules>
 </project>
