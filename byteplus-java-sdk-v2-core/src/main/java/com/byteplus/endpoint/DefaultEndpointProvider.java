@@ -122,6 +122,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 createRegionEndpointMap()
         ));
 
+        // --------------------------- cloudmonitor ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("cloudmonitor", new ServiceEndpointInfo(
+                "cloudmonitor",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
