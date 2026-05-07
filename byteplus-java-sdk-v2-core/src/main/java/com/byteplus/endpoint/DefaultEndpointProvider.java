@@ -122,6 +122,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 createRegionEndpointMap()
         ));
 
+        // --------------------------- iam ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(
+                "iam",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- cloudmonitor ---------------------------
         DEFAULT_ENDPOINT_MAP.put("cloudmonitor", new ServiceEndpointInfo(
                 "cloudmonitor",
