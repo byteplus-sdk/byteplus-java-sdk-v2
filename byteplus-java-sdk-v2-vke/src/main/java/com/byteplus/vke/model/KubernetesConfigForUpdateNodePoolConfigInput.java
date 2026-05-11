@@ -14,8 +14,10 @@ package com.byteplus.vke.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.vke.model.ContainerdConfigForUpdateNodePoolConfigInput;
 import com.byteplus.vke.model.KubeletConfigForUpdateNodePoolConfigInput;
 import com.byteplus.vke.model.LabelForUpdateNodePoolConfigInput;
+import com.byteplus.vke.model.RuntimeForUpdateNodePoolConfigInput;
 import com.byteplus.vke.model.TaintForUpdateNodePoolConfigInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -38,6 +40,9 @@ public class KubernetesConfigForUpdateNodePoolConfigInput {
   @SerializedName("AutoSyncDisabled")
   private Boolean autoSyncDisabled = null;
 
+  @SerializedName("ContainerdConfig")
+  private ContainerdConfigForUpdateNodePoolConfigInput containerdConfig = null;
+
   @SerializedName("Cordon")
   private Boolean cordon = null;
 
@@ -49,6 +54,15 @@ public class KubernetesConfigForUpdateNodePoolConfigInput {
 
   @SerializedName("NamePrefix")
   private String namePrefix = null;
+
+  @SerializedName("NameSuffix")
+  private String nameSuffix = null;
+
+  @SerializedName("NameUseHostname")
+  private Boolean nameUseHostname = null;
+
+  @SerializedName("Runtime")
+  private RuntimeForUpdateNodePoolConfigInput runtime = null;
 
   @SerializedName("Taints")
   private List<TaintForUpdateNodePoolConfigInput> taints = null;
@@ -69,6 +83,25 @@ public class KubernetesConfigForUpdateNodePoolConfigInput {
 
   public void setAutoSyncDisabled(Boolean autoSyncDisabled) {
     this.autoSyncDisabled = autoSyncDisabled;
+  }
+
+  public KubernetesConfigForUpdateNodePoolConfigInput containerdConfig(ContainerdConfigForUpdateNodePoolConfigInput containerdConfig) {
+    this.containerdConfig = containerdConfig;
+    return this;
+  }
+
+   /**
+   * Get containerdConfig
+   * @return containerdConfig
+  **/
+  @Valid
+  @Schema(description = "")
+  public ContainerdConfigForUpdateNodePoolConfigInput getContainerdConfig() {
+    return containerdConfig;
+  }
+
+  public void setContainerdConfig(ContainerdConfigForUpdateNodePoolConfigInput containerdConfig) {
+    this.containerdConfig = containerdConfig;
   }
 
   public KubernetesConfigForUpdateNodePoolConfigInput cordon(Boolean cordon) {
@@ -153,6 +186,61 @@ public class KubernetesConfigForUpdateNodePoolConfigInput {
     this.namePrefix = namePrefix;
   }
 
+  public KubernetesConfigForUpdateNodePoolConfigInput nameSuffix(String nameSuffix) {
+    this.nameSuffix = nameSuffix;
+    return this;
+  }
+
+   /**
+   * Get nameSuffix
+   * @return nameSuffix
+  **/
+  @Schema(description = "")
+  public String getNameSuffix() {
+    return nameSuffix;
+  }
+
+  public void setNameSuffix(String nameSuffix) {
+    this.nameSuffix = nameSuffix;
+  }
+
+  public KubernetesConfigForUpdateNodePoolConfigInput nameUseHostname(Boolean nameUseHostname) {
+    this.nameUseHostname = nameUseHostname;
+    return this;
+  }
+
+   /**
+   * Get nameUseHostname
+   * @return nameUseHostname
+  **/
+  @Schema(description = "")
+  public Boolean isNameUseHostname() {
+    return nameUseHostname;
+  }
+
+  public void setNameUseHostname(Boolean nameUseHostname) {
+    this.nameUseHostname = nameUseHostname;
+  }
+
+  public KubernetesConfigForUpdateNodePoolConfigInput runtime(RuntimeForUpdateNodePoolConfigInput runtime) {
+    this.runtime = runtime;
+    return this;
+  }
+
+   /**
+   * Get runtime
+   * @return runtime
+  **/
+  @Valid
+  @Schema(description = "")
+  public RuntimeForUpdateNodePoolConfigInput getRuntime() {
+    return runtime;
+  }
+
+  public void setRuntime(RuntimeForUpdateNodePoolConfigInput runtime) {
+    this.runtime = runtime;
+  }
+
   public KubernetesConfigForUpdateNodePoolConfigInput taints(List<TaintForUpdateNodePoolConfigInput> taints) {
     this.taints = taints;
     return this;
@@ -191,16 +279,20 @@ public class KubernetesConfigForUpdateNodePoolConfigInput {
     }
     KubernetesConfigForUpdateNodePoolConfigInput kubernetesConfigForUpdateNodePoolConfigInput = (KubernetesConfigForUpdateNodePoolConfigInput) o;
     return Objects.equals(this.autoSyncDisabled, kubernetesConfigForUpdateNodePoolConfigInput.autoSyncDisabled) &&
+        Objects.equals(this.containerdConfig, kubernetesConfigForUpdateNodePoolConfigInput.containerdConfig) &&
         Objects.equals(this.cordon, kubernetesConfigForUpdateNodePoolConfigInput.cordon) &&
         Objects.equals(this.kubeletConfig, kubernetesConfigForUpdateNodePoolConfigInput.kubeletConfig) &&
         Objects.equals(this.labels, kubernetesConfigForUpdateNodePoolConfigInput.labels) &&
         Objects.equals(this.namePrefix, kubernetesConfigForUpdateNodePoolConfigInput.namePrefix) &&
+        Objects.equals(this.nameSuffix, kubernetesConfigForUpdateNodePoolConfigInput.nameSuffix) &&
+        Objects.equals(this.nameUseHostname, kubernetesConfigForUpdateNodePoolConfigInput.nameUseHostname) &&
+        Objects.equals(this.runtime, kubernetesConfigForUpdateNodePoolConfigInput.runtime) &&
         Objects.equals(this.taints, kubernetesConfigForUpdateNodePoolConfigInput.taints);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(autoSyncDisabled, cordon, kubeletConfig, labels, namePrefix, taints);
+    return Objects.hash(autoSyncDisabled, containerdConfig, cordon, kubeletConfig, labels, namePrefix, nameSuffix, nameUseHostname, runtime, taints);
   }
 
 
@@ -210,10 +302,14 @@ public class KubernetesConfigForUpdateNodePoolConfigInput {
     sb.append("class KubernetesConfigForUpdateNodePoolConfigInput {\n");
     
     sb.append("    autoSyncDisabled: ").append(toIndentedString(autoSyncDisabled)).append("\n");
+    sb.append("    containerdConfig: ").append(toIndentedString(containerdConfig)).append("\n");
     sb.append("    cordon: ").append(toIndentedString(cordon)).append("\n");
     sb.append("    kubeletConfig: ").append(toIndentedString(kubeletConfig)).append("\n");
     sb.append("    labels: ").append(toIndentedString(labels)).append("\n");
     sb.append("    namePrefix: ").append(toIndentedString(namePrefix)).append("\n");
+    sb.append("    nameSuffix: ").append(toIndentedString(nameSuffix)).append("\n");
+    sb.append("    nameUseHostname: ").append(toIndentedString(nameUseHostname)).append("\n");
+    sb.append("    runtime: ").append(toIndentedString(runtime)).append("\n");
     sb.append("    taints: ").append(toIndentedString(taints)).append("\n");
     sb.append("}");
     return sb.toString();
