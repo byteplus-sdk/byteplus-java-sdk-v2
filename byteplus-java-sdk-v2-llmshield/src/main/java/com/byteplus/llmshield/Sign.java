@@ -18,7 +18,7 @@ import java.util.*;
 import java.net.URLEncoder;
 
 /**
- * Copyright (year) Beijing Volcano Engine Technology Ltd.
+ * Copyright (year) BytePlus Technology Ltd.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,10 +83,10 @@ public class Sign {
     }
 
     /**
-     * 核心加签方法：为 HttpPost 请求添加火山引擎 API 签名
+     * 核心加签方法：为 HttpPost 请求添加 BytePlus API 签名
      *
      * @param httpPost 待加签的 HttpPost 请求（需提前设置请求体，若有）
-     * @param uri      请求的 URI（包含 host、path、query 参数，如 https://iam.volcengineapi.com/?Limit=1）
+     * @param uri      请求的 URI（包含 host、path、query 参数，如 https://iam.byteplusapi.com/?Limit=1）
      * @param action   请求方法
      * @param ak       访问密钥 AK
      * @param sk       密钥 SK

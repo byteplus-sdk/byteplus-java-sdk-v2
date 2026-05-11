@@ -1,14 +1,14 @@
-[← Overview](0-Overview.md) | Credentials | [Endpoint →](2-Endpoint.md)
+[← Overview](0-Overview.md) | Credentials[(中文)](1-Credentials-zh.md) | [Endpoint →](2-Endpoint.md)
 
 ---
 
-# Securely Configure Access Credentials
+## Credentials
 
 To prevent credential leakage, do not hardcode credentials in plaintext in your code. BytePlus provides multiple secure ways to load credentials, such as environment variables.
 
-## Environment Variable Setup
+### Environment Variable Setup
 
-### Linux
+#### Linux
 
 > ⚠️ **Note**
 >
@@ -22,15 +22,15 @@ To prevent credential leakage, do not hardcode credentials in plaintext in your 
 
 **Verify**: run `echo $BYTEPLUS_ACCESS_KEY`. If it returns the correct value, the configuration is effective.
 
-### Windows
+#### Windows
 
 Two options are provided: **GUI setup** and **command line setup**.
 
 **Verify**: open Command Prompt and run `echo %BYTEPLUS_ACCESS_KEY%`, `echo %BYTEPLUS_SECRET_KEY%`, `echo %BYTEPLUS_SESSION_TOKEN%`. If the returned values are correct, the configuration is effective.
 
-#### GUI Setup
+##### GUI Setup
 
-On Windows 10, right-click **This PC** -> **Properties** -> **Advanced system settings** -> **Environment Variables** -> **System variables/User variables** -> **New**, then set:
+On Windows 10, right-click **This PC** → **Properties** → **Advanced system settings** → **Environment Variables** → **System variables / User variables** → **New**, then set:
 
 | Variable | Example |
 |---|---|
@@ -38,7 +38,7 @@ On Windows 10, right-click **This PC** -> **Properties** -> **Advanced system se
 | AccessKey Secret | Name: `BYTEPLUS_SECRET_KEY` <br/> Value: `*****` |
 | Session Token | Name: `BYTEPLUS_SESSION_TOKEN` <br/> Value: `*****` |
 
-#### Command Line Setup
+##### Command Line Setup
 
 Run Command Prompt as Administrator, and add environment variables:
 
@@ -48,7 +48,7 @@ setx BYTEPLUS_SECRET_KEY yourAccessKeySecret /M
 setx BYTEPLUS_SESSION_TOKEN yourSessionToken /M
 ```
 
-> ⚠️ Note
+> ⚠️ **Note**
 >
 > `/M` means system-level variables. You may omit it for user-level variables.
 
@@ -58,20 +58,20 @@ BytePlus Java SDK supports explicit credentials and `CredentialProvider`-based a
 
 You can refer to: [Environment Variable Setup](#environment-variable-setup)
 
-## Credential Providers Overview
+### Credential Providers Overview
 
-| Provider | Purpose                                   | Auto Refresh | Typical Scenario |
-|---|-------------------------------------------|---|---|
-| `StaticCredentialProvider` | Static AK/SK(/Token)                      | No | Long-lived server credentials |
-| `StsAssumeRoleProvider` | STS AssumeRole                            | Yes | IAM role-based temporary credentials |
-| `OidcCredentialProvider` | STS AssumeRoleWithOIDC                    | Yes | OIDC federation |
-| `SamlCredentialProvider` | STS AssumeRoleWithSAML                    | Yes | SAML federation |
-| `EnvironmentVariableCredentialProvider` | Read AK/SK(/Token) from env               | No | CI/CD and container env injection |
+| Provider | Purpose | Auto Refresh | Typical Scenario |
+|---|---|---|---|
+| `StaticCredentialProvider` | Static AK/SK(/Token) | No | Long-lived server credentials |
+| `StsAssumeRoleProvider` | STS AssumeRole | Yes | IAM role-based temporary credentials |
+| `OidcCredentialProvider` | STS AssumeRoleWithOIDC | Yes | OIDC federation |
+| `SamlCredentialProvider` | STS AssumeRoleWithSAML | Yes | SAML federation |
+| `EnvironmentVariableCredentialProvider` | Read AK/SK(/Token) from env | No | CI/CD and container env injection |
 | `CLIConfigCredentialProvider` | Read from `$HOME/.byteplus/config.json` | Depends on mode | Reuse CLI profile and login state |
-| `EcsRoleCredentialProvider` | Read from ECS IMDS                        | Yes | ECS instance role credentials |
-| `DefaultCredentialProvider` | Default chain wrapper                     | Depends on delegated provider | No AK/SK in application code |
+| `EcsRoleCredentialProvider` | Read from ECS IMDS | Yes | ECS instance role credentials |
+| `DefaultCredentialProvider` | Default chain wrapper | Depends on delegated provider | No AK/SK in application code |
 
-## Supported BYTEPLUS Environment Variables
+### Supported BYTEPLUS Environment Variables
 
 - Basic credentials:
   - `BYTEPLUS_ACCESS_KEY`
@@ -90,11 +90,11 @@ You can refer to: [Environment Variable Setup](#environment-variable-setup)
   - `BYTEPLUS_ECS_METADATA`
   - `BYTEPLUS_ECS_METADATA_DISABLED`
 
-## AK/SK
+### AK/SK
 
 AK/SK is a pair of permanent access keys created in the BytePlus console. The SDK signs each request to authenticate.
 
-> ⚠️ Notes
+> ⚠️ **Notes**
 >
 > 1. Do not embed or expose AK/SK in client-side applications.
 > 2. Use a configuration center or environment variables.
@@ -105,28 +105,28 @@ import com.byteplus.ApiClient;
 import com.byteplus.sign.Credentials;
 
 public class SampleCode {
-  public static void main(String[] args) {
-      String ak = "Your AK";
-      String sk = "Your SK";
-      String region = "cn-beijing";
+    public static void main(String[] args) {
+        String ak = "Your AK";
+        String sk = "Your SK";
+        String region = "ap-singapore-1";
 
-      // 1. Using static AK/SK may leak credentials; do not use in production.
-      Credentials akSkCredential = Credentials.getCredentials(ak, sk);
-      // 2. Recommended in production: read from env vars: BYTEPLUS_ACCESS_KEY / BYTEPLUS_SECRET_KEY
-      // Credentials akSkCredential = Credentials.getEnvCredentials();
+        // 1. Using static AK/SK may leak credentials; do not use in production.
+        Credentials akSkCredential = Credentials.getCredentials(ak, sk);
+        // 2. Recommended in production: read from env vars: BYTEPLUS_ACCESS_KEY / BYTEPLUS_SECRET_KEY
+        // Credentials akSkCredential = Credentials.getEnvCredentials();
 
-      ApiClient apiClient = new ApiClient()
-              .setCredentials(akSkCredential)
-              .setRegion(region);
-  }
+        ApiClient apiClient = new ApiClient()
+            .setCredentials(akSkCredential)
+            .setRegion(region);
+    }
 }
 ```
 
-## STS Token
+### STS Token
 
 STS (Security Token Service) provides temporary credentials (temporary AK/SK and Token).
 
-> ⚠️ Notes
+> ⚠️ **Notes**
 >
 > 1. Least privilege.
 > 2. Use a reasonable TTL. Shorter is safer; avoid exceeding 1 hour.
@@ -136,27 +136,53 @@ import com.byteplus.ApiClient;
 import com.byteplus.sign.Credentials;
 
 public class SampleCode {
-  public static void main(String[] args) {
-      String ak = "Your AK";
-      String sk = "Your SK";
-      String sessionToken = "Your Session Token";
-      String region = "cn-beijing";
+    public static void main(String[] args) {
+        String ak = "Your AK";
+        String sk = "Your SK";
+        String sessionToken = "Your Session Token";
+        String region = "ap-singapore-1";
 
-      Credentials sessionTokenCredential = Credentials.getCredentials(ak, sk, sessionToken);
-      // Credentials sessionTokenCredential = Credentials.getEnvCredentials();
+        Credentials sessionTokenCredential = Credentials.getCredentials(ak, sk, sessionToken);
+        // Credentials sessionTokenCredential = Credentials.getEnvCredentials();
 
-      ApiClient apiClient = new ApiClient()
-              .setCredentials(sessionTokenCredential)
-              .setRegion(region);
-  }
+        ApiClient apiClient = new ApiClient()
+            .setCredentials(sessionTokenCredential)
+            .setRegion(region);
+    }
 }
 ```
 
-## AssumeRole
+### StaticCredentialProvider
+
+To wrap static AK/SK(/Token) in the `Provider` form (so the API style matches the dynamic providers), use `StaticCredentialProvider`:
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.auth.CredentialProvider;
+import com.byteplus.auth.StaticCredentialProvider;
+
+public class SampleCode {
+    public static void main(String[] args) {
+        // sessionToken may be null (long-lived AK/SK scenario)
+        StaticCredentialProvider staticProvider = new StaticCredentialProvider(
+            "Your AK",
+            "Your SK",
+            "Your Session Token");
+
+        CredentialProvider credentialProvider = new CredentialProvider(staticProvider);
+
+        ApiClient apiClient = new ApiClient()
+            .setCredentialProvider(credentialProvider)
+            .setRegion("ap-singapore-1");
+    }
+}
+```
+
+### AssumeRole
 
 AssumeRole supports dynamic credentials with auto refresh.
 
-> ⚠️ Notes
+> ⚠️ **Notes**
 >
 > 1. Least privilege.
 > 2. Choose a reasonable TTL; maximum is 12 hours.
@@ -167,37 +193,36 @@ import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.StsAssumeRoleProvider;
 
 public class SampleCode {
-  public static void main(String[] args) {
-    String region = "cn-beijing";
-    StsAssumeRoleProvider stsAssumeRoleProvider = new StsAssumeRoleProvider(
+    public static void main(String[] args) {
+        String region = "ap-singapore-1";
+        StsAssumeRoleProvider stsAssumeRoleProvider = new StsAssumeRoleProvider(
             "YourAccessKey",
             "YourSecretKey",
             "YourRoleName",
             "YourAccountId");
 
-    // Optional fields
-    stsAssumeRoleProvider.setHost("sts.volcengineapi.com");
-    stsAssumeRoleProvider.setRegion("cn-north-1");
-    stsAssumeRoleProvider.setTimeout(30);
-    stsAssumeRoleProvider.setDurationSeconds(3600);
-    stsAssumeRoleProvider.setExpireBufferSeconds(60);
-    stsAssumeRoleProvider.setSchema("https");
-    CredentialProvider credentialProvider = new CredentialProvider(stsAssumeRoleProvider);
+        // Optional fields
+        stsAssumeRoleProvider.setHost("sts.byteplusapi.com");
+        stsAssumeRoleProvider.setRegion("ap-singapore-1");
+        stsAssumeRoleProvider.setDurationSeconds(3600);
+        stsAssumeRoleProvider.setExpireBufferSeconds(60);
+        stsAssumeRoleProvider.setSchema("https");
+        CredentialProvider credentialProvider = new CredentialProvider(stsAssumeRoleProvider);
 
-    ApiClient apiClient = new ApiClient()
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
             .setRegion(region);
-  }
+    }
 }
 ```
 
-## OIDC (AssumeRoleWithOIDC)
+### OIDC (AssumeRoleWithOIDC)
 
 `OidcCredentialProvider` gets temporary credentials from STS via OIDC token.
 
-Reference: https://www.volcengine.com/docs/6257/1494877
+Reference: https://www.byteplus.com/docs/6257/1494877
 
-Explicit parameter example:
+#### Explicit Parameter Example
 
 ```java
 import com.byteplus.ApiClient;
@@ -205,32 +230,32 @@ import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.OidcCredentialProvider;
 
 public class SampleCode {
-  public static void main(String[] args) {
-    String region = "cn-beijing";
+    public static void main(String[] args) {
+        String region = "ap-singapore-1";
 
-    OidcCredentialProvider oidcProvider = new OidcCredentialProvider(
+        OidcCredentialProvider oidcProvider = new OidcCredentialProvider(
             "trn:iam::1234567890:role/oidc-role", // roleTrn
             null,                                 // roleSessionName (optional)
             "/var/run/secrets/oidc/token",        // oidcTokenFile
             null,                                 // rolePolicy (optional)
             "sts.byteplusapi.com"               // stsEndpoint (optional)
-    );
-    // Optional setters
-    oidcProvider.setDurationSeconds(3600);          // Credential TTL in seconds, default: 3600
-    oidcProvider.setExpireBufferSeconds(60);         // Expire buffer in seconds, default: 300
-    oidcProvider.setSchema("https");                // STS scheme, default: https
-    oidcProvider.setMaxRetries(3);                  // Retry attempts, default: 3, 0 disables retry
-    oidcProvider.setRetryIntervalMs(1000);          // Retry interval in ms, default: 1000
+        );
+        // Optional setters
+        oidcProvider.setDurationSeconds(3600);          // Credential TTL in seconds, default: 3600
+        oidcProvider.setExpireBufferSeconds(60);         // Expire buffer in seconds, default: 300
+        oidcProvider.setSchema("https");                // STS scheme, default: https
+        oidcProvider.setMaxRetries(3);                  // Retry attempts, default: 3, 0 disables retry
+        oidcProvider.setRetryIntervalMs(1000);          // Retry interval in ms, default: 1000
 
-    CredentialProvider credentialProvider = new CredentialProvider(oidcProvider);
-    ApiClient apiClient = new ApiClient()
+        CredentialProvider credentialProvider = new CredentialProvider(oidcProvider);
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
             .setRegion(region);
-  }
+    }
 }
 ```
 
-Environment-variable example:
+#### Environment-variable Example
 
 ```java
 import com.byteplus.ApiClient;
@@ -238,25 +263,25 @@ import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.OidcCredentialProvider;
 
 public class SampleCode {
-  public static void main(String[] args) throws Exception {
-    // Required:
-    // BYTEPLUS_OIDC_ROLE_TRN
-    // BYTEPLUS_OIDC_TOKEN_FILE
-    OidcCredentialProvider oidcProvider = OidcCredentialProvider.fromEnvironment();
-    CredentialProvider credentialProvider = new CredentialProvider(oidcProvider);
+    public static void main(String[] args) throws Exception {
+        // Required:
+        // BYTEPLUS_OIDC_ROLE_TRN
+        // BYTEPLUS_OIDC_TOKEN_FILE
+        OidcCredentialProvider oidcProvider = OidcCredentialProvider.fromEnvironment();
+        CredentialProvider credentialProvider = new CredentialProvider(oidcProvider);
 
-    ApiClient apiClient = new ApiClient()
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
-            .setRegion("cn-beijing");
-  }
+            .setRegion("ap-singapore-1");
+    }
 }
 ```
 
-## SAML (AssumeRoleWithSAML)
+### SAML (AssumeRoleWithSAML)
 
 `SamlCredentialProvider` exchanges a SAML 2.0 assertion (returned by your IdP) for temporary STS credentials via `AssumeRoleWithSAML`. Credentials are auto-refreshed before expiration.
 
-> ⚠️ Notes
+> ⚠️ **Notes**
 >
 > 1. Least privilege.
 > 2. Reasonable TTL; recommended ≤ 1 hour.
@@ -268,30 +293,30 @@ import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.SamlCredentialProvider;
 
 public class SampleCode {
-  public static void main(String[] args) {
-    SamlCredentialProvider samlProvider = new SamlCredentialProvider(
+    public static void main(String[] args) {
+        SamlCredentialProvider samlProvider = new SamlCredentialProvider(
             "trn:iam::1234567890:role/YourRoleName",           // roleTrn
             "trn:iam::1234567890:saml-provider/MyIdp",         // samlProviderTrn
             "BASE64_ENCODED_SAML_RESPONSE_FROM_IDP",           // samlAssertion
             null,                                              // rolePolicy (optional)
             null                                               // stsEndpoint (optional, uses default)
-    );
-    // Optional setters
-    samlProvider.setDurationSeconds(3600);          // Credential TTL in seconds, default: 3600
-    samlProvider.setExpireBufferSeconds(300);        // Expire buffer in seconds, default: 300
-    samlProvider.setSchema("https");                // STS scheme, default: https
-    samlProvider.setMaxRetries(3);                  // Retry attempts, default: 3, 0 disables retry
-    samlProvider.setRetryIntervalMs(1000);          // Retry interval in ms, default: 1000
+        );
+        // Optional setters
+        samlProvider.setDurationSeconds(3600);          // Credential TTL in seconds, default: 3600
+        samlProvider.setExpireBufferSeconds(300);        // Expire buffer in seconds, default: 300
+        samlProvider.setSchema("https");                // STS scheme, default: https
+        samlProvider.setMaxRetries(3);                  // Retry attempts, default: 3, 0 disables retry
+        samlProvider.setRetryIntervalMs(1000);          // Retry interval in ms, default: 1000
 
-    CredentialProvider credentialProvider = new CredentialProvider(samlProvider);
-    ApiClient apiClient = new ApiClient()
+        CredentialProvider credentialProvider = new CredentialProvider(samlProvider);
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
-            .setRegion("cn-beijing");
-  }
+            .setRegion("ap-singapore-1");
+    }
 }
 ```
 
-## Environment Variable Credential Provider
+### Environment Variable Credential Provider
 
 `EnvironmentVariableCredentialProvider` reads:
 
@@ -305,18 +330,18 @@ import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.EnvironmentVariableCredentialProvider;
 
 public class SampleCode {
-  public static void main(String[] args) {
-    CredentialProvider credentialProvider =
+    public static void main(String[] args) {
+        CredentialProvider credentialProvider =
             new CredentialProvider(new EnvironmentVariableCredentialProvider());
 
-    ApiClient apiClient = new ApiClient()
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
-            .setRegion("cn-beijing");
-  }
+            .setRegion("ap-singapore-1");
+    }
 }
 ```
 
-## CLI Config Credential Provider
+### CLI Config Credential Provider
 
 `CLIConfigCredentialProvider` reads `$HOME/.byteplus/config.json` by default.
 
@@ -326,11 +351,10 @@ public class SampleCode {
 Supported profile `mode`:
 
 - `AK` / empty
+- `StsToken`
 - `RamRoleArn` (delegates to `StsAssumeRoleProvider`)
   - Required: `access-key`, `secret-key`, `role-name`, `account-id`
-  - Optional: `session-token` — when the source `access-key` / `secret-key` are
-    themselves STS temporaries (e.g. issued by SSO/OIDC), this token is forwarded
-    to the chained AssumeRole call as `X-Security-Token`.
+  - Optional: `session-token` — when the source `access-key` / `secret-key` are themselves STS temporaries (e.g. issued by SSO/OIDC), this token is forwarded to the chained AssumeRole call as `X-Security-Token`.
 - `OIDC` (delegates to `OidcCredentialProvider`)
 - `EcsRole` (delegates to `EcsRoleCredentialProvider`)
 - `SSO`
@@ -345,19 +369,23 @@ import com.byteplus.auth.CredentialProvider;
 import java.nio.file.Paths;
 
 public class SampleCode {
-  public static void main(String[] args) {
-    CLIConfigCredentialProvider cliProvider =
+    public static void main(String[] args) {
+        CLIConfigCredentialProvider cliProvider =
             new CLIConfigCredentialProvider("prod", Paths.get(System.getProperty("user.home"), ".byteplus", "config.json").toString());
-    CredentialProvider credentialProvider = new CredentialProvider(cliProvider);
+        CredentialProvider credentialProvider = new CredentialProvider(cliProvider);
 
-    ApiClient apiClient = new ApiClient()
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
-            .setRegion("cn-beijing");
-  }
+            .setRegion("ap-singapore-1");
+    }
 }
 ```
 
-## ECS Role Credential Provider
+### ECS Role Credential Provider
+
+> 🚨 **Current version limitation**
+>
+> **Auto-detection of the role name from IMDS is not yet supported in the current release.** You must pass the role name explicitly via the constructor argument or the `BYTEPLUS_ECS_METADATA` environment variable. Auto-detection will be supported in a future version — please watch the release notes.
 
 `EcsRoleCredentialProvider` reads temporary credentials from ECS IMDS.
 
@@ -370,24 +398,24 @@ import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.EcsRoleCredentialProvider;
 
 public class SampleCode {
-  public static void main(String[] args) throws Exception {
-    EcsRoleCredentialProvider ecsProvider = EcsRoleCredentialProvider.create("your-ecs-role-name");
-    // Optional setters
-    ecsProvider.setMaxRetries(3);                   // Retry attempts, default: 3, 0 disables retry
-    ecsProvider.setRetryIntervalMs(1000);           // Retry interval in ms, default: 1000
-    ecsProvider.setConnectTimeoutMs(1000);           // Connect timeout in ms, default: 1000
-    ecsProvider.setReadTimeoutMs(1000);              // Read timeout in ms, default: 1000
-    ecsProvider.setExpireBufferSeconds(300);          // Expire buffer in seconds, default: 300
+    public static void main(String[] args) throws Exception {
+        EcsRoleCredentialProvider ecsProvider = EcsRoleCredentialProvider.create("your-ecs-role-name");
+        // Optional setters
+        ecsProvider.setMaxRetries(3);                   // Retry attempts, default: 3, 0 disables retry
+        ecsProvider.setRetryIntervalMs(1000);           // Retry interval in ms, default: 1000
+        ecsProvider.setConnectTimeoutMs(1000);           // Connect timeout in ms, default: 1000
+        ecsProvider.setReadTimeoutMs(1000);              // Read timeout in ms, default: 1000
+        ecsProvider.setExpireBufferSeconds(300);          // Expire buffer in seconds, default: 300
 
-    CredentialProvider credentialProvider = new CredentialProvider(ecsProvider);
-    ApiClient apiClient = new ApiClient()
+        CredentialProvider credentialProvider = new CredentialProvider(ecsProvider);
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
-            .setRegion("cn-beijing");
-  }
+            .setRegion("ap-singapore-1");
+    }
 }
 ```
 
-## Default Credential Provider
+### Default Credential Provider
 
 When `credentials` and `credentialProvider` are both unset, the SDK automatically uses `DefaultCredentialProvider` — no manual configuration is needed.
 
@@ -408,21 +436,21 @@ import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.DefaultCredentialProvider;
 
 public class SampleCode {
-  public static void main(String[] args) {
-    DefaultCredentialProvider defaultProvider = DefaultCredentialProvider.builder()
+    public static void main(String[] args) {
+        DefaultCredentialProvider defaultProvider = DefaultCredentialProvider.builder()
             .reuseLastProviderEnabled(true)
             .roleName(null) // optional: used by ECS provider
             .build();
-    // Or: DefaultCredentialProvider defaultProvider = DefaultCredentialProvider.create();
+        // Or: DefaultCredentialProvider defaultProvider = DefaultCredentialProvider.create();
 
-    CredentialProvider credentialProvider = new CredentialProvider(defaultProvider);
-    ApiClient apiClient = new ApiClient()
+        CredentialProvider credentialProvider = new CredentialProvider(defaultProvider);
+        ApiClient apiClient = new ApiClient()
             .setCredentialProvider(credentialProvider)
-            .setRegion("cn-beijing");
-  }
+            .setRegion("ap-singapore-1");
+    }
 }
 ```
 
 ---
 
-[← Overview](0-Overview.md) | Credentials | [Endpoint →](2-Endpoint.md)
+[← Overview](0-Overview.md) | Credentials[(中文)](1-Credentials-zh.md) | [Endpoint →](2-Endpoint.md)

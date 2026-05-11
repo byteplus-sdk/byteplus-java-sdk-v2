@@ -1,14 +1,14 @@
-[← Overview](0-Overview.md) | Environment Variables
+[← Overview](0-Overview.md) | Environment Variables[(中文)](EnvironmentVariables-zh.md)
 
 ---
 
-# Environment Variables
+## Environment Variables
 
 This page consolidates all credential-related environment variables supported by the SDK, for easy deployment / CI injection. Other categories (Region, TLS, etc.) can be appended here as new sections later.
 
-## How to Set
+### How to Set
 
-### Linux / macOS
+#### Linux / macOS
 
 Temporary (current shell only):
 
@@ -22,7 +22,7 @@ To persist, put the `export` lines in `~/.bashrc`, `~/.zshrc`, or your shell's s
 
 Verify with `echo $BYTEPLUS_ACCESS_KEY`.
 
-### Windows
+#### Windows
 
 Command line (run as Administrator):
 
@@ -38,9 +38,9 @@ GUI: **This PC** → right-click → **Properties** → **Advanced system settin
 
 Verify: open a new command prompt and run `echo %BYTEPLUS_ACCESS_KEY%`.
 
-## Credentials
+### Credentials
 
-### Basic AK/SK/Token
+#### Basic AK/SK/Token
 
 | Variable | Description | Required |
 |---|---|:-:|
@@ -48,7 +48,7 @@ Verify: open a new command prompt and run `echo %BYTEPLUS_ACCESS_KEY%`.
 | `BYTEPLUS_SECRET_KEY` | Secret Key | ✅ |
 | `BYTEPLUS_SESSION_TOKEN` | STS session token | ❌ |
 
-### OIDC (AssumeRoleWithOIDC)
+#### OIDC (AssumeRoleWithOIDC)
 
 | Variable | Description | Required |
 |---|---|:-:|
@@ -58,34 +58,22 @@ Verify: open a new command prompt and run `echo %BYTEPLUS_ACCESS_KEY%`.
 | `BYTEPLUS_OIDC_ROLE_POLICY` | Session policy JSON | ❌ |
 | `BYTEPLUS_OIDC_STS_ENDPOINT` | STS endpoint host | ❌ |
 
-### ECS IMDS
+#### ECS IMDS
 
 | Variable | Description |
 |---|---|
 | `BYTEPLUS_ECS_METADATA` | ECS instance role name; if unset, auto-discovered from IMDS |
 | `BYTEPLUS_ECS_METADATA_DISABLED` | Set to `true` to disable IMDS credential retrieval |
 
-### CLI Config File
+#### CLI Config File
 
 | Variable | Description |
 |---|---|
 | `BYTEPLUS_CLI_CONFIG_FILE` | Config file path; defaults to `~/.byteplus/config.json` |
 | `BYTEPLUS_PROFILE` | Profile name to use |
 
-### Legacy Compatibility Variables (`BYTEPLUSSTACK_*`)
 
-Early SDKs used the `BYTEPLUSSTACK_*` prefix. When the corresponding `BYTEPLUS_*` variable is unset, the following are used as fallbacks. **New code should use `BYTEPLUS_*` only.**
-
-| Variable | Equivalent `BYTEPLUS_*` | Go | Java | PHP | Python |
-|---|---|:-:|:-:|:-:|:-:|
-| `BYTEPLUSSTACK_ACCESS_KEY_ID` / `BYTEPLUSSTACK_ACCESS_KEY` | `BYTEPLUS_ACCESS_KEY` | ✅ | ❌ | ✅ | ❌ |
-| `BYTEPLUSSTACK_SECRET_ACCESS_KEY` / `BYTEPLUSSTACK_SECRET_KEY` | `BYTEPLUS_SECRET_KEY` | ✅ | ❌ | ✅ | ❌ |
-| `BYTEPLUSSTACK_SESSION_TOKEN` | `BYTEPLUS_SESSION_TOKEN` | ✅ | ❌ | ✅ | ❌ |
-| `BYTEPLUSSTACK_PROFILE` | `BYTEPLUS_PROFILE` | ✅ | ❌ | ✅ | ❌ |
-
-> The Go SDK has a few additional legacy `BYTEPLUSSTACK_*` variables (shared-credentials file path, legacy AssumeRole settings, etc.) that are not listed here. Please migrate to the `BYTEPLUS_*` interfaces documented on this page.
-
-### Default Credential Chain
+#### Default Credential Chain
 
 When no credentials are explicitly configured, all four SDKs try the following providers in order; the first one that succeeds is used:
 
@@ -99,13 +87,13 @@ When no credentials are explicitly configured, all four SDKs try the following p
 | Item | Priority (high → low) |
 |---|---|
 | CLI config file path | constructor arg > `BYTEPLUS_CLI_CONFIG_FILE` > `~/.byteplus/config.json` |
-| Profile | constructor arg > `BYTEPLUS_PROFILE` > `BYTEPLUSSTACK_PROFILE` (Go/PHP only) > `current` field in config > `default` |
+| Profile | constructor arg > `BYTEPLUS_PROFILE` > `current` field in config > `default` |
 | ECS role name | constructor arg > `BYTEPLUS_ECS_METADATA` > IMDS auto-discovery |
 
-## See Also
+### See Also
 
 - [Credentials](1-Credentials.md) — Per-provider code-level usage
 
 ---
 
-[← Overview](0-Overview.md) | Environment Variables
+[← Overview](0-Overview.md) | Environment Variables[(中文)](EnvironmentVariables-zh.md)

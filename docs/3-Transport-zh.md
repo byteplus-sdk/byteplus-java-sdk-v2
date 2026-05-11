@@ -1,15 +1,15 @@
-[← Endpoint](2-Endpoint.md) | Transport[(中文)](3-Transport-zh.md) | [Timeout →](4-Timeout.md)
+[← Endpoint 配置](2-Endpoint-zh.md) | Transport[(English)](3-Transport.md) | [超时配置 →](4-Timeout-zh.md)
 
 ---
 
-## HTTP Connection Pool
+## HTTP 连接池配置
 
-> **Default**
+> **默认**
 >
-> - `maxIdleConns`: `5`
-> - `keepAliveDurationMs`: `5 * 60 * 1000`
+> - `maxIdleConns` - `5`
+> - `keepAliveDurationMs` - `5 * 60 * 1000`
 
-The Java SDK uses `com.squareup.okhttp.ConnectionPool`. You can adjust the pool behavior via these two parameters.
+Java SDK 连接池用的是 `com.squareup.okhttp.ConnectionPool`，可以通过设置 `maxIdleConns` 和 `keepAliveDurationMs` 来控制连接池的行为。
 
 ```java
 import com.byteplus.ApiClient;
@@ -21,21 +21,21 @@ public class SampleCode {
         ApiClient apiClient = new ApiClient()
                 .setCredentials(Credentials.getEnvCredentials())
                 .setRegion(regionId)
-                .setMaxIdleConns(5)
-                .setKeepAliveDurationMs(5 * 60 * 1000);
+                .setMaxIdleConns(5) // 最大空闲连接数量
+                .setKeepAliveDurationMs(5 * 60 * 1000); // 空闲连接存活时间
     }
 }
 ```
 
-## HTTPS Request Configuration
+## HTTPS 请求配置
 
-### Specify Scheme
+### 指定 scheme
 
-> **Default**
+> **默认**
 >
-> - `disableSSL`: `false` (HTTPS)
+> - `disableSSL` - `false`（表示 HTTPS）
 
-Set `disableSSL=true` to use HTTP.
+Java SDK 默认使用 HTTPS 请求，如需使用 HTTP 请求，可通过设置 `disableSSL` 为 `true` 来实现。
 
 ```java
 import com.byteplus.ApiClient;
@@ -52,13 +52,13 @@ public class SampleCode {
 }
 ```
 
-### Ignore SSL Verification
+### 忽略 SSL 验证
 
-> **Default**
+> **默认**
 >
-> - `verifyingSsl`: `true`
+> - `verifyingSsl` - `true`（表示启用 SSL 验证）
 
-Set `verifyingSsl=false` to skip SSL verification.
+Java SDK 默认启用 SSL 验证，如需忽略 SSL 验证，可通过设置 `verifyingSsl` 为 `false` 来实现。
 
 ```java
 import com.byteplus.ApiClient;
@@ -70,18 +70,18 @@ public class SampleCode {
         ApiClient apiClient = new ApiClient()
                 .setCredentials(Credentials.getEnvCredentials())
                 .setRegion(regionId)
-                .setVerifyingSsl(false);
+                .setVerifyingSsl(false); // 忽略SSL验证
     }
 }
 ```
 
-## HTTP(S) Proxy
+## HTTP(S) 代理配置
 
-> **Default**
+> **默认**
 >
-> No proxy.
+> 无代理。
 
-### Configure HTTP(S) Proxy
+### 配置 HTTP(S) 代理
 
 ```java
 import com.byteplus.ApiClient;
@@ -93,21 +93,21 @@ public class SampleCode {
         ApiClient apiClient = new ApiClient()
                 .setCredentials(Credentials.getEnvCredentials())
                 .setRegion(regionId)
-                .setHttpProxy("http://your_http_proxy:proxy_port")
-                .setHttpsProxy("http://your_https_proxy:proxy_port");
+                .setHttpProxy("http://your_http_proxy:proxy_port") // 设置http代理
+                .setHttpsProxy("http://your_https_proxy:proxy_port"); // 设置https代理
     }
 }
 ```
 
-### Notes
+### 注意事项
 
-The following environment variables are supported:
+支持通过以下环境变量配置代理：
 
 - `http_proxy` / `HTTP_PROXY`
 - `https_proxy` / `HTTPS_PROXY`
 
-Priority: code > environment variables.
+优先级：代码指定 > 环境变量。
 
 ---
 
-[← Endpoint](2-Endpoint.md) | Transport[(中文)](3-Transport-zh.md) | [Timeout →](4-Timeout.md)
+[← Endpoint 配置](2-Endpoint-zh.md) | Transport[(English)](3-Transport.md) | [超时配置 →](4-Timeout-zh.md)
