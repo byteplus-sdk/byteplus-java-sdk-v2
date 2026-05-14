@@ -138,6 +138,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- vke ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo(
+                "vke",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- kickart ---------------------------
         DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(
                 "kickart",

@@ -14,7 +14,9 @@ package com.byteplus.vke.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.vke.model.AffinityGroupConfigForCreateNodePoolInput;
 import com.byteplus.vke.model.DataVolumeForCreateNodePoolInput;
+import com.byteplus.vke.model.InstancesDistributionForCreateNodePoolInput;
 import com.byteplus.vke.model.PublicAccessConfigForCreateNodePoolInput;
 import com.byteplus.vke.model.SecurityForCreateNodePoolInput;
 import com.byteplus.vke.model.SystemVolumeForCreateNodePoolInput;
@@ -40,6 +42,9 @@ public class NodeConfigForCreateNodePoolInput {
   @SerializedName("AdditionalContainerStorageEnabled")
   private Boolean additionalContainerStorageEnabled = null;
 
+  @SerializedName("AffinityGroupConfig")
+  private AffinityGroupConfigForCreateNodePoolInput affinityGroupConfig = null;
+
   @SerializedName("AutoRenew")
   private Boolean autoRenew = null;
 
@@ -54,6 +59,12 @@ public class NodeConfigForCreateNodePoolInput {
 
   @SerializedName("DeploymentSetId")
   private String deploymentSetId = null;
+
+  @SerializedName("GpuDriverVersion")
+  private String gpuDriverVersion = null;
+
+  @SerializedName("Hostname")
+  private String hostname = null;
 
   @SerializedName("HpcClusterIds")
   private List<String> hpcClusterIds = null;
@@ -110,14 +121,26 @@ public class NodeConfigForCreateNodePoolInput {
   }  @SerializedName("InstanceChargeType")
   private InstanceChargeTypeEnum instanceChargeType = null;
 
+  @SerializedName("InstanceName")
+  private String instanceName = null;
+
   @SerializedName("InstanceTypeIds")
   private List<String> instanceTypeIds = null;
+
+  @SerializedName("InstancesDistribution")
+  private InstancesDistributionForCreateNodePoolInput instancesDistribution = null;
 
   @SerializedName("NamePrefix")
   private String namePrefix = null;
 
+  @SerializedName("NetworkTrafficMode")
+  private String networkTrafficMode = null;
+
   @SerializedName("Period")
   private Integer period = null;
+
+  @SerializedName("PreScript")
+  private String preScript = null;
 
   @SerializedName("ProjectName")
   private String projectName = null;
@@ -130,6 +153,52 @@ public class NodeConfigForCreateNodePoolInput {
 
   @SerializedName("Security")
   private SecurityForCreateNodePoolInput security = null;
+
+  /**
+   * Gets or Sets spotStrategy
+   */
+  @JsonAdapter(SpotStrategyEnum.Adapter.class)
+  public enum SpotStrategyEnum {
+    @SerializedName("NoSpot")
+    NOSPOT("NoSpot"),
+    @SerializedName("SpotAsPriceGo")
+    SPOTASPRICEGO("SpotAsPriceGo");
+
+    private String value;
+
+    SpotStrategyEnum(String value) {
+      this.value = value;
+    }
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+    public static SpotStrategyEnum fromValue(String input) {
+      for (SpotStrategyEnum b : SpotStrategyEnum.values()) {
+        if (b.value.equals(input)) {
+          return b;
+        }
+      }
+      return null;
+    }
+    public static class Adapter extends TypeAdapter<SpotStrategyEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final SpotStrategyEnum enumeration) throws IOException {
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
+      }
+
+      @Override
+      public SpotStrategyEnum read(final JsonReader jsonReader) throws IOException {
+        Object value = jsonReader.nextString();
+        return SpotStrategyEnum.fromValue((String)(value));
+      }
+    }
+  }  @SerializedName("SpotStrategy")
+  private SpotStrategyEnum spotStrategy = null;
 
   @SerializedName("SubnetIds")
   private List<String> subnetIds = null;
@@ -156,6 +225,25 @@ public class NodeConfigForCreateNodePoolInput {
 
   public void setAdditionalContainerStorageEnabled(Boolean additionalContainerStorageEnabled) {
     this.additionalContainerStorageEnabled = additionalContainerStorageEnabled;
+  }
+
+  public NodeConfigForCreateNodePoolInput affinityGroupConfig(AffinityGroupConfigForCreateNodePoolInput affinityGroupConfig) {
+    this.affinityGroupConfig = affinityGroupConfig;
+    return this;
+  }
+
+   /**
+   * Get affinityGroupConfig
+   * @return affinityGroupConfig
+  **/
+  @Valid
+  @Schema(description = "")
+  public AffinityGroupConfigForCreateNodePoolInput getAffinityGroupConfig() {
+    return affinityGroupConfig;
+  }
+
+  public void setAffinityGroupConfig(AffinityGroupConfigForCreateNodePoolInput affinityGroupConfig) {
+    this.affinityGroupConfig = affinityGroupConfig;
   }
 
   public NodeConfigForCreateNodePoolInput autoRenew(Boolean autoRenew) {
@@ -257,6 +345,42 @@ public class NodeConfigForCreateNodePoolInput {
     this.deploymentSetId = deploymentSetId;
   }
 
+  public NodeConfigForCreateNodePoolInput gpuDriverVersion(String gpuDriverVersion) {
+    this.gpuDriverVersion = gpuDriverVersion;
+    return this;
+  }
+
+   /**
+   * Get gpuDriverVersion
+   * @return gpuDriverVersion
+  **/
+  @Schema(description = "")
+  public String getGpuDriverVersion() {
+    return gpuDriverVersion;
+  }
+
+  public void setGpuDriverVersion(String gpuDriverVersion) {
+    this.gpuDriverVersion = gpuDriverVersion;
+  }
+
+  public NodeConfigForCreateNodePoolInput hostname(String hostname) {
+    this.hostname = hostname;
+    return this;
+  }
+
+   /**
+   * Get hostname
+   * @return hostname
+  **/
+  @Schema(description = "")
+  public String getHostname() {
+    return hostname;
+  }
+
+  public void setHostname(String hostname) {
+    this.hostname = hostname;
+  }
+
   public NodeConfigForCreateNodePoolInput hpcClusterIds(List<String> hpcClusterIds) {
     this.hpcClusterIds = hpcClusterIds;
     return this;
@@ -337,6 +461,24 @@ public class NodeConfigForCreateNodePoolInput {
     this.instanceChargeType = instanceChargeType;
   }
 
+  public NodeConfigForCreateNodePoolInput instanceName(String instanceName) {
+    this.instanceName = instanceName;
+    return this;
+  }
+
+   /**
+   * Get instanceName
+   * @return instanceName
+  **/
+  @Schema(description = "")
+  public String getInstanceName() {
+    return instanceName;
+  }
+
+  public void setInstanceName(String instanceName) {
+    this.instanceName = instanceName;
+  }
+
   public NodeConfigForCreateNodePoolInput instanceTypeIds(List<String> instanceTypeIds) {
     this.instanceTypeIds = instanceTypeIds;
     return this;
@@ -363,6 +505,25 @@ public class NodeConfigForCreateNodePoolInput {
     this.instanceTypeIds = instanceTypeIds;
   }
 
+  public NodeConfigForCreateNodePoolInput instancesDistribution(InstancesDistributionForCreateNodePoolInput instancesDistribution) {
+    this.instancesDistribution = instancesDistribution;
+    return this;
+  }
+
+   /**
+   * Get instancesDistribution
+   * @return instancesDistribution
+  **/
+  @Valid
+  @Schema(description = "")
+  public InstancesDistributionForCreateNodePoolInput getInstancesDistribution() {
+    return instancesDistribution;
+  }
+
+  public void setInstancesDistribution(InstancesDistributionForCreateNodePoolInput instancesDistribution) {
+    this.instancesDistribution = instancesDistribution;
+  }
+
   public NodeConfigForCreateNodePoolInput namePrefix(String namePrefix) {
     this.namePrefix = namePrefix;
     return this;
@@ -381,6 +542,24 @@ public class NodeConfigForCreateNodePoolInput {
     this.namePrefix = namePrefix;
   }
 
+  public NodeConfigForCreateNodePoolInput networkTrafficMode(String networkTrafficMode) {
+    this.networkTrafficMode = networkTrafficMode;
+    return this;
+  }
+
+   /**
+   * Get networkTrafficMode
+   * @return networkTrafficMode
+  **/
+  @Schema(description = "")
+  public String getNetworkTrafficMode() {
+    return networkTrafficMode;
+  }
+
+  public void setNetworkTrafficMode(String networkTrafficMode) {
+    this.networkTrafficMode = networkTrafficMode;
+  }
+
   public NodeConfigForCreateNodePoolInput period(Integer period) {
     this.period = period;
     return this;
@@ -397,6 +576,24 @@ public class NodeConfigForCreateNodePoolInput {
 
   public void setPeriod(Integer period) {
     this.period = period;
+  }
+
+  public NodeConfigForCreateNodePoolInput preScript(String preScript) {
+    this.preScript = preScript;
+    return this;
+  }
+
+   /**
+   * Get preScript
+   * @return preScript
+  **/
+  @Schema(description = "")
+  public String getPreScript() {
+    return preScript;
+  }
+
+  public void setPreScript(String preScript) {
+    this.preScript = preScript;
   }
 
   public NodeConfigForCreateNodePoolInput projectName(String projectName) {
@@ -471,6 +668,24 @@ public class NodeConfigForCreateNodePoolInput {
 
   public void setSecurity(SecurityForCreateNodePoolInput security) {
     this.security = security;
+  }
+
+  public NodeConfigForCreateNodePoolInput spotStrategy(SpotStrategyEnum spotStrategy) {
+    this.spotStrategy = spotStrategy;
+    return this;
+  }
+
+   /**
+   * Get spotStrategy
+   * @return spotStrategy
+  **/
+  @Schema(description = "")
+  public SpotStrategyEnum getSpotStrategy() {
+    return spotStrategy;
+  }
+
+  public void setSpotStrategy(SpotStrategyEnum spotStrategy) {
+    this.spotStrategy = spotStrategy;
   }
 
   public NodeConfigForCreateNodePoolInput subnetIds(List<String> subnetIds) {
@@ -556,22 +771,30 @@ public class NodeConfigForCreateNodePoolInput {
     }
     NodeConfigForCreateNodePoolInput nodeConfigForCreateNodePoolInput = (NodeConfigForCreateNodePoolInput) o;
     return Objects.equals(this.additionalContainerStorageEnabled, nodeConfigForCreateNodePoolInput.additionalContainerStorageEnabled) &&
+        Objects.equals(this.affinityGroupConfig, nodeConfigForCreateNodePoolInput.affinityGroupConfig) &&
         Objects.equals(this.autoRenew, nodeConfigForCreateNodePoolInput.autoRenew) &&
         Objects.equals(this.autoRenewPeriod, nodeConfigForCreateNodePoolInput.autoRenewPeriod) &&
         Objects.equals(this.dataVolumes, nodeConfigForCreateNodePoolInput.dataVolumes) &&
         Objects.equals(this.deploymentSetGroupNumber, nodeConfigForCreateNodePoolInput.deploymentSetGroupNumber) &&
         Objects.equals(this.deploymentSetId, nodeConfigForCreateNodePoolInput.deploymentSetId) &&
+        Objects.equals(this.gpuDriverVersion, nodeConfigForCreateNodePoolInput.gpuDriverVersion) &&
+        Objects.equals(this.hostname, nodeConfigForCreateNodePoolInput.hostname) &&
         Objects.equals(this.hpcClusterIds, nodeConfigForCreateNodePoolInput.hpcClusterIds) &&
         Objects.equals(this.imageId, nodeConfigForCreateNodePoolInput.imageId) &&
         Objects.equals(this.initializeScript, nodeConfigForCreateNodePoolInput.initializeScript) &&
         Objects.equals(this.instanceChargeType, nodeConfigForCreateNodePoolInput.instanceChargeType) &&
+        Objects.equals(this.instanceName, nodeConfigForCreateNodePoolInput.instanceName) &&
         Objects.equals(this.instanceTypeIds, nodeConfigForCreateNodePoolInput.instanceTypeIds) &&
+        Objects.equals(this.instancesDistribution, nodeConfigForCreateNodePoolInput.instancesDistribution) &&
         Objects.equals(this.namePrefix, nodeConfigForCreateNodePoolInput.namePrefix) &&
+        Objects.equals(this.networkTrafficMode, nodeConfigForCreateNodePoolInput.networkTrafficMode) &&
         Objects.equals(this.period, nodeConfigForCreateNodePoolInput.period) &&
+        Objects.equals(this.preScript, nodeConfigForCreateNodePoolInput.preScript) &&
         Objects.equals(this.projectName, nodeConfigForCreateNodePoolInput.projectName) &&
         Objects.equals(this.publicAccessConfig, nodeConfigForCreateNodePoolInput.publicAccessConfig) &&
         Objects.equals(this.publicAccessEnabled, nodeConfigForCreateNodePoolInput.publicAccessEnabled) &&
         Objects.equals(this.security, nodeConfigForCreateNodePoolInput.security) &&
+        Objects.equals(this.spotStrategy, nodeConfigForCreateNodePoolInput.spotStrategy) &&
         Objects.equals(this.subnetIds, nodeConfigForCreateNodePoolInput.subnetIds) &&
         Objects.equals(this.systemVolume, nodeConfigForCreateNodePoolInput.systemVolume) &&
         Objects.equals(this.tags, nodeConfigForCreateNodePoolInput.tags);
@@ -579,7 +802,7 @@ public class NodeConfigForCreateNodePoolInput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalContainerStorageEnabled, autoRenew, autoRenewPeriod, dataVolumes, deploymentSetGroupNumber, deploymentSetId, hpcClusterIds, imageId, initializeScript, instanceChargeType, instanceTypeIds, namePrefix, period, projectName, publicAccessConfig, publicAccessEnabled, security, subnetIds, systemVolume, tags);
+    return Objects.hash(additionalContainerStorageEnabled, affinityGroupConfig, autoRenew, autoRenewPeriod, dataVolumes, deploymentSetGroupNumber, deploymentSetId, gpuDriverVersion, hostname, hpcClusterIds, imageId, initializeScript, instanceChargeType, instanceName, instanceTypeIds, instancesDistribution, namePrefix, networkTrafficMode, period, preScript, projectName, publicAccessConfig, publicAccessEnabled, security, spotStrategy, subnetIds, systemVolume, tags);
   }
 
 
@@ -589,22 +812,30 @@ public class NodeConfigForCreateNodePoolInput {
     sb.append("class NodeConfigForCreateNodePoolInput {\n");
     
     sb.append("    additionalContainerStorageEnabled: ").append(toIndentedString(additionalContainerStorageEnabled)).append("\n");
+    sb.append("    affinityGroupConfig: ").append(toIndentedString(affinityGroupConfig)).append("\n");
     sb.append("    autoRenew: ").append(toIndentedString(autoRenew)).append("\n");
     sb.append("    autoRenewPeriod: ").append(toIndentedString(autoRenewPeriod)).append("\n");
     sb.append("    dataVolumes: ").append(toIndentedString(dataVolumes)).append("\n");
     sb.append("    deploymentSetGroupNumber: ").append(toIndentedString(deploymentSetGroupNumber)).append("\n");
     sb.append("    deploymentSetId: ").append(toIndentedString(deploymentSetId)).append("\n");
+    sb.append("    gpuDriverVersion: ").append(toIndentedString(gpuDriverVersion)).append("\n");
+    sb.append("    hostname: ").append(toIndentedString(hostname)).append("\n");
     sb.append("    hpcClusterIds: ").append(toIndentedString(hpcClusterIds)).append("\n");
     sb.append("    imageId: ").append(toIndentedString(imageId)).append("\n");
     sb.append("    initializeScript: ").append(toIndentedString(initializeScript)).append("\n");
     sb.append("    instanceChargeType: ").append(toIndentedString(instanceChargeType)).append("\n");
+    sb.append("    instanceName: ").append(toIndentedString(instanceName)).append("\n");
     sb.append("    instanceTypeIds: ").append(toIndentedString(instanceTypeIds)).append("\n");
+    sb.append("    instancesDistribution: ").append(toIndentedString(instancesDistribution)).append("\n");
     sb.append("    namePrefix: ").append(toIndentedString(namePrefix)).append("\n");
+    sb.append("    networkTrafficMode: ").append(toIndentedString(networkTrafficMode)).append("\n");
     sb.append("    period: ").append(toIndentedString(period)).append("\n");
+    sb.append("    preScript: ").append(toIndentedString(preScript)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    publicAccessConfig: ").append(toIndentedString(publicAccessConfig)).append("\n");
     sb.append("    publicAccessEnabled: ").append(toIndentedString(publicAccessEnabled)).append("\n");
     sb.append("    security: ").append(toIndentedString(security)).append("\n");
+    sb.append("    spotStrategy: ").append(toIndentedString(spotStrategy)).append("\n");
     sb.append("    subnetIds: ").append(toIndentedString(subnetIds)).append("\n");
     sb.append("    systemVolume: ").append(toIndentedString(systemVolume)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
