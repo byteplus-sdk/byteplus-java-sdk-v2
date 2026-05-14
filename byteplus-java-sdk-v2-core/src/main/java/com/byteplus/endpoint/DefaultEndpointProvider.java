@@ -138,6 +138,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- kickart ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(
+                "kickart",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
