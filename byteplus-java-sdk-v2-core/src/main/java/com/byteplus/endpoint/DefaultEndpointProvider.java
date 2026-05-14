@@ -146,6 +146,22 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- vke ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo(
+                "vke",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- kickart ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(
+                "kickart",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法

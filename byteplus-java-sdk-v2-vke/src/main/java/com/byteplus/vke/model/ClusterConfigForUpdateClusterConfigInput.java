@@ -15,6 +15,7 @@ package com.byteplus.vke.model;
 import java.util.Objects;
 import java.util.Arrays;
 import com.byteplus.vke.model.ApiServerPublicAccessConfigForUpdateClusterConfigInput;
+import com.byteplus.vke.model.ClusterConnectorConfigRequestForUpdateClusterConfigInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -38,6 +39,12 @@ public class ClusterConfigForUpdateClusterConfigInput {
 
   @SerializedName("ApiServerPublicAccessEnabled")
   private Boolean apiServerPublicAccessEnabled = null;
+
+  @SerializedName("ClusterConnectorConfigRequest")
+  private ClusterConnectorConfigRequestForUpdateClusterConfigInput clusterConnectorConfigRequest = null;
+
+  @SerializedName("ResourcePublicAccessDefaultEnabled")
+  private Boolean resourcePublicAccessDefaultEnabled = null;
 
   @SerializedName("SubnetIds")
   private List<String> subnetIds = null;
@@ -79,6 +86,43 @@ public class ClusterConfigForUpdateClusterConfigInput {
     this.apiServerPublicAccessEnabled = apiServerPublicAccessEnabled;
   }
 
+  public ClusterConfigForUpdateClusterConfigInput clusterConnectorConfigRequest(ClusterConnectorConfigRequestForUpdateClusterConfigInput clusterConnectorConfigRequest) {
+    this.clusterConnectorConfigRequest = clusterConnectorConfigRequest;
+    return this;
+  }
+
+   /**
+   * Get clusterConnectorConfigRequest
+   * @return clusterConnectorConfigRequest
+  **/
+  @Valid
+  @Schema(description = "")
+  public ClusterConnectorConfigRequestForUpdateClusterConfigInput getClusterConnectorConfigRequest() {
+    return clusterConnectorConfigRequest;
+  }
+
+  public void setClusterConnectorConfigRequest(ClusterConnectorConfigRequestForUpdateClusterConfigInput clusterConnectorConfigRequest) {
+    this.clusterConnectorConfigRequest = clusterConnectorConfigRequest;
+  }
+
+  public ClusterConfigForUpdateClusterConfigInput resourcePublicAccessDefaultEnabled(Boolean resourcePublicAccessDefaultEnabled) {
+    this.resourcePublicAccessDefaultEnabled = resourcePublicAccessDefaultEnabled;
+    return this;
+  }
+
+   /**
+   * Get resourcePublicAccessDefaultEnabled
+   * @return resourcePublicAccessDefaultEnabled
+  **/
+  @Schema(description = "")
+  public Boolean isResourcePublicAccessDefaultEnabled() {
+    return resourcePublicAccessDefaultEnabled;
+  }
+
+  public void setResourcePublicAccessDefaultEnabled(Boolean resourcePublicAccessDefaultEnabled) {
+    this.resourcePublicAccessDefaultEnabled = resourcePublicAccessDefaultEnabled;
+  }
+
   public ClusterConfigForUpdateClusterConfigInput subnetIds(List<String> subnetIds) {
     this.subnetIds = subnetIds;
     return this;
@@ -117,12 +161,14 @@ public class ClusterConfigForUpdateClusterConfigInput {
     ClusterConfigForUpdateClusterConfigInput clusterConfigForUpdateClusterConfigInput = (ClusterConfigForUpdateClusterConfigInput) o;
     return Objects.equals(this.apiServerPublicAccessConfig, clusterConfigForUpdateClusterConfigInput.apiServerPublicAccessConfig) &&
         Objects.equals(this.apiServerPublicAccessEnabled, clusterConfigForUpdateClusterConfigInput.apiServerPublicAccessEnabled) &&
+        Objects.equals(this.clusterConnectorConfigRequest, clusterConfigForUpdateClusterConfigInput.clusterConnectorConfigRequest) &&
+        Objects.equals(this.resourcePublicAccessDefaultEnabled, clusterConfigForUpdateClusterConfigInput.resourcePublicAccessDefaultEnabled) &&
         Objects.equals(this.subnetIds, clusterConfigForUpdateClusterConfigInput.subnetIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(apiServerPublicAccessConfig, apiServerPublicAccessEnabled, subnetIds);
+    return Objects.hash(apiServerPublicAccessConfig, apiServerPublicAccessEnabled, clusterConnectorConfigRequest, resourcePublicAccessDefaultEnabled, subnetIds);
   }
 
 
@@ -133,6 +179,8 @@ public class ClusterConfigForUpdateClusterConfigInput {
     
     sb.append("    apiServerPublicAccessConfig: ").append(toIndentedString(apiServerPublicAccessConfig)).append("\n");
     sb.append("    apiServerPublicAccessEnabled: ").append(toIndentedString(apiServerPublicAccessEnabled)).append("\n");
+    sb.append("    clusterConnectorConfigRequest: ").append(toIndentedString(clusterConnectorConfigRequest)).append("\n");
+    sb.append("    resourcePublicAccessDefaultEnabled: ").append(toIndentedString(resourcePublicAccessDefaultEnabled)).append("\n");
     sb.append("    subnetIds: ").append(toIndentedString(subnetIds)).append("\n");
     sb.append("}");
     return sb.toString();
