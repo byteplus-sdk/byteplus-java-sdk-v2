@@ -1,0 +1,5 @@
+{
+  "description": "ECS: added DescribeAvailableResource, DescribeRegions, ImportImage, ListTagsForResources, TagResources, RunInstances, StartInstance, CreateImage, DeleteImages, DescribeInstances, DescribeUserData, ModifyInstanceSpec, DescribeInstanceTypeFamilies, ReplaceSystemVolume, UntagResources, ModifyInstanceAttribute, RebootInstance, StopInstance, DeleteInstance, DescribeImages, DescribeInstanceTypes, DescribeZones, ModifyImageAttribute",
+  "modules": "service/ecs",
+  "type": "feature"
+}

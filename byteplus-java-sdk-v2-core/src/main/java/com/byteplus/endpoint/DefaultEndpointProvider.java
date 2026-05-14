@@ -122,6 +122,46 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 createRegionEndpointMap()
         ));
 
+        // --------------------------- iam ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(
+                "iam",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- cloudmonitor ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("cloudmonitor", new ServiceEndpointInfo(
+                "cloudmonitor",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- vepfs ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo(
+                "vepfs",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- vke ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo(
+                "vke",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- kickart ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(
+                "kickart",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
