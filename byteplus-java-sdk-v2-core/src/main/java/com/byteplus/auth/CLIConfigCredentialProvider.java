@@ -212,9 +212,39 @@ public class CLIConfigCredentialProvider implements Provider {
             case "sso": {
                 return loadSsoProvider(profileData, profile, configMap);
             }
+            case "consolelogin": {
+                return loadConsoleLoginProvider(profileData, profile);
+            }
             default:
                 throw new ApiException(PROVIDER_NAME + ": unsupported mode: " + mode);
         }
+    }
+
+    /**
+     * Load a {@link ConsoleLoginCredentialProvider} from the given profile.
+     *
+     * <p>Reads the {@code login-session} field from the profile, then delegates
+     * to {@link ConsoleLoginCredentialProvider} which consumes the token cache
+     * file written by the {@code byteplus consolelogin} CLI command.
+     */
+    private Provider loadConsoleLoginProvider(Map<String, Object> profileData, String profile)
+            throws ApiException {
+        String loginSession = getStringValue(profileData, "login-session");
+        if (isNullOrEmpty(loginSession)) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": login-session not found in ConsoleLogin profile '" + profile + "'");
+        }
+        // Pin the cache directory to <cli-config-dir>/login/cache/ so it tracks
+        // a custom BYTEPLUS_CLI_CONFIG_FILE location, while still honoring the
+        // BYTEPLUS_LOGIN_CACHE_DIRECTORY override applied inside the provider.
+        Path configDir = resolveConfigPath().getParent();
+        String cacheDir = (System.getenv("BYTEPLUS_LOGIN_CACHE_DIRECTORY") != null)
+                ? null
+                : (configDir != null ? configDir.resolve("login").resolve("cache").toString() : null);
+
+        Provider d = new ConsoleLoginCredentialProvider(loginSession, cacheDir, null);
+        d.refresh();
+        return d;
     }
 
     @SuppressWarnings("unchecked")
