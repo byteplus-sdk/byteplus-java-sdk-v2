@@ -162,6 +162,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- rds_mssql ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("rds_mssql", new ServiceEndpointInfo(
+                "rds_mssql",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
