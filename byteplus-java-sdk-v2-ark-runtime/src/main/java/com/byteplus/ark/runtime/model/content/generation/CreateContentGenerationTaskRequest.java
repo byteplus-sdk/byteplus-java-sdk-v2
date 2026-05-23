@@ -29,6 +29,9 @@ public class CreateContentGenerationTaskRequest {
     @JsonProperty("execution_expires_after")
     private Long executionExpiresAfter;
 
+    @JsonProperty("priority")
+    private Integer priority;
+
     @JsonProperty("generate_audio")
     private Boolean generateAudio;
 
@@ -150,6 +153,14 @@ public class CreateContentGenerationTaskRequest {
         this.executionExpiresAfter = executionExpiresAfter;
     }
 
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
     public Boolean getGenerateAudio() {
         return generateAudio;
     }
@@ -226,6 +237,7 @@ public class CreateContentGenerationTaskRequest {
                 ", returnLastFrame=" + returnLastFrame +
                 ", serviceTier='" + serviceTier + '\'' +
                 ", executionExpiresAfter=" + executionExpiresAfter +
+                ", priority=" + priority +
                 ", generateAudio=" + generateAudio +
                 ", cameraFixed=" + cameraFixed +
                 ", watermark=" + watermark +
@@ -250,6 +262,7 @@ public class CreateContentGenerationTaskRequest {
         private Boolean returnLastFrame;
         private String serviceTier;
         private Long executionExpiresAfter;
+        private Integer priority;
         private Boolean generateAudio;
         private Boolean cameraFixed;
         private Boolean watermark;
@@ -295,6 +308,11 @@ public class CreateContentGenerationTaskRequest {
 
         public Builder executionExpiresAfter(Long executionExpiresAfter) {
             this.executionExpiresAfter = executionExpiresAfter;
+            return this;
+        }
+
+        public Builder priority(Integer priority) {
+            this.priority = priority;
             return this;
         }
 
@@ -352,6 +370,7 @@ public class CreateContentGenerationTaskRequest {
             createContentGenerationTaskRequest.setReturnLastFrame(returnLastFrame);
             createContentGenerationTaskRequest.setServiceTier(serviceTier);
             createContentGenerationTaskRequest.setExecutionExpiresAfter(executionExpiresAfter);
+            createContentGenerationTaskRequest.setPriority(priority);
             createContentGenerationTaskRequest.setGenerateAudio(generateAudio);
             createContentGenerationTaskRequest.setCameraFixed(cameraFixed);
             createContentGenerationTaskRequest.setWatermark(watermark);
