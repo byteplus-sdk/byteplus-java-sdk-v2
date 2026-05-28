@@ -138,6 +138,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- cpaas ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("cpaas", new ServiceEndpointInfo(
+                "cpaas",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- vepfs ---------------------------
         DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo(
                 "vepfs",
