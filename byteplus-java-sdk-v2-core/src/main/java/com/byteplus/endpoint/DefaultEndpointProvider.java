@@ -146,6 +146,38 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- vepfs ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo(
+                "vepfs",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- vke ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo(
+                "vke",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- kickart ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(
+                "kickart",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- rds_mssql ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("rds_mssql", new ServiceEndpointInfo(
+                "rds_mssql",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法

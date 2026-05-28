@@ -1,0 +1,5 @@
+{
+  "description": "VPC: added AttachNetworkInterface, DeleteSubnet, ModifySecurityGroupRuleDescriptionsEgress, ModifySecurityGroupRuleDescriptionsIngress, RevokeSecurityGroupIngress, DescribeSubnetAttributes, AssociateVpcCidrBlock, CreateSubnet, DeleteSecurityGroup, DeleteVpc, DescribeRouteEntryList, DescribeSecurityGroups, ListTagsForResources, TagResources, CreateRouteTable, CreateVpc, DeleteRouteEntry, DeleteRouteTable, DescribeSecurityGroupAttributes, UntagResources, DescribeVpcAttributes, DescribeVpcs, ModifyRouteEntry, ModifySecurityGroupAttributes, AuthorizeSecurityGroupEgress, AuthorizeSecurityGroupIngress, CreateRouteEntry, ModifyVpcAttributes, AssignPrivateIpAddresses, DetachNetworkInterface, ModifySubnetAttributes, CreateNetworkInterface, DescribeRouteTableList, ModifyRouteTableAttributes, RevokeSecurityGroupEgress, UnassignPrivateIpAddresses, DescribeSubnets, DisassociateRouteTable, DisassociateVpcCidrBlock, AssociateRouteTable, CreateSecurityGroup, DeleteNetworkInterface, DescribeNetworkInterfaceAttributes, DescribeNetworkInterfaces, ModifyNetworkInterfaceAttributes",
+  "modules": "service/vpc",
+  "type": "feature"
+}
