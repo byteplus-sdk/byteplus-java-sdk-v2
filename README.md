@@ -1,37 +1,40 @@
-# Byteplus SDK for Java
+# BytePlus SDK for Java
 
 ## Table of Contents
+
 * Requirements
 * Usage
-* API Dosc
-* Note
+* API Docs
+* Notes
 
-### Requirements ###
-运行 SDK需要jdk **Java 1.8.0_131+**. 你可以下载最新的版本： http://developers.sun.com/downloads/.
-如果 SDK版本 高于或者等于 **Java 9** 请依赖javax.annotation-api
-由于在高于或者等于 **Java 9** 中 javax.annotation-api 被移除
+### Requirements
 
-请在使用中引用
+The SDK requires **Java 1.8.0_131+**. You can download the latest version from: http://developers.sun.com/downloads/.
+
+If your Java version is **Java 9 or later**, add `javax.annotation-api` because it was removed from JDK 9+.
+
 ```xml
 <dependency>
-  <groupId>javax.annotation</groupId>
-  <artifactId>javax.annotation-api</artifactId>
-  <version>1.3.2</version>
+    <groupId>javax.annotation</groupId>
+    <artifactId>javax.annotation-api</artifactId>
+    <version>1.3.2</version>
 </dependency>
 ```
 
-### Usage ###
+For detailed SDK documentation (credentials, endpoint, transport, timeout, retry, error handling, debugging), see: [SDK Integration Guide](./docs/0-Overview.md)
+
+### Usage
+
 * Getting Started
 * Example
 
-#### Getting Started ####
+#### Getting Started
 
-##### 工程使用sdk #####
+##### Installation
 
-建议使用Maven构建自己的项目，添加需要的相应模块的依赖，示例如下：
+It is recommended to use Maven. Add dependencies for the modules you need.
 
-
-##### Importing the pom #####
+##### Importing the BOM
 
 ```xml
 <dependencyManagement>
@@ -39,7 +42,7 @@
     <dependency>
       <groupId>com.byteplus</groupId>
 	  <artifactId>byteplus-java-sdk-v2-bom</artifactId>
-       <version>0.1.58</version>
+       <version>0.1.60</version>
 	  <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -47,43 +50,64 @@
 </dependencyManagement>
 ```
 
-
-##### Using the SDK Maven modules #####
+##### Using SDK Maven modules
 
 ```xml
 <dependencies>
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-vpc</artifactId>
-   <version>0.1.58</version>
+   <version>0.1.60</version>
   </dependency>
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-ecs</artifactId>
-   <version>0.1.58</version>
+   <version>0.1.60</version>
   </dependency>
 </dependencies>
 ```
 
-##### Credentials 配置 #####
+##### Credentials
 
-**通过环境变量导入**:
+**Import via environment variables**:
+
 ```
 export BYTEPLUS_ACCESS_KEY=your ak
 export BYTEPLUS_SECRET_KEY=your sk
-#如果使用token
+# If using token
 export BYTEPLUS_SESSION_TOKEN=token
 ```
 
-**代码方式引入**：
+**Import in code**:
 
 ```java
-Credentials credentials = Credentials.getCredentials(ak,sk);
-//如果使用token
-Credentials credentials = Credentials.getCredentials(ak,sk，token);
+Credentials credentials = Credentials.getCredentials(ak, sk);
+// If using token
+Credentials credentials = Credentials.getCredentials(ak, sk, token);
 ```
 
-#### Example ####
+##### Endpoint
+
+To customize the SDK endpoint:
+
+```java
+ApiClient apiClient = new ApiClient()
+        .setCredentials(Credentials.getCredentials(ak, sk))
+        .setRegion(region).setEndpoint("ecs.ap-southeast-1.byteplusapi.com");
+```
+
+Standard endpoint rules:
+
+| Regional Service | Global Service |
+|---|---|
+| `{service}.{region}.byteplusapi.com` <br> e.g. `ecs.ap-southeast-1.byteplusapi.com` | `{service}.byteplusapi.com` <br> e.g. `iam.byteplusapi.com` |
+
+Note:
+
+- If the service name contains `_`, it should be converted to `-` in the endpoint. Use lowercase for all characters.
+
+#### SDK Example
+
 ```java
 import com.byteplus.ApiClient;
 import com.byteplus.ApiException;
@@ -96,28 +120,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestVpc {
-  public static void main(String[] args)throws Exception {
-    String ak = "your ak";
-    String sk = "your sk";
-    String region = "cn-beijing";
+    public static void main(String[] args) throws Exception {
+        String ak = "your ak";
+        String sk = "your sk";
+        String region = "ap-southeast-1";
 
-    ApiClient apiClient = new ApiClient()
-            .setCredentials(Credentials.getCredentials(ak,sk))
-            .setRegion(region);
-    VpcApi vpcApi = new VpcApi(apiClient);
-    DescribeVpcsRequest request = new DescribeVpcsRequest();
-    List<String> list = new ArrayList<>();
-    list.add("vpc-13fpdgwk7rxfk3n6nu44wisg7");
-    request.setVpcIds(list);
-    try {
-      DescribeVpcsResponse response = vpcApi.describeVpcs(request);
-      System.out.println(response);
-    } catch (ApiException e) {
-      System.out.println(e.getResponseBody());
+        ApiClient apiClient = new ApiClient()
+                .setCredentials(Credentials.getCredentials(ak, sk))
+                .setRegion(region);
+        VpcApi vpcApi = new VpcApi(apiClient);
+        DescribeVpcsRequest request = new DescribeVpcsRequest();
+        List<String> list = new ArrayList<>();
+        list.add("vpc-13fpdgwk7rxfk3n6nu44wisg7");
+        request.setVpcIds(list);
+        try {
+            DescribeVpcsResponse response = vpcApi.describeVpcs(request);
+            System.out.println(response);
+        } catch (ApiException e) {
+            System.out.println(e.getResponseBody());
+        }
     }
-  }
 }
-
 ```
 
-For more code examples, please refer to the [SDK Integration Guide](./SDK_Integration.md) directory.
+For more code examples, please refer to the [SDK Integration Guide](./SDK_Integration.md) and the [docs/](./docs/) directory.
