@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 // 生成响应类
 public class GenerateStreamV2Response implements Closeable {
-    private final InputStream reader;
+    private InputStream reader;
     private final CloseableHttpResponse response;
 
     public GenerateStreamV2Response(InputStream reader, CloseableHttpResponse response) {

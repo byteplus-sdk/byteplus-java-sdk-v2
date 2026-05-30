@@ -252,10 +252,10 @@ public class ApiClient {
 
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             int statusCode = response.getCode();
-            String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-            if (statusCode != 200) {
-                throw new IOException("HTTP request failed with status code: " + statusCode + ", response: " + responseBody);
+            if (response.getEntity() == null) {
+                throw new IOException("HTTP response entity is null, status code: " + statusCode);
             }
+            String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             ModerateV2Response moderateResponse = OBJECT_MAPPER.readValue(responseBody, ModerateV2Response.class);
             session.setDefaultOut(moderateResponse);
             session.setStreamSendLen(0);
