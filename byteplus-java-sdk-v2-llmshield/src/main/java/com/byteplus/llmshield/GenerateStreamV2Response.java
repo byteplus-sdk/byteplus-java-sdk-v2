@@ -1,6 +1,6 @@
 package com.byteplus.llmshield;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 
 import java.io.Closeable;
 import java.io.IOException;
