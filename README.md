@@ -42,7 +42,7 @@ It is recommended to use Maven. Add dependencies for the modules you need.
     <dependency>
       <groupId>com.byteplus</groupId>
 	  <artifactId>byteplus-java-sdk-v2-bom</artifactId>
-       <version>0.1.61</version>
+       <version>0.1.62</version>
 	  <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -57,12 +57,12 @@ It is recommended to use Maven. Add dependencies for the modules you need.
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-vpc</artifactId>
-   <version>0.1.61</version>
+   <version>0.1.62</version>
   </dependency>
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-ecs</artifactId>
-   <version>0.1.61</version>
+   <version>0.1.62</version>
   </dependency>
 </dependencies>
 ```
