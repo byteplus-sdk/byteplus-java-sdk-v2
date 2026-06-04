@@ -178,6 +178,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- sts ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("sts", new ServiceEndpointInfo(
+                "sts",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法

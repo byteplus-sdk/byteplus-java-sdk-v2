@@ -264,5 +264,6 @@
         <module>byteplus-java-sdk-v2-kickart</module>
         <module>byteplus-java-sdk-v2-vpc20250901</module>
         <module>byteplus-java-sdk-v2-cpaas</module>
+        <module>byteplus-java-sdk-v2-sts</module>
     </modules>
 </project>
