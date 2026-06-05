@@ -186,6 +186,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- vmp ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vmp", new ServiceEndpointInfo(
+                "vmp",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
