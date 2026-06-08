@@ -157,14 +157,17 @@ class ConsoleLoginRefreshProvider implements Provider {
                     + ": console-login cache lacks client_id; please run 'bp login' to regenerate.");
         }
 
-		String resolvedEndpoint = isNullOrEmpty(c.getEndpointUrl())
-				? ConsoleOAuthClient.DEFAULT_ENDPOINT_URL
-				: c.getEndpointUrl();
-        ConsoleOAuthClient client = new ConsoleOAuthClient(resolvedEndpoint);
+        ConsoleOAuthClient client = new ConsoleOAuthClient(c.getEndpointUrl());
         ConsoleOAuthClient.ConsoleTokenResponse resp =
-                client.refreshToken(c.getClientId(), c.getRefreshToken(), c.getScope());
+                client.refreshToken(c.getClientId(), c.getScope(), c.getRefreshToken());
 
-        c.setAccessToken(resp.accessToken);
+        try {
+            c.setAccessToken(new JsonParser().parse(resp.accessToken));
+        } catch (Exception e) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": console-login refresh succeeded but access_token could not be parsed as JSON;"
+                    + " please run 'bp login'. underlying error: " + e.getMessage());
+        }
         if (!isNullOrEmpty(resp.refreshToken)) {
             c.setRefreshToken(resp.refreshToken);
         }

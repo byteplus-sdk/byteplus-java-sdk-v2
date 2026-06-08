@@ -36,6 +36,7 @@ public class CLIConfigCredentialProvider implements Provider {
 
     private static final String PROVIDER_NAME = "CLIConfigCredentialProvider";
     private static final long EXPIRE_BUFFER_SECONDS = 60;
+    private static final String LOGIN_CACHE_DIRECTORY_ENV = "BYTEPLUS_LOGIN_CACHE_DIRECTORY";
 
     private final String profileName;
     private final String configPath;
@@ -212,8 +213,7 @@ public class CLIConfigCredentialProvider implements Provider {
             case "sso": {
                 return loadSsoProvider(profileData, profile, configMap);
             }
-            case "console-login":
-            case "consolelogin": {
+            case "console-login": {
                 return loadConsoleLoginProvider(profileData, profile);
             }
             default:
@@ -236,7 +236,7 @@ public class CLIConfigCredentialProvider implements Provider {
                     + ": login-session not found in console-login profile '" + profile + "'");
         }
 		Path configDir = resolveConfigPath().getParent();
-		String envCacheDir = System.getenv("BYTEPLUS_LOGIN_CACHE_DIRECTORY");
+		String envCacheDir = System.getenv(LOGIN_CACHE_DIRECTORY_ENV);
 		Path cacheDir = !isNullOrEmpty(envCacheDir)
 				? Paths.get(envCacheDir).toAbsolutePath().normalize()
 				: (configDir != null ? configDir.resolve("login").resolve("cache") : null);

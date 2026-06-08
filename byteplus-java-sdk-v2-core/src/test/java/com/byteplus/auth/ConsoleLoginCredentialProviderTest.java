@@ -92,7 +92,7 @@ public class ConsoleLoginCredentialProviderTest {
             assertEquals("old-refresh", form.get("refresh_token"), "refresh token");
             assertEquals("trn:signin:::devtools/same-device", form.get("client_id"), "client id");
             sendJson(exchange, 200, "{"
-                    + "\"access_token\":{\"access_key_id\":\"NEW\",\"secret_access_key\":\"SECRET\",\"session_token\":\"TOKEN\"},"
+                    + "\"access_token\":\"{\\\"access_key_id\\\":\\\"NEW\\\",\\\"secret_access_key\\\":\\\"SECRET\\\",\\\"session_token\\\":\\\"TOKEN\\\"}\","
                     + "\"refresh_token\":\"new-refresh\","
                     + "\"id_token\":\"new-id-token\","
                     + "\"token_type\":\"urn:ietf:params:oauth:token-type:access_token_sts\","
@@ -148,7 +148,7 @@ public class ConsoleLoginCredentialProviderTest {
             }
             if ("new-refresh".equals(refreshToken)) {
                 sendJson(exchange, 200, "{"
-                        + "\"access_token\":{\"access_key_id\":\"FALLBACKAK\",\"secret_access_key\":\"FALLBACKSK\",\"session_token\":\"FALLBACKTOKEN\"},"
+                        + "\"access_token\":\"{\\\"access_key_id\\\":\\\"FALLBACKAK\\\",\\\"secret_access_key\\\":\\\"FALLBACKSK\\\",\\\"session_token\\\":\\\"FALLBACKTOKEN\\\"}\","
                         + "\"refresh_token\":\"rotated-refresh\","
                         + "\"token_type\":\"urn:ietf:params:oauth:token-type:access_token_sts\","
                         + "\"expires_in\":900,"
