@@ -29,7 +29,7 @@ public class ConsoleLoginCredentialProviderTest {
         testCliConfigAcceptsHyphenatedConsoleLoginMode();
         testRefreshDoesNotRewriteCache();
         testInvalidGrantReloadsDiskCache();
-        System.out.println("All ConsoleLoginCredentialProvider tests passed.");
+		System.out.println("All ConsoleLoginRefreshProvider tests passed.");
     }
 
     static void testCliConfigAcceptsHyphenatedConsoleLoginMode() throws Exception {
@@ -107,8 +107,8 @@ public class ConsoleLoginCredentialProviderTest {
                     .getBytes(StandardCharsets.UTF_8));
             String before = new String(Files.readAllBytes(cachePath), StandardCharsets.UTF_8);
 
-            ConsoleLoginCredentialProvider provider =
-                    new ConsoleLoginCredentialProvider(loginSession, cacheDir.toString(), null);
+			ConsoleLoginRefreshProvider provider =
+					new ConsoleLoginRefreshProvider(loginSession, cacheDir);
             provider.refresh();
             CredentialValue value = provider.retrieve();
 
@@ -164,8 +164,8 @@ public class ConsoleLoginCredentialProviderTest {
             Files.write(cachePath, expiredCacheJson(loginSession, "OLD", "old-refresh", endpoint)
                     .getBytes(StandardCharsets.UTF_8));
 
-            ConsoleLoginCredentialProvider provider =
-                    new ConsoleLoginCredentialProvider(loginSession, cacheDir.toString(), null);
+			ConsoleLoginRefreshProvider provider =
+					new ConsoleLoginRefreshProvider(loginSession, cacheDir);
             provider.refresh();
             CredentialValue value = provider.retrieve();
 

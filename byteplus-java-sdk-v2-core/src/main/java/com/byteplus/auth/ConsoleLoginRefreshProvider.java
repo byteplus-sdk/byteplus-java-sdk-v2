@@ -11,14 +11,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
 /**
- * Provider that resolves credentials from the Byteplus CLI {@code bp login}
- * token cache.
+ * console-login {@link Provider} that owns a long-lived in-memory snapshot of
+ * the {@code bp login} cache and silently refreshes STS credentials via the
+ * BytePlus signin OAuth endpoint.
  *
  * <p>Contract aligned with the Volcengine Java SDK console-login provider:
  * <ul>
@@ -34,28 +34,22 @@ import java.time.format.DateTimeParseException;
  *       {@code bp login} again.</li>
  * </ul>
  */
-public class ConsoleLoginCredentialProvider implements Provider {
+class ConsoleLoginRefreshProvider implements Provider {
 
-    private static final String PROVIDER_NAME = "ConsoleLoginCredentialProvider";
-    private static final long EXPIRE_BUFFER_SECONDS = 60;
+	private static final String PROVIDER_NAME = "ConsoleLoginCredentialProvider";
+	private static final long EXPIRE_BUFFER_SECONDS = 60;
 
-    private final String loginSession;
-    private final String cacheDirectory;
-    private final String endpointUrl;
+	private final String loginSession;
+	private final Path cacheDir;
 
-    private ConsoleLoginTokenCache cache;
-    private CredentialValue cachedValue;
-    private long expirationSeconds;
+	private ConsoleLoginTokenCache cache;
+	private CredentialValue cachedValue;
+	private long expirationSeconds;
 
-    public ConsoleLoginCredentialProvider(String loginSession) {
-        this(loginSession, null, null);
-    }
-
-    public ConsoleLoginCredentialProvider(String loginSession, String cacheDirectory, String endpointUrl) {
-        this.loginSession = loginSession;
-        this.cacheDirectory = cacheDirectory;
-        this.endpointUrl = endpointUrl;
-    }
+	ConsoleLoginRefreshProvider(String loginSession, Path cacheDir) {
+		this.loginSession = loginSession;
+		this.cacheDir = cacheDir;
+	}
 
     @Override
     public boolean isExpired() {
@@ -163,11 +157,9 @@ public class ConsoleLoginCredentialProvider implements Provider {
                     + ": console-login cache lacks client_id; please run 'bp login' to regenerate.");
         }
 
-        String resolvedEndpoint = !isNullOrEmpty(endpointUrl)
-                ? endpointUrl
-                : (isNullOrEmpty(c.getEndpointUrl())
-                        ? ConsoleOAuthClient.DEFAULT_ENDPOINT_URL
-                        : c.getEndpointUrl());
+		String resolvedEndpoint = isNullOrEmpty(c.getEndpointUrl())
+				? ConsoleOAuthClient.DEFAULT_ENDPOINT_URL
+				: c.getEndpointUrl();
         ConsoleOAuthClient client = new ConsoleOAuthClient(resolvedEndpoint);
         ConsoleOAuthClient.ConsoleTokenResponse resp =
                 client.refreshToken(c.getClientId(), c.getRefreshToken(), c.getScope());
@@ -223,22 +215,12 @@ public class ConsoleLoginCredentialProvider implements Provider {
         return parsed;
     }
 
-    private Path resolveCachePath() throws ApiException {
-        Path dir = resolveCacheDirectory();
-        return dir.resolve(computeCacheFileName(loginSession));
-    }
-
-    private Path resolveCacheDirectory() {
-        if (!isNullOrEmpty(cacheDirectory)) {
-            return Paths.get(cacheDirectory).toAbsolutePath().normalize();
-        }
-        String envDir = System.getenv("BYTEPLUS_LOGIN_CACHE_DIRECTORY");
-        if (!isNullOrEmpty(envDir)) {
-            return Paths.get(envDir).toAbsolutePath().normalize();
-        }
-        String home = System.getProperty("user.home");
-        return Paths.get(home, ".byteplus", "login", "cache").toAbsolutePath().normalize();
-    }
+	private Path resolveCachePath() throws ApiException {
+		if (cacheDir == null) {
+			throw new ApiException(PROVIDER_NAME + ": console-login cache directory is not resolved");
+		}
+		return cacheDir.resolve(computeCacheFileName(loginSession));
+	}
 
     private static String computeCacheFileName(String loginSession) throws ApiException {
         try {

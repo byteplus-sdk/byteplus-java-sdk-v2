@@ -221,32 +221,30 @@ public class CLIConfigCredentialProvider implements Provider {
         }
     }
 
-    /**
-     * Load a {@link ConsoleLoginCredentialProvider} from the given profile.
-     *
-     * <p>Reads the {@code login-session} field from the profile, then delegates
-     * to {@link ConsoleLoginCredentialProvider} which consumes the token cache
-     * file written by the {@code bp login} CLI command.
-     */
-    private Provider loadConsoleLoginProvider(Map<String, Object> profileData, String profile)
-            throws ApiException {
+	/**
+	 * Load a console-login refresh provider from the given profile.
+	 *
+	 * <p>Reads the {@code login-session} field from the profile, then delegates
+	 * to {@link ConsoleLoginRefreshProvider} which consumes the token cache file
+	 * written by the {@code bp login} CLI command.
+	 */
+	private Provider loadConsoleLoginProvider(Map<String, Object> profileData, String profile)
+			throws ApiException {
         String loginSession = getStringValue(profileData, "login-session");
         if (isNullOrEmpty(loginSession)) {
             throw new ApiException(PROVIDER_NAME
                     + ": login-session not found in console-login profile '" + profile + "'");
         }
-        // Pin the cache directory to <cli-config-dir>/login/cache/ so it tracks
-        // a custom BYTEPLUS_CLI_CONFIG_FILE location, while still honoring the
-        // BYTEPLUS_LOGIN_CACHE_DIRECTORY override applied inside the provider.
-        Path configDir = resolveConfigPath().getParent();
-        String cacheDir = (System.getenv("BYTEPLUS_LOGIN_CACHE_DIRECTORY") != null)
-                ? null
-                : (configDir != null ? configDir.resolve("login").resolve("cache").toString() : null);
+		Path configDir = resolveConfigPath().getParent();
+		String envCacheDir = System.getenv("BYTEPLUS_LOGIN_CACHE_DIRECTORY");
+		Path cacheDir = !isNullOrEmpty(envCacheDir)
+				? Paths.get(envCacheDir).toAbsolutePath().normalize()
+				: (configDir != null ? configDir.resolve("login").resolve("cache") : null);
 
-        Provider d = new ConsoleLoginCredentialProvider(loginSession, cacheDir, null);
-        d.refresh();
-        return d;
-    }
+		Provider d = new ConsoleLoginRefreshProvider(loginSession, cacheDir);
+		d.refresh();
+		return d;
+	}
 
     @SuppressWarnings("unchecked")
     private Provider loadSsoProvider(Map<String, Object> profileData, String profile,
