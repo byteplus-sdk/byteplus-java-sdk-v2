@@ -361,6 +361,7 @@ Supported profile `mode`:
 - `SSO`
 - `console-login` (delegates to `ConsoleLoginCredentialProvider`)
   - Required: `login-session`
+  - Run `bp login` first so the CLI writes `mode: "console-login"` and `login-session` into the selected profile.
   - Reads the cache written by the `bp login` CLI command at `<cli-config-dir>/login/cache/<sha1(login_session)>.json`. Refresh is performed automatically via the OAuth `refresh_token` grant when the cached STS credentials are near expiry; on success the cache file is rewritten atomically.
 
 > Mode matching is case-insensitive.
