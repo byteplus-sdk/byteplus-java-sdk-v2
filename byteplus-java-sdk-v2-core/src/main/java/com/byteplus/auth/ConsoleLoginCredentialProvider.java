@@ -8,40 +8,31 @@ import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
 /**
- * Provider that resolves credentials from a Byteplus CLI {@code bp login}
+ * Provider that resolves credentials from the Byteplus CLI {@code bp login}
  * token cache.
  *
- * <p>The byteplus-cli {@code bp login} command performs the interactive
- * OAuth 2.0 Authorization Code + PKCE flow against
- * {@code https://signin.byteplus.com} and writes a token cache JSON file at
- * {@code ~/.byteplus/login/cache/<sha1(login_session)>.json}. The cached
- * {@code access_token} is itself a JSON object containing STS temporary
- * credentials. This provider:
- *
+ * <p>Contract aligned with the Volcengine Java SDK console-login provider:
  * <ul>
- *   <li>Reads the cache by {@code login_session}.</li>
- *   <li>Parses the embedded STS credentials
- *       (access_key_id / secret_access_key / session_token).</li>
- *   <li>Considers the credentials expired when
- *       {@code now >= issued_at + expires_in - 60s}.</li>
- *   <li>Refreshes via the OAuth {@code refresh_token} grant and atomically
- *       rewrites the cache file on success.</li>
+ *   <li>The SDK reads the cache on bootstrap and on the invalid_grant fallback
+ *       only; it never writes the cache file. {@code bp login} remains the
+ *       only disk writer.</li>
+ *   <li>When the in-memory access_token expires, the provider exchanges the
+ *       cached refresh_token at the BytePlus signin OAuth endpoint and updates
+ *       the in-memory cache only.</li>
+ *   <li>If signin rejects the refresh_token with {@code invalid_grant}, the
+ *       provider re-reads disk once. If disk contains a different
+ *       refresh_token, it retries with that token; otherwise the user must run
+ *       {@code bp login} again.</li>
  * </ul>
- *
- * <p>Follows the {@link Provider} CQS contract and is intended to be wrapped
- * in a {@link CredentialProvider}.
  */
 public class ConsoleLoginCredentialProvider implements Provider {
 
@@ -52,8 +43,9 @@ public class ConsoleLoginCredentialProvider implements Provider {
     private final String cacheDirectory;
     private final String endpointUrl;
 
+    private ConsoleLoginTokenCache cache;
     private CredentialValue cachedValue;
-    private long expirationSeconds; // epoch seconds
+    private long expirationSeconds;
 
     public ConsoleLoginCredentialProvider(String loginSession) {
         this(loginSession, null, null);
@@ -67,11 +59,8 @@ public class ConsoleLoginCredentialProvider implements Provider {
 
     @Override
     public boolean isExpired() {
-        if (cachedValue == null) {
+        if (cachedValue == null || expirationSeconds == 0) {
             return true;
-        }
-        if (expirationSeconds == 0) {
-            return false;
         }
         return System.currentTimeMillis() / 1000 + EXPIRE_BUFFER_SECONDS >= expirationSeconds;
     }
@@ -81,7 +70,132 @@ public class ConsoleLoginCredentialProvider implements Provider {
         if (isNullOrEmpty(loginSession)) {
             throw new ApiException(PROVIDER_NAME + ": login_session is required");
         }
+        if (cache == null) {
+            cache = loadCacheFromDisk();
+        }
+        if (tryApplyFromCache(cache)) {
+            return;
+        }
 
+        try {
+            refreshWithOAuth(cache);
+            return;
+        } catch (ConsoleOAuthClient.InvalidGrantException invalidGrant) {
+            ConsoleLoginTokenCache disk = loadCacheFromDisk();
+            if (isNullOrEmpty(disk.getRefreshToken())) {
+                throw new ApiException(PROVIDER_NAME
+                        + ": console-login refresh token rejected and disk cache lacks refresh_token;"
+                        + " please run 'bp login' to re-authenticate.");
+            }
+            if (disk.getRefreshToken().equals(cache.getRefreshToken())) {
+                throw new ApiException(PROVIDER_NAME
+                        + ": console-login refresh token rejected by signin service"
+                        + " (disk cache has the same RT); please run 'bp login' to re-authenticate."
+                        + " underlying error: " + invalidGrant.getMessage());
+            }
+            cache = disk;
+            if (tryApplyFromCache(cache)) {
+                return;
+            }
+            try {
+                refreshWithOAuth(cache);
+            } catch (ConsoleOAuthClient.InvalidGrantException retryInvalid) {
+                throw new ApiException(PROVIDER_NAME
+                        + ": console-login refresh token rejected; reloaded disk cache but new RT also failed;"
+                        + " please run 'bp login'. underlying error: " + retryInvalid.getMessage());
+            } catch (ApiException e) {
+                throw new ApiException(PROVIDER_NAME
+                        + ": console-login refresh failed after disk reload;"
+                        + " please run 'bp login'. underlying error: " + e.getMessage());
+            } catch (RuntimeException e) {
+                throw new ApiException(PROVIDER_NAME
+                        + ": console-login refresh failed after disk reload;"
+                        + " please run 'bp login'. underlying error: " + e.getMessage());
+            }
+        } catch (ApiException e) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": console-login refresh failed; please run 'bp login'. underlying error: "
+                    + e.getMessage());
+        } catch (RuntimeException e) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": console-login refresh failed; please run 'bp login'. underlying error: "
+                    + e.getMessage());
+        }
+    }
+
+    @Override
+    public CredentialValue retrieve() throws ApiException {
+        CredentialValue v = cachedValue;
+        if (v == null) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": not refreshed; call refresh() first or use CredentialProvider");
+        }
+        return v;
+    }
+
+    private boolean tryApplyFromCache(ConsoleLoginTokenCache c) throws ApiException {
+        long expSeconds = computeExpirationSeconds(c.getIssuedAt(), c.getExpiresIn());
+        if (expSeconds == 0
+                || System.currentTimeMillis() / 1000 + EXPIRE_BUFFER_SECONDS >= expSeconds) {
+            return false;
+        }
+
+        STSCredentials sts;
+        try {
+            sts = extractStsCredentials(c.getAccessToken());
+        } catch (ApiException e) {
+            return false;
+        }
+        cachedValue = new CredentialValue(
+                sts.accessKeyId, sts.secretAccessKey, sts.sessionToken, PROVIDER_NAME);
+        expirationSeconds = expSeconds;
+        return true;
+    }
+
+    private void refreshWithOAuth(ConsoleLoginTokenCache c)
+            throws ApiException, ConsoleOAuthClient.InvalidGrantException {
+        if (isNullOrEmpty(c.getRefreshToken())) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": console-login cache lacks refresh_token; please run 'bp login' first.");
+        }
+        if (isNullOrEmpty(c.getClientId())) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": console-login cache lacks client_id; please run 'bp login' to regenerate.");
+        }
+
+        String resolvedEndpoint = !isNullOrEmpty(endpointUrl)
+                ? endpointUrl
+                : (isNullOrEmpty(c.getEndpointUrl())
+                        ? ConsoleOAuthClient.DEFAULT_ENDPOINT_URL
+                        : c.getEndpointUrl());
+        ConsoleOAuthClient client = new ConsoleOAuthClient(resolvedEndpoint);
+        ConsoleOAuthClient.ConsoleTokenResponse resp =
+                client.refreshToken(c.getClientId(), c.getRefreshToken(), c.getScope());
+
+        c.setAccessToken(resp.accessToken);
+        if (!isNullOrEmpty(resp.refreshToken)) {
+            c.setRefreshToken(resp.refreshToken);
+        }
+        if (!isNullOrEmpty(resp.idToken)) {
+            c.setIdToken(resp.idToken);
+        }
+        if (!isNullOrEmpty(resp.scope)) {
+            c.setScope(resp.scope);
+        }
+        if (!isNullOrEmpty(resp.tokenType)) {
+            c.setTokenType(resp.tokenType);
+        }
+        c.setIssuedAt(Instant.now().toString());
+        c.setExpiresIn(resp.expiresIn);
+
+        if (!tryApplyFromCache(c)) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": console-login refresh succeeded but the new access_token could not be"
+                    + " parsed into STS credentials; please run 'bp login' to re-authenticate.");
+        }
+    }
+
+    private ConsoleLoginTokenCache loadCacheFromDisk() throws ApiException {
         Path cachePath = resolveCachePath();
         if (!Files.exists(cachePath)) {
             throw new ApiException(PROVIDER_NAME + ": console-login token cache not found: " + cachePath
@@ -96,133 +210,17 @@ public class ConsoleLoginCredentialProvider implements Provider {
                     + cachePath + " - " + e.getMessage());
         }
 
-        Gson gson = new Gson();
-        ConsoleLoginTokenCache cache;
+        ConsoleLoginTokenCache parsed;
         try {
-            cache = gson.fromJson(content, ConsoleLoginTokenCache.class);
+            parsed = new Gson().fromJson(content, ConsoleLoginTokenCache.class);
         } catch (Exception e) {
             throw new ApiException(PROVIDER_NAME + ": failed to parse console-login token cache: "
                     + e.getMessage());
         }
-        if (cache == null) {
+        if (parsed == null) {
             throw new ApiException(PROVIDER_NAME + ": console-login token cache is empty");
         }
-
-        long expSeconds = computeExpirationSeconds(cache.getIssuedAt(), cache.getExpiresIn());
-        if (System.currentTimeMillis() / 1000 + EXPIRE_BUFFER_SECONDS >= expSeconds) {
-            // Token expired or near expiry — refresh via OAuth refresh_token grant.
-            refreshTokenCache(cache, cachePath, gson);
-            expSeconds = computeExpirationSeconds(cache.getIssuedAt(), cache.getExpiresIn());
-        }
-
-        STSCredentials sts = extractStsCredentials(cache.getAccessToken());
-        if (isNullOrEmpty(sts.accessKeyId) || isNullOrEmpty(sts.secretAccessKey)) {
-            throw new ApiException(PROVIDER_NAME
-                    + ": console-login access_token did not contain valid STS credentials");
-        }
-
-        this.cachedValue = new CredentialValue(
-                sts.accessKeyId, sts.secretAccessKey, sts.sessionToken, PROVIDER_NAME);
-        this.expirationSeconds = expSeconds;
-    }
-
-    @Override
-    public CredentialValue retrieve() throws ApiException {
-        CredentialValue v = cachedValue;
-        if (v == null) {
-            throw new ApiException(PROVIDER_NAME
-                    + ": not refreshed; call refresh() first or use CredentialProvider");
-        }
-        return v;
-    }
-
-    // ---- Internal -----------------------------------------------------------
-
-    private void refreshTokenCache(ConsoleLoginTokenCache cache, Path cachePath, Gson gson)
-            throws ApiException {
-        String refreshTokenStr = cache.getRefreshToken();
-        if (isNullOrEmpty(refreshTokenStr)) {
-            throw new ApiException(PROVIDER_NAME
-                    + ": console-login token cache missing refresh_token; please re-login with CLI");
-        }
-        String clientId = cache.getClientId();
-        if (isNullOrEmpty(clientId)) {
-            throw new ApiException(PROVIDER_NAME
-                    + ": console-login token cache missing client_id; please re-login with CLI");
-        }
-
-        String resolvedEndpoint = !isNullOrEmpty(endpointUrl)
-                ? endpointUrl
-                : (isNullOrEmpty(cache.getEndpointUrl())
-                        ? ConsoleOAuthClient.DEFAULT_ENDPOINT_URL
-                        : cache.getEndpointUrl());
-
-        ConsoleOAuthClient client = new ConsoleOAuthClient(resolvedEndpoint);
-        ConsoleOAuthClient.ConsoleTokenResponse resp = client.refreshToken(
-                clientId, refreshTokenStr, cache.getScope());
-
-        // Compose the updated cache, persist to disk first, then mutate in-memory state.
-        ConsoleLoginTokenCache updated = new ConsoleLoginTokenCache();
-        updated.setLoginSession(cache.getLoginSession());
-        updated.setAccessToken(resp.accessToken);
-        updated.setRefreshToken(
-                isNullOrEmpty(resp.refreshToken) ? cache.getRefreshToken() : resp.refreshToken);
-        updated.setIdToken(
-                isNullOrEmpty(resp.idToken) ? cache.getIdToken() : resp.idToken);
-        updated.setScope(
-                isNullOrEmpty(resp.scope) ? cache.getScope() : resp.scope);
-        updated.setClientId(cache.getClientId());
-        updated.setEndpointUrl(cache.getEndpointUrl());
-        updated.setIssuedAt(Instant.now().toString());
-        updated.setExpiresIn(resp.expiresIn);
-        updated.setTokenType(
-                isNullOrEmpty(resp.tokenType) ? cache.getTokenType() : resp.tokenType);
-
-        writeCacheAtomic(cachePath, gson.toJson(updated));
-
-        // Disk write succeeded — mirror into the in-memory cache object.
-        cache.setAccessToken(updated.getAccessToken());
-        cache.setRefreshToken(updated.getRefreshToken());
-        cache.setIdToken(updated.getIdToken());
-        cache.setScope(updated.getScope());
-        cache.setIssuedAt(updated.getIssuedAt());
-        cache.setExpiresIn(updated.getExpiresIn());
-        cache.setTokenType(updated.getTokenType());
-    }
-
-    private static void writeCacheAtomic(Path cachePath, String json) throws ApiException {
-        try {
-            Path parent = cachePath.getParent();
-            if (parent != null) {
-                Files.createDirectories(parent);
-            }
-            Path tempFile = Files.createTempFile(parent, ".tmp-", ".json");
-            try {
-                byte[] data = json.getBytes(StandardCharsets.UTF_8);
-                try (OutputStream os = Files.newOutputStream(tempFile)) {
-                    os.write(data);
-                }
-                try {
-                    Files.move(tempFile, cachePath,
-                            StandardCopyOption.REPLACE_EXISTING,
-                            StandardCopyOption.ATOMIC_MOVE);
-                } catch (IOException atomicFailed) {
-                    // Some filesystems do not support ATOMIC_MOVE — fall back to a non-atomic
-                    // replacement, preserving the temp-file safety net.
-                    Files.move(tempFile, cachePath, StandardCopyOption.REPLACE_EXISTING);
-                }
-            } catch (Exception e) {
-                try { Files.deleteIfExists(tempFile); } catch (IOException ignored) { }
-                if (e instanceof ApiException) {
-                    throw (ApiException) e;
-                }
-                throw new ApiException(PROVIDER_NAME
-                        + ": failed to write console-login token cache: " + e.getMessage());
-            }
-        } catch (IOException e) {
-            throw new ApiException(PROVIDER_NAME
-                    + ": failed to write console-login token cache: " + e.getMessage());
-        }
+        return parsed;
     }
 
     private Path resolveCachePath() throws ApiException {
@@ -251,17 +249,11 @@ public class ConsoleLoginCredentialProvider implements Provider {
                 hex.append(String.format("%02x", b));
             }
             return hex.toString() + ".json";
-        } catch (NoSuchAlgorithmException e) {
+        } catch (java.security.NoSuchAlgorithmException e) {
             throw new ApiException(PROVIDER_NAME + ": SHA-1 algorithm not available");
         }
     }
 
-    /**
-     * Compute the absolute expiration epoch (seconds) given an RFC3339
-     * {@code issued_at} timestamp and an {@code expires_in} duration.
-     * Returns 0 when {@code issued_at} cannot be parsed (caller treats 0 as
-     * "unknown — treat as expired").
-     */
     private static long computeExpirationSeconds(String issuedAt, long expiresIn) {
         if (isNullOrEmpty(issuedAt) || expiresIn <= 0) {
             return 0;
@@ -274,10 +266,6 @@ public class ConsoleLoginCredentialProvider implements Provider {
         }
     }
 
-    /**
-     * Parse the STS credentials embedded in the cached {@code access_token}.
-     * The element may be a JSON object, or a JSON string holding a JSON object.
-     */
     private static STSCredentials extractStsCredentials(JsonElement accessToken) throws ApiException {
         if (accessToken == null || accessToken.isJsonNull()) {
             throw new ApiException(PROVIDER_NAME + ": access_token is missing in token cache");
@@ -307,6 +295,12 @@ public class ConsoleLoginCredentialProvider implements Provider {
         sts.accessKeyId = optString(obj, "access_key_id");
         sts.secretAccessKey = optString(obj, "secret_access_key");
         sts.sessionToken = optString(obj, "session_token");
+        if (isNullOrEmpty(sts.accessKeyId)
+                || isNullOrEmpty(sts.secretAccessKey)
+                || isNullOrEmpty(sts.sessionToken)) {
+            throw new ApiException(PROVIDER_NAME
+                    + ": console-login access_token did not contain valid STS credentials");
+        }
         return sts;
     }
 

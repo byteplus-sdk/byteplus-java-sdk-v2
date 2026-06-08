@@ -68,7 +68,7 @@ You can refer to: [Environment Variable Setup](#environment-variable-setup)
 | `SamlCredentialProvider` | STS AssumeRoleWithSAML | Yes | SAML federation |
 | `EnvironmentVariableCredentialProvider` | Read AK/SK(/Token) from env | No | CI/CD and container env injection |
 | `CLIConfigCredentialProvider` | Read from `$HOME/.byteplus/config.json` | Depends on mode | Reuse CLI profile and login state |
-| `ConsoleLoginCredentialProvider` | Read from `$HOME/.byteplus/login/cache/<sha1>.json` | Yes (refresh_token grant) | Reuse `bp login` interactive login state |
+| `ConsoleLoginCredentialProvider` | Read from `$HOME/.byteplus/login/cache/<sha1>.json` | Yes (in-memory refresh_token grant; no disk writes) | Reuse `bp login` interactive login state |
 | `EcsRoleCredentialProvider` | Read from ECS IMDS | Yes | ECS instance role credentials |
 | `DefaultCredentialProvider` | Default chain wrapper | Depends on delegated provider | No AK/SK in application code |
 
@@ -362,7 +362,7 @@ Supported profile `mode`:
 - `console-login` (delegates to `ConsoleLoginCredentialProvider`)
   - Required: `login-session`
   - Run `bp login` first so the CLI writes `mode: "console-login"` and `login-session` into the selected profile.
-  - Reads the cache written by the `bp login` CLI command at `<cli-config-dir>/login/cache/<sha1(login_session)>.json`. Refresh is performed automatically via the OAuth `refresh_token` grant when the cached STS credentials are near expiry; on success the cache file is rewritten atomically.
+  - Reads the cache written by the `bp login` CLI command at `<cli-config-dir>/login/cache/<sha1(login_session)>.json`. Refresh is performed automatically via the OAuth `refresh_token` grant when the cached STS credentials are near expiry; the SDK updates its in-memory state only and never writes the cache file.
 
 > Mode matching is case-insensitive.
 
@@ -388,7 +388,7 @@ public class SampleCode {
 
 ### Console Login Credential Provider
 
-`ConsoleLoginCredentialProvider` consumes the token cache produced by the `bp login` command. The CLI runs the interactive OAuth 2.0 Authorization Code + PKCE flow against `https://signin.byteplus.com` and writes a cache JSON file containing STS temporary credentials. This provider parses the cache, returns the embedded STS credentials, and refreshes them via the `refresh_token` grant before they expire.
+`ConsoleLoginCredentialProvider` consumes the token cache produced by the `bp login` command. The CLI runs the interactive OAuth 2.0 Authorization Code + PKCE flow against `https://signin.byteplus.com` and writes a cache JSON file containing STS temporary credentials. This provider parses the cache, returns the embedded STS credentials, and refreshes them via the `refresh_token` grant before they expire. The SDK never writes the cache file; `bp login` remains the only disk writer.
 
 - Cache directory priority: constructor `cacheDirectory` > `BYTEPLUS_LOGIN_CACHE_DIRECTORY` > `$HOME/.byteplus/login/cache/`
 - Cache file name: `sha1(login_session).hex + ".json"`
@@ -416,6 +416,35 @@ public class SampleCode {
 ```
 
 > 💡 Most users do not need to instantiate `ConsoleLoginCredentialProvider` directly — run `bp login` to set `mode = console-login` in your CLI profile and use `CLIConfigCredentialProvider` (or the default chain) instead.
+
+#### Runtime Refresh Behavior (console-login)
+
+For `console-login` mode the SDK owns refresh in memory and never writes any
+local file. Key invariants:
+
+- **Config-responsive refresh**: when `CLIConfigCredentialProvider` refreshes,
+  it re-reads `config.json` and rebuilds the credential delegate, so profile,
+  mode, or AK changes are picked up at the next refresh boundary. Within a
+  single expiry cycle the delegate keeps an in-memory snapshot of the token
+  cache.
+- **Read-only on disk**: `config.json` and
+  `~/.byteplus/login/cache/*.json` are read on refresh and once more if the
+  OAuth server rejects the in-memory refresh token (`invalid_grant` fallback).
+  They are never written by the SDK.
+- **In-memory refresh**: when the cached `access_token` is past its expiry
+  buffer (60 seconds), the SDK exchanges the cached `refresh_token` at
+  `https://signin.byteplus.com/authorize/oauth/token` and updates its
+  in-memory state only.
+- **Invalid-grant fallback**: when signin rejects the refresh token, the SDK
+  re-reads the cache file from disk once. If the disk `refresh_token` differs
+  from the in-memory one (i.e. `bp login` rotated it under the SDK), the SDK
+  retries with the disk refresh token; otherwise it reports an actionable error
+  pointing at `bp login`.
+- **Refresh-token expiry**: when the SDK exhausts both the in-memory and disk
+  refresh tokens, it raises a clear error instructing the user to run
+  `bp login`.
+- **Concurrency**: refresh is serialized by `CredentialProvider`, so concurrent
+  callers share a single in-flight refresh.
 
 ### ECS Role Credential Provider
 

@@ -3,6 +3,7 @@ package com.byteplus.auth;
 import com.byteplus.ApiException;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.BufferedReader;
@@ -54,7 +55,7 @@ class ConsoleOAuthClient {
      * Exchange a refresh token for a fresh console access token.
      */
     ConsoleTokenResponse refreshToken(String clientId, String refreshToken, String scope)
-            throws ApiException {
+            throws ApiException, InvalidGrantException {
         if (isNullOrEmpty(clientId)) {
             throw new ApiException("ConsoleOAuthClient: client_id is required for refresh");
         }
@@ -90,7 +91,8 @@ class ConsoleOAuthClient {
 
     // ---- HTTP helpers -------------------------------------------------------
 
-    private String doFormPostWithRetry(String urlStr, String formBody) throws ApiException {
+    private String doFormPostWithRetry(String urlStr, String formBody)
+            throws ApiException, InvalidGrantException {
         ApiException lastException = null;
         for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
             try {
@@ -100,6 +102,8 @@ class ConsoleOAuthClient {
                 if (attempt < MAX_RETRIES - 1) {
                     trySleep();
                 }
+            } catch (InvalidGrantException e) {
+                throw e;
             } catch (ApiException e) {
                 // Non-retryable error: fail immediately.
                 throw e;
@@ -110,7 +114,8 @@ class ConsoleOAuthClient {
                 : new ApiException("ConsoleOAuthClient: token request failed after " + MAX_RETRIES + " attempts");
     }
 
-    private String doFormPost(String urlStr, String formBody) throws ApiException, RetryableException {
+    private String doFormPost(String urlStr, String formBody)
+            throws ApiException, RetryableException, InvalidGrantException {
         HttpURLConnection conn = null;
         try {
             URL url = new URL(urlStr);
@@ -135,6 +140,9 @@ class ConsoleOAuthClient {
                         + " failed with status " + statusCode
                         + (logId != null ? " (RequestId=" + logId + ")" : "")
                         + ": " + body;
+                if (statusCode == 400 && "invalid_grant".equals(readOAuthErrorCode(body))) {
+                    throw new InvalidGrantException(msg);
+                }
                 if (RETRYABLE_STATUSES.contains(statusCode)) {
                     throw new RetryableException(msg);
                 }
@@ -142,6 +150,8 @@ class ConsoleOAuthClient {
             }
             return body;
         } catch (RetryableException e) {
+            throw e;
+        } catch (InvalidGrantException e) {
             throw e;
         } catch (ApiException e) {
             throw e;
@@ -213,6 +223,21 @@ class ConsoleOAuthClient {
         }
     }
 
+    private String readOAuthErrorCode(String body) {
+        if (isNullOrEmpty(body)) {
+            return "";
+        }
+        try {
+            JsonObject obj = gson.fromJson(body, JsonObject.class);
+            if (obj != null && obj.has("error") && !obj.get("error").isJsonNull()) {
+                return obj.get("error").getAsString();
+            }
+        } catch (Exception ignored) {
+            return "";
+        }
+        return "";
+    }
+
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }
@@ -222,6 +247,14 @@ class ConsoleOAuthClient {
         private static final long serialVersionUID = 1L;
 
         RetryableException(String msg) {
+            super(msg);
+        }
+    }
+
+    static final class InvalidGrantException extends Exception {
+        private static final long serialVersionUID = 1L;
+
+        InvalidGrantException(String msg) {
             super(msg);
         }
     }

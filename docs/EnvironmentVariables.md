@@ -71,7 +71,7 @@ Verify: open a new command prompt and run `echo %BYTEPLUS_ACCESS_KEY%`.
 |---|---|
 | `BYTEPLUS_CLI_CONFIG_FILE` | Config file path; defaults to `~/.byteplus/config.json` |
 | `BYTEPLUS_PROFILE` | Profile name to use |
-| `BYTEPLUS_LOGIN_CACHE_DIRECTORY` | Console-login token cache directory; defaults to `$HOME/.byteplus/login/cache` for direct `ConsoleLoginCredentialProvider` usage |
+| `BYTEPLUS_LOGIN_CACHE_DIRECTORY` | Optional console-login cache directory; CLI provider defaults to `<config dir>/login/cache`, direct `ConsoleLoginCredentialProvider` defaults to `$HOME/.byteplus/login/cache` |
 
 
 #### Default Credential Chain
@@ -89,7 +89,7 @@ When no credentials are explicitly configured, all four SDKs try the following p
 |---|---|
 | CLI config file path | constructor arg > `BYTEPLUS_CLI_CONFIG_FILE` > `~/.byteplus/config.json` |
 | Profile | constructor arg > `BYTEPLUS_PROFILE` > `current` field in config > `default` |
-| Console-login cache directory | constructor `cacheDirectory` > `BYTEPLUS_LOGIN_CACHE_DIRECTORY` > `$HOME/.byteplus/login/cache` |
+| Console-login cache directory | constructor `cacheDirectory` > `BYTEPLUS_LOGIN_CACHE_DIRECTORY` > `<cli-config-dir>/login/cache` (CLI provider) > `$HOME/.byteplus/login/cache` |
 | ECS role name | constructor arg > `BYTEPLUS_ECS_METADATA` > IMDS auto-discovery |
 
 ### See Also
