@@ -68,7 +68,7 @@ You can refer to: [Environment Variable Setup](#environment-variable-setup)
 | `SamlCredentialProvider` | STS AssumeRoleWithSAML | Yes | SAML federation |
 | `EnvironmentVariableCredentialProvider` | Read AK/SK(/Token) from env | No | CI/CD and container env injection |
 | `CLIConfigCredentialProvider` | Read from `$HOME/.byteplus/config.json` | Depends on mode | Reuse CLI profile and login state |
-| `ConsoleLoginCredentialProvider` | Read from `$HOME/.byteplus/login/cache/<sha1>.json` | Yes (refresh_token grant) | Reuse `byteplus consolelogin` interactive login state |
+| `ConsoleLoginCredentialProvider` | Read from `$HOME/.byteplus/login/cache/<sha1>.json` | Yes (refresh_token grant) | Reuse `bp login` interactive login state |
 | `EcsRoleCredentialProvider` | Read from ECS IMDS | Yes | ECS instance role credentials |
 | `DefaultCredentialProvider` | Default chain wrapper | Depends on delegated provider | No AK/SK in application code |
 
@@ -359,9 +359,9 @@ Supported profile `mode`:
 - `OIDC` (delegates to `OidcCredentialProvider`)
 - `EcsRole` (delegates to `EcsRoleCredentialProvider`)
 - `SSO`
-- `ConsoleLogin` (delegates to `ConsoleLoginCredentialProvider`)
+- `console-login` (delegates to `ConsoleLoginCredentialProvider`)
   - Required: `login-session`
-  - Reads the cache written by the `byteplus consolelogin` CLI command at `<cli-config-dir>/login/cache/<sha1(login_session)>.json`. Refresh is performed automatically via the OAuth `refresh_token` grant when the cached STS credentials are near expiry; on success the cache file is rewritten atomically.
+  - Reads the cache written by the `bp login` CLI command at `<cli-config-dir>/login/cache/<sha1(login_session)>.json`. Refresh is performed automatically via the OAuth `refresh_token` grant when the cached STS credentials are near expiry; on success the cache file is rewritten atomically.
 
 > Mode matching is case-insensitive.
 
@@ -387,7 +387,7 @@ public class SampleCode {
 
 ### Console Login Credential Provider
 
-`ConsoleLoginCredentialProvider` consumes the token cache produced by the `byteplus consolelogin` command. The CLI runs the interactive OAuth 2.0 Authorization Code + PKCE flow against `https://signin.byteplus.com` and writes a cache JSON file containing STS temporary credentials. This provider parses the cache, returns the embedded STS credentials, and refreshes them via the `refresh_token` grant before they expire.
+`ConsoleLoginCredentialProvider` consumes the token cache produced by the `bp login` command. The CLI runs the interactive OAuth 2.0 Authorization Code + PKCE flow against `https://signin.byteplus.com` and writes a cache JSON file containing STS temporary credentials. This provider parses the cache, returns the embedded STS credentials, and refreshes them via the `refresh_token` grant before they expire.
 
 - Cache directory priority: constructor `cacheDirectory` > `BYTEPLUS_LOGIN_CACHE_DIRECTORY` > `$HOME/.byteplus/login/cache/`
 - Cache file name: `sha1(login_session).hex + ".json"`
@@ -414,7 +414,7 @@ public class SampleCode {
 }
 ```
 
-> 💡 Most users do not need to instantiate `ConsoleLoginCredentialProvider` directly — set `mode = ConsoleLogin` in your CLI profile and use `CLIConfigCredentialProvider` (or the default chain) instead.
+> 💡 Most users do not need to instantiate `ConsoleLoginCredentialProvider` directly — run `bp login` to set `mode = console-login` in your CLI profile and use `CLIConfigCredentialProvider` (or the default chain) instead.
 
 ### ECS Role Credential Provider
 

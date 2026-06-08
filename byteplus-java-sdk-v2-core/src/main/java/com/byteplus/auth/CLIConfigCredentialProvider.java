@@ -212,6 +212,7 @@ public class CLIConfigCredentialProvider implements Provider {
             case "sso": {
                 return loadSsoProvider(profileData, profile, configMap);
             }
+            case "console-login":
             case "consolelogin": {
                 return loadConsoleLoginProvider(profileData, profile);
             }
@@ -225,14 +226,14 @@ public class CLIConfigCredentialProvider implements Provider {
      *
      * <p>Reads the {@code login-session} field from the profile, then delegates
      * to {@link ConsoleLoginCredentialProvider} which consumes the token cache
-     * file written by the {@code byteplus consolelogin} CLI command.
+     * file written by the {@code bp login} CLI command.
      */
     private Provider loadConsoleLoginProvider(Map<String, Object> profileData, String profile)
             throws ApiException {
         String loginSession = getStringValue(profileData, "login-session");
         if (isNullOrEmpty(loginSession)) {
             throw new ApiException(PROVIDER_NAME
-                    + ": login-session not found in ConsoleLogin profile '" + profile + "'");
+                    + ": login-session not found in console-login profile '" + profile + "'");
         }
         // Pin the cache directory to <cli-config-dir>/login/cache/ so it tracks
         // a custom BYTEPLUS_CLI_CONFIG_FILE location, while still honoring the

@@ -21,7 +21,7 @@ import java.util.Set;
  * Minimal HTTP client for the Byteplus Console OAuth token endpoint used by
  * the console-login credential flow.
  *
- * <p>Mirrors the protocol surface of the byteplus-cli {@code consolelogin}
+ * <p>Mirrors the protocol surface of the byteplus-cli {@code bp login}
  * command: this SDK side only needs the {@code refresh_token} grant — the
  * authorization-code + PKCE leg is performed exclusively by the CLI.
  *

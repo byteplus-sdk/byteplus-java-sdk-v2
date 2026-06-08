@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * POJO representing the cached console-login token JSON written by the
- * Byteplus CLI {@code consolelogin} command at
+ * Byteplus CLI {@code bp login} command at
  * {@code ~/.byteplus/login/cache/<sha1(login_session)>.json}.
  *
  * <p>The {@code access_token} field is intentionally typed as a raw

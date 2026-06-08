@@ -20,10 +20,10 @@ import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
 /**
- * Provider that resolves credentials from a Byteplus CLI {@code consolelogin}
+ * Provider that resolves credentials from a Byteplus CLI {@code bp login}
  * token cache.
  *
- * <p>The byteplus-cli {@code consolelogin} command performs the interactive
+ * <p>The byteplus-cli {@code bp login} command performs the interactive
  * OAuth 2.0 Authorization Code + PKCE flow against
  * {@code https://signin.byteplus.com} and writes a token cache JSON file at
  * {@code ~/.byteplus/login/cache/<sha1(login_session)>.json}. The cached
@@ -85,7 +85,7 @@ public class ConsoleLoginCredentialProvider implements Provider {
         Path cachePath = resolveCachePath();
         if (!Files.exists(cachePath)) {
             throw new ApiException(PROVIDER_NAME + ": console-login token cache not found: " + cachePath
-                    + "; please run `byteplus consolelogin login` first");
+                    + "; please run `bp login` first");
         }
 
         String content;
@@ -288,7 +288,7 @@ public class ConsoleLoginCredentialProvider implements Provider {
         } else if (accessToken.isJsonPrimitive() && accessToken.getAsJsonPrimitive().isString()) {
             String raw = accessToken.getAsString();
             try {
-                JsonElement parsed = JsonParser.parseString(raw);
+                JsonElement parsed = new JsonParser().parse(raw);
                 if (!parsed.isJsonObject()) {
                     throw new ApiException(PROVIDER_NAME
                             + ": access_token string is not a JSON object");
