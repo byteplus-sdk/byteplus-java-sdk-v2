@@ -37,7 +37,7 @@ class SsoPortalClient {
     private final Gson gson = new Gson();
 
     SsoPortalClient(String region) {
-        this.region = (region == null || region.trim().isEmpty()) ? "cn-beijing" : region.trim();
+        this.region = (region == null || region.trim().isEmpty()) ? "ap-southeast-1" : region.trim();
     }
 
     // ---- OAuth token refresh ------------------------------------------------
