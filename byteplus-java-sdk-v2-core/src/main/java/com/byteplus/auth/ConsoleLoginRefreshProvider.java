@@ -33,23 +33,35 @@ import java.time.format.DateTimeParseException;
  *       refresh_token, it retries with that token; otherwise the user must run
  *       {@code bp login} again.</li>
  * </ul>
+ *
+ * <p>{@code refresh()} is the only mutating method; {@code isExpired()} and
+ * {@code retrieve()} are pure reads. Concurrency control lives in the outer
+ * {@link CredentialProvider} via its read-write lock.
  */
 class ConsoleLoginRefreshProvider implements Provider {
 
-	private static final String PROVIDER_NAME = "ConsoleLoginCredentialProvider";
-	private static final long EXPIRE_BUFFER_SECONDS = 60;
+    private static final String PROVIDER_NAME = "ConsoleLoginCredentialProvider";
+    private static final long EXPIRE_BUFFER_SECONDS = 60;
 
-	private final String loginSession;
-	private final Path cacheDir;
+    private final String loginSession;
+    private final Path cacheDir;
+    private final ConsoleOAuthClientFactory oauthFactory;
 
-	private ConsoleLoginTokenCache cache;
-	private CredentialValue cachedValue;
-	private long expirationSeconds;
+    private ConsoleLoginTokenCache cache;
+    private CredentialValue cachedValue;
+    private long expirationSeconds;
 
-	ConsoleLoginRefreshProvider(String loginSession, Path cacheDir) {
-		this.loginSession = loginSession;
-		this.cacheDir = cacheDir;
-	}
+    ConsoleLoginRefreshProvider(String loginSession, Path cacheDir) {
+        this(loginSession, cacheDir, DEFAULT_FACTORY);
+    }
+
+    /** Test-only constructor accepting an OAuth factory for HTTP injection. */
+    ConsoleLoginRefreshProvider(String loginSession, Path cacheDir,
+                                ConsoleOAuthClientFactory oauthFactory) {
+        this.loginSession = loginSession;
+        this.cacheDir = cacheDir;
+        this.oauthFactory = oauthFactory;
+    }
 
     @Override
     public boolean isExpired() {
@@ -157,7 +169,7 @@ class ConsoleLoginRefreshProvider implements Provider {
                     + ": console-login cache lacks client_id; please run 'bp login' to regenerate.");
         }
 
-        ConsoleOAuthClient client = new ConsoleOAuthClient(c.getEndpointUrl());
+        ConsoleOAuthClient client = oauthFactory.create(c.getEndpointUrl());
         ConsoleOAuthClient.ConsoleTokenResponse resp =
                 client.refreshToken(c.getClientId(), c.getScope(), c.getRefreshToken());
 
@@ -173,9 +185,6 @@ class ConsoleLoginRefreshProvider implements Provider {
         }
         if (!isNullOrEmpty(resp.idToken)) {
             c.setIdToken(resp.idToken);
-        }
-        if (!isNullOrEmpty(resp.scope)) {
-            c.setScope(resp.scope);
         }
         if (!isNullOrEmpty(resp.tokenType)) {
             c.setTokenType(resp.tokenType);
@@ -218,12 +227,12 @@ class ConsoleLoginRefreshProvider implements Provider {
         return parsed;
     }
 
-	private Path resolveCachePath() throws ApiException {
-		if (cacheDir == null) {
-			throw new ApiException(PROVIDER_NAME + ": console-login cache directory is not resolved");
-		}
-		return cacheDir.resolve(computeCacheFileName(loginSession));
-	}
+    private Path resolveCachePath() throws ApiException {
+        if (cacheDir == null) {
+            throw new ApiException(PROVIDER_NAME + ": console-login cache directory is not resolved");
+        }
+        return cacheDir.resolve(computeCacheFileName(loginSession));
+    }
 
     private static String computeCacheFileName(String loginSession) throws ApiException {
         try {
@@ -313,4 +322,17 @@ class ConsoleLoginRefreshProvider implements Provider {
         @SerializedName("session_token")
         String sessionToken;
     }
+
+    /** Pluggable OAuth client factory; production uses DEFAULT_FACTORY. */
+    interface ConsoleOAuthClientFactory {
+        ConsoleOAuthClient create(String endpointUrl);
+    }
+
+    private static final ConsoleOAuthClientFactory DEFAULT_FACTORY =
+            new ConsoleOAuthClientFactory() {
+                @Override
+                public ConsoleOAuthClient create(String endpointUrl) {
+                    return new ConsoleOAuthClient(endpointUrl);
+                }
+            };
 }

@@ -218,30 +218,30 @@ public class CLIConfigCredentialProvider implements Provider {
         }
     }
 
-	/**
-	 * Load a console-login refresh provider from the given profile.
-	 *
-	 * <p>Reads the {@code login-session} field from the profile, then delegates
-	 * to {@link ConsoleLoginRefreshProvider} which consumes the token cache file
-	 * written by the {@code bp login} CLI command.
-	 */
-	private Provider loadConsoleLoginProvider(Map<String, Object> profileData, String profile)
-			throws ApiException {
+    /**
+     * Load a console-login refresh provider from the given profile.
+     *
+     * <p>Reads the {@code login-session} field from the profile, then delegates
+     * to {@link ConsoleLoginRefreshProvider} which consumes the token cache file
+     * written by the {@code bp login} CLI command.
+     */
+    private Provider loadConsoleLoginProvider(Map<String, Object> profileData, String profile)
+            throws ApiException {
         String loginSession = getStringValue(profileData, "login-session");
         if (isNullOrEmpty(loginSession)) {
             throw new ApiException(PROVIDER_NAME
                     + ": login-session not found in console-login profile '" + profile + "'");
         }
-		Path configDir = resolveConfigPath().getParent();
-		String envCacheDir = System.getenv(LOGIN_CACHE_DIRECTORY_ENV);
-		Path cacheDir = !isNullOrEmpty(envCacheDir)
-				? Paths.get(envCacheDir).toAbsolutePath().normalize()
-				: (configDir != null ? configDir.resolve("login").resolve("cache") : null);
+        Path configDir = resolveConfigPath().getParent();
+        String envCacheDir = System.getenv(LOGIN_CACHE_DIRECTORY_ENV);
+        Path cacheDir = !isNullOrEmpty(envCacheDir)
+                ? Paths.get(envCacheDir).toAbsolutePath().normalize()
+                : (configDir != null ? configDir.resolve("login").resolve("cache") : null);
 
-		Provider d = new ConsoleLoginRefreshProvider(loginSession, cacheDir);
-		d.refresh();
-		return d;
-	}
+        Provider d = new ConsoleLoginRefreshProvider(loginSession, cacheDir);
+        d.refresh();
+        return d;
+    }
 
     @SuppressWarnings("unchecked")
     private Provider loadSsoProvider(Map<String, Object> profileData, String profile,
