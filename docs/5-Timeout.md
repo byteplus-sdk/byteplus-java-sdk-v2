@@ -1,4 +1,4 @@
-[← Proxy](4-Proxy.md) | Timeout[(中文)](4-Timeout-zh.md) | [Retry →](6-Retry.md)
+[← Proxy](4-Proxy.md) | Timeout[(中文)](5-Timeout-zh.md) | [Retry →](6-Retry.md)
 
 ---
 
@@ -33,4 +33,4 @@ public class SampleCode {
 
 ---
 
-[← Proxy](4-Proxy.md) | Timeout[(中文)](4-Timeout-zh.md) | [Retry →](6-Retry.md)
+[← Proxy](4-Proxy.md) | Timeout[(中文)](5-Timeout-zh.md) | [Retry →](6-Retry.md)

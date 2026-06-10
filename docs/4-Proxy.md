@@ -1,4 +1,4 @@
-[← Transport](3-Transport.md) | Proxy[(中文)](3-Transport-zh.md) | [Timeout →](5-Timeout.md)
+[← Transport](3-Transport.md) | Proxy[(中文)](4-Proxy-zh.md) | [Timeout →](5-Timeout.md)
 
 ---
 
@@ -37,4 +37,4 @@ Priority: code > environment variables.
 
 ---
 
-[← Transport](3-Transport.md) | Proxy[(中文)](3-Transport-zh.md) | [Timeout →](5-Timeout.md)
+[← Transport](3-Transport.md) | Proxy[(中文)](4-Proxy-zh.md) | [Timeout →](5-Timeout.md)
