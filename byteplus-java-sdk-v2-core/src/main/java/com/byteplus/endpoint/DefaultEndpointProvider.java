@@ -186,6 +186,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- vmp ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vmp", new ServiceEndpointInfo(
+                "vmp",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- redis ---------------------------
         DEFAULT_ENDPOINT_MAP.put("redis", new ServiceEndpointInfo(
                 "redis",

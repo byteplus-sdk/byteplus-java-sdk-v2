@@ -14,6 +14,7 @@ package com.byteplus.vmp.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.vmp.model.ExclusiveResourceConfigForGetWorkspaceOutput;
 import com.byteplus.vmp.model.InstanceTypeForGetWorkspaceOutput;
 import com.byteplus.vmp.model.QuotaForGetWorkspaceOutput;
 import com.byteplus.vmp.model.TagForGetWorkspaceOutput;
@@ -35,6 +36,12 @@ import javax.validation.Valid;
 
 
 public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("AuthType")
+  private String authType = null;
+
+  @SerializedName("ChargeType")
+  private String chargeType = null;
+
   @SerializedName("CreateTime")
   private String createTime = null;
 
@@ -43,6 +50,9 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
 
   @SerializedName("Description")
   private String description = null;
+
+  @SerializedName("ExclusiveResourceConfig")
+  private ExclusiveResourceConfigForGetWorkspaceOutput exclusiveResourceConfig = null;
 
   @SerializedName("Id")
   private String id = null;
@@ -61,6 +71,9 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
 
   @SerializedName("ProjectName")
   private String projectName = null;
+
+  @SerializedName("PrometheusFederateEndpoint")
+  private String prometheusFederateEndpoint = null;
 
   @SerializedName("PrometheusPushEndpoint")
   private String prometheusPushEndpoint = null;
@@ -103,6 +116,42 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
 
   @SerializedName("Username")
   private String username = null;
+
+  public GetWorkspaceResponse authType(String authType) {
+    this.authType = authType;
+    return this;
+  }
+
+   /**
+   * Get authType
+   * @return authType
+  **/
+  @Schema(description = "")
+  public String getAuthType() {
+    return authType;
+  }
+
+  public void setAuthType(String authType) {
+    this.authType = authType;
+  }
+
+  public GetWorkspaceResponse chargeType(String chargeType) {
+    this.chargeType = chargeType;
+    return this;
+  }
+
+   /**
+   * Get chargeType
+   * @return chargeType
+  **/
+  @Schema(description = "")
+  public String getChargeType() {
+    return chargeType;
+  }
+
+  public void setChargeType(String chargeType) {
+    this.chargeType = chargeType;
+  }
 
   public GetWorkspaceResponse createTime(String createTime) {
     this.createTime = createTime;
@@ -156,6 +205,25 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public GetWorkspaceResponse exclusiveResourceConfig(ExclusiveResourceConfigForGetWorkspaceOutput exclusiveResourceConfig) {
+    this.exclusiveResourceConfig = exclusiveResourceConfig;
+    return this;
+  }
+
+   /**
+   * Get exclusiveResourceConfig
+   * @return exclusiveResourceConfig
+  **/
+  @Valid
+  @Schema(description = "")
+  public ExclusiveResourceConfigForGetWorkspaceOutput getExclusiveResourceConfig() {
+    return exclusiveResourceConfig;
+  }
+
+  public void setExclusiveResourceConfig(ExclusiveResourceConfigForGetWorkspaceOutput exclusiveResourceConfig) {
+    this.exclusiveResourceConfig = exclusiveResourceConfig;
   }
 
   public GetWorkspaceResponse id(String id) {
@@ -265,6 +333,24 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
 
   public void setProjectName(String projectName) {
     this.projectName = projectName;
+  }
+
+  public GetWorkspaceResponse prometheusFederateEndpoint(String prometheusFederateEndpoint) {
+    this.prometheusFederateEndpoint = prometheusFederateEndpoint;
+    return this;
+  }
+
+   /**
+   * Get prometheusFederateEndpoint
+   * @return prometheusFederateEndpoint
+  **/
+  @Schema(description = "")
+  public String getPrometheusFederateEndpoint() {
+    return prometheusFederateEndpoint;
+  }
+
+  public void setPrometheusFederateEndpoint(String prometheusFederateEndpoint) {
+    this.prometheusFederateEndpoint = prometheusFederateEndpoint;
   }
 
   public GetWorkspaceResponse prometheusPushEndpoint(String prometheusPushEndpoint) {
@@ -539,15 +625,19 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
       return false;
     }
     GetWorkspaceResponse getWorkspaceResponse = (GetWorkspaceResponse) o;
-    return Objects.equals(this.createTime, getWorkspaceResponse.createTime) &&
+    return Objects.equals(this.authType, getWorkspaceResponse.authType) &&
+        Objects.equals(this.chargeType, getWorkspaceResponse.chargeType) &&
+        Objects.equals(this.createTime, getWorkspaceResponse.createTime) &&
         Objects.equals(this.deleteProtectionEnabled, getWorkspaceResponse.deleteProtectionEnabled) &&
         Objects.equals(this.description, getWorkspaceResponse.description) &&
+        Objects.equals(this.exclusiveResourceConfig, getWorkspaceResponse.exclusiveResourceConfig) &&
         Objects.equals(this.id, getWorkspaceResponse.id) &&
         Objects.equals(this.instanceType, getWorkspaceResponse.instanceType) &&
         Objects.equals(this.instanceTypeId, getWorkspaceResponse.instanceTypeId) &&
         Objects.equals(this.name, getWorkspaceResponse.name) &&
         Objects.equals(this.overdueReclaimTime, getWorkspaceResponse.overdueReclaimTime) &&
         Objects.equals(this.projectName, getWorkspaceResponse.projectName) &&
+        Objects.equals(this.prometheusFederateEndpoint, getWorkspaceResponse.prometheusFederateEndpoint) &&
         Objects.equals(this.prometheusPushEndpoint, getWorkspaceResponse.prometheusPushEndpoint) &&
         Objects.equals(this.prometheusPushIntranetEndpoint, getWorkspaceResponse.prometheusPushIntranetEndpoint) &&
         Objects.equals(this.prometheusQueryEndpoint, getWorkspaceResponse.prometheusQueryEndpoint) &&
@@ -566,7 +656,7 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(createTime, deleteProtectionEnabled, description, id, instanceType, instanceTypeId, name, overdueReclaimTime, projectName, prometheusPushEndpoint, prometheusPushIntranetEndpoint, prometheusQueryEndpoint, prometheusQueryIntranetEndpoint, prometheusWriteEndpoint, prometheusWriteIntranetEndpoint, publicAccessEnabled, publicQueryBandwidth, publicWriteBandwidth, quota, searchLatencyOffset, status, tags, username);
+    return Objects.hash(authType, chargeType, createTime, deleteProtectionEnabled, description, exclusiveResourceConfig, id, instanceType, instanceTypeId, name, overdueReclaimTime, projectName, prometheusFederateEndpoint, prometheusPushEndpoint, prometheusPushIntranetEndpoint, prometheusQueryEndpoint, prometheusQueryIntranetEndpoint, prometheusWriteEndpoint, prometheusWriteIntranetEndpoint, publicAccessEnabled, publicQueryBandwidth, publicWriteBandwidth, quota, searchLatencyOffset, status, tags, username);
   }
 
 
@@ -575,15 +665,19 @@ public class GetWorkspaceResponse extends com.byteplus.model.AbstractResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetWorkspaceResponse {\n");
     
+    sb.append("    authType: ").append(toIndentedString(authType)).append("\n");
+    sb.append("    chargeType: ").append(toIndentedString(chargeType)).append("\n");
     sb.append("    createTime: ").append(toIndentedString(createTime)).append("\n");
     sb.append("    deleteProtectionEnabled: ").append(toIndentedString(deleteProtectionEnabled)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    exclusiveResourceConfig: ").append(toIndentedString(exclusiveResourceConfig)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    instanceType: ").append(toIndentedString(instanceType)).append("\n");
     sb.append("    instanceTypeId: ").append(toIndentedString(instanceTypeId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    overdueReclaimTime: ").append(toIndentedString(overdueReclaimTime)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
+    sb.append("    prometheusFederateEndpoint: ").append(toIndentedString(prometheusFederateEndpoint)).append("\n");
     sb.append("    prometheusPushEndpoint: ").append(toIndentedString(prometheusPushEndpoint)).append("\n");
     sb.append("    prometheusPushIntranetEndpoint: ").append(toIndentedString(prometheusPushIntranetEndpoint)).append("\n");
     sb.append("    prometheusQueryEndpoint: ").append(toIndentedString(prometheusQueryEndpoint)).append("\n");
