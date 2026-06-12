@@ -202,6 +202,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- vs ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vs", new ServiceEndpointInfo(
+                "vs",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
