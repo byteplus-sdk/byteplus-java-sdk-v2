@@ -57,6 +57,9 @@ public class ListForListBillDetailOutput {
   @SerializedName("BusinessMode")
   private String businessMode = null;
 
+  @SerializedName("ChargeItemCode")
+  private String chargeItemCode = null;
+
   @SerializedName("ConfigName")
   private String configName = null;
 
@@ -183,6 +186,15 @@ public class ListForListBillDetailOutput {
   @SerializedName("PayerUserName")
   private String payerUserName = null;
 
+  @SerializedName("PickupVoucherCountUnit")
+  private String pickupVoucherCountUnit = null;
+
+  @SerializedName("PickupVoucherDeductCount")
+  private String pickupVoucherDeductCount = null;
+
+  @SerializedName("PickupVoucherID")
+  private String pickupVoucherID = null;
+
   @SerializedName("PosttaxAmount")
   private String posttaxAmount = null;
 
@@ -200,6 +212,9 @@ public class ListForListBillDetailOutput {
 
   @SerializedName("Price")
   private String price = null;
+
+  @SerializedName("PriceFactor")
+  private String priceFactor = null;
 
   @SerializedName("PriceInterval")
   private String priceInterval = null;
@@ -239,6 +254,9 @@ public class ListForListBillDetailOutput {
 
   @SerializedName("SavingPlanDeductionDiscountAmount")
   private String savingPlanDeductionDiscountAmount = null;
+
+  @SerializedName("SavingPlanDeductionDiscountTotalAmount")
+  private String savingPlanDeductionDiscountTotalAmount = null;
 
   @SerializedName("SavingPlanDeductionSpID")
   private String savingPlanDeductionSpID = null;
@@ -478,6 +496,24 @@ public class ListForListBillDetailOutput {
 
   public void setBusinessMode(String businessMode) {
     this.businessMode = businessMode;
+  }
+
+  public ListForListBillDetailOutput chargeItemCode(String chargeItemCode) {
+    this.chargeItemCode = chargeItemCode;
+    return this;
+  }
+
+   /**
+   * Get chargeItemCode
+   * @return chargeItemCode
+  **/
+  @Schema(description = "")
+  public String getChargeItemCode() {
+    return chargeItemCode;
+  }
+
+  public void setChargeItemCode(String chargeItemCode) {
+    this.chargeItemCode = chargeItemCode;
   }
 
   public ListForListBillDetailOutput configName(String configName) {
@@ -1236,6 +1272,60 @@ public class ListForListBillDetailOutput {
     this.payerUserName = payerUserName;
   }
 
+  public ListForListBillDetailOutput pickupVoucherCountUnit(String pickupVoucherCountUnit) {
+    this.pickupVoucherCountUnit = pickupVoucherCountUnit;
+    return this;
+  }
+
+   /**
+   * Get pickupVoucherCountUnit
+   * @return pickupVoucherCountUnit
+  **/
+  @Schema(description = "")
+  public String getPickupVoucherCountUnit() {
+    return pickupVoucherCountUnit;
+  }
+
+  public void setPickupVoucherCountUnit(String pickupVoucherCountUnit) {
+    this.pickupVoucherCountUnit = pickupVoucherCountUnit;
+  }
+
+  public ListForListBillDetailOutput pickupVoucherDeductCount(String pickupVoucherDeductCount) {
+    this.pickupVoucherDeductCount = pickupVoucherDeductCount;
+    return this;
+  }
+
+   /**
+   * Get pickupVoucherDeductCount
+   * @return pickupVoucherDeductCount
+  **/
+  @Schema(description = "")
+  public String getPickupVoucherDeductCount() {
+    return pickupVoucherDeductCount;
+  }
+
+  public void setPickupVoucherDeductCount(String pickupVoucherDeductCount) {
+    this.pickupVoucherDeductCount = pickupVoucherDeductCount;
+  }
+
+  public ListForListBillDetailOutput pickupVoucherID(String pickupVoucherID) {
+    this.pickupVoucherID = pickupVoucherID;
+    return this;
+  }
+
+   /**
+   * Get pickupVoucherID
+   * @return pickupVoucherID
+  **/
+  @Schema(description = "")
+  public String getPickupVoucherID() {
+    return pickupVoucherID;
+  }
+
+  public void setPickupVoucherID(String pickupVoucherID) {
+    this.pickupVoucherID = pickupVoucherID;
+  }
+
   public ListForListBillDetailOutput posttaxAmount(String posttaxAmount) {
     this.posttaxAmount = posttaxAmount;
     return this;
@@ -1342,6 +1432,24 @@ public class ListForListBillDetailOutput {
 
   public void setPrice(String price) {
     this.price = price;
+  }
+
+  public ListForListBillDetailOutput priceFactor(String priceFactor) {
+    this.priceFactor = priceFactor;
+    return this;
+  }
+
+   /**
+   * Get priceFactor
+   * @return priceFactor
+  **/
+  @Schema(description = "")
+  public String getPriceFactor() {
+    return priceFactor;
+  }
+
+  public void setPriceFactor(String priceFactor) {
+    this.priceFactor = priceFactor;
   }
 
   public ListForListBillDetailOutput priceInterval(String priceInterval) {
@@ -1576,6 +1684,24 @@ public class ListForListBillDetailOutput {
 
   public void setSavingPlanDeductionDiscountAmount(String savingPlanDeductionDiscountAmount) {
     this.savingPlanDeductionDiscountAmount = savingPlanDeductionDiscountAmount;
+  }
+
+  public ListForListBillDetailOutput savingPlanDeductionDiscountTotalAmount(String savingPlanDeductionDiscountTotalAmount) {
+    this.savingPlanDeductionDiscountTotalAmount = savingPlanDeductionDiscountTotalAmount;
+    return this;
+  }
+
+   /**
+   * Get savingPlanDeductionDiscountTotalAmount
+   * @return savingPlanDeductionDiscountTotalAmount
+  **/
+  @Schema(description = "")
+  public String getSavingPlanDeductionDiscountTotalAmount() {
+    return savingPlanDeductionDiscountTotalAmount;
+  }
+
+  public void setSavingPlanDeductionDiscountTotalAmount(String savingPlanDeductionDiscountTotalAmount) {
+    this.savingPlanDeductionDiscountTotalAmount = savingPlanDeductionDiscountTotalAmount;
   }
 
   public ListForListBillDetailOutput savingPlanDeductionSpID(String savingPlanDeductionSpID) {
@@ -2065,6 +2191,7 @@ public class ListForListBillDetailOutput {
         Objects.equals(this.billingMode, listForListBillDetailOutput.billingMode) &&
         Objects.equals(this.busiPeriod, listForListBillDetailOutput.busiPeriod) &&
         Objects.equals(this.businessMode, listForListBillDetailOutput.businessMode) &&
+        Objects.equals(this.chargeItemCode, listForListBillDetailOutput.chargeItemCode) &&
         Objects.equals(this.configName, listForListBillDetailOutput.configName) &&
         Objects.equals(this.configurationCode, listForListBillDetailOutput.configurationCode) &&
         Objects.equals(this.count, listForListBillDetailOutput.count) &&
@@ -2107,12 +2234,16 @@ public class ListForListBillDetailOutput {
         Objects.equals(this.payerCustomerName, listForListBillDetailOutput.payerCustomerName) &&
         Objects.equals(this.payerID, listForListBillDetailOutput.payerID) &&
         Objects.equals(this.payerUserName, listForListBillDetailOutput.payerUserName) &&
+        Objects.equals(this.pickupVoucherCountUnit, listForListBillDetailOutput.pickupVoucherCountUnit) &&
+        Objects.equals(this.pickupVoucherDeductCount, listForListBillDetailOutput.pickupVoucherDeductCount) &&
+        Objects.equals(this.pickupVoucherID, listForListBillDetailOutput.pickupVoucherID) &&
         Objects.equals(this.posttaxAmount, listForListBillDetailOutput.posttaxAmount) &&
         Objects.equals(this.preTaxPayableAmount, listForListBillDetailOutput.preTaxPayableAmount) &&
         Objects.equals(this.preferentialBillAmount, listForListBillDetailOutput.preferentialBillAmount) &&
         Objects.equals(this.pretaxAmount, listForListBillDetailOutput.pretaxAmount) &&
         Objects.equals(this.pretaxRealValue, listForListBillDetailOutput.pretaxRealValue) &&
         Objects.equals(this.price, listForListBillDetailOutput.price) &&
+        Objects.equals(this.priceFactor, listForListBillDetailOutput.priceFactor) &&
         Objects.equals(this.priceInterval, listForListBillDetailOutput.priceInterval) &&
         Objects.equals(this.priceUnit, listForListBillDetailOutput.priceUnit) &&
         Objects.equals(this.product, listForListBillDetailOutput.product) &&
@@ -2126,6 +2257,7 @@ public class ListForListBillDetailOutput {
         Objects.equals(this.resourceID, listForListBillDetailOutput.resourceID) &&
         Objects.equals(this.roundAmount, listForListBillDetailOutput.roundAmount) &&
         Objects.equals(this.savingPlanDeductionDiscountAmount, listForListBillDetailOutput.savingPlanDeductionDiscountAmount) &&
+        Objects.equals(this.savingPlanDeductionDiscountTotalAmount, listForListBillDetailOutput.savingPlanDeductionDiscountTotalAmount) &&
         Objects.equals(this.savingPlanDeductionSpID, listForListBillDetailOutput.savingPlanDeductionSpID) &&
         Objects.equals(this.savingPlanOriginalAmount, listForListBillDetailOutput.savingPlanOriginalAmount) &&
         Objects.equals(this.sellerCustomerName, listForListBillDetailOutput.sellerCustomerName) &&
@@ -2156,7 +2288,7 @@ public class ListForListBillDetailOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategory, billDetailId, billID, billPeriod, billingFunction, billingMethodCode, billingMode, busiPeriod, businessMode, configName, configurationCode, count, countryRegion, couponAmount, creditCarriedAmount, currency, currencySettlement, deductionCount, deductionUseDuration, discountBillAmount, discountBizBillingFunction, discountBizMeasureInterval, discountBizUnitPrice, discountBizUnitPriceInterval, discountInfo, effectiveFactor, element, elementCode, exchangeRate, expandField, expenseBeginTime, expenseDate, expenseEndTime, factor, factorCode, formula, instanceName, instanceNo, mainContractNumber, marketPrice, measureInterval, originalBillAmount, originalOrderNo, ownerCustomerName, ownerID, ownerUserName, paidAmount, payableAmount, payerCustomerName, payerID, payerUserName, posttaxAmount, preTaxPayableAmount, preferentialBillAmount, pretaxAmount, pretaxRealValue, price, priceInterval, priceUnit, product, productZh, project, projectDisplayName, realValue, region, regionCode, reservationInstance, resourceID, roundAmount, savingPlanDeductionDiscountAmount, savingPlanDeductionSpID, savingPlanOriginalAmount, sellerCustomerName, sellerID, sellerUserName, sellingMode, settlePayableAmount, settlePosttaxAmount, settlePreTaxPayableAmount, settlePretaxAmount, settlePretaxRealValue, settleRealValue, settleTax, settlementType, solutionZh, subjectName, tag, tax, taxRate, tradeTime, unit, unpaidAmount, useDuration, useDurationUnit, zone, zoneCode);
+    return Objects.hash(billCategory, billDetailId, billID, billPeriod, billingFunction, billingMethodCode, billingMode, busiPeriod, businessMode, chargeItemCode, configName, configurationCode, count, countryRegion, couponAmount, creditCarriedAmount, currency, currencySettlement, deductionCount, deductionUseDuration, discountBillAmount, discountBizBillingFunction, discountBizMeasureInterval, discountBizUnitPrice, discountBizUnitPriceInterval, discountInfo, effectiveFactor, element, elementCode, exchangeRate, expandField, expenseBeginTime, expenseDate, expenseEndTime, factor, factorCode, formula, instanceName, instanceNo, mainContractNumber, marketPrice, measureInterval, originalBillAmount, originalOrderNo, ownerCustomerName, ownerID, ownerUserName, paidAmount, payableAmount, payerCustomerName, payerID, payerUserName, pickupVoucherCountUnit, pickupVoucherDeductCount, pickupVoucherID, posttaxAmount, preTaxPayableAmount, preferentialBillAmount, pretaxAmount, pretaxRealValue, price, priceFactor, priceInterval, priceUnit, product, productZh, project, projectDisplayName, realValue, region, regionCode, reservationInstance, resourceID, roundAmount, savingPlanDeductionDiscountAmount, savingPlanDeductionDiscountTotalAmount, savingPlanDeductionSpID, savingPlanOriginalAmount, sellerCustomerName, sellerID, sellerUserName, sellingMode, settlePayableAmount, settlePosttaxAmount, settlePreTaxPayableAmount, settlePretaxAmount, settlePretaxRealValue, settleRealValue, settleTax, settlementType, solutionZh, subjectName, tag, tax, taxRate, tradeTime, unit, unpaidAmount, useDuration, useDurationUnit, zone, zoneCode);
   }
 
 
@@ -2174,6 +2306,7 @@ public class ListForListBillDetailOutput {
     sb.append("    billingMode: ").append(toIndentedString(billingMode)).append("\n");
     sb.append("    busiPeriod: ").append(toIndentedString(busiPeriod)).append("\n");
     sb.append("    businessMode: ").append(toIndentedString(businessMode)).append("\n");
+    sb.append("    chargeItemCode: ").append(toIndentedString(chargeItemCode)).append("\n");
     sb.append("    configName: ").append(toIndentedString(configName)).append("\n");
     sb.append("    configurationCode: ").append(toIndentedString(configurationCode)).append("\n");
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
@@ -2216,12 +2349,16 @@ public class ListForListBillDetailOutput {
     sb.append("    payerCustomerName: ").append(toIndentedString(payerCustomerName)).append("\n");
     sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    payerUserName: ").append(toIndentedString(payerUserName)).append("\n");
+    sb.append("    pickupVoucherCountUnit: ").append(toIndentedString(pickupVoucherCountUnit)).append("\n");
+    sb.append("    pickupVoucherDeductCount: ").append(toIndentedString(pickupVoucherDeductCount)).append("\n");
+    sb.append("    pickupVoucherID: ").append(toIndentedString(pickupVoucherID)).append("\n");
     sb.append("    posttaxAmount: ").append(toIndentedString(posttaxAmount)).append("\n");
     sb.append("    preTaxPayableAmount: ").append(toIndentedString(preTaxPayableAmount)).append("\n");
     sb.append("    preferentialBillAmount: ").append(toIndentedString(preferentialBillAmount)).append("\n");
     sb.append("    pretaxAmount: ").append(toIndentedString(pretaxAmount)).append("\n");
     sb.append("    pretaxRealValue: ").append(toIndentedString(pretaxRealValue)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
+    sb.append("    priceFactor: ").append(toIndentedString(priceFactor)).append("\n");
     sb.append("    priceInterval: ").append(toIndentedString(priceInterval)).append("\n");
     sb.append("    priceUnit: ").append(toIndentedString(priceUnit)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
@@ -2235,6 +2372,7 @@ public class ListForListBillDetailOutput {
     sb.append("    resourceID: ").append(toIndentedString(resourceID)).append("\n");
     sb.append("    roundAmount: ").append(toIndentedString(roundAmount)).append("\n");
     sb.append("    savingPlanDeductionDiscountAmount: ").append(toIndentedString(savingPlanDeductionDiscountAmount)).append("\n");
+    sb.append("    savingPlanDeductionDiscountTotalAmount: ").append(toIndentedString(savingPlanDeductionDiscountTotalAmount)).append("\n");
     sb.append("    savingPlanDeductionSpID: ").append(toIndentedString(savingPlanDeductionSpID)).append("\n");
     sb.append("    savingPlanOriginalAmount: ").append(toIndentedString(savingPlanOriginalAmount)).append("\n");
     sb.append("    sellerCustomerName: ").append(toIndentedString(sellerCustomerName)).append("\n");

@@ -14,7 +14,7 @@ package com.byteplus.vmp.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.vmp.model.CustomHeadersForGetExternalPrometheusOutput;
+import com.byteplus.vmp.model.CustomHeaderKVForGetExternalPrometheusOutput;
 import com.byteplus.vmp.model.TagForGetExternalPrometheusOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -40,8 +40,8 @@ public class GetExternalPrometheusResponse extends com.byteplus.model.AbstractRe
   @SerializedName("CreateTime")
   private String createTime = null;
 
-  @SerializedName("CustomHeaders")
-  private CustomHeadersForGetExternalPrometheusOutput customHeaders = null;
+  @SerializedName("CustomHeaderKVs")
+  private List<CustomHeaderKVForGetExternalPrometheusOutput> customHeaderKVs = null;
 
   @SerializedName("Description")
   private String description = null;
@@ -115,23 +115,31 @@ public class GetExternalPrometheusResponse extends com.byteplus.model.AbstractRe
     this.createTime = createTime;
   }
 
-  public GetExternalPrometheusResponse customHeaders(CustomHeadersForGetExternalPrometheusOutput customHeaders) {
-    this.customHeaders = customHeaders;
+  public GetExternalPrometheusResponse customHeaderKVs(List<CustomHeaderKVForGetExternalPrometheusOutput> customHeaderKVs) {
+    this.customHeaderKVs = customHeaderKVs;
+    return this;
+  }
+
+  public GetExternalPrometheusResponse addCustomHeaderKVsItem(CustomHeaderKVForGetExternalPrometheusOutput customHeaderKVsItem) {
+    if (this.customHeaderKVs == null) {
+      this.customHeaderKVs = new ArrayList<CustomHeaderKVForGetExternalPrometheusOutput>();
+    }
+    this.customHeaderKVs.add(customHeaderKVsItem);
     return this;
   }
 
    /**
-   * Get customHeaders
-   * @return customHeaders
+   * Get customHeaderKVs
+   * @return customHeaderKVs
   **/
   @Valid
   @Schema(description = "")
-  public CustomHeadersForGetExternalPrometheusOutput getCustomHeaders() {
-    return customHeaders;
+  public List<CustomHeaderKVForGetExternalPrometheusOutput> getCustomHeaderKVs() {
+    return customHeaderKVs;
   }
 
-  public void setCustomHeaders(CustomHeadersForGetExternalPrometheusOutput customHeaders) {
-    this.customHeaders = customHeaders;
+  public void setCustomHeaderKVs(List<CustomHeaderKVForGetExternalPrometheusOutput> customHeaderKVs) {
+    this.customHeaderKVs = customHeaderKVs;
   }
 
   public GetExternalPrometheusResponse description(String description) {
@@ -379,7 +387,7 @@ public class GetExternalPrometheusResponse extends com.byteplus.model.AbstractRe
     GetExternalPrometheusResponse getExternalPrometheusResponse = (GetExternalPrometheusResponse) o;
     return Objects.equals(this.authType, getExternalPrometheusResponse.authType) &&
         Objects.equals(this.createTime, getExternalPrometheusResponse.createTime) &&
-        Objects.equals(this.customHeaders, getExternalPrometheusResponse.customHeaders) &&
+        Objects.equals(this.customHeaderKVs, getExternalPrometheusResponse.customHeaderKVs) &&
         Objects.equals(this.description, getExternalPrometheusResponse.description) &&
         Objects.equals(this.id, getExternalPrometheusResponse.id) &&
         Objects.equals(this.maxQueryRate, getExternalPrometheusResponse.maxQueryRate) &&
@@ -396,7 +404,7 @@ public class GetExternalPrometheusResponse extends com.byteplus.model.AbstractRe
 
   @Override
   public int hashCode() {
-    return Objects.hash(authType, createTime, customHeaders, description, id, maxQueryRate, name, projectName, status, subnetIds, tags, type, URL, username, vpCId);
+    return Objects.hash(authType, createTime, customHeaderKVs, description, id, maxQueryRate, name, projectName, status, subnetIds, tags, type, URL, username, vpCId);
   }
 
 
@@ -407,7 +415,7 @@ public class GetExternalPrometheusResponse extends com.byteplus.model.AbstractRe
     
     sb.append("    authType: ").append(toIndentedString(authType)).append("\n");
     sb.append("    createTime: ").append(toIndentedString(createTime)).append("\n");
-    sb.append("    customHeaders: ").append(toIndentedString(customHeaders)).append("\n");
+    sb.append("    customHeaderKVs: ").append(toIndentedString(customHeaderKVs)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    maxQueryRate: ").append(toIndentedString(maxQueryRate)).append("\n");

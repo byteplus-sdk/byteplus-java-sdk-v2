@@ -138,6 +138,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- cpaas ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("cpaas", new ServiceEndpointInfo(
+                "cpaas",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- vepfs ---------------------------
         DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo(
                 "vepfs",
@@ -158,6 +166,38 @@ public class DefaultEndpointProvider implements EndpointResolver {
         DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(
                 "kickart",
                 true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- rds_mssql ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("rds_mssql", new ServiceEndpointInfo(
+                "rds_mssql",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- sts ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("sts", new ServiceEndpointInfo(
+                "sts",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- vmp ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vmp", new ServiceEndpointInfo(
+                "vmp",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
+        // --------------------------- redis ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("redis", new ServiceEndpointInfo(
+                "redis",
+                false,
                 "",
                 ENDPOINT,
                 createRegionEndpointMap()
