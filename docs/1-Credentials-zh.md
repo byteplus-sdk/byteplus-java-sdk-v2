@@ -80,6 +80,7 @@ setx BYTEPLUS_SESSION_TOKEN yourSessionToken /M
 - CLI 配置：
   - `BYTEPLUS_CLI_CONFIG_FILE`
   - `BYTEPLUS_PROFILE`
+  - `BYTEPLUS_LOGIN_CACHE_DIRECTORY`
 - ECS 元数据：
   - `BYTEPLUS_ECS_METADATA`
   - `BYTEPLUS_ECS_METADATA_DISABLED`
@@ -354,7 +355,11 @@ public class SampleCode {
   - 可选：`session-token` —— 当源 `access-key` / `secret-key` 本身是 STS 临时凭证（比如 SSO/OIDC 下发的），这个 token 会带到链式 AssumeRole 请求的 `X-Security-Token` header。
 - `OIDC`（委托给 `OidcCredentialProvider`）
 - `EcsRole`（委托给 `EcsRoleCredentialProvider`）
-- `SSO`
+- `SSO`（从 CLI sso 缓存读取 STS 凭证；SDK 自动在内存中刷新 access token，永不写入缓存文件）
+- `console-login`（从 CLI console-login 缓存读取 STS 凭证；SDK 通过 OAuth `refresh_token` 在内存中自动刷新，永不写入缓存文件）
+  - 必填：`login-session`
+  - 请先运行 `bp login`，确保 CLI 将 `mode: "console-login"` 和 `login-session` 写入所选 profile。
+  - SDK 会读取 `bp login` 写入的缓存文件：`<cli-config-dir>/login/cache/<sha1(login_session)>.json`。当缓存中的 STS 凭证接近过期时，SDK 会通过 OAuth `refresh_token` grant 自动刷新；刷新结果只更新内存状态，永不写回缓存文件。
 
 > mode 不区分大小写。
 
@@ -377,6 +382,29 @@ public class SampleCode {
     }
 }
 ```
+
+#### 运行时刷新行为（sso / console-login）
+
+`sso` 与 `console-login` 模式下，SDK 自管理刷新，且**永不写入任何本地文件**：
+
+- **配置响应式刷新**：当 `CLIConfigCredentialProvider` 刷新时，SDK 会重新读取
+  `config.json` 并重建凭证代理，使 profile、mode 或 AK 的变更在下次刷新边界
+  自动生效。在单次过期周期内，代理会在内存中维护 token cache 的快照。
+- **只读磁盘**：`config.json`、`~/.byteplus/sso/cache/*.json` 与
+  `~/.byteplus/login/cache/*.json` 会在刷新时读取；当 OAuth 服务端拒绝内存中的
+  refresh token 时，还会再读一次磁盘执行 `invalid_grant` fallback。SDK 永不写入。
+- **内存刷新**：缓存的 `access_token` 进入到期窗口（60 秒）后，SDK 使用缓存的
+  `refresh_token` 调 OAuth `/token` 端点续期，并只更新内存状态。SSO 随后调用
+  CloudIdentity Portal `GetRoleCredentials`；console-login 则从刷新后的 signin
+  access token 中解析 STS 凭证。
+- **invalid_grant fallback**：当 OAuth 拒绝 refresh token 时，SDK 会重新读取一次
+  cache 文件。若磁盘上的 `refresh_token` 与内存不同（说明 `bp login` /
+  `bp sso login` 在期间更新过），SDK 会用磁盘 refresh token 重试；否则报错并
+  提示用户运行 `bp login`（console-login）或 `bp sso login`（SSO）。
+- **refresh_token 过期**：当内存和磁盘上的 refresh token 都不可用时，SDK 会抛出
+  明确错误，提示用户重新运行 `bp login`（console-login）或 `bp sso login`（SSO）。
+- **并发**：刷新由 `CredentialProvider` 串行化，多个并发调用方会共享同一次
+  in-flight refresh。
 
 ### ECS Role 凭证 Provider
 
