@@ -202,6 +202,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- resourcecenter ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("resourcecenter", new ServiceEndpointInfo(
+                "resourcecenter",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
