@@ -210,6 +210,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- rds_mysql ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("rds_mysql", new ServiceEndpointInfo(
+                "rds_mysql",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法

@@ -24,31 +24,52 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * SaveAsParameterTemplateResponse
+ * KeywordRouteStrategyForCreateDBEndpointInput
  */
 
 
 
-public class SaveAsParameterTemplateResponse extends com.byteplus.model.AbstractResponse {
-  @SerializedName("TemplateId")
-  private String templateId = null;
+public class KeywordRouteStrategyForCreateDBEndpointInput {
+  @SerializedName("NodeType")
+  private String nodeType = null;
 
-  public SaveAsParameterTemplateResponse templateId(String templateId) {
-    this.templateId = templateId;
+  @SerializedName("SQLKeyword")
+  private String sqLKeyword = null;
+
+  public KeywordRouteStrategyForCreateDBEndpointInput nodeType(String nodeType) {
+    this.nodeType = nodeType;
     return this;
   }
 
    /**
-   * Get templateId
-   * @return templateId
+   * Get nodeType
+   * @return nodeType
   **/
   @Schema(description = "")
-  public String getTemplateId() {
-    return templateId;
+  public String getNodeType() {
+    return nodeType;
   }
 
-  public void setTemplateId(String templateId) {
-    this.templateId = templateId;
+  public void setNodeType(String nodeType) {
+    this.nodeType = nodeType;
+  }
+
+  public KeywordRouteStrategyForCreateDBEndpointInput sqLKeyword(String sqLKeyword) {
+    this.sqLKeyword = sqLKeyword;
+    return this;
+  }
+
+   /**
+   * Get sqLKeyword
+   * @return sqLKeyword
+  **/
+  @Schema(description = "")
+  public String getSqLKeyword() {
+    return sqLKeyword;
+  }
+
+  public void setSqLKeyword(String sqLKeyword) {
+    this.sqLKeyword = sqLKeyword;
   }
 
 
@@ -60,22 +81,24 @@ public class SaveAsParameterTemplateResponse extends com.byteplus.model.Abstract
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SaveAsParameterTemplateResponse saveAsParameterTemplateResponse = (SaveAsParameterTemplateResponse) o;
-    return Objects.equals(this.templateId, saveAsParameterTemplateResponse.templateId);
+    KeywordRouteStrategyForCreateDBEndpointInput keywordRouteStrategyForCreateDBEndpointInput = (KeywordRouteStrategyForCreateDBEndpointInput) o;
+    return Objects.equals(this.nodeType, keywordRouteStrategyForCreateDBEndpointInput.nodeType) &&
+        Objects.equals(this.sqLKeyword, keywordRouteStrategyForCreateDBEndpointInput.sqLKeyword);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(templateId);
+    return Objects.hash(nodeType, sqLKeyword);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SaveAsParameterTemplateResponse {\n");
+    sb.append("class KeywordRouteStrategyForCreateDBEndpointInput {\n");
     
-    sb.append("    templateId: ").append(toIndentedString(templateId)).append("\n");
+    sb.append("    nodeType: ").append(toIndentedString(nodeType)).append("\n");
+    sb.append("    sqLKeyword: ").append(toIndentedString(sqLKeyword)).append("\n");
     sb.append("}");
     return sb.toString();
   }

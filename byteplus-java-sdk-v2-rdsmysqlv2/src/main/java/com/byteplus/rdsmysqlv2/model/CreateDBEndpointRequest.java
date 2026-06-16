@@ -14,6 +14,7 @@ package com.byteplus.rdsmysqlv2.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.rdsmysqlv2.model.CustomRouteStrategyForCreateDBEndpointInput;
 import com.byteplus.rdsmysqlv2.model.ReadOnlyNodeWeightForCreateDBEndpointInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -41,6 +42,9 @@ public class CreateDBEndpointRequest {
 
   @SerializedName("ConnectionPoolType")
   private String connectionPoolType = null;
+
+  @SerializedName("CustomRouteStrategy")
+  private CustomRouteStrategyForCreateDBEndpointInput customRouteStrategy = null;
 
   @SerializedName("Description")
   private String description = null;
@@ -145,6 +149,25 @@ public class CreateDBEndpointRequest {
 
   public void setConnectionPoolType(String connectionPoolType) {
     this.connectionPoolType = connectionPoolType;
+  }
+
+  public CreateDBEndpointRequest customRouteStrategy(CustomRouteStrategyForCreateDBEndpointInput customRouteStrategy) {
+    this.customRouteStrategy = customRouteStrategy;
+    return this;
+  }
+
+   /**
+   * Get customRouteStrategy
+   * @return customRouteStrategy
+  **/
+  @Valid
+  @Schema(description = "")
+  public CustomRouteStrategyForCreateDBEndpointInput getCustomRouteStrategy() {
+    return customRouteStrategy;
+  }
+
+  public void setCustomRouteStrategy(CustomRouteStrategyForCreateDBEndpointInput customRouteStrategy) {
+    this.customRouteStrategy = customRouteStrategy;
   }
 
   public CreateDBEndpointRequest description(String description) {
@@ -477,6 +500,7 @@ public class CreateDBEndpointRequest {
     return Objects.equals(this.autoAddNewNodes, createDBEndpointRequest.autoAddNewNodes) &&
         Objects.equals(this.connectionMode, createDBEndpointRequest.connectionMode) &&
         Objects.equals(this.connectionPoolType, createDBEndpointRequest.connectionPoolType) &&
+        Objects.equals(this.customRouteStrategy, createDBEndpointRequest.customRouteStrategy) &&
         Objects.equals(this.description, createDBEndpointRequest.description) &&
         Objects.equals(this.enableConnectionPersistent, createDBEndpointRequest.enableConnectionPersistent) &&
         Objects.equals(this.endpointName, createDBEndpointRequest.endpointName) &&
@@ -498,7 +522,7 @@ public class CreateDBEndpointRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(autoAddNewNodes, connectionMode, connectionPoolType, description, enableConnectionPersistent, endpointName, endpointType, idleConnectionReclaim, implicitTransSplit, instanceId, masterNodeRouting, masterProtectorTimeout, multiStatementsMode, nodes, overloadProtection, readOnlyNodeDistributionType, readOnlyNodeMaxDelayTime, readOnlyNodeWeight, readWriteMode, readWriteSpliting);
+    return Objects.hash(autoAddNewNodes, connectionMode, connectionPoolType, customRouteStrategy, description, enableConnectionPersistent, endpointName, endpointType, idleConnectionReclaim, implicitTransSplit, instanceId, masterNodeRouting, masterProtectorTimeout, multiStatementsMode, nodes, overloadProtection, readOnlyNodeDistributionType, readOnlyNodeMaxDelayTime, readOnlyNodeWeight, readWriteMode, readWriteSpliting);
   }
 
 
@@ -510,6 +534,7 @@ public class CreateDBEndpointRequest {
     sb.append("    autoAddNewNodes: ").append(toIndentedString(autoAddNewNodes)).append("\n");
     sb.append("    connectionMode: ").append(toIndentedString(connectionMode)).append("\n");
     sb.append("    connectionPoolType: ").append(toIndentedString(connectionPoolType)).append("\n");
+    sb.append("    customRouteStrategy: ").append(toIndentedString(customRouteStrategy)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    enableConnectionPersistent: ").append(toIndentedString(enableConnectionPersistent)).append("\n");
     sb.append("    endpointName: ").append(toIndentedString(endpointName)).append("\n");
