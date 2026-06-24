@@ -408,13 +408,9 @@ public class SampleCode {
 
 ### ECS Role 凭证 Provider
 
-> 🚨 **当前版本限制**
->
-> **当前版本暂不支持从 IMDS 自动探测角色名**，必须通过构造参数或 `BYTEPLUS_ECS_METADATA` 环境变量显式传入角色名。后续版本将支持自动探测，敬请关注版本发布通知。
-
 `EcsRoleCredentialProvider` 从 ECS IMDS 获取临时凭证。
 
-- RoleName 优先级：构造参数 > `BYTEPLUS_ECS_METADATA` > 从 IMDS 自动检测
+- RoleName 优先级：构造参数 > `BYTEPLUS_ECS_METADATA` > 从 IMDS 自动探测
 - 禁用开关：`BYTEPLUS_ECS_METADATA_DISABLED=true`
 
 ```java
@@ -424,6 +420,7 @@ import com.byteplus.auth.EcsRoleCredentialProvider;
 
 public class SampleCode {
     public static void main(String[] args) throws Exception {
+        // 传 null 或空字符串时，将读取 BYTEPLUS_ECS_METADATA 或从 IMDS 自动探测角色名。
         EcsRoleCredentialProvider ecsProvider = EcsRoleCredentialProvider.create("your-ecs-role-name");
         // 选填字段
         ecsProvider.setMaxRetries(3);                   // 重试次数，默认: 3，0 表示不重试

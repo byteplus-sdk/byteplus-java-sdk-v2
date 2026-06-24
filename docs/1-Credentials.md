@@ -418,10 +418,6 @@ writes any local file. Key invariants:
 
 ### ECS Role Credential Provider
 
-> 🚨 **Current version limitation**
->
-> **Auto-detection of the role name from IMDS is not yet supported in the current release.** You must pass the role name explicitly via the constructor argument or the `BYTEPLUS_ECS_METADATA` environment variable. Auto-detection will be supported in a future version — please watch the release notes.
-
 `EcsRoleCredentialProvider` reads temporary credentials from ECS IMDS.
 
 - Role name priority: constructor arg > `BYTEPLUS_ECS_METADATA` > auto-detect from IMDS
@@ -434,6 +430,7 @@ import com.byteplus.auth.EcsRoleCredentialProvider;
 
 public class SampleCode {
     public static void main(String[] args) throws Exception {
+        // Pass null or empty string to read BYTEPLUS_ECS_METADATA or auto-detect the role name from IMDS.
         EcsRoleCredentialProvider ecsProvider = EcsRoleCredentialProvider.create("your-ecs-role-name");
         // Optional setters
         ecsProvider.setMaxRetries(3);                   // Retry attempts, default: 3, 0 disables retry
