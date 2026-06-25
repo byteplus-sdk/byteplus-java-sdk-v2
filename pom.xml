@@ -267,5 +267,6 @@
         <module>byteplus-java-sdk-v2-sts</module>
         <module>byteplus-java-sdk-v2-resourcecenter</module>
         <module>byteplus-java-sdk-v2-privatelink</module>
+        <module>byteplus-java-sdk-v2-vs</module>
     </modules>
 </project>

@@ -202,6 +202,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- vs ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("vs", new ServiceEndpointInfo(
+                "vs",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- resourcecenter ---------------------------
         DEFAULT_ENDPOINT_MAP.put("resourcecenter", new ServiceEndpointInfo(
                 "resourcecenter",
