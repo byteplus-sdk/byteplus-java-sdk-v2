@@ -210,6 +210,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- rds_mysql ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("rds_mysql", new ServiceEndpointInfo(
+                "rds_mysql",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- privatelink ---------------------------
         DEFAULT_ENDPOINT_MAP.put("privatelink", new ServiceEndpointInfo(
                 "privatelink",
