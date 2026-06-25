@@ -42,7 +42,7 @@ It is recommended to use Maven. Add dependencies for the modules you need.
     <dependency>
       <groupId>com.byteplus</groupId>
 	  <artifactId>byteplus-java-sdk-v2-bom</artifactId>
-       <version>0.1.64</version>
+       <version>0.1.65</version>
 	  <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -57,12 +57,12 @@ It is recommended to use Maven. Add dependencies for the modules you need.
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-vpc</artifactId>
-   <version>0.1.64</version>
+   <version>0.1.65</version>
   </dependency>
   <dependency>
     <groupId>com.byteplus</groupId>
     <artifactId>byteplus-java-sdk-v2-ecs</artifactId>
-   <version>0.1.64</version>
+   <version>0.1.65</version>
   </dependency>
 </dependencies>
 ```
@@ -144,6 +144,7 @@ public class TestVpc {
 ```
 
 For more code examples, please refer to the [SDK Integration Guide](./SDK_Integration.md) and the [docs/](./docs/) directory.
+
 ## Security and privacy
 This project takes security seriously.
 For vulnerability reporting and supported versions, see [SECURITY.md](SECURITY.md)

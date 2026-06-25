@@ -1,5 +1,0 @@
-{
-  "description": "CLOUDMONITOR: modified ListRulesByIds, UpdateEventRule, UpdateRule, ListEventRules, CreateEventRule, CreateRule, ListRules",
-  "modules": "service/cloudmonitor",
-  "type": "breaking-change"
-}

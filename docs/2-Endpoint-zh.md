@@ -57,7 +57,7 @@ public class SampleCode {
 
 1. **是否自动寻址 Region**
 
-    内置自动寻址 Region 列表代码：[`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#BOOTSTRAP_REGION`](./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#L25)
+    内置自动寻址 Region 列表代码：[`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#BOOTSTRAP_REGION`](../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#L25)
 
     SDK 仅对部分预设区域（如 `ap-singapore-1-autodriving`、`ap-southeast-2`）或用户配置的区域执行自动寻址；其他区域默认返回 Endpoint：`open.byteplusapi.com`。
 
@@ -107,7 +107,7 @@ public class SampleCode {
 | 否 | 是 | `{Service}.{region}.byteplus-api.com` |
 | 否 | 否 | `{Service}.{region}.byteplusapi.com` |
 
-是否 Global 服务由具体调用的服务决定，不可修改。可以参考列表：[`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#SERVICE_INFOS`](./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#L142)。
+是否 Global 服务由具体调用的服务决定，不可修改。可以参考列表：[`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#SERVICE_INFOS`](../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#L142)。
 
 ##### 代码示例
 

@@ -357,7 +357,11 @@ Supported profile `mode`:
   - Optional: `session-token` — when the source `access-key` / `secret-key` are themselves STS temporaries (e.g. issued by SSO/OIDC), this token is forwarded to the chained AssumeRole call as `X-Security-Token`.
 - `OIDC` (delegates to `OidcCredentialProvider`)
 - `EcsRole` (delegates to `EcsRoleCredentialProvider`)
-- `SSO`
+- `SSO` (reads STS credentials from the CLI sso cache; SDK refreshes access token in-memory and never writes the cache file)
+- `console-login` (reads STS credentials from the CLI console-login cache; SDK refreshes via OAuth `refresh_token` in-memory and never writes the cache file)
+  - Required: `login-session`
+  - Run `bp login` first so the CLI writes `mode: "console-login"` and `login-session` into the selected profile.
+  - Reads the cache written by the `bp login` CLI command at `<cli-config-dir>/login/cache/<sha1(login_session)>.json`. Refresh is performed automatically via the OAuth `refresh_token` grant when the cached STS credentials are near expiry; the SDK updates its in-memory state only and never writes the cache file.
 
 > Mode matching is case-insensitive.
 
@@ -380,6 +384,37 @@ public class SampleCode {
     }
 }
 ```
+
+#### Runtime Refresh Behavior (sso / console-login)
+
+For `sso` and `console-login` modes the SDK owns refresh in memory and never
+writes any local file. Key invariants:
+
+- **Config-responsive refresh**: when `CLIConfigCredentialProvider` refreshes,
+  it re-reads `config.json` and rebuilds the credential delegate, so profile,
+  mode, or AK changes are picked up at the next refresh boundary. Within a
+  single expiry cycle the delegate keeps an in-memory snapshot of the token
+  cache.
+- **Read-only on disk**: `config.json`, `~/.byteplus/sso/cache/*.json` and
+  `~/.byteplus/login/cache/*.json` are read on refresh and once more if the
+  OAuth server rejects the in-memory refresh token (`invalid_grant` fallback).
+  They are never written by the SDK.
+- **In-memory refresh**: when the cached `access_token` is past its expiry
+  buffer (60 seconds), the SDK exchanges the cached `refresh_token` at the
+  OAuth `/token` endpoint and updates its in-memory state. SSO then calls
+  CloudIdentity Portal `GetRoleCredentials`; console-login parses STS from the
+  refreshed signin access token.
+- **Invalid-grant fallback**: when OAuth rejects the refresh token, the SDK
+  re-reads the cache file from disk once. If the disk `refresh_token` differs
+  from the in-memory one (i.e. `bp login` / `bp sso login` rotated it under the
+  SDK), the SDK retries with the disk refresh token; otherwise it reports an
+  actionable error pointing at `bp login` (console-login) or `bp sso login`
+  (SSO).
+- **Refresh-token expiry**: when the SDK exhausts both the in-memory and disk
+  refresh tokens, it raises a clear error instructing the user to run
+  `bp login` (console-login) or `bp sso login` (SSO).
+- **Concurrency**: refresh is serialized by `CredentialProvider`, so concurrent
+  callers share a single in-flight refresh.
 
 ### ECS Role Credential Provider
 

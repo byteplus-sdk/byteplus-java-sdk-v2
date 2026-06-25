@@ -51,7 +51,7 @@ BytePlus provides a flexible endpoint resolution mechanism. The SDK automaticall
 
 1. **Whether the region is in the bootstrap list**
 
-    Built-in list: [`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#BOOTSTRAP_REGION`](./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#L25).
+    Built-in list: [`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#BOOTSTRAP_REGION`](../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/DefaultEndpointProvider.java#L25).
 
     Only predefined regions (e.g., `ap-southeast-1`) or user-configured regions are auto-resolved; others fall back to `open.byteplusapi.com`.
 
@@ -101,7 +101,7 @@ public class SampleCode {
 | No  | Yes | `{Service}.{region}.byteplus-api.com` |
 | No  | No  | `{Service}.{region}.byteplusapi.com` |
 
-Whether a service is global depends on the service itself and cannot be changed. See: [`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#SERVICE_INFOS`](./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#L142).
+Whether a service is global depends on the service itself and cannot be changed. See: [`./byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#SERVICE_INFOS`](../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java#L142).
 
 ##### Code Example
 
