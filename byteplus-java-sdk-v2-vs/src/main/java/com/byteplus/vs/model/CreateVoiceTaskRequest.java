@@ -23,6 +23,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
@@ -42,7 +44,7 @@ public class CreateVoiceTaskRequest {
   private Integer maxRingTime = null;
 
   @SerializedName("NumberInfoList")
-  private NumberInfoListForCreateVoiceTaskInput numberInfoList = null;
+  private List<NumberInfoListForCreateVoiceTaskInput> numberInfoList = null;
 
   @SerializedName("RepeatingCount")
   private Integer repeatingCount = null;
@@ -120,8 +122,16 @@ public class CreateVoiceTaskRequest {
     this.maxRingTime = maxRingTime;
   }
 
-  public CreateVoiceTaskRequest numberInfoList(NumberInfoListForCreateVoiceTaskInput numberInfoList) {
+  public CreateVoiceTaskRequest numberInfoList(List<NumberInfoListForCreateVoiceTaskInput> numberInfoList) {
     this.numberInfoList = numberInfoList;
+    return this;
+  }
+
+  public CreateVoiceTaskRequest addNumberInfoListItem(NumberInfoListForCreateVoiceTaskInput numberInfoListItem) {
+    if (this.numberInfoList == null) {
+      this.numberInfoList = new ArrayList<NumberInfoListForCreateVoiceTaskInput>();
+    }
+    this.numberInfoList.add(numberInfoListItem);
     return this;
   }
 
@@ -131,11 +141,11 @@ public class CreateVoiceTaskRequest {
   **/
   @Valid
   @Schema(description = "")
-  public NumberInfoListForCreateVoiceTaskInput getNumberInfoList() {
+  public List<NumberInfoListForCreateVoiceTaskInput> getNumberInfoList() {
     return numberInfoList;
   }
 
-  public void setNumberInfoList(NumberInfoListForCreateVoiceTaskInput numberInfoList) {
+  public void setNumberInfoList(List<NumberInfoListForCreateVoiceTaskInput> numberInfoList) {
     this.numberInfoList = numberInfoList;
   }
 
