@@ -14,7 +14,7 @@ package com.byteplus.transitrouter.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.transitrouter.model.TransitRouterMulticastDomainsForDescribeTransitRouterMulticastDomainsOutput;
+import com.byteplus.transitrouter.model.TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,6 +22,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
@@ -41,7 +43,7 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
   private Integer totalCount = null;
 
   @SerializedName("TransitRouterMulticastDomains")
-  private TransitRouterMulticastDomainsForDescribeTransitRouterMulticastDomainsOutput transitRouterMulticastDomains = null;
+  private List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> transitRouterMulticastDomains = null;
 
   public DescribeTransitRouterMulticastDomainsResponse pageNumber(Integer pageNumber) {
     this.pageNumber = pageNumber;
@@ -97,8 +99,16 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
     this.totalCount = totalCount;
   }
 
-  public DescribeTransitRouterMulticastDomainsResponse transitRouterMulticastDomains(TransitRouterMulticastDomainsForDescribeTransitRouterMulticastDomainsOutput transitRouterMulticastDomains) {
+  public DescribeTransitRouterMulticastDomainsResponse transitRouterMulticastDomains(List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> transitRouterMulticastDomains) {
     this.transitRouterMulticastDomains = transitRouterMulticastDomains;
+    return this;
+  }
+
+  public DescribeTransitRouterMulticastDomainsResponse addTransitRouterMulticastDomainsItem(TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput transitRouterMulticastDomainsItem) {
+    if (this.transitRouterMulticastDomains == null) {
+      this.transitRouterMulticastDomains = new ArrayList<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput>();
+    }
+    this.transitRouterMulticastDomains.add(transitRouterMulticastDomainsItem);
     return this;
   }
 
@@ -108,11 +118,11 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
   **/
   @Valid
   @Schema(description = "")
-  public TransitRouterMulticastDomainsForDescribeTransitRouterMulticastDomainsOutput getTransitRouterMulticastDomains() {
+  public List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> getTransitRouterMulticastDomains() {
     return transitRouterMulticastDomains;
   }
 
-  public void setTransitRouterMulticastDomains(TransitRouterMulticastDomainsForDescribeTransitRouterMulticastDomainsOutput transitRouterMulticastDomains) {
+  public void setTransitRouterMulticastDomains(List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> transitRouterMulticastDomains) {
     this.transitRouterMulticastDomains = transitRouterMulticastDomains;
   }
 

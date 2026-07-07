@@ -234,6 +234,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- transitrouter ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("transitrouter", new ServiceEndpointInfo(
+                "transitrouter",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
