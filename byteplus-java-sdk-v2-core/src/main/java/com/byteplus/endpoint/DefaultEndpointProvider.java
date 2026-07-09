@@ -242,6 +242,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- cen ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("cen", new ServiceEndpointInfo(
+                "cen",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
     }
 
     // 创建区域端点映射的辅助方法
