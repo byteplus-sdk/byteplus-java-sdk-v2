@@ -234,6 +234,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- transitrouter ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("transitrouter", new ServiceEndpointInfo(
+                "transitrouter",
+                false,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- cen ---------------------------
         DEFAULT_ENDPOINT_MAP.put("cen", new ServiceEndpointInfo(
                 "cen",

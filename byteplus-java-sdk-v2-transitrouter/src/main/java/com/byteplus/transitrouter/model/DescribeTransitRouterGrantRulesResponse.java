@@ -14,7 +14,7 @@ package com.byteplus.transitrouter.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.byteplus.transitrouter.model.TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput;
+import com.byteplus.transitrouter.model.TransitRouterGrantRuleForDescribeTransitRouterGrantRulesOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -27,12 +27,12 @@ import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * DescribeTransitRouterMulticastDomainsResponse
+ * DescribeTransitRouterGrantRulesResponse
  */
 
 
 
-public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.model.AbstractResponse {
+public class DescribeTransitRouterGrantRulesResponse extends com.byteplus.model.AbstractResponse {
   @SerializedName("PageNumber")
   private Integer pageNumber = null;
 
@@ -42,10 +42,10 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
   @SerializedName("TotalCount")
   private Integer totalCount = null;
 
-  @SerializedName("TransitRouterMulticastDomains")
-  private List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> transitRouterMulticastDomains = null;
+  @SerializedName("TransitRouterGrantRules")
+  private List<TransitRouterGrantRuleForDescribeTransitRouterGrantRulesOutput> transitRouterGrantRules = null;
 
-  public DescribeTransitRouterMulticastDomainsResponse pageNumber(Integer pageNumber) {
+  public DescribeTransitRouterGrantRulesResponse pageNumber(Integer pageNumber) {
     this.pageNumber = pageNumber;
     return this;
   }
@@ -63,7 +63,7 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
     this.pageNumber = pageNumber;
   }
 
-  public DescribeTransitRouterMulticastDomainsResponse pageSize(Integer pageSize) {
+  public DescribeTransitRouterGrantRulesResponse pageSize(Integer pageSize) {
     this.pageSize = pageSize;
     return this;
   }
@@ -81,7 +81,7 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
     this.pageSize = pageSize;
   }
 
-  public DescribeTransitRouterMulticastDomainsResponse totalCount(Integer totalCount) {
+  public DescribeTransitRouterGrantRulesResponse totalCount(Integer totalCount) {
     this.totalCount = totalCount;
     return this;
   }
@@ -99,31 +99,31 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
     this.totalCount = totalCount;
   }
 
-  public DescribeTransitRouterMulticastDomainsResponse transitRouterMulticastDomains(List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> transitRouterMulticastDomains) {
-    this.transitRouterMulticastDomains = transitRouterMulticastDomains;
+  public DescribeTransitRouterGrantRulesResponse transitRouterGrantRules(List<TransitRouterGrantRuleForDescribeTransitRouterGrantRulesOutput> transitRouterGrantRules) {
+    this.transitRouterGrantRules = transitRouterGrantRules;
     return this;
   }
 
-  public DescribeTransitRouterMulticastDomainsResponse addTransitRouterMulticastDomainsItem(TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput transitRouterMulticastDomainsItem) {
-    if (this.transitRouterMulticastDomains == null) {
-      this.transitRouterMulticastDomains = new ArrayList<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput>();
+  public DescribeTransitRouterGrantRulesResponse addTransitRouterGrantRulesItem(TransitRouterGrantRuleForDescribeTransitRouterGrantRulesOutput transitRouterGrantRulesItem) {
+    if (this.transitRouterGrantRules == null) {
+      this.transitRouterGrantRules = new ArrayList<TransitRouterGrantRuleForDescribeTransitRouterGrantRulesOutput>();
     }
-    this.transitRouterMulticastDomains.add(transitRouterMulticastDomainsItem);
+    this.transitRouterGrantRules.add(transitRouterGrantRulesItem);
     return this;
   }
 
    /**
-   * Get transitRouterMulticastDomains
-   * @return transitRouterMulticastDomains
+   * Get transitRouterGrantRules
+   * @return transitRouterGrantRules
   **/
   @Valid
   @Schema(description = "")
-  public List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> getTransitRouterMulticastDomains() {
-    return transitRouterMulticastDomains;
+  public List<TransitRouterGrantRuleForDescribeTransitRouterGrantRulesOutput> getTransitRouterGrantRules() {
+    return transitRouterGrantRules;
   }
 
-  public void setTransitRouterMulticastDomains(List<TransitRouterMulticastDomainForDescribeTransitRouterMulticastDomainsOutput> transitRouterMulticastDomains) {
-    this.transitRouterMulticastDomains = transitRouterMulticastDomains;
+  public void setTransitRouterGrantRules(List<TransitRouterGrantRuleForDescribeTransitRouterGrantRulesOutput> transitRouterGrantRules) {
+    this.transitRouterGrantRules = transitRouterGrantRules;
   }
 
 
@@ -135,28 +135,28 @@ public class DescribeTransitRouterMulticastDomainsResponse extends com.byteplus.
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DescribeTransitRouterMulticastDomainsResponse describeTransitRouterMulticastDomainsResponse = (DescribeTransitRouterMulticastDomainsResponse) o;
-    return Objects.equals(this.pageNumber, describeTransitRouterMulticastDomainsResponse.pageNumber) &&
-        Objects.equals(this.pageSize, describeTransitRouterMulticastDomainsResponse.pageSize) &&
-        Objects.equals(this.totalCount, describeTransitRouterMulticastDomainsResponse.totalCount) &&
-        Objects.equals(this.transitRouterMulticastDomains, describeTransitRouterMulticastDomainsResponse.transitRouterMulticastDomains);
+    DescribeTransitRouterGrantRulesResponse describeTransitRouterGrantRulesResponse = (DescribeTransitRouterGrantRulesResponse) o;
+    return Objects.equals(this.pageNumber, describeTransitRouterGrantRulesResponse.pageNumber) &&
+        Objects.equals(this.pageSize, describeTransitRouterGrantRulesResponse.pageSize) &&
+        Objects.equals(this.totalCount, describeTransitRouterGrantRulesResponse.totalCount) &&
+        Objects.equals(this.transitRouterGrantRules, describeTransitRouterGrantRulesResponse.transitRouterGrantRules);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pageNumber, pageSize, totalCount, transitRouterMulticastDomains);
+    return Objects.hash(pageNumber, pageSize, totalCount, transitRouterGrantRules);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DescribeTransitRouterMulticastDomainsResponse {\n");
+    sb.append("class DescribeTransitRouterGrantRulesResponse {\n");
     
     sb.append("    pageNumber: ").append(toIndentedString(pageNumber)).append("\n");
     sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("    totalCount: ").append(toIndentedString(totalCount)).append("\n");
-    sb.append("    transitRouterMulticastDomains: ").append(toIndentedString(transitRouterMulticastDomains)).append("\n");
+    sb.append("    transitRouterGrantRules: ").append(toIndentedString(transitRouterGrantRules)).append("\n");
     sb.append("}");
     return sb.toString();
   }
