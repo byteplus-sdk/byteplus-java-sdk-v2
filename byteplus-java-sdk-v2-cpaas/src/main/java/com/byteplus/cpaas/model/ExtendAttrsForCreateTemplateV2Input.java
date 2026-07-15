@@ -33,8 +33,17 @@ public class ExtendAttrsForCreateTemplateV2Input {
   @SerializedName("CouponCode")
   private String couponCode = null;
 
+  @SerializedName("CreateFrom")
+  private String createFrom = null;
+
   @SerializedName("PhoneNumber")
   private String phoneNumber = null;
+
+  @SerializedName("PhoneType")
+  private String phoneType = null;
+
+  @SerializedName("TerminalOpenType")
+  private String terminalOpenType = null;
 
   @SerializedName("Variable")
   private String variable = null;
@@ -63,6 +72,24 @@ public class ExtendAttrsForCreateTemplateV2Input {
     this.couponCode = couponCode;
   }
 
+  public ExtendAttrsForCreateTemplateV2Input createFrom(String createFrom) {
+    this.createFrom = createFrom;
+    return this;
+  }
+
+   /**
+   * Get createFrom
+   * @return createFrom
+  **/
+  @Schema(description = "")
+  public String getCreateFrom() {
+    return createFrom;
+  }
+
+  public void setCreateFrom(String createFrom) {
+    this.createFrom = createFrom;
+  }
+
   public ExtendAttrsForCreateTemplateV2Input phoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
     return this;
@@ -79,6 +106,42 @@ public class ExtendAttrsForCreateTemplateV2Input {
 
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+  }
+
+  public ExtendAttrsForCreateTemplateV2Input phoneType(String phoneType) {
+    this.phoneType = phoneType;
+    return this;
+  }
+
+   /**
+   * Get phoneType
+   * @return phoneType
+  **/
+  @Schema(description = "")
+  public String getPhoneType() {
+    return phoneType;
+  }
+
+  public void setPhoneType(String phoneType) {
+    this.phoneType = phoneType;
+  }
+
+  public ExtendAttrsForCreateTemplateV2Input terminalOpenType(String terminalOpenType) {
+    this.terminalOpenType = terminalOpenType;
+    return this;
+  }
+
+   /**
+   * Get terminalOpenType
+   * @return terminalOpenType
+  **/
+  @Schema(description = "")
+  public String getTerminalOpenType() {
+    return terminalOpenType;
+  }
+
+  public void setTerminalOpenType(String terminalOpenType) {
+    this.terminalOpenType = terminalOpenType;
   }
 
   public ExtendAttrsForCreateTemplateV2Input variable(String variable) {
@@ -146,7 +209,10 @@ public class ExtendAttrsForCreateTemplateV2Input {
     }
     ExtendAttrsForCreateTemplateV2Input extendAttrsForCreateTemplateV2Input = (ExtendAttrsForCreateTemplateV2Input) o;
     return Objects.equals(this.couponCode, extendAttrsForCreateTemplateV2Input.couponCode) &&
+        Objects.equals(this.createFrom, extendAttrsForCreateTemplateV2Input.createFrom) &&
         Objects.equals(this.phoneNumber, extendAttrsForCreateTemplateV2Input.phoneNumber) &&
+        Objects.equals(this.phoneType, extendAttrsForCreateTemplateV2Input.phoneType) &&
+        Objects.equals(this.terminalOpenType, extendAttrsForCreateTemplateV2Input.terminalOpenType) &&
         Objects.equals(this.variable, extendAttrsForCreateTemplateV2Input.variable) &&
         Objects.equals(this.websiteUrl, extendAttrsForCreateTemplateV2Input.websiteUrl) &&
         Objects.equals(this.websiteUrlType, extendAttrsForCreateTemplateV2Input.websiteUrlType);
@@ -154,7 +220,7 @@ public class ExtendAttrsForCreateTemplateV2Input {
 
   @Override
   public int hashCode() {
-    return Objects.hash(couponCode, phoneNumber, variable, websiteUrl, websiteUrlType);
+    return Objects.hash(couponCode, createFrom, phoneNumber, phoneType, terminalOpenType, variable, websiteUrl, websiteUrlType);
   }
 
 
@@ -164,7 +230,10 @@ public class ExtendAttrsForCreateTemplateV2Input {
     sb.append("class ExtendAttrsForCreateTemplateV2Input {\n");
     
     sb.append("    couponCode: ").append(toIndentedString(couponCode)).append("\n");
+    sb.append("    createFrom: ").append(toIndentedString(createFrom)).append("\n");
     sb.append("    phoneNumber: ").append(toIndentedString(phoneNumber)).append("\n");
+    sb.append("    phoneType: ").append(toIndentedString(phoneType)).append("\n");
+    sb.append("    terminalOpenType: ").append(toIndentedString(terminalOpenType)).append("\n");
     sb.append("    variable: ").append(toIndentedString(variable)).append("\n");
     sb.append("    websiteUrl: ").append(toIndentedString(websiteUrl)).append("\n");
     sb.append("    websiteUrlType: ").append(toIndentedString(websiteUrlType)).append("\n");

@@ -14,6 +14,7 @@ package com.byteplus.cpaas.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.cpaas.model.ItemForGetTemplateV2Output;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -21,6 +22,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
@@ -30,6 +33,9 @@ import javax.validation.Valid;
 
 
 public class ElementStyleForGetTemplateV2Output {
+  @SerializedName("Deeplink")
+  private String deeplink = null;
+
   @SerializedName("ElementType")
   private String elementType = null;
 
@@ -42,17 +48,89 @@ public class ElementStyleForGetTemplateV2Output {
   @SerializedName("HasSecurity")
   private Boolean hasSecurity = null;
 
+  @SerializedName("ImageJumpType")
+  private String imageJumpType = null;
+
+  @SerializedName("ImageLink")
+  private String imageLink = null;
+
+  @SerializedName("Items")
+  private List<ItemForGetTemplateV2Output> items = null;
+
+  @SerializedName("PackageName")
+  private String packageName = null;
+
+  @SerializedName("ParamLeft")
+  private String paramLeft = null;
+
+  @SerializedName("ParamRight")
+  private String paramRight = null;
+
   @SerializedName("RealContent")
   private String realContent = null;
 
   @SerializedName("ResourceCode")
   private String resourceCode = null;
 
+  @SerializedName("ResourceContentType")
+  private String resourceContentType = null;
+
   @SerializedName("ResourceName")
   private String resourceName = null;
 
+  @SerializedName("ResourceSize")
+  private Integer resourceSize = null;
+
+  @SerializedName("ResourceThumbImageUrl")
+  private String resourceThumbImageUrl = null;
+
+  @SerializedName("ResourceType")
+  private String resourceType = null;
+
   @SerializedName("ResourceUrl")
   private String resourceUrl = null;
+
+  @SerializedName("SubText")
+  private String subText = null;
+
+  @SerializedName("ThumbContentType")
+  private String thumbContentType = null;
+
+  @SerializedName("ThumbImageFileSize")
+  private Integer thumbImageFileSize = null;
+
+  @SerializedName("ThumbImageUrl")
+  private String thumbImageUrl = null;
+
+  @SerializedName("ThumbnailResourceContentType")
+  private String thumbnailResourceContentType = null;
+
+  @SerializedName("ThumbnailResourceName")
+  private String thumbnailResourceName = null;
+
+  @SerializedName("ThumbnailResourceSize")
+  private Integer thumbnailResourceSize = null;
+
+  @SerializedName("ThumbnailUrl")
+  private String thumbnailUrl = null;
+
+  public ElementStyleForGetTemplateV2Output deeplink(String deeplink) {
+    this.deeplink = deeplink;
+    return this;
+  }
+
+   /**
+   * Get deeplink
+   * @return deeplink
+  **/
+  @Schema(description = "")
+  public String getDeeplink() {
+    return deeplink;
+  }
+
+  public void setDeeplink(String deeplink) {
+    this.deeplink = deeplink;
+  }
 
   public ElementStyleForGetTemplateV2Output elementType(String elementType) {
     this.elementType = elementType;
@@ -126,6 +204,123 @@ public class ElementStyleForGetTemplateV2Output {
     this.hasSecurity = hasSecurity;
   }
 
+  public ElementStyleForGetTemplateV2Output imageJumpType(String imageJumpType) {
+    this.imageJumpType = imageJumpType;
+    return this;
+  }
+
+   /**
+   * Get imageJumpType
+   * @return imageJumpType
+  **/
+  @Schema(description = "")
+  public String getImageJumpType() {
+    return imageJumpType;
+  }
+
+  public void setImageJumpType(String imageJumpType) {
+    this.imageJumpType = imageJumpType;
+  }
+
+  public ElementStyleForGetTemplateV2Output imageLink(String imageLink) {
+    this.imageLink = imageLink;
+    return this;
+  }
+
+   /**
+   * Get imageLink
+   * @return imageLink
+  **/
+  @Schema(description = "")
+  public String getImageLink() {
+    return imageLink;
+  }
+
+  public void setImageLink(String imageLink) {
+    this.imageLink = imageLink;
+  }
+
+  public ElementStyleForGetTemplateV2Output items(List<ItemForGetTemplateV2Output> items) {
+    this.items = items;
+    return this;
+  }
+
+  public ElementStyleForGetTemplateV2Output addItemsItem(ItemForGetTemplateV2Output itemsItem) {
+    if (this.items == null) {
+      this.items = new ArrayList<ItemForGetTemplateV2Output>();
+    }
+    this.items.add(itemsItem);
+    return this;
+  }
+
+   /**
+   * Get items
+   * @return items
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<ItemForGetTemplateV2Output> getItems() {
+    return items;
+  }
+
+  public void setItems(List<ItemForGetTemplateV2Output> items) {
+    this.items = items;
+  }
+
+  public ElementStyleForGetTemplateV2Output packageName(String packageName) {
+    this.packageName = packageName;
+    return this;
+  }
+
+   /**
+   * Get packageName
+   * @return packageName
+  **/
+  @Schema(description = "")
+  public String getPackageName() {
+    return packageName;
+  }
+
+  public void setPackageName(String packageName) {
+    this.packageName = packageName;
+  }
+
+  public ElementStyleForGetTemplateV2Output paramLeft(String paramLeft) {
+    this.paramLeft = paramLeft;
+    return this;
+  }
+
+   /**
+   * Get paramLeft
+   * @return paramLeft
+  **/
+  @Schema(description = "")
+  public String getParamLeft() {
+    return paramLeft;
+  }
+
+  public void setParamLeft(String paramLeft) {
+    this.paramLeft = paramLeft;
+  }
+
+  public ElementStyleForGetTemplateV2Output paramRight(String paramRight) {
+    this.paramRight = paramRight;
+    return this;
+  }
+
+   /**
+   * Get paramRight
+   * @return paramRight
+  **/
+  @Schema(description = "")
+  public String getParamRight() {
+    return paramRight;
+  }
+
+  public void setParamRight(String paramRight) {
+    this.paramRight = paramRight;
+  }
+
   public ElementStyleForGetTemplateV2Output realContent(String realContent) {
     this.realContent = realContent;
     return this;
@@ -162,6 +357,24 @@ public class ElementStyleForGetTemplateV2Output {
     this.resourceCode = resourceCode;
   }
 
+  public ElementStyleForGetTemplateV2Output resourceContentType(String resourceContentType) {
+    this.resourceContentType = resourceContentType;
+    return this;
+  }
+
+   /**
+   * Get resourceContentType
+   * @return resourceContentType
+  **/
+  @Schema(description = "")
+  public String getResourceContentType() {
+    return resourceContentType;
+  }
+
+  public void setResourceContentType(String resourceContentType) {
+    this.resourceContentType = resourceContentType;
+  }
+
   public ElementStyleForGetTemplateV2Output resourceName(String resourceName) {
     this.resourceName = resourceName;
     return this;
@@ -178,6 +391,60 @@ public class ElementStyleForGetTemplateV2Output {
 
   public void setResourceName(String resourceName) {
     this.resourceName = resourceName;
+  }
+
+  public ElementStyleForGetTemplateV2Output resourceSize(Integer resourceSize) {
+    this.resourceSize = resourceSize;
+    return this;
+  }
+
+   /**
+   * Get resourceSize
+   * @return resourceSize
+  **/
+  @Schema(description = "")
+  public Integer getResourceSize() {
+    return resourceSize;
+  }
+
+  public void setResourceSize(Integer resourceSize) {
+    this.resourceSize = resourceSize;
+  }
+
+  public ElementStyleForGetTemplateV2Output resourceThumbImageUrl(String resourceThumbImageUrl) {
+    this.resourceThumbImageUrl = resourceThumbImageUrl;
+    return this;
+  }
+
+   /**
+   * Get resourceThumbImageUrl
+   * @return resourceThumbImageUrl
+  **/
+  @Schema(description = "")
+  public String getResourceThumbImageUrl() {
+    return resourceThumbImageUrl;
+  }
+
+  public void setResourceThumbImageUrl(String resourceThumbImageUrl) {
+    this.resourceThumbImageUrl = resourceThumbImageUrl;
+  }
+
+  public ElementStyleForGetTemplateV2Output resourceType(String resourceType) {
+    this.resourceType = resourceType;
+    return this;
+  }
+
+   /**
+   * Get resourceType
+   * @return resourceType
+  **/
+  @Schema(description = "")
+  public String getResourceType() {
+    return resourceType;
+  }
+
+  public void setResourceType(String resourceType) {
+    this.resourceType = resourceType;
   }
 
   public ElementStyleForGetTemplateV2Output resourceUrl(String resourceUrl) {
@@ -198,6 +465,150 @@ public class ElementStyleForGetTemplateV2Output {
     this.resourceUrl = resourceUrl;
   }
 
+  public ElementStyleForGetTemplateV2Output subText(String subText) {
+    this.subText = subText;
+    return this;
+  }
+
+   /**
+   * Get subText
+   * @return subText
+  **/
+  @Schema(description = "")
+  public String getSubText() {
+    return subText;
+  }
+
+  public void setSubText(String subText) {
+    this.subText = subText;
+  }
+
+  public ElementStyleForGetTemplateV2Output thumbContentType(String thumbContentType) {
+    this.thumbContentType = thumbContentType;
+    return this;
+  }
+
+   /**
+   * Get thumbContentType
+   * @return thumbContentType
+  **/
+  @Schema(description = "")
+  public String getThumbContentType() {
+    return thumbContentType;
+  }
+
+  public void setThumbContentType(String thumbContentType) {
+    this.thumbContentType = thumbContentType;
+  }
+
+  public ElementStyleForGetTemplateV2Output thumbImageFileSize(Integer thumbImageFileSize) {
+    this.thumbImageFileSize = thumbImageFileSize;
+    return this;
+  }
+
+   /**
+   * Get thumbImageFileSize
+   * @return thumbImageFileSize
+  **/
+  @Schema(description = "")
+  public Integer getThumbImageFileSize() {
+    return thumbImageFileSize;
+  }
+
+  public void setThumbImageFileSize(Integer thumbImageFileSize) {
+    this.thumbImageFileSize = thumbImageFileSize;
+  }
+
+  public ElementStyleForGetTemplateV2Output thumbImageUrl(String thumbImageUrl) {
+    this.thumbImageUrl = thumbImageUrl;
+    return this;
+  }
+
+   /**
+   * Get thumbImageUrl
+   * @return thumbImageUrl
+  **/
+  @Schema(description = "")
+  public String getThumbImageUrl() {
+    return thumbImageUrl;
+  }
+
+  public void setThumbImageUrl(String thumbImageUrl) {
+    this.thumbImageUrl = thumbImageUrl;
+  }
+
+  public ElementStyleForGetTemplateV2Output thumbnailResourceContentType(String thumbnailResourceContentType) {
+    this.thumbnailResourceContentType = thumbnailResourceContentType;
+    return this;
+  }
+
+   /**
+   * Get thumbnailResourceContentType
+   * @return thumbnailResourceContentType
+  **/
+  @Schema(description = "")
+  public String getThumbnailResourceContentType() {
+    return thumbnailResourceContentType;
+  }
+
+  public void setThumbnailResourceContentType(String thumbnailResourceContentType) {
+    this.thumbnailResourceContentType = thumbnailResourceContentType;
+  }
+
+  public ElementStyleForGetTemplateV2Output thumbnailResourceName(String thumbnailResourceName) {
+    this.thumbnailResourceName = thumbnailResourceName;
+    return this;
+  }
+
+   /**
+   * Get thumbnailResourceName
+   * @return thumbnailResourceName
+  **/
+  @Schema(description = "")
+  public String getThumbnailResourceName() {
+    return thumbnailResourceName;
+  }
+
+  public void setThumbnailResourceName(String thumbnailResourceName) {
+    this.thumbnailResourceName = thumbnailResourceName;
+  }
+
+  public ElementStyleForGetTemplateV2Output thumbnailResourceSize(Integer thumbnailResourceSize) {
+    this.thumbnailResourceSize = thumbnailResourceSize;
+    return this;
+  }
+
+   /**
+   * Get thumbnailResourceSize
+   * @return thumbnailResourceSize
+  **/
+  @Schema(description = "")
+  public Integer getThumbnailResourceSize() {
+    return thumbnailResourceSize;
+  }
+
+  public void setThumbnailResourceSize(Integer thumbnailResourceSize) {
+    this.thumbnailResourceSize = thumbnailResourceSize;
+  }
+
+  public ElementStyleForGetTemplateV2Output thumbnailUrl(String thumbnailUrl) {
+    this.thumbnailUrl = thumbnailUrl;
+    return this;
+  }
+
+   /**
+   * Get thumbnailUrl
+   * @return thumbnailUrl
+  **/
+  @Schema(description = "")
+  public String getThumbnailUrl() {
+    return thumbnailUrl;
+  }
+
+  public void setThumbnailUrl(String thumbnailUrl) {
+    this.thumbnailUrl = thumbnailUrl;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -208,19 +619,38 @@ public class ElementStyleForGetTemplateV2Output {
       return false;
     }
     ElementStyleForGetTemplateV2Output elementStyleForGetTemplateV2Output = (ElementStyleForGetTemplateV2Output) o;
-    return Objects.equals(this.elementType, elementStyleForGetTemplateV2Output.elementType) &&
+    return Objects.equals(this.deeplink, elementStyleForGetTemplateV2Output.deeplink) &&
+        Objects.equals(this.elementType, elementStyleForGetTemplateV2Output.elementType) &&
         Objects.equals(this.expiresTime, elementStyleForGetTemplateV2Output.expiresTime) &&
         Objects.equals(this.hasExpires, elementStyleForGetTemplateV2Output.hasExpires) &&
         Objects.equals(this.hasSecurity, elementStyleForGetTemplateV2Output.hasSecurity) &&
+        Objects.equals(this.imageJumpType, elementStyleForGetTemplateV2Output.imageJumpType) &&
+        Objects.equals(this.imageLink, elementStyleForGetTemplateV2Output.imageLink) &&
+        Objects.equals(this.items, elementStyleForGetTemplateV2Output.items) &&
+        Objects.equals(this.packageName, elementStyleForGetTemplateV2Output.packageName) &&
+        Objects.equals(this.paramLeft, elementStyleForGetTemplateV2Output.paramLeft) &&
+        Objects.equals(this.paramRight, elementStyleForGetTemplateV2Output.paramRight) &&
         Objects.equals(this.realContent, elementStyleForGetTemplateV2Output.realContent) &&
         Objects.equals(this.resourceCode, elementStyleForGetTemplateV2Output.resourceCode) &&
+        Objects.equals(this.resourceContentType, elementStyleForGetTemplateV2Output.resourceContentType) &&
         Objects.equals(this.resourceName, elementStyleForGetTemplateV2Output.resourceName) &&
-        Objects.equals(this.resourceUrl, elementStyleForGetTemplateV2Output.resourceUrl);
+        Objects.equals(this.resourceSize, elementStyleForGetTemplateV2Output.resourceSize) &&
+        Objects.equals(this.resourceThumbImageUrl, elementStyleForGetTemplateV2Output.resourceThumbImageUrl) &&
+        Objects.equals(this.resourceType, elementStyleForGetTemplateV2Output.resourceType) &&
+        Objects.equals(this.resourceUrl, elementStyleForGetTemplateV2Output.resourceUrl) &&
+        Objects.equals(this.subText, elementStyleForGetTemplateV2Output.subText) &&
+        Objects.equals(this.thumbContentType, elementStyleForGetTemplateV2Output.thumbContentType) &&
+        Objects.equals(this.thumbImageFileSize, elementStyleForGetTemplateV2Output.thumbImageFileSize) &&
+        Objects.equals(this.thumbImageUrl, elementStyleForGetTemplateV2Output.thumbImageUrl) &&
+        Objects.equals(this.thumbnailResourceContentType, elementStyleForGetTemplateV2Output.thumbnailResourceContentType) &&
+        Objects.equals(this.thumbnailResourceName, elementStyleForGetTemplateV2Output.thumbnailResourceName) &&
+        Objects.equals(this.thumbnailResourceSize, elementStyleForGetTemplateV2Output.thumbnailResourceSize) &&
+        Objects.equals(this.thumbnailUrl, elementStyleForGetTemplateV2Output.thumbnailUrl);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(elementType, expiresTime, hasExpires, hasSecurity, realContent, resourceCode, resourceName, resourceUrl);
+    return Objects.hash(deeplink, elementType, expiresTime, hasExpires, hasSecurity, imageJumpType, imageLink, items, packageName, paramLeft, paramRight, realContent, resourceCode, resourceContentType, resourceName, resourceSize, resourceThumbImageUrl, resourceType, resourceUrl, subText, thumbContentType, thumbImageFileSize, thumbImageUrl, thumbnailResourceContentType, thumbnailResourceName, thumbnailResourceSize, thumbnailUrl);
   }
 
 
@@ -229,14 +659,33 @@ public class ElementStyleForGetTemplateV2Output {
     StringBuilder sb = new StringBuilder();
     sb.append("class ElementStyleForGetTemplateV2Output {\n");
     
+    sb.append("    deeplink: ").append(toIndentedString(deeplink)).append("\n");
     sb.append("    elementType: ").append(toIndentedString(elementType)).append("\n");
     sb.append("    expiresTime: ").append(toIndentedString(expiresTime)).append("\n");
     sb.append("    hasExpires: ").append(toIndentedString(hasExpires)).append("\n");
     sb.append("    hasSecurity: ").append(toIndentedString(hasSecurity)).append("\n");
+    sb.append("    imageJumpType: ").append(toIndentedString(imageJumpType)).append("\n");
+    sb.append("    imageLink: ").append(toIndentedString(imageLink)).append("\n");
+    sb.append("    items: ").append(toIndentedString(items)).append("\n");
+    sb.append("    packageName: ").append(toIndentedString(packageName)).append("\n");
+    sb.append("    paramLeft: ").append(toIndentedString(paramLeft)).append("\n");
+    sb.append("    paramRight: ").append(toIndentedString(paramRight)).append("\n");
     sb.append("    realContent: ").append(toIndentedString(realContent)).append("\n");
     sb.append("    resourceCode: ").append(toIndentedString(resourceCode)).append("\n");
+    sb.append("    resourceContentType: ").append(toIndentedString(resourceContentType)).append("\n");
     sb.append("    resourceName: ").append(toIndentedString(resourceName)).append("\n");
+    sb.append("    resourceSize: ").append(toIndentedString(resourceSize)).append("\n");
+    sb.append("    resourceThumbImageUrl: ").append(toIndentedString(resourceThumbImageUrl)).append("\n");
+    sb.append("    resourceType: ").append(toIndentedString(resourceType)).append("\n");
     sb.append("    resourceUrl: ").append(toIndentedString(resourceUrl)).append("\n");
+    sb.append("    subText: ").append(toIndentedString(subText)).append("\n");
+    sb.append("    thumbContentType: ").append(toIndentedString(thumbContentType)).append("\n");
+    sb.append("    thumbImageFileSize: ").append(toIndentedString(thumbImageFileSize)).append("\n");
+    sb.append("    thumbImageUrl: ").append(toIndentedString(thumbImageUrl)).append("\n");
+    sb.append("    thumbnailResourceContentType: ").append(toIndentedString(thumbnailResourceContentType)).append("\n");
+    sb.append("    thumbnailResourceName: ").append(toIndentedString(thumbnailResourceName)).append("\n");
+    sb.append("    thumbnailResourceSize: ").append(toIndentedString(thumbnailResourceSize)).append("\n");
+    sb.append("    thumbnailUrl: ").append(toIndentedString(thumbnailUrl)).append("\n");
     sb.append("}");
     return sb.toString();
   }

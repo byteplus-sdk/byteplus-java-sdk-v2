@@ -42,6 +42,9 @@ public class VariablesDTOListForCreateTemplateV2Input {
   @SerializedName("VariableCode")
   private String variableCode = null;
 
+  @SerializedName("VariableLength")
+  private Integer variableLength = null;
+
   @SerializedName("VariableName")
   private String variableName = null;
 
@@ -117,6 +120,24 @@ public class VariablesDTOListForCreateTemplateV2Input {
     this.variableCode = variableCode;
   }
 
+  public VariablesDTOListForCreateTemplateV2Input variableLength(Integer variableLength) {
+    this.variableLength = variableLength;
+    return this;
+  }
+
+   /**
+   * Get variableLength
+   * @return variableLength
+  **/
+  @Schema(description = "")
+  public Integer getVariableLength() {
+    return variableLength;
+  }
+
+  public void setVariableLength(Integer variableLength) {
+    this.variableLength = variableLength;
+  }
+
   public VariablesDTOListForCreateTemplateV2Input variableName(String variableName) {
     this.variableName = variableName;
     return this;
@@ -149,12 +170,13 @@ public class VariablesDTOListForCreateTemplateV2Input {
         Objects.equals(this.format, variablesDTOListForCreateTemplateV2Input.format) &&
         Objects.equals(this.uniqueVariableCode, variablesDTOListForCreateTemplateV2Input.uniqueVariableCode) &&
         Objects.equals(this.variableCode, variablesDTOListForCreateTemplateV2Input.variableCode) &&
+        Objects.equals(this.variableLength, variablesDTOListForCreateTemplateV2Input.variableLength) &&
         Objects.equals(this.variableName, variablesDTOListForCreateTemplateV2Input.variableName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(defaultValue, format, uniqueVariableCode, variableCode, variableName);
+    return Objects.hash(defaultValue, format, uniqueVariableCode, variableCode, variableLength, variableName);
   }
 
 
@@ -167,6 +189,7 @@ public class VariablesDTOListForCreateTemplateV2Input {
     sb.append("    format: ").append(toIndentedString(format)).append("\n");
     sb.append("    uniqueVariableCode: ").append(toIndentedString(uniqueVariableCode)).append("\n");
     sb.append("    variableCode: ").append(toIndentedString(variableCode)).append("\n");
+    sb.append("    variableLength: ").append(toIndentedString(variableLength)).append("\n");
     sb.append("    variableName: ").append(toIndentedString(variableName)).append("\n");
     sb.append("}");
     return sb.toString();

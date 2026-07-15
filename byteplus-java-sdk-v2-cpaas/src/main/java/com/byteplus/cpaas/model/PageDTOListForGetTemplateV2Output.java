@@ -43,6 +43,9 @@ public class PageDTOListForGetTemplateV2Output {
   @SerializedName("PageName")
   private String pageName = null;
 
+  @SerializedName("PageType")
+  private String pageType = null;
+
   public PageDTOListForGetTemplateV2Output pageElementDTOList(List<PageElementDTOListForGetTemplateV2Output> pageElementDTOList) {
     this.pageElementDTOList = pageElementDTOList;
     return this;
@@ -115,6 +118,24 @@ public class PageDTOListForGetTemplateV2Output {
     this.pageName = pageName;
   }
 
+  public PageDTOListForGetTemplateV2Output pageType(String pageType) {
+    this.pageType = pageType;
+    return this;
+  }
+
+   /**
+   * Get pageType
+   * @return pageType
+  **/
+  @Schema(description = "")
+  public String getPageType() {
+    return pageType;
+  }
+
+  public void setPageType(String pageType) {
+    this.pageType = pageType;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -127,12 +148,13 @@ public class PageDTOListForGetTemplateV2Output {
     PageDTOListForGetTemplateV2Output pageDTOListForGetTemplateV2Output = (PageDTOListForGetTemplateV2Output) o;
     return Objects.equals(this.pageElementDTOList, pageDTOListForGetTemplateV2Output.pageElementDTOList) &&
         Objects.equals(this.pageLinkList, pageDTOListForGetTemplateV2Output.pageLinkList) &&
-        Objects.equals(this.pageName, pageDTOListForGetTemplateV2Output.pageName);
+        Objects.equals(this.pageName, pageDTOListForGetTemplateV2Output.pageName) &&
+        Objects.equals(this.pageType, pageDTOListForGetTemplateV2Output.pageType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pageElementDTOList, pageLinkList, pageName);
+    return Objects.hash(pageElementDTOList, pageLinkList, pageName, pageType);
   }
 
 
@@ -144,6 +166,7 @@ public class PageDTOListForGetTemplateV2Output {
     sb.append("    pageElementDTOList: ").append(toIndentedString(pageElementDTOList)).append("\n");
     sb.append("    pageLinkList: ").append(toIndentedString(pageLinkList)).append("\n");
     sb.append("    pageName: ").append(toIndentedString(pageName)).append("\n");
+    sb.append("    pageType: ").append(toIndentedString(pageType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

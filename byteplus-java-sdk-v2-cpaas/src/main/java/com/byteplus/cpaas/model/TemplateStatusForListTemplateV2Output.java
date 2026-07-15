@@ -36,6 +36,15 @@ public class TemplateStatusForListTemplateV2Output {
   @SerializedName("Reason")
   private String reason = null;
 
+  @SerializedName("ServiceName")
+  private String serviceName = null;
+
+  @SerializedName("ServiceNo")
+  private String serviceNo = null;
+
+  @SerializedName("SubaccountId")
+  private String subaccountId = null;
+
   @SerializedName("TemplateType")
   private String templateType = null;
 
@@ -75,6 +84,60 @@ public class TemplateStatusForListTemplateV2Output {
     this.reason = reason;
   }
 
+  public TemplateStatusForListTemplateV2Output serviceName(String serviceName) {
+    this.serviceName = serviceName;
+    return this;
+  }
+
+   /**
+   * Get serviceName
+   * @return serviceName
+  **/
+  @Schema(description = "")
+  public String getServiceName() {
+    return serviceName;
+  }
+
+  public void setServiceName(String serviceName) {
+    this.serviceName = serviceName;
+  }
+
+  public TemplateStatusForListTemplateV2Output serviceNo(String serviceNo) {
+    this.serviceNo = serviceNo;
+    return this;
+  }
+
+   /**
+   * Get serviceNo
+   * @return serviceNo
+  **/
+  @Schema(description = "")
+  public String getServiceNo() {
+    return serviceNo;
+  }
+
+  public void setServiceNo(String serviceNo) {
+    this.serviceNo = serviceNo;
+  }
+
+  public TemplateStatusForListTemplateV2Output subaccountId(String subaccountId) {
+    this.subaccountId = subaccountId;
+    return this;
+  }
+
+   /**
+   * Get subaccountId
+   * @return subaccountId
+  **/
+  @Schema(description = "")
+  public String getSubaccountId() {
+    return subaccountId;
+  }
+
+  public void setSubaccountId(String subaccountId) {
+    this.subaccountId = subaccountId;
+  }
+
   public TemplateStatusForListTemplateV2Output templateType(String templateType) {
     this.templateType = templateType;
     return this;
@@ -105,12 +168,15 @@ public class TemplateStatusForListTemplateV2Output {
     TemplateStatusForListTemplateV2Output templateStatusForListTemplateV2Output = (TemplateStatusForListTemplateV2Output) o;
     return Objects.equals(this.auditStatus, templateStatusForListTemplateV2Output.auditStatus) &&
         Objects.equals(this.reason, templateStatusForListTemplateV2Output.reason) &&
+        Objects.equals(this.serviceName, templateStatusForListTemplateV2Output.serviceName) &&
+        Objects.equals(this.serviceNo, templateStatusForListTemplateV2Output.serviceNo) &&
+        Objects.equals(this.subaccountId, templateStatusForListTemplateV2Output.subaccountId) &&
         Objects.equals(this.templateType, templateStatusForListTemplateV2Output.templateType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(auditStatus, reason, templateType);
+    return Objects.hash(auditStatus, reason, serviceName, serviceNo, subaccountId, templateType);
   }
 
 
@@ -121,6 +187,9 @@ public class TemplateStatusForListTemplateV2Output {
     
     sb.append("    auditStatus: ").append(toIndentedString(auditStatus)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
+    sb.append("    serviceName: ").append(toIndentedString(serviceName)).append("\n");
+    sb.append("    serviceNo: ").append(toIndentedString(serviceNo)).append("\n");
+    sb.append("    subaccountId: ").append(toIndentedString(subaccountId)).append("\n");
     sb.append("    templateType: ").append(toIndentedString(templateType)).append("\n");
     sb.append("}");
     return sb.toString();
