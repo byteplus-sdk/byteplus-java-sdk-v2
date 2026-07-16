@@ -37,6 +37,9 @@ public class PageElementDTOListForCreateTemplateV2Input {
   @SerializedName("ElementType")
   private String elementType = null;
 
+  @SerializedName("OrderId")
+  private Integer orderId = null;
+
   public PageElementDTOListForCreateTemplateV2Input elementStyle(ElementStyleForCreateTemplateV2Input elementStyle) {
     this.elementStyle = elementStyle;
     return this;
@@ -74,6 +77,24 @@ public class PageElementDTOListForCreateTemplateV2Input {
     this.elementType = elementType;
   }
 
+  public PageElementDTOListForCreateTemplateV2Input orderId(Integer orderId) {
+    this.orderId = orderId;
+    return this;
+  }
+
+   /**
+   * Get orderId
+   * @return orderId
+  **/
+  @Schema(description = "")
+  public Integer getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(Integer orderId) {
+    this.orderId = orderId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -85,12 +106,13 @@ public class PageElementDTOListForCreateTemplateV2Input {
     }
     PageElementDTOListForCreateTemplateV2Input pageElementDTOListForCreateTemplateV2Input = (PageElementDTOListForCreateTemplateV2Input) o;
     return Objects.equals(this.elementStyle, pageElementDTOListForCreateTemplateV2Input.elementStyle) &&
-        Objects.equals(this.elementType, pageElementDTOListForCreateTemplateV2Input.elementType);
+        Objects.equals(this.elementType, pageElementDTOListForCreateTemplateV2Input.elementType) &&
+        Objects.equals(this.orderId, pageElementDTOListForCreateTemplateV2Input.orderId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(elementStyle, elementType);
+    return Objects.hash(elementStyle, elementType, orderId);
   }
 
 
@@ -101,6 +123,7 @@ public class PageElementDTOListForCreateTemplateV2Input {
     
     sb.append("    elementStyle: ").append(toIndentedString(elementStyle)).append("\n");
     sb.append("    elementType: ").append(toIndentedString(elementType)).append("\n");
+    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

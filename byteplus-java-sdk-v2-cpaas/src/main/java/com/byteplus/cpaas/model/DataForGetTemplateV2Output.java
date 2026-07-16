@@ -36,6 +36,15 @@ public class DataForGetTemplateV2Output {
   @SerializedName("BusinessType")
   private String businessType = null;
 
+  @SerializedName("EnabledShortUrl")
+  private String enabledShortUrl = null;
+
+  @SerializedName("GmtCreate")
+  private Long gmtCreate = null;
+
+  @SerializedName("GmtModifier")
+  private Long gmtModifier = null;
+
   @SerializedName("LanguageCode")
   private String languageCode = null;
 
@@ -67,6 +76,60 @@ public class DataForGetTemplateV2Output {
 
   public void setBusinessType(String businessType) {
     this.businessType = businessType;
+  }
+
+  public DataForGetTemplateV2Output enabledShortUrl(String enabledShortUrl) {
+    this.enabledShortUrl = enabledShortUrl;
+    return this;
+  }
+
+   /**
+   * Get enabledShortUrl
+   * @return enabledShortUrl
+  **/
+  @Schema(description = "")
+  public String getEnabledShortUrl() {
+    return enabledShortUrl;
+  }
+
+  public void setEnabledShortUrl(String enabledShortUrl) {
+    this.enabledShortUrl = enabledShortUrl;
+  }
+
+  public DataForGetTemplateV2Output gmtCreate(Long gmtCreate) {
+    this.gmtCreate = gmtCreate;
+    return this;
+  }
+
+   /**
+   * Get gmtCreate
+   * @return gmtCreate
+  **/
+  @Schema(description = "")
+  public Long getGmtCreate() {
+    return gmtCreate;
+  }
+
+  public void setGmtCreate(Long gmtCreate) {
+    this.gmtCreate = gmtCreate;
+  }
+
+  public DataForGetTemplateV2Output gmtModifier(Long gmtModifier) {
+    this.gmtModifier = gmtModifier;
+    return this;
+  }
+
+   /**
+   * Get gmtModifier
+   * @return gmtModifier
+  **/
+  @Schema(description = "")
+  public Long getGmtModifier() {
+    return gmtModifier;
+  }
+
+  public void setGmtModifier(Long gmtModifier) {
+    this.gmtModifier = gmtModifier;
   }
 
   public DataForGetTemplateV2Output languageCode(String languageCode) {
@@ -179,6 +242,9 @@ public class DataForGetTemplateV2Output {
     }
     DataForGetTemplateV2Output dataForGetTemplateV2Output = (DataForGetTemplateV2Output) o;
     return Objects.equals(this.businessType, dataForGetTemplateV2Output.businessType) &&
+        Objects.equals(this.enabledShortUrl, dataForGetTemplateV2Output.enabledShortUrl) &&
+        Objects.equals(this.gmtCreate, dataForGetTemplateV2Output.gmtCreate) &&
+        Objects.equals(this.gmtModifier, dataForGetTemplateV2Output.gmtModifier) &&
         Objects.equals(this.languageCode, dataForGetTemplateV2Output.languageCode) &&
         Objects.equals(this.languageName, dataForGetTemplateV2Output.languageName) &&
         Objects.equals(this.sceneTemplateCode, dataForGetTemplateV2Output.sceneTemplateCode) &&
@@ -188,7 +254,7 @@ public class DataForGetTemplateV2Output {
 
   @Override
   public int hashCode() {
-    return Objects.hash(businessType, languageCode, languageName, sceneTemplateCode, sceneTemplateName, templateList);
+    return Objects.hash(businessType, enabledShortUrl, gmtCreate, gmtModifier, languageCode, languageName, sceneTemplateCode, sceneTemplateName, templateList);
   }
 
 
@@ -198,6 +264,9 @@ public class DataForGetTemplateV2Output {
     sb.append("class DataForGetTemplateV2Output {\n");
     
     sb.append("    businessType: ").append(toIndentedString(businessType)).append("\n");
+    sb.append("    enabledShortUrl: ").append(toIndentedString(enabledShortUrl)).append("\n");
+    sb.append("    gmtCreate: ").append(toIndentedString(gmtCreate)).append("\n");
+    sb.append("    gmtModifier: ").append(toIndentedString(gmtModifier)).append("\n");
     sb.append("    languageCode: ").append(toIndentedString(languageCode)).append("\n");
     sb.append("    languageName: ").append(toIndentedString(languageName)).append("\n");
     sb.append("    sceneTemplateCode: ").append(toIndentedString(sceneTemplateCode)).append("\n");

@@ -45,6 +45,9 @@ public class CreateTemplateV2Request {
   @SerializedName("SceneTemplateName")
   private String sceneTemplateName = null;
 
+  @SerializedName("SendAudit")
+  private String sendAudit = null;
+
   @SerializedName("Signature")
   private String signature = null;
 
@@ -128,6 +131,24 @@ public class CreateTemplateV2Request {
 
   public void setSceneTemplateName(String sceneTemplateName) {
     this.sceneTemplateName = sceneTemplateName;
+  }
+
+  public CreateTemplateV2Request sendAudit(String sendAudit) {
+    this.sendAudit = sendAudit;
+    return this;
+  }
+
+   /**
+   * Get sendAudit
+   * @return sendAudit
+  **/
+  @Schema(description = "")
+  public String getSendAudit() {
+    return sendAudit;
+  }
+
+  public void setSendAudit(String sendAudit) {
+    this.sendAudit = sendAudit;
   }
 
   public CreateTemplateV2Request signature(String signature) {
@@ -225,6 +246,7 @@ public class CreateTemplateV2Request {
         Objects.equals(this.enableShortUrl, createTemplateV2Request.enableShortUrl) &&
         Objects.equals(this.language, createTemplateV2Request.language) &&
         Objects.equals(this.sceneTemplateName, createTemplateV2Request.sceneTemplateName) &&
+        Objects.equals(this.sendAudit, createTemplateV2Request.sendAudit) &&
         Objects.equals(this.signature, createTemplateV2Request.signature) &&
         Objects.equals(this.subAccountId, createTemplateV2Request.subAccountId) &&
         Objects.equals(this.templateList, createTemplateV2Request.templateList) &&
@@ -233,7 +255,7 @@ public class CreateTemplateV2Request {
 
   @Override
   public int hashCode() {
-    return Objects.hash(businessType, enableShortUrl, language, sceneTemplateName, signature, subAccountId, templateList, wabaId);
+    return Objects.hash(businessType, enableShortUrl, language, sceneTemplateName, sendAudit, signature, subAccountId, templateList, wabaId);
   }
 
 
@@ -246,6 +268,7 @@ public class CreateTemplateV2Request {
     sb.append("    enableShortUrl: ").append(toIndentedString(enableShortUrl)).append("\n");
     sb.append("    language: ").append(toIndentedString(language)).append("\n");
     sb.append("    sceneTemplateName: ").append(toIndentedString(sceneTemplateName)).append("\n");
+    sb.append("    sendAudit: ").append(toIndentedString(sendAudit)).append("\n");
     sb.append("    signature: ").append(toIndentedString(signature)).append("\n");
     sb.append("    subAccountId: ").append(toIndentedString(subAccountId)).append("\n");
     sb.append("    templateList: ").append(toIndentedString(templateList)).append("\n");
