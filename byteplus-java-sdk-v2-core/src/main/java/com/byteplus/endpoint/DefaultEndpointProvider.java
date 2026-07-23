@@ -36,10 +36,12 @@ public class DefaultEndpointProvider implements EndpointResolver {
     }
 
     private static final class ServiceEndpointInfo {
+        private final String service;
         private final boolean isGlobal;
         private final boolean goChinaEnabled;
 
-        ServiceEndpointInfo(boolean isGlobal, boolean goChinaEnabled) {
+        ServiceEndpointInfo(String service, boolean isGlobal, boolean goChinaEnabled) {
+            this.service = service;
             this.isGlobal = isGlobal;
             this.goChinaEnabled = goChinaEnabled;
         }
@@ -49,30 +51,30 @@ public class DefaultEndpointProvider implements EndpointResolver {
         // Every service currently supports Go-China (.byteplusapi.com.cn) when
         // dispatched to a mainland cn-* region. Set goChinaEnabled=false only
         // for services that must never resolve to the .cn suffix.
-        DEFAULT_ENDPOINT_MAP.put("ark", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("billing", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("ecs", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("kms", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("natgateway", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("eco_partner", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("cloudmonitor", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("cpaas", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("rds_mssql", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("sts", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("vmp", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("redis", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("vs", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("resourcecenter", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("rds_mysql", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("privatelink", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("transitrouter", new ServiceEndpointInfo(false, true));
-        DEFAULT_ENDPOINT_MAP.put("cen", new ServiceEndpointInfo(true, true));
-        DEFAULT_ENDPOINT_MAP.put("clawsentry", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("ark", new ServiceEndpointInfo("ark", false, true));
+        DEFAULT_ENDPOINT_MAP.put("billing", new ServiceEndpointInfo("billing", true, true));
+        DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo("vpc", false, true));
+        DEFAULT_ENDPOINT_MAP.put("ecs", new ServiceEndpointInfo("ecs", false, true));
+        DEFAULT_ENDPOINT_MAP.put("kms", new ServiceEndpointInfo("kms", false, true));
+        DEFAULT_ENDPOINT_MAP.put("natgateway", new ServiceEndpointInfo("natgateway", false, true));
+        DEFAULT_ENDPOINT_MAP.put("eco_partner", new ServiceEndpointInfo("eco_partner", true, true));
+        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo("iam", true, true));
+        DEFAULT_ENDPOINT_MAP.put("cloudmonitor", new ServiceEndpointInfo("cloudmonitor", false, true));
+        DEFAULT_ENDPOINT_MAP.put("cpaas", new ServiceEndpointInfo("cpaas", true, true));
+        DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo("vepfs", false, true));
+        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo("vke", false, true));
+        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo("kickart", true, true));
+        DEFAULT_ENDPOINT_MAP.put("rds_mssql", new ServiceEndpointInfo("rds_mssql", false, true));
+        DEFAULT_ENDPOINT_MAP.put("sts", new ServiceEndpointInfo("sts", false, true));
+        DEFAULT_ENDPOINT_MAP.put("vmp", new ServiceEndpointInfo("vmp", false, true));
+        DEFAULT_ENDPOINT_MAP.put("redis", new ServiceEndpointInfo("redis", false, true));
+        DEFAULT_ENDPOINT_MAP.put("vs", new ServiceEndpointInfo("vs", true, true));
+        DEFAULT_ENDPOINT_MAP.put("resourcecenter", new ServiceEndpointInfo("resourcecenter", true, true));
+        DEFAULT_ENDPOINT_MAP.put("rds_mysql", new ServiceEndpointInfo("rds_mysql", false, true));
+        DEFAULT_ENDPOINT_MAP.put("privatelink", new ServiceEndpointInfo("privatelink", false, true));
+        DEFAULT_ENDPOINT_MAP.put("transitrouter", new ServiceEndpointInfo("transitrouter", false, true));
+        DEFAULT_ENDPOINT_MAP.put("cen", new ServiceEndpointInfo("cen", true, true));
+        DEFAULT_ENDPOINT_MAP.put("clawsentry", new ServiceEndpointInfo("clawsentry", false, true));
     }
 
     private static String standardizeDomainServiceCode(String serviceCode) {
