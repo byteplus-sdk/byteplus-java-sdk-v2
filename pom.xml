@@ -275,5 +275,6 @@
         <module>byteplus-java-sdk-v2-privatelink</module>
         <module>byteplus-java-sdk-v2-vs</module>
         <module>byteplus-java-sdk-v2-clawsentry</module>
+        <module>byteplus-java-sdk-v2-vs20260714</module>
     </modules>
 </project>
