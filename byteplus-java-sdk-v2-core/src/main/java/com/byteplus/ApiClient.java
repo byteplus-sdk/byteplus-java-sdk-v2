@@ -556,7 +556,11 @@ public class ApiClient extends BaseClient{
      *
      * @param customBootstrapRegion Set of custom bootstrapping regions
      * @return Api client
+     * @deprecated bootstrap-region-based routing no longer participates in
+     * default endpoint resolution. Retained for API compatibility only; values
+     * set here are ignored by the default endpoint resolver.
      */
+    @Deprecated
     public ApiClient setCustomBootstrapRegion(Set<String> customBootstrapRegion) {
         this.customBootstrapRegion = customBootstrapRegion;
         return this;

@@ -1,9 +1,10 @@
 package com.byteplus.endpoint;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import com.byteplus.ApiException;
+
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,391 +12,163 @@ import static com.byteplus.observability.debugger.SdkDebugLog.SDK_CORE_LOGGER;
 
 public class DefaultEndpointProvider implements EndpointResolver {
 
-
     // 区域代码常量
-    private static final String REGION_CODE_CN_BEIJING_AUTODRIVING = "cn-beijing-autodriving";
-    private static final String REGION_CODE_AP_SOUTH_EAST_2 = "ap-southeast-2";
-    private static final String REGION_CODE_AP_SOUTH_EAST_3 = "ap-southeast-3";
     private static final String REGION_CODE_CN_HONGKONG = "cn-hongkong";
+
     // 常量
     private static final String SEPARATOR = ".";
-    private static final String OPEN_PREFIX = "open";
+    private static final String CN_PREFIX = "cn-";
+    private static final String CN_SUFFIX = ".cn";
     private static final String ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
-    private static final String AP_SOUTHEAST_1_PREFIX = SEPARATOR + "ap-southeast-1";
-    private static final String ENDPOINT = OPEN_PREFIX + AP_SOUTHEAST_1_PREFIX + ENDPOINT_SUFFIX;
-    private static final String BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX = SEPARATOR + "byteplusapi.com";
-    private static final String BYTEPLUS_ORIGIN_ENDPOINT = OPEN_PREFIX + BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX;
-
-
     private static final String DUALSTACK_ENDPOINT_SUFFIX = SEPARATOR + "byteplus-api.com";
+
     private static final Map<String, ServiceEndpointInfo> DEFAULT_ENDPOINT_MAP = new HashMap<>();
-    private static final Set<String> BOOTSTRAP_REGION = new HashSet<>();
 
-    // 区域端点映射类型
-    private static class RegionEndpointMap extends HashMap<String, String> {
-    }
-
-    static {
-        BOOTSTRAP_REGION.add(REGION_CODE_AP_SOUTH_EAST_2);
-        BOOTSTRAP_REGION.add(REGION_CODE_AP_SOUTH_EAST_3);
-    }
-
-
-    private static class ServiceEndpointInfo {
-        private String service;
-        private boolean isGlobal;
-        private String globalEndpoint;
-        private String defaultEndpoint;
-        private RegionEndpointMap regionEndpointMap;
-
-        public ServiceEndpointInfo(String service, boolean isGlobal, String globalEndpoint,
-                                   String defaultEndpoint, RegionEndpointMap regionEndpointMap) {
-            this.service = service;
-            this.isGlobal = isGlobal;
-            this.globalEndpoint = globalEndpoint;
-            this.defaultEndpoint = defaultEndpoint;
-            this.regionEndpointMap = regionEndpointMap;
-        }
-    }
-
-    private static Set<String> CN_NONE_MAINLAND_REGION_SET = new HashSet<>();
+    /**
+     * Region-level whitelist of cn-* regions that should resolve to the
+     * international {@code .byteplusapi.com} suffix rather than the Chinese
+     * mainland {@code .byteplusapi.com.cn} suffix.
+     */
+    private static final Set<String> CN_NONE_MAINLAND_REGION_SET = new HashSet<>();
 
     static {
         CN_NONE_MAINLAND_REGION_SET.add(REGION_CODE_CN_HONGKONG);
-
-        // --------------------------- ark ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("ark", new ServiceEndpointInfo(
-                "ark",
-                false,
-                "",
-                BYTEPLUS_ORIGIN_ENDPOINT,
-                createRegionEndpointMap()
-        ));
-
-        // --------------------------- billing ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("billing", new ServiceEndpointInfo(
-                "billing",
-                true,
-                "",
-                BYTEPLUS_ORIGIN_ENDPOINT,
-                createRegionEndpointMap()
-        ));
-
-        // --------------------------- vpc ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo(
-                "vpc",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-
-        // --------------------------- ecs ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("ecs", new ServiceEndpointInfo(
-                "ecs",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-
-        DEFAULT_ENDPOINT_MAP.put("kms", new ServiceEndpointInfo(
-                "kms",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-
-        DEFAULT_ENDPOINT_MAP.put("natgateway", new ServiceEndpointInfo(
-                "natgateway",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        DEFAULT_ENDPOINT_MAP.put("eco_partner", new ServiceEndpointInfo(
-                "eco_partner",
-                true,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-
-        // --------------------------- iam ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(
-                "iam",
-                true,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- cloudmonitor ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("cloudmonitor", new ServiceEndpointInfo(
-                "cloudmonitor",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- cpaas ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("cpaas", new ServiceEndpointInfo(
-                "cpaas",
-                true,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- vepfs ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo(
-                "vepfs",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- vke ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo(
-                "vke",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- kickart ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(
-                "kickart",
-                true,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- rds_mssql ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("rds_mssql", new ServiceEndpointInfo(
-                "rds_mssql",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- sts ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("sts", new ServiceEndpointInfo(
-                "sts",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- vmp ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("vmp", new ServiceEndpointInfo(
-                "vmp",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- redis ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("redis", new ServiceEndpointInfo(
-                "redis",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- vs ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("vs", new ServiceEndpointInfo(
-                "vs",
-                true,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- resourcecenter ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("resourcecenter", new ServiceEndpointInfo(
-                "resourcecenter",
-                true,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- rds_mysql ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("rds_mysql", new ServiceEndpointInfo(
-                "rds_mysql",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- privatelink ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("privatelink", new ServiceEndpointInfo(
-                "privatelink",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- transitrouter ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("transitrouter", new ServiceEndpointInfo(
-                "transitrouter",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- cen ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("cen", new ServiceEndpointInfo(
-                "cen",
-                true,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
-        // --------------------------- clawsentry ---------------------------
-        DEFAULT_ENDPOINT_MAP.put("clawsentry", new ServiceEndpointInfo(
-                "clawsentry",
-                false,
-                "",
-                ENDPOINT,
-                createRegionEndpointMap()
-        ));
     }
 
-    // 创建区域端点映射的辅助方法
-    private static RegionEndpointMap createRegionEndpointMap(String... keyValuePairs) {
-        RegionEndpointMap map = new RegionEndpointMap();
-        for (int i = 0; i < keyValuePairs.length; i += 2) {
-            String regionCode = keyValuePairs[i];
-            String servicePrefix = keyValuePairs[i + 1];
-            map.put(regionCode, servicePrefix + SEPARATOR + regionCode + BYTEPLUS_ORIGIN_ENDPOINT_SUFFIX);
+    private static final class ServiceEndpointInfo {
+        private final boolean isGlobal;
+        private final boolean goChinaEnabled;
+
+        ServiceEndpointInfo(boolean isGlobal, boolean goChinaEnabled) {
+            this.isGlobal = isGlobal;
+            this.goChinaEnabled = goChinaEnabled;
         }
-        return map;
+    }
+
+    static {
+        // Every service currently supports Go-China (.byteplusapi.com.cn) when
+        // dispatched to a mainland cn-* region. Set goChinaEnabled=false only
+        // for services that must never resolve to the .cn suffix.
+        DEFAULT_ENDPOINT_MAP.put("ark", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("billing", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("ecs", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("kms", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("natgateway", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("eco_partner", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("iam", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("cloudmonitor", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("cpaas", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("vepfs", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("kickart", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("rds_mssql", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("sts", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("vmp", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("redis", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("vs", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("resourcecenter", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("rds_mysql", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("privatelink", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("transitrouter", new ServiceEndpointInfo(false, true));
+        DEFAULT_ENDPOINT_MAP.put("cen", new ServiceEndpointInfo(true, true));
+        DEFAULT_ENDPOINT_MAP.put("clawsentry", new ServiceEndpointInfo(false, true));
     }
 
     private static String standardizeDomainServiceCode(String serviceCode) {
-        return serviceCode.toLowerCase().replaceAll("_", "-");
+        return serviceCode.toLowerCase(Locale.ROOT).replaceAll("_", "-");
+    }
+
+    private static String normalizeRegion(String region) {
+        return region == null ? "" : region.trim().toLowerCase(Locale.ROOT);
     }
 
     @Override
-    public ResolvedEndpoint endpointFor(ResolveEndpointOption option) {
+    public ResolvedEndpoint endpointFor(ResolveEndpointOption option) throws ApiException {
         String endpoint = DefaultEndpointProvider.getDefaultEndpointByServiceInfo(
-                option.getService(), option.getRegion(), option.getCustomBootstrapRegion(),option.getUseDualStack());
+                option.getService(), option.getRegion(),
+                option.getCustomBootstrapRegion(), option.getUseDualStack());
         ResolvedEndpoint result = new ResolvedEndpoint();
         result.setEndpoint(endpoint);
         return result;
     }
 
-    private static boolean isCNRegion(String region) {
-        if (!region.startsWith("cn-")) {
+    /**
+     * Returns whether the given region is a mainland cn-* region resolving to
+     * the {@code .byteplusapi.com.cn} suffix. Assumes the region has already
+     * been normalized via {@link #normalizeRegion(String)}. Regions listed in
+     * {@link #CN_NONE_MAINLAND_REGION_SET} (for example {@code cn-hongkong})
+     * are treated as international.
+     */
+    private static boolean isCNMainlandRegion(String normalizedRegion) {
+        if (!normalizedRegion.startsWith(CN_PREFIX)) {
             return false;
         }
-
-        return !CN_NONE_MAINLAND_REGION_SET.contains(region);
-    }
-
-    private static boolean inBootstrapRegionList(String region, Set<String> customBootstrapRegion) {
-        String regionCode = region.trim();
-        String bsRegionListPath = System.getenv("BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF");
-
-        if (bsRegionListPath != null && !bsRegionListPath.isEmpty()) {
-            SDK_CORE_LOGGER.debugEndpoint("Checking for region in file specified by BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF: " + bsRegionListPath);
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(bsRegionListPath));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    line = line.trim();
-                    if (line.isEmpty()) {
-                        continue;
-                    }
-                    if (line.equals(regionCode)) {
-                        reader.close();
-                        SDK_CORE_LOGGER.debugEndpoint("Region '{}' found in {}.", regionCode, bsRegionListPath);
-                        return true;
-                    }
-                }
-                reader.close();
-            } catch (Exception e) {
-                SDK_CORE_LOGGER.error(()->"Error when reading " + bsRegionListPath + ": ", e);
-            }
-        }
-
-        if (BOOTSTRAP_REGION.contains(region)) {
-            SDK_CORE_LOGGER.debugEndpoint("Region '{}' found in default bootstrap list.", region);
-            return true;
-        }
-
-        if (customBootstrapRegion != null) {
-            SDK_CORE_LOGGER.debugEndpoint("Region '{}' found in custom bootstrap list.", region);
-            return customBootstrapRegion.contains(region);
-        }
-
-        SDK_CORE_LOGGER.debugEndpoint("Region '{}' not found in any bootstrap list.", region);
-
-        return false;
+        return !CN_NONE_MAINLAND_REGION_SET.contains(normalizedRegion);
     }
 
     private static boolean hasEnabledDualstack(Boolean useDualStack) {
         if (useDualStack == null) {
             String enableDualstack = System.getenv("BYTEPLUS_ENABLE_DUALSTACK");
-            return enableDualstack != null && enableDualstack.equals("true");
+            return "true".equals(enableDualstack);
         }
-
         return useDualStack;
     }
 
-
+    /**
+     * Resolves the default endpoint for the given service and region.
+     *
+     * <p>Decision table (mirrors the SDK-wide addressing spec):
+     * <ol>
+     *   <li>Unknown service &rarr; throws {@link ApiException}. No silent
+     *       fallback; callers are expected to surface the error.</li>
+     *   <li>Global service in a mainland {@code cn-*} region with
+     *       {@code goChinaEnabled=true} &rarr;
+     *       {@code {service}.byteplusapi.com.cn}.</li>
+     *   <li>Global service otherwise &rarr; {@code {service}.byteplusapi.com}
+     *       (or {@code .byteplus-api.com} when dual-stack is enabled).</li>
+     *   <li>Regional service in a mainland {@code cn-*} region with
+     *       {@code goChinaEnabled=true} &rarr;
+     *       {@code {service}.{region}.byteplusapi.com.cn}.</li>
+     *   <li>Regional service otherwise &rarr;
+     *       {@code {service}.{region}.byteplusapi.com}.</li>
+     * </ol>
+     *
+     * <p>{@code regionCode} is normalized (trim + lowercase) before being
+     * placed in the returned host, so callers may pass mixed-case values.
+     *
+     * @param service              service code registered in the default endpoint map.
+     * @param regionCode           request region.
+     * @param customBootstrapRegion <b>Deprecated.</b> Retained for signature
+     *                              compatibility only; no longer participates
+     *                              in addressing.
+     * @param useDualStack         nullable dual-stack override; when {@code null}
+     *                              falls back to {@code BYTEPLUS_ENABLE_DUALSTACK}.
+     * @throws ApiException when {@code service} is not registered in the default endpoint map.
+     */
     public static String getDefaultEndpointByServiceInfo(String service, String regionCode,
-                                                         Set<String> customBootstrapRegion, Boolean useDualStack) {
-        String resultEndpoint = OPEN_PREFIX + AP_SOUTHEAST_1_PREFIX + ENDPOINT_SUFFIX;
+                                                         Set<String> customBootstrapRegion, Boolean useDualStack) throws ApiException {
+        // customBootstrapRegion is intentionally ignored: bootstrap-region-based
+        // routing is deprecated and no longer participates in addressing.
 
         ServiceEndpointInfo endpointInfo = DEFAULT_ENDPOINT_MAP.get(service);
-
-        if (!inBootstrapRegionList(regionCode, customBootstrapRegion)) {
-            SDK_CORE_LOGGER.debugEndpoint("Region '{}' not in bootstrap region list, fallback to default: {}", regionCode, resultEndpoint);
-            if (endpointInfo == null) {
-                SDK_CORE_LOGGER.debugEndpoint("Service '{}' not found in default endpoint map, fallback to default: {}", regionCode, resultEndpoint);
-                return resultEndpoint;
-            }
-
-            return endpointInfo.defaultEndpoint;
+        if (endpointInfo == null) {
+            throw new ApiException("service '" + service + "' not registered in default endpoint map");
         }
 
         String endpointSuffix = hasEnabledDualstack(useDualStack) ? DUALSTACK_ENDPOINT_SUFFIX : ENDPOINT_SUFFIX;
-        SDK_CORE_LOGGER.debugEndpoint("Endpoint suffix is: " + endpointSuffix);
-
-        if (endpointInfo == null) {
-            SDK_CORE_LOGGER.debugEndpoint("Service '{}' not found in default endpoint map, fallback to default: {}", regionCode, resultEndpoint);
-            return resultEndpoint;
-        }
+        String serviceCode = standardizeDomainServiceCode(service);
+        String normalizedRegion = normalizeRegion(regionCode);
+        String cnSuffix = (endpointInfo.goChinaEnabled && isCNMainlandRegion(normalizedRegion)) ? CN_SUFFIX : "";
 
         if (endpointInfo.isGlobal) {
-            if (!endpointInfo.globalEndpoint.isEmpty()) {
-                SDK_CORE_LOGGER.debugEndpoint("Service '{}' is global, using predefined global endpoint: {}", service, resultEndpoint);
-                resultEndpoint = endpointInfo.globalEndpoint;
-                return resultEndpoint;
-            }
-
-            resultEndpoint = standardizeDomainServiceCode(service) + endpointSuffix;
+            String resultEndpoint = serviceCode + endpointSuffix + cnSuffix;
             SDK_CORE_LOGGER.debugEndpoint("Service '{}' is global, constructing endpoint: {}", service, resultEndpoint);
-
             return resultEndpoint;
         }
 
-        if (endpointInfo.regionEndpointMap != null) {
-            String regionEndpoint = endpointInfo.regionEndpointMap.get(regionCode);
-            if (regionEndpoint != null) {
-                resultEndpoint = regionEndpoint;
-                SDK_CORE_LOGGER.debugEndpoint("Found predefined endpoint for service '{}' in region '{}': {}", service, regionCode, resultEndpoint);
-                return resultEndpoint;
-            }
-        }
-
-        resultEndpoint = standardizeDomainServiceCode(service) + SEPARATOR + regionCode + endpointSuffix +
-                (isCNRegion(regionCode) ? ".cn" : "");
-
-        SDK_CORE_LOGGER.debugEndpoint("Constructing endpoint for service '{}' in region '{}': {}", service, regionCode, resultEndpoint);
+        String resultEndpoint = serviceCode + SEPARATOR + normalizedRegion + endpointSuffix + cnSuffix;
+        SDK_CORE_LOGGER.debugEndpoint("Constructing endpoint for service '{}' in region '{}': {}", service, normalizedRegion, resultEndpoint);
         return resultEndpoint;
     }
-
 }
-
-

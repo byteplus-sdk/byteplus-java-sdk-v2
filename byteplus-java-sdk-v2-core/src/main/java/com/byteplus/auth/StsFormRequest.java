@@ -11,6 +11,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * Shared HTTP helper for STS form-encoded POST requests (AssumeRoleWithOIDC,
@@ -21,7 +25,8 @@ import java.nio.charset.StandardCharsets;
  */
 class StsFormRequest {
 
-    static final String DEFAULT_STS_ENDPOINT = "sts.ap-southeast-1.byteplusapi.com";
+    static final String DEFAULT_STS_REGION = "ap-southeast-1";
+    static final String DEFAULT_STS_ENDPOINT = "sts." + DEFAULT_STS_REGION + ".byteplusapi.com";
     static final int DEFAULT_CONNECT_TIMEOUT_MS = 3000;
     static final int DEFAULT_READ_TIMEOUT_MS = 3000;
     static final int DEFAULT_MAX_RETRIES = 3;
@@ -30,7 +35,34 @@ class StsFormRequest {
     static final String FORM_URLENCODED = "application/x-www-form-urlencoded";
     static final String ACCEPT = "application/json";
 
+    private static final Set<String> CN_NONE_MAINLAND_REGION_SET;
+
+    static {
+        Set<String> set = new HashSet<String>();
+        set.add("cn-hongkong");
+        CN_NONE_MAINLAND_REGION_SET = Collections.unmodifiableSet(set);
+    }
+
     private StsFormRequest() {
+    }
+
+    /**
+     * Returns the STS host for the given region. Follows the STS
+     * (regional, go-china enabled) rules: mainland {@code cn-*} regions map to
+     * {@code byteplusapi.com.cn}; every other region maps to
+     * {@code byteplusapi.com}. Empty region falls back to
+     * {@link #DEFAULT_STS_REGION}.
+     */
+    static String defaultSTSHostFor(String region) {
+        String normalized = region == null ? "" : region.trim().toLowerCase(Locale.ROOT);
+        if (normalized.isEmpty()) {
+            normalized = DEFAULT_STS_REGION;
+        }
+        String suffix = "byteplusapi.com";
+        if (normalized.startsWith("cn-") && !CN_NONE_MAINLAND_REGION_SET.contains(normalized)) {
+            suffix = "byteplusapi.com.cn";
+        }
+        return "sts." + normalized + "." + suffix;
     }
 
     /**

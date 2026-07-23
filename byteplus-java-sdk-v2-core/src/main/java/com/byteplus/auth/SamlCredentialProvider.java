@@ -40,6 +40,7 @@ public class SamlCredentialProvider implements Provider {
     private final String samlAssertion;
     private final String rolePolicy;
     private final String stsEndpoint;
+    private final String region;
 
     private int durationSeconds = DEFAULT_DURATION_SECONDS;
     private int expireBufferSeconds = DEFAULT_EXPIRE_BUFFER_SECONDS;
@@ -61,6 +62,26 @@ public class SamlCredentialProvider implements Provider {
      */
     public SamlCredentialProvider(String roleTrn, String samlProviderTrn,
                                   String samlAssertion, String rolePolicy, String stsEndpoint) {
+        this(roleTrn, samlProviderTrn, samlAssertion, rolePolicy, stsEndpoint, null);
+    }
+
+    /**
+     * Creates a new SamlCredentialProvider.
+     *
+     * <p>The effective STS endpoint is resolved with three-level fallback:
+     * an explicit {@code stsEndpoint} wins; otherwise a non-empty {@code region}
+     * drives {@link StsFormRequest#defaultSTSHostFor}; otherwise the default
+     * {@link StsFormRequest#DEFAULT_STS_ENDPOINT} is used.
+     *
+     * @param roleTrn         the TRN of the role to assume
+     * @param samlProviderTrn the TRN of the SAML provider
+     * @param samlAssertion   the base64-encoded SAML Response from your IdP
+     * @param rolePolicy      optional inline policy (may be null)
+     * @param stsEndpoint     optional STS endpoint override (may be null)
+     * @param region          optional region driving auto-resolved STS host when endpoint is empty (may be null)
+     */
+    public SamlCredentialProvider(String roleTrn, String samlProviderTrn,
+                                  String samlAssertion, String rolePolicy, String stsEndpoint, String region) {
         if (isNullOrEmpty(roleTrn)) {
             throw new IllegalArgumentException("roleTrn must not be null or empty");
         }
@@ -74,7 +95,18 @@ public class SamlCredentialProvider implements Provider {
         this.samlProviderTrn = samlProviderTrn;
         this.samlAssertion = samlAssertion;
         this.rolePolicy = rolePolicy;
-        this.stsEndpoint = isNullOrEmpty(stsEndpoint) ? StsFormRequest.DEFAULT_STS_ENDPOINT : stsEndpoint;
+        this.region = region;
+        this.stsEndpoint = resolveEndpoint(stsEndpoint, region);
+    }
+
+    static String resolveEndpoint(String stsEndpoint, String region) {
+        if (!isNullOrEmpty(stsEndpoint)) {
+            return stsEndpoint;
+        }
+        if (!isNullOrEmpty(region)) {
+            return StsFormRequest.defaultSTSHostFor(region);
+        }
+        return StsFormRequest.DEFAULT_STS_ENDPOINT;
     }
 
     @Override
@@ -133,6 +165,14 @@ public class SamlCredentialProvider implements Provider {
             throw new ApiException(PROVIDER_NAME + ": not refreshed; call refresh() first or use CredentialProvider");
         }
         return v;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getStsEndpoint() {
+        return stsEndpoint;
     }
 
     public void setDurationSeconds(int durationSeconds) {

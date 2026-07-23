@@ -43,6 +43,7 @@ public class OidcCredentialProvider implements Provider {
     private final String oidcTokenFile;
     private final String rolePolicy;
     private final String stsEndpoint;
+    private final String region;
 
     private int durationSeconds = DEFAULT_DURATION_SECONDS;
     private int expireBufferSeconds = DEFAULT_EXPIRE_BUFFER_SECONDS;
@@ -55,6 +56,19 @@ public class OidcCredentialProvider implements Provider {
 
     public OidcCredentialProvider(String roleTrn, String roleSessionName, String oidcTokenFile,
                                   String rolePolicy, String stsEndpoint) {
+        this(roleTrn, roleSessionName, oidcTokenFile, rolePolicy, stsEndpoint, null);
+    }
+
+    /**
+     * Creates a new OidcCredentialProvider.
+     *
+     * <p>The effective STS endpoint is resolved with three-level fallback:
+     * an explicit {@code stsEndpoint} wins; otherwise a non-empty {@code region}
+     * drives {@link StsFormRequest#defaultSTSHostFor}; otherwise the default
+     * {@link StsFormRequest#DEFAULT_STS_ENDPOINT} is used.
+     */
+    public OidcCredentialProvider(String roleTrn, String roleSessionName, String oidcTokenFile,
+                                  String rolePolicy, String stsEndpoint, String region) {
         if (isNullOrEmpty(roleTrn)) {
             throw new IllegalArgumentException("roleTrn must not be null or empty");
         }
@@ -68,7 +82,18 @@ public class OidcCredentialProvider implements Provider {
         this.roleSessionName = roleSessionName;
         this.oidcTokenFile = oidcTokenFile;
         this.rolePolicy = rolePolicy;
-        this.stsEndpoint = isNullOrEmpty(stsEndpoint) ? StsFormRequest.DEFAULT_STS_ENDPOINT : stsEndpoint;
+        this.region = region;
+        this.stsEndpoint = resolveEndpoint(stsEndpoint, region);
+    }
+
+    static String resolveEndpoint(String stsEndpoint, String region) {
+        if (!isNullOrEmpty(stsEndpoint)) {
+            return stsEndpoint;
+        }
+        if (!isNullOrEmpty(region)) {
+            return StsFormRequest.defaultSTSHostFor(region);
+        }
+        return StsFormRequest.DEFAULT_STS_ENDPOINT;
     }
 
     public static OidcCredentialProvider fromEnvironment() throws ApiException {
@@ -77,13 +102,14 @@ public class OidcCredentialProvider implements Provider {
         String oidcTokenFile = System.getenv("BYTEPLUS_OIDC_TOKEN_FILE");
         String rolePolicy = System.getenv("BYTEPLUS_OIDC_ROLE_POLICY");
         String stsEndpoint = System.getenv("BYTEPLUS_OIDC_STS_ENDPOINT");
+        String region = System.getenv("BYTEPLUS_OIDC_STS_REGION");
 
         if (isNullOrEmpty(roleTrn) || isNullOrEmpty(oidcTokenFile)) {
             throw new ApiException(PROVIDER_NAME + ": required environment variables "
                     + "BYTEPLUS_OIDC_ROLE_TRN and BYTEPLUS_OIDC_TOKEN_FILE are not set");
         }
 
-        return new OidcCredentialProvider(roleTrn, roleSessionName, oidcTokenFile, rolePolicy, stsEndpoint);
+        return new OidcCredentialProvider(roleTrn, roleSessionName, oidcTokenFile, rolePolicy, stsEndpoint, region);
     }
 
     @Override
@@ -153,6 +179,14 @@ public class OidcCredentialProvider implements Provider {
             throw new ApiException(PROVIDER_NAME + ": not refreshed; call refresh() first or use CredentialProvider");
         }
         return v;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getStsEndpoint() {
+        return stsEndpoint;
     }
 
     public void setDurationSeconds(int durationSeconds) {
