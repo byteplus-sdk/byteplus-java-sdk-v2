@@ -91,12 +91,6 @@ The table lists every effective combination. `RegionType` is derived from the se
 
 When DualStack is enabled, replace every occurrence of `byteplusapi.com` in the table with `byteplus-api.com`.
 
-##### STS Credential Providers
-
-`StsAssumeRoleProvider`, `OidcCredentialProvider`, and `SamlCredentialProvider` share the same decision table. When their `host` / `stsEndpoint` field is empty, the provider derives the STS host from `region` (`OidcCredentialProvider.fromEnvironment()` also honors the `BYTEPLUS_OIDC_STS_REGION` environment variable) and resolves it against the same STS row used by the main request pipeline — no explicit STS host configuration is required.
-
-`StsAssumeRoleProvider` also supports explicitly setting the STS host via `setHost(...)`. Once `setHost` has been called, subsequent `setRegion(...)` calls do not overwrite the explicitly set `host`; when `setHost` has never been called, `setRegion` recomputes the default STS host from the new region.
-
 ##### `setCustomBootstrapRegion` / `BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF` (Deprecated)
 
 > **⚠️ Deprecated**: `ApiClient.setCustomBootstrapRegion(Set<String>)`, `ResolveEndpointOption.setCustomBootstrapRegion(Set<String>)`, and the `BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF` environment variable are **deprecated** and **no longer participate** in the default addressing pipeline. The related methods are retained only for API source/binary compatibility and are treated as no-ops at runtime. **Do not use them in new code.** Existing callers should switch to `setRegion` + `setUseDualStack` and let the SDK auto-resolve the endpoint, or override it explicitly via `setEndpoint`.

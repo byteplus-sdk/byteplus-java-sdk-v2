@@ -14,9 +14,8 @@ public class StsAssumeRoleProvider implements Provider {
     private String sessionToken;
     private String roleName;
     private String accountId;
-    private String host;
-    private String region = StsFormRequest.DEFAULT_STS_REGION;
-    private boolean hostExplicitlySet;
+    private String host = "sts.ap-southeast-1.byteplusapi.com";
+    private String region = "ap-southeast-1";
     private String schema = "https";
     //STS request timeout
     private int timeout = 30;
@@ -43,7 +42,6 @@ public class StsAssumeRoleProvider implements Provider {
         this.sessionToken = sessionToken;
         this.roleName = roleName;
         this.accountId = accountId;
-        this.host = StsFormRequest.defaultSTSHostFor(this.region);
         this.apiClient = new ApiClient()
                 .setEndpoint(this.host)
                 .setCredentials(Credentials.getCredentials(accessKey, securityKey, sessionToken))
@@ -100,7 +98,6 @@ public class StsAssumeRoleProvider implements Provider {
 
     public void setHost(String host) {
         this.host = host;
-        this.hostExplicitlySet = true;
         this.apiClient.setEndpoint(host);
     }
 
@@ -111,10 +108,6 @@ public class StsAssumeRoleProvider implements Provider {
     public void setRegion(String region) {
         this.region = region;
         this.apiClient.setRegion(region);
-        if (!this.hostExplicitlySet) {
-            this.host = StsFormRequest.defaultSTSHostFor(region);
-            this.apiClient.setEndpoint(this.host);
-        }
     }
 
     public String getSchema() {

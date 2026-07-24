@@ -97,12 +97,6 @@ public class SampleCode {
 
 启用 DualStack 时，将上表中的 `byteplusapi.com` 整体替换为 `byteplus-api.com`。
 
-##### STS 凭证 Provider
-
-`StsAssumeRoleProvider` / `OidcCredentialProvider` / `SamlCredentialProvider` 共享同一份决策表。当 `host` / `stsEndpoint` 字段留空时，Provider 会用 `region`（`OidcCredentialProvider.fromEnvironment()` 也支持 `BYTEPLUS_OIDC_STS_REGION` 环境变量）自动寻址，命中与主链路一致的 STS 行 —— 无需再显式配置 STS 域名。
-
-`StsAssumeRoleProvider` 支持通过 `setHost(...)` 显式指定 STS 域名，此时后续 `setRegion(...)` 不会覆盖用户已显式设置的 `host`；反之若从未显式 `setHost`，`setRegion` 会依据新 region 重算默认 STS 域名。
-
 ##### `setCustomBootstrapRegion` / `BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF`（已废弃）
 
 > **⚠️ Deprecated**：`ApiClient.setCustomBootstrapRegion(Set<String>)`、`ResolveEndpointOption.setCustomBootstrapRegion(Set<String>)` 以及 `BYTEPLUS_BOOTSTRAP_REGION_LIST_CONF` 环境变量已被标记为**废弃**，**不再参与**默认寻址链路。相关方法仅为 API 源码/二进制兼容而保留，运行时视为 no-op。请**勿在新代码中使用**，已有代码建议改用 `setRegion` + `setUseDualStack` 让 SDK 自动寻址，或用 `setEndpoint` 显式覆盖。
