@@ -18,7 +18,7 @@ public class StandardEndpointProvider implements EndpointResolver {
     private static final String CN_SUFFIX = ".cn";
 
     private String format;
-    private Variables variables;
+    private final Map<String,String> extension;
     private Map<String, ServiceInfo> customServices;
 
     private static class Variables {
@@ -116,10 +116,7 @@ public class StandardEndpointProvider implements EndpointResolver {
         if (StringUtils.isNotBlank(format)) {
             this.format = format;
         }
-        Variables variables = new Variables();
-        variables.setSiteStack(siteStack);
-        variables.setExtension(extension);
-        this.variables = variables;
+        this.extension = extension == null ? new HashMap<>() : new HashMap<>(extension);
         this.customServices = customServices == null ? new HashMap<>() : customServices;
     }
 
@@ -360,8 +357,12 @@ public class StandardEndpointProvider implements EndpointResolver {
             this.format = DEFAULT_FORMAT;
         }
 
+        // Per-request Variables — never share instance state across calls.
+        Variables vars = new Variables();
+        vars.setExtension(this.extension);
+
         // 1) 归一化放入变量
-        this.variables.Service = standardizeDomainServiceCode(service);
+        vars.Service = standardizeDomainServiceCode(service);
 
         // 2) 获取服务信息
         ServiceInfo info = SERVICE_INFOS.get(service);
@@ -376,25 +377,27 @@ public class StandardEndpointProvider implements EndpointResolver {
 
         // 3) region 处理（非 Global 才带 .region）
         if (!info.isGlobal) {
-            this.variables.Region = "." + region;
+            vars.Region = "." + region;
         } else {
-            this.variables.Region = "";
+            vars.Region = "";
         }
 
         // 4) IP 版本选择 SiteStack（与 Go 逻辑一致：仅在匹配时覆盖）
         if  (useDualStack != null && useDualStack) {
-            this.variables.SiteStack = SiteStackByteplusDualStack;
+            vars.SiteStack = SiteStackByteplusDualStack;
         } else {
-            this.variables.SiteStack = SiteStackByteplusIPv4;
+            vars.SiteStack = SiteStackByteplusIPv4;
         }
 
         // 5) 判断是否为中国区域
         if (!info.isGlobal && isGoChina(region)) {
-            this.variables.CNSuffix = CN_SUFFIX;
+            vars.CNSuffix = CN_SUFFIX;
+        } else {
+            vars.CNSuffix = "";
         }
 
         // 6) 渲染模板
-        String url = renderTemplate(this.format, this.variables);
+        String url = renderTemplate(this.format, vars);
         ResolvedEndpoint resolved = new ResolvedEndpoint();
         resolved.setEndpoint(url);
 

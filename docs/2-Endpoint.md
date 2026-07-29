@@ -149,7 +149,7 @@ When you hit this error, first try upgrading the SDK. If the service is genuinel
 | No  | Yes | `{Service}.{region}.byteplus-api.com` |
 | No  | No  | `{Service}.{region}.byteplusapi.com` |
 
-Standard resolution never appends the Go China `.cn` suffix. If you need `.cn`, use the default resolver (or set the endpoint explicitly).
+Standard resolution appends the Go China `.cn` suffix for regional services in mainland `cn-*` regions (for example `vpc.cn-beijing.byteplusapi.com.cn`). This is the existing behavior; if `.cn` is not desired, use the default resolver or set the endpoint explicitly.
 
 Whether a service is global depends on the service itself and cannot be changed. See `SERVICE_INFOS` in [`../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java`](../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java).
 

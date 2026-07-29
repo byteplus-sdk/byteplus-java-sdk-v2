@@ -17,7 +17,7 @@ import com.byteplus.model.ResponseMetadata;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-03-17T19:20:18.609954+08:00[Asia/Shanghai]")public class ApiException extends Exception {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-03-17T19:20:18.609954+08:00[Asia/Shanghai]")public class ApiException extends RuntimeException {
     private int code = 0;
     private Map<String, List<String>> responseHeaders = null;
     private String responseBody = null;
