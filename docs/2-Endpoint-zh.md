@@ -154,7 +154,7 @@ try {
 | 否 | 是 | `{Service}.{region}.byteplus-api.com` |
 | 否 | 否 | `{Service}.{region}.byteplusapi.com` |
 
-标准寻址在中国大陆 Regional 服务下会追加 Go China 的 `.cn` 后缀（例如 `vpc.cn-beijing.byteplusapi.com.cn`）。此为既有实现，若不希望追加 `.cn`，请使用默认寻址 Provider 或通过 `setEndpoint(...)` 显式指定 Endpoint。
+标准寻址在中国大陆 Regional 服务下会追加 Go China 的 `.cn` 后缀（例如 `vpc.cn-beijing.byteplusapi.com.cn`）。此为既有实现；默认寻址 Provider 在同场景下也会追加 `.cn`（同为 `vpc.cn-beijing.byteplusapi.com.cn`），若不希望追加 `.cn`，请通过 `setEndpoint(...)` 显式指定 Endpoint。
 
 是否 Global 服务由具体调用的服务决定，不可修改。可以参考列表：[`../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java`](../byteplus-java-sdk-v2-core/src/main/java/com/byteplus/endpoint/StandardEndpointProvider.java) 中的 `SERVICE_INFOS`。
 
