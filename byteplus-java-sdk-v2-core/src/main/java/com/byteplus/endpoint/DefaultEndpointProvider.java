@@ -250,6 +250,14 @@ public class DefaultEndpointProvider implements EndpointResolver {
                 ENDPOINT,
                 createRegionEndpointMap()
         ));
+        // --------------------------- seccenter ---------------------------
+        DEFAULT_ENDPOINT_MAP.put("seccenter", new ServiceEndpointInfo(
+                "seccenter",
+                true,
+                "",
+                ENDPOINT,
+                createRegionEndpointMap()
+        ));
         // --------------------------- clawsentry ---------------------------
         DEFAULT_ENDPOINT_MAP.put("clawsentry", new ServiceEndpointInfo(
                 "clawsentry",
