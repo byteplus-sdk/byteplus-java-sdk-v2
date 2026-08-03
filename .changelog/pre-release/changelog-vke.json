@@ -1,5 +1,15 @@
 {
-  "description": "VKE: added ScaleNodePool；modified ListScalingPolicies",
+  "actions": [
+    "UpdateNodePoolConfig",
+    "CreateCluster",
+    "ListClusters",
+    "CreateDefaultNodePool",
+    "CreateNodePool",
+    "CreateNodes",
+    "ListNodePools",
+    "UpdateClusterConfig"
+  ],
+  "description": "VKE: modified CreateCluster, ListClusters, CreateDefaultNodePool, CreateNodePool, CreateNodes, ListNodePools, UpdateClusterConfig, UpdateNodePoolConfig",
   "modules": "service/vke",
-  "type": "feature"
+  "type": "breaking-change"
 }

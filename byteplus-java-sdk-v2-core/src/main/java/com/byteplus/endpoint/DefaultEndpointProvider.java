@@ -33,6 +33,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
 
     static {
         CN_NONE_MAINLAND_REGION_SET.add(REGION_CODE_CN_HONGKONG);
+
     }
 
     private static final class ServiceEndpointInfo {

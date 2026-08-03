@@ -15,6 +15,7 @@ package com.byteplus.vke.model;
 import java.util.Objects;
 import java.util.Arrays;
 import com.byteplus.vke.model.ClusterConfigForUpdateClusterConfigInput;
+import com.byteplus.vke.model.KubernetesConfigForUpdateClusterConfigInput;
 import com.byteplus.vke.model.LoggingConfigForUpdateClusterConfigInput;
 import com.byteplus.vke.model.MonitoringConfigForUpdateClusterConfigInput;
 import com.byteplus.vke.model.PodsConfigForUpdateClusterConfigInput;
@@ -52,6 +53,9 @@ public class UpdateClusterConfigRequest {
 
   @SerializedName("IrsaEnabled")
   private Boolean irsaEnabled = null;
+
+  @SerializedName("KubernetesConfig")
+  private KubernetesConfigForUpdateClusterConfigInput kubernetesConfig = null;
 
   @SerializedName("LoggingConfig")
   private LoggingConfigForUpdateClusterConfigInput loggingConfig = null;
@@ -179,6 +183,25 @@ public class UpdateClusterConfigRequest {
 
   public void setIrsaEnabled(Boolean irsaEnabled) {
     this.irsaEnabled = irsaEnabled;
+  }
+
+  public UpdateClusterConfigRequest kubernetesConfig(KubernetesConfigForUpdateClusterConfigInput kubernetesConfig) {
+    this.kubernetesConfig = kubernetesConfig;
+    return this;
+  }
+
+   /**
+   * Get kubernetesConfig
+   * @return kubernetesConfig
+  **/
+  @Valid
+  @Schema(description = "")
+  public KubernetesConfigForUpdateClusterConfigInput getKubernetesConfig() {
+    return kubernetesConfig;
+  }
+
+  public void setKubernetesConfig(KubernetesConfigForUpdateClusterConfigInput kubernetesConfig) {
+    this.kubernetesConfig = kubernetesConfig;
   }
 
   public UpdateClusterConfigRequest loggingConfig(LoggingConfigForUpdateClusterConfigInput loggingConfig) {
@@ -309,6 +332,7 @@ public class UpdateClusterConfigRequest {
         Objects.equals(this.description, updateClusterConfigRequest.description) &&
         Objects.equals(this.id, updateClusterConfigRequest.id) &&
         Objects.equals(this.irsaEnabled, updateClusterConfigRequest.irsaEnabled) &&
+        Objects.equals(this.kubernetesConfig, updateClusterConfigRequest.kubernetesConfig) &&
         Objects.equals(this.loggingConfig, updateClusterConfigRequest.loggingConfig) &&
         Objects.equals(this.monitoringConfig, updateClusterConfigRequest.monitoringConfig) &&
         Objects.equals(this.name, updateClusterConfigRequest.name) &&
@@ -319,7 +343,7 @@ public class UpdateClusterConfigRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientToken, clusterConfig, deleteProtectionEnabled, description, id, irsaEnabled, loggingConfig, monitoringConfig, name, podsConfig, registerMonitoringConfig, sourceRegion);
+    return Objects.hash(clientToken, clusterConfig, deleteProtectionEnabled, description, id, irsaEnabled, kubernetesConfig, loggingConfig, monitoringConfig, name, podsConfig, registerMonitoringConfig, sourceRegion);
   }
 
 
@@ -334,6 +358,7 @@ public class UpdateClusterConfigRequest {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    irsaEnabled: ").append(toIndentedString(irsaEnabled)).append("\n");
+    sb.append("    kubernetesConfig: ").append(toIndentedString(kubernetesConfig)).append("\n");
     sb.append("    loggingConfig: ").append(toIndentedString(loggingConfig)).append("\n");
     sb.append("    monitoringConfig: ").append(toIndentedString(monitoringConfig)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
