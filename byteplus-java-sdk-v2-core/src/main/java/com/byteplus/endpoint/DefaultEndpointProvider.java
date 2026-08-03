@@ -52,7 +52,8 @@ public class DefaultEndpointProvider implements EndpointResolver {
         // goChinaEnabled controls the Go-China (.byteplusapi.com.cn) suffix when
         // dispatched to a mainland cn-* region. Set goChinaEnabled=false for
         // services that must never resolve to the .cn suffix.
-        DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo("vpc", false, true));
+        DEFAULT_ENDPOINT_MAP.put("vpc", new ServiceEndpointInfo("vpc",
+                false, true));
         DEFAULT_ENDPOINT_MAP.put("vke", new ServiceEndpointInfo("vke", false, true));
         DEFAULT_ENDPOINT_MAP.put("auto_scaling", new ServiceEndpointInfo("auto_scaling", false, true));
         DEFAULT_ENDPOINT_MAP.put("storage_ebs", new ServiceEndpointInfo("storage_ebs", false, true));
