@@ -30,6 +30,12 @@ public class ResolveEndpointOption {
         return customBootstrapRegion;
     }
 
+    /**
+     * @deprecated bootstrap-region-based routing no longer participates in
+     * default endpoint resolution. Retained for API compatibility only; values
+     * set here are ignored by {@link DefaultEndpointProvider}.
+     */
+    @Deprecated
     public void setCustomBootstrapRegion(Set<String> customBootstrapRegion) {
         this.customBootstrapRegion = customBootstrapRegion;
     }
