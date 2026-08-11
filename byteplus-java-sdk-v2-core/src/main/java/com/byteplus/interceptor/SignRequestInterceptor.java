@@ -20,7 +20,7 @@ import java.util.*;
 
 public class SignRequestInterceptor implements RequestInterceptor {
 
-    public static String name = "volcengine-sign-request-interceptor";
+    public static String name = "byteplus-sign-request-interceptor";
     private static final String RETRY_INVOCATION_ID_HEADER = "X-Sdk-Invocation-Id";
     private static final String RETRY_ATTEMPT_HEADER = "X-Sdk-Request";
 
