@@ -50,6 +50,12 @@ public class CreateContentGenerationTaskRequest {
     @JsonProperty("ratio")
     private String ratio;
 
+    @JsonProperty("output_format")
+    private String outputFormat;
+
+    @JsonProperty("omni_reference_task_type")
+    private String omniReferenceTaskType;
+
     @JsonProperty("duration")
     private Long duration;
 
@@ -205,6 +211,23 @@ public class CreateContentGenerationTaskRequest {
     public void setRatio(String ratio) {
         this.ratio = ratio;
     }
+
+    public String getOutputFormat() {
+        return outputFormat;
+    }
+
+    public void setOutputFormat(String outputFormat) {
+        this.outputFormat = outputFormat;
+    }
+
+    public String getOmniReferenceTaskType() {
+        return omniReferenceTaskType;
+    }
+
+    public void setOmniReferenceTaskType(String omniReferenceTaskType) {
+        this.omniReferenceTaskType = omniReferenceTaskType;
+    }
+
     public Long getDuration() {
         return duration;
     }
@@ -244,6 +267,8 @@ public class CreateContentGenerationTaskRequest {
                 ", seed=" + seed +
                 ", resolution='" + resolution + '\'' +
                 ", ratio='" + ratio + '\'' +
+                ", outputFormat='" + outputFormat + '\'' +
+                ", omniReferenceTaskType='" + omniReferenceTaskType + '\'' +
                 ", duration=" + duration +
                 ", frames=" + frames +
                 ", draft=" + draft +
@@ -269,6 +294,8 @@ public class CreateContentGenerationTaskRequest {
         private Long seed;
         private String resolution;
         private String ratio;
+        private String outputFormat;
+        private String omniReferenceTaskType;
         private Long duration;
         private Long frames;
         private Boolean draft;
@@ -346,6 +373,16 @@ public class CreateContentGenerationTaskRequest {
             return this;
         }
 
+        public Builder outputFormat(String outputFormat) {
+            this.outputFormat = outputFormat;
+            return this;
+        }
+
+        public Builder omniReferenceTaskType(String omniReferenceTaskType) {
+            this.omniReferenceTaskType = omniReferenceTaskType;
+            return this;
+        }
+
         public Builder duration(Long duration) {
             this.duration = duration;
             return this;
@@ -377,6 +414,8 @@ public class CreateContentGenerationTaskRequest {
             createContentGenerationTaskRequest.setSeed(seed);
             createContentGenerationTaskRequest.setResolution(resolution);
             createContentGenerationTaskRequest.setRatio(ratio);
+            createContentGenerationTaskRequest.setOutputFormat(outputFormat);
+            createContentGenerationTaskRequest.setOmniReferenceTaskType(omniReferenceTaskType);
             createContentGenerationTaskRequest.setDuration(duration);
             createContentGenerationTaskRequest.setFrames(frames);
             createContentGenerationTaskRequest.setDraft(draft);

@@ -66,6 +66,9 @@ public class GetContentGenerationTaskResponse {
     @JsonProperty("ratio")
     private String ratio;
 
+    @JsonProperty("output_format")
+    private String outputFormat;
+
     @JsonProperty("duration")
     private java.lang.Long duration;
 
@@ -240,6 +243,14 @@ public class GetContentGenerationTaskResponse {
         this.ratio = ratio;
     }
 
+    public String getOutputFormat() {
+        return outputFormat;
+    }
+
+    public void setOutputFormat(String outputFormat) {
+        this.outputFormat = outputFormat;
+    }
+
     public java.lang.Long getDuration() {
         return duration;
     }
@@ -390,6 +401,7 @@ public class GetContentGenerationTaskResponse {
                 ", priority=" + priority +
                 ", generateAudio=" + generateAudio +
                 ", ratio='" + ratio + '\'' +
+                ", outputFormat='" + outputFormat + '\'' +
                 ", duration=" + duration +
                 ", resolution='" + resolution + '\'' +
                 ", draft=" + draft +
