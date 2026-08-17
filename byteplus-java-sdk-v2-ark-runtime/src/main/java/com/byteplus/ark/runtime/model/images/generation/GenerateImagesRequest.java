@@ -61,6 +61,9 @@ public class GenerateImagesRequest {
     private List<ContentGenerationTool> tools;
     @JsonProperty("output_format")
     private String outputFormat;
+
+    @JsonProperty("layer_decomposition")
+    private Boolean layerDecomposition;
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ContentGenerationTool {
         @JsonProperty("type")
@@ -162,6 +165,11 @@ public class GenerateImagesRequest {
         this.outputFormat = outputFormat;
     }
 
+    public GenerateImagesRequest(String model, String prompt, List<String> image, String responseFormat, Integer seed, Double guidanceScale, String size, Boolean watermark, String sequentialImageGeneration, SequentialImageGenerationOptions sequentialImageGenerationOptions, Boolean optimizePrompt, OptimizePromptOptions optimizePromptOptions, Boolean stream, List<ContentGenerationTool> tools, String outputFormat, Boolean layerDecomposition) {
+        this(model, prompt, image, responseFormat, seed, guidanceScale, size, watermark, sequentialImageGeneration, sequentialImageGenerationOptions, optimizePrompt, optimizePromptOptions, stream, tools, outputFormat);
+        this.layerDecomposition = layerDecomposition;
+    }
+
     public String getModel() {
         return this.model;
     }
@@ -260,6 +268,14 @@ public class GenerateImagesRequest {
         this.outputFormat = outputFormat;
     }
 
+    public Boolean getLayerDecomposition() {
+        return this.layerDecomposition;
+    }
+
+    public void setLayerDecomposition(Boolean layerDecomposition) {
+        this.layerDecomposition = layerDecomposition;
+    }
+
 
     public Boolean getStream() {
         return this.stream;
@@ -303,6 +319,7 @@ public class GenerateImagesRequest {
                 ", sequentialImageGenerationOptions=" + sequentialImageGenerationOptions +
                 ", tools=" + tools +
                 ", outputFormat=" + outputFormat +
+                ", layerDecomposition=" + layerDecomposition +
                 '}';
     }
 
@@ -330,6 +347,8 @@ public class GenerateImagesRequest {
 
         private List<ContentGenerationTool> tools;
         private String outputFormat;
+
+        private Boolean layerDecomposition;
 
         private Builder() {
         }
@@ -413,6 +432,11 @@ public class GenerateImagesRequest {
             return this;
         }
 
+        public GenerateImagesRequest.Builder layerDecomposition(Boolean layerDecomposition) {
+            this.layerDecomposition = layerDecomposition;
+            return this;
+        }
+
         public GenerateImagesRequest build() {
             GenerateImagesRequest generateImagesRequest = new GenerateImagesRequest();
             generateImagesRequest.setModel(model);
@@ -430,6 +454,7 @@ public class GenerateImagesRequest {
             generateImagesRequest.setStream(stream);
             generateImagesRequest.setTools(tools);
             generateImagesRequest.setOutputFormat(outputFormat);
+            generateImagesRequest.setLayerDecomposition(layerDecomposition);
             return generateImagesRequest;
         }
     }
