@@ -22,9 +22,15 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 // 客户端类
 public class ApiClient {
+    public static final String OPTION_PROXY_ADDR = "ProxyAddr";
+    public static final String OPTION_CONN_MAX = "ConnMax";
+    public static final String OPTION_TIMEOUT = "Timeout";
+    public static final String OPTION_REWRITE_URL = "RewriteUrl";
+
     private static final String CONTENT_TYPE_HEADER = "application/json";
     private static final long FIVE_MINUTES_MS = 5 * 60 * 1000;
 
@@ -36,6 +42,7 @@ public class ApiClient {
     private final String ak;
     private final String sk;
     private final String region;
+    private final String rewriteHost;
     private final CloseableHttpClient httpClient;
 
     private ApiClient(String url, String ak, String sk, String region, long timeout) {
@@ -43,6 +50,7 @@ public class ApiClient {
         this.ak = ak;
         this.sk = sk;
         this.region = region;
+        this.rewriteHost = null;
 
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(Timeout.ofMilliseconds(timeout))
@@ -67,10 +75,16 @@ public class ApiClient {
     }
 
     private ApiClient(String url, String ak, String sk, String region, long timeout, String proxy, int connMax) throws MalformedURLException {
+        this(url, ak, sk, region, timeout, proxy, connMax, null);
+    }
+
+    private ApiClient(String url, String ak, String sk, String region, long timeout, String proxy, int connMax,
+                      String rewriteHost) throws MalformedURLException {
         this.url = url;
         this.ak = ak;
         this.sk = sk;
         this.region = region;
+        this.rewriteHost = rewriteHost;
 
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(Timeout.ofMilliseconds(timeout))
@@ -146,6 +160,53 @@ public class ApiClient {
     }
 
     /**
+     * 创建新的客户端实例。RewriteUrl 仅用于签名 Host，不覆盖实际请求 Host。
+     */
+    @SuppressWarnings("unchecked")
+    public static ApiClient NewWithOptions(String url, String ak, String sk, String region, String jsonConfig)
+            throws Exception {
+        Map<String, Object> config = jsonConfig == null || jsonConfig.isEmpty()
+                ? null
+                : OBJECT_MAPPER.readValue(jsonConfig, Map.class);
+
+        String proxy = null;
+        int connMax = 0;
+        long timeout = 0;
+        String rewriteHost = null;
+        if (config != null) {
+            Object proxyValue = config.get(OPTION_PROXY_ADDR);
+            if (proxyValue instanceof String) {
+                proxy = (String) proxyValue;
+            }
+            Object connMaxValue = config.get(OPTION_CONN_MAX);
+            if (connMaxValue instanceof Number) {
+                connMax = ((Number) connMaxValue).intValue();
+            }
+            Object timeoutValue = config.get(OPTION_TIMEOUT);
+            if (timeoutValue instanceof Number) {
+                timeout = ((Number) timeoutValue).longValue();
+            }
+            Object rewriteUrlValue = config.get(OPTION_REWRITE_URL);
+            if (rewriteUrlValue instanceof String && !((String) rewriteUrlValue).isEmpty()) {
+                URI rewriteUri = URI.create((String) rewriteUrlValue);
+                rewriteHost = rewriteUri.getHost();
+                if (rewriteHost == null || rewriteHost.isEmpty()) {
+                    throw new IllegalArgumentException("RewriteUrl must include a valid host");
+                }
+                if (rewriteUri.getPort() >= 0) {
+                    rewriteHost = rewriteHost + ":" + rewriteUri.getPort();
+                }
+            }
+        }
+        return new ApiClient(url, ak, sk, region, timeout, proxy, connMax, rewriteHost);
+    }
+
+    private void signRequest(HttpPost request, URI uri, String action) throws Exception {
+        Sign sign = new Sign();
+        sign.DoSignRequest(request, uri, action, ak, sk, region, rewriteHost);
+    }
+
+    /**
      * 关闭客户端，释放连接池资源
      *
      * @throws IOException 如果关闭时发生 IO 异常
@@ -196,8 +257,7 @@ public class ApiClient {
         httpPost.setHeader("Content-Type", CONTENT_TYPE_HEADER);
         httpPost.setEntity(new StringEntity(requestBody, StandardCharsets.UTF_8));
 
-        Sign sign = new Sign();
-        sign.DoSignRequest(httpPost, uri, "Moderate", ak, sk, region);
+        signRequest(httpPost, uri, "Moderate");
 
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             int statusCode = response.getCode();
@@ -247,8 +307,7 @@ public class ApiClient {
         httpPost.setHeader("Content-Type", CONTENT_TYPE_HEADER);
         httpPost.setEntity(new StringEntity(requestBody, StandardCharsets.UTF_8));
 
-        Sign sign = new Sign();
-        sign.DoSignRequest(httpPost, uri, "Moderate", ak, sk, region);
+        signRequest(httpPost, uri, "Moderate");
 
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             int statusCode = response.getCode();
@@ -292,8 +351,7 @@ public class ApiClient {
         httpPost.setHeader("Content-Type", CONTENT_TYPE_HEADER);
         httpPost.setEntity(new StringEntity(requestBody, StandardCharsets.UTF_8));
 
-        Sign sign = new Sign();
-        sign.DoSignRequest(httpPost, uri, "Generate", ak, sk, region);
+        signRequest(httpPost, uri, "Generate");
 
         CloseableHttpResponse response = httpClient.execute(httpPost);
         try {

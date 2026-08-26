@@ -95,9 +95,17 @@ public class Sign {
      */
     public void DoSignRequest(HttpPost httpPost, URI uri, String action, String ak, String sk,
                               String region) throws Exception{
+        DoSignRequest(httpPost, uri, action, ak, sk, region, null);
+    }
+
+    /**
+     * 使用 rewriteHost 计算签名，但保留实际请求 URL 对应的 Host。
+     */
+    public void DoSignRequest(HttpPost httpPost, URI uri, String action, String ak, String sk,
+                              String region, String rewriteHost) throws Exception{
         String method = httpPost.getMethod();
         String path = uri.getPath();
-        String host = uri.getHost();
+        String host = rewriteHost != null && !rewriteHost.isEmpty() ? rewriteHost : uri.getHost();
 
         byte[] body = EntityUtils.toByteArray(httpPost.getEntity());
         LocalDateTime date = LocalDateTime.now(ZoneId.of("GMT"));
@@ -138,7 +146,6 @@ public class Sign {
         // 设置请求头
         httpPost.setHeader("X-Top-Service", SERVICE);
         httpPost.setHeader("X-Top-Region", region);
-        httpPost.setHeader("Host", host);
         httpPost.setHeader("X-Date", xDate);
         httpPost.setHeader("X-Content-Sha256", xContentSha256);
         httpPost.setHeader("Content-Type", contentType);
