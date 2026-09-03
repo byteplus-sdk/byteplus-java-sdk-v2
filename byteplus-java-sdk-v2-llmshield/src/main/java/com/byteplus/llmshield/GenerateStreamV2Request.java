@@ -1,4 +1,5 @@
 package com.byteplus.llmshield;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 // 生成请求类
@@ -6,7 +7,7 @@ public class GenerateStreamV2Request {
     @JsonProperty("MsgID")
     private String msgID;
 
-    @JsonProperty("UseStream")
+    @JsonIgnore
     private boolean useStream;
 
     public String getMsgID() {
@@ -17,16 +18,18 @@ public class GenerateStreamV2Request {
         this.msgID = msgID;
     }
 
+    @Deprecated
+    @JsonIgnore
     public boolean isUseStream() {
         return useStream;
     }
 
+    @Deprecated
+    @JsonIgnore
     public void setUseStream(boolean useStream) {
         this.useStream = useStream;
     }
 }
-
-
 
 
 
