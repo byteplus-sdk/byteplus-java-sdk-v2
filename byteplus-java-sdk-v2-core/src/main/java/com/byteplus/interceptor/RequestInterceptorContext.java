@@ -8,8 +8,12 @@ import com.squareup.okhttp.RequestBody;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class RequestInterceptorContext {
+    private final String invocationId = UUID.randomUUID().toString();
+    private int retryCount;
+    private int maxAttempts = 1;
     private String schema;
     private String host;
     private String path;
@@ -26,6 +30,26 @@ public class RequestInterceptorContext {
 
     private ServiceInfo serviceInfo;
     private Request request;
+
+    public String getInvocationId() {
+        return invocationId;
+    }
+
+    public int getRetryCount() {
+        return retryCount;
+    }
+
+    public void setRetryCount(int retryCount) {
+        this.retryCount = retryCount;
+    }
+
+    public int getMaxAttempts() {
+        return maxAttempts;
+    }
+
+    public void setMaxAttempts(int maxAttempts) {
+        this.maxAttempts = maxAttempts;
+    }
 
     public String getSchema() {
         return schema;

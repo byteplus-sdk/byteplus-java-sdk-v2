@@ -194,7 +194,9 @@ public class ByteplusSign implements Authentication {
         StringBuilder canonicalHeaders = new StringBuilder("");
         StringBuilder signedHeaders = new StringBuilder("");
         for (String key : listHeaderKeys) {
-            if (!key.equalsIgnoreCase("x-date")) {
+            if (!key.equalsIgnoreCase("x-date")
+                    && !key.equalsIgnoreCase("x-sdk-invocation-id")
+                    && !key.equalsIgnoreCase("x-sdk-request")) {
                 continue;
             }
             canonicalHeaders.append(key.toLowerCase());
@@ -446,4 +448,3 @@ public class ByteplusSign implements Authentication {
     }
 
 }
-
