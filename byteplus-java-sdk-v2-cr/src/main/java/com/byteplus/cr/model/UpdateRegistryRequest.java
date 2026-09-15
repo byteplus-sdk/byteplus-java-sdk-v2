@@ -24,22 +24,22 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * UpdatePublicEndpointRequest
+ * UpdateRegistryRequest
  */
 
 
 
-public class UpdatePublicEndpointRequest {
+public class UpdateRegistryRequest {
   @SerializedName("ClientToken")
   private String clientToken = null;
 
-  @SerializedName("Enabled")
-  private Boolean enabled = null;
+  @SerializedName("Name")
+  private String name = null;
 
-  @SerializedName("Registry")
-  private String registry = null;
+  @SerializedName("StorageEncryptionEnabled")
+  private Boolean storageEncryptionEnabled = null;
 
-  public UpdatePublicEndpointRequest clientToken(String clientToken) {
+  public UpdateRegistryRequest clientToken(String clientToken) {
     this.clientToken = clientToken;
     return this;
   }
@@ -57,41 +57,41 @@ public class UpdatePublicEndpointRequest {
     this.clientToken = clientToken;
   }
 
-  public UpdatePublicEndpointRequest enabled(Boolean enabled) {
-    this.enabled = enabled;
+  public UpdateRegistryRequest name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * Get enabled
-   * @return enabled
-  **/
-  @Schema(description = "")
-  public Boolean isEnabled() {
-    return enabled;
-  }
-
-  public void setEnabled(Boolean enabled) {
-    this.enabled = enabled;
-  }
-
-  public UpdatePublicEndpointRequest registry(String registry) {
-    this.registry = registry;
-    return this;
-  }
-
-   /**
-   * Get registry
-   * @return registry
+   * Get name
+   * @return name
   **/
   @NotNull
- @Size(min=3,max=30)  @Schema(required = true, description = "")
-  public String getRegistry() {
-    return registry;
+  @Schema(required = true, description = "")
+  public String getName() {
+    return name;
   }
 
-  public void setRegistry(String registry) {
-    this.registry = registry;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public UpdateRegistryRequest storageEncryptionEnabled(Boolean storageEncryptionEnabled) {
+    this.storageEncryptionEnabled = storageEncryptionEnabled;
+    return this;
+  }
+
+   /**
+   * Get storageEncryptionEnabled
+   * @return storageEncryptionEnabled
+  **/
+  @Schema(description = "")
+  public Boolean isStorageEncryptionEnabled() {
+    return storageEncryptionEnabled;
+  }
+
+  public void setStorageEncryptionEnabled(Boolean storageEncryptionEnabled) {
+    this.storageEncryptionEnabled = storageEncryptionEnabled;
   }
 
 
@@ -103,26 +103,26 @@ public class UpdatePublicEndpointRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdatePublicEndpointRequest updatePublicEndpointRequest = (UpdatePublicEndpointRequest) o;
-    return Objects.equals(this.clientToken, updatePublicEndpointRequest.clientToken) &&
-        Objects.equals(this.enabled, updatePublicEndpointRequest.enabled) &&
-        Objects.equals(this.registry, updatePublicEndpointRequest.registry);
+    UpdateRegistryRequest updateRegistryRequest = (UpdateRegistryRequest) o;
+    return Objects.equals(this.clientToken, updateRegistryRequest.clientToken) &&
+        Objects.equals(this.name, updateRegistryRequest.name) &&
+        Objects.equals(this.storageEncryptionEnabled, updateRegistryRequest.storageEncryptionEnabled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(clientToken, enabled, registry);
+    return Objects.hash(clientToken, name, storageEncryptionEnabled);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpdatePublicEndpointRequest {\n");
+    sb.append("class UpdateRegistryRequest {\n");
     
     sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
-    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-    sb.append("    registry: ").append(toIndentedString(registry)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    storageEncryptionEnabled: ").append(toIndentedString(storageEncryptionEnabled)).append("\n");
     sb.append("}");
     return sb.toString();
   }
