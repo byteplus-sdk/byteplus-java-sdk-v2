@@ -5,9 +5,6 @@ import com.byteplus.Pair;
 import com.byteplus.ProgressRequestBody;
 import com.byteplus.auth.CredentialProvider;
 import com.byteplus.auth.CredentialValue;
-import com.byteplus.auth.OidcCredentialProvider;
-import com.byteplus.auth.SamlCredentialProvider;
-import com.byteplus.auth.StsAssumeRoleProvider;
 import com.byteplus.sign.ByteplusSign;
 import com.byteplus.sign.Credentials;
 import com.byteplus.sign.ServiceInfo;
@@ -53,19 +50,19 @@ public class SignRequestInterceptor implements RequestInterceptor {
         if (context.getApiClient().getCredentials() != null) {
             byteplusSign.setCredentials(context.getApiClient().getCredentials());
         } else {
-            CredentialProvider credentialProvider = context.getApiClient().getCredentialProvider();
+            CredentialProvider credentialProvider = context.getRequestContext().getCredentialProvider();
+            if (credentialProvider == null) {
+                credentialProvider = context.getApiClient().getCredentialProvider();
+            }
             if (credentialProvider == null) {
                 // No explicit credentials or provider set — use default credential chain
                 credentialProvider = new com.byteplus.auth.CredentialProvider(
                     com.byteplus.auth.DefaultCredentialProvider.create()
                 );
                 context.getApiClient().setCredentialProvider(credentialProvider);
+                credentialProvider = context.getApiClient().getCredentialProvider();
             }
-            // When an STS/OIDC/SAML provider has no explicit proxyUrl, fall back to
-            // the ApiClient's httpProxy/httpsProxy (and HTTP(S)_PROXY env) so the
-            // credential-fetch request reuses the same proxy configuration as the
-            // business API client. Explicit proxyUrl on the provider always wins.
-            applyProxyFallback(credentialProvider, context.getApiClient());
+            context.getRequestContext().setCredentialProvider(credentialProvider);
             CredentialValue credentialValue = credentialProvider.get();
             if (credentialValue == null) {
                 throw new ApiException("credentialProvider return null");
@@ -144,36 +141,6 @@ public class SignRequestInterceptor implements RequestInterceptor {
         context.getRequestContext().setRequest(request);
 
         return context;
-    }
-
-    /**
-     * Fall back to the ApiClient's proxy configuration for STS/OIDC/SAML
-     * providers that have no explicit proxyUrl. Mirrors the Go SDK behaviour
-     * where NewSession transfers Config.HTTPProxy/HTTPSProxy to the credential
-     * provider. Only fills the gap: an explicit proxyUrl on the provider is
-     * left untouched.
-     */
-    private static void applyProxyFallback(CredentialProvider credentialProvider, com.byteplus.ApiClient apiClient) {
-        if (credentialProvider == null || apiClient == null) {
-            return;
-        }
-        Object provider = credentialProvider.getProvider();
-        if (provider instanceof StsAssumeRoleProvider) {
-            StsAssumeRoleProvider p = (StsAssumeRoleProvider) provider;
-            if (StringUtils.isEmpty(p.getProxyUrl())) {
-                p.setProxyUrl(apiClient.resolveCredsProxy());
-            }
-        } else if (provider instanceof OidcCredentialProvider) {
-            OidcCredentialProvider p = (OidcCredentialProvider) provider;
-            if (StringUtils.isEmpty(p.getProxyUrl())) {
-                p.setProxyUrl(apiClient.resolveCredsProxy());
-            }
-        } else if (provider instanceof SamlCredentialProvider) {
-            SamlCredentialProvider p = (SamlCredentialProvider) provider;
-            if (StringUtils.isEmpty(p.getProxyUrl())) {
-                p.setProxyUrl(apiClient.resolveCredsProxy());
-            }
-        }
     }
 
     private static void setHeader(Map<String, String> headers, String name, String value) {
