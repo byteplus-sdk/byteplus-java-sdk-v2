@@ -21,6 +21,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
@@ -30,6 +32,9 @@ import javax.validation.Valid;
 
 
 public class ModifyIpamResourceDiscoveryRequest {
+  @SerializedName("AddOperatingRegions")
+  private List<String> addOperatingRegions = null;
+
   @SerializedName("Description")
   private String description = null;
 
@@ -38,6 +43,35 @@ public class ModifyIpamResourceDiscoveryRequest {
 
   @SerializedName("IpamResourceDiscoveryName")
   private String ipamResourceDiscoveryName = null;
+
+  @SerializedName("RemoveOperatingRegions")
+  private List<String> removeOperatingRegions = null;
+
+  public ModifyIpamResourceDiscoveryRequest addOperatingRegions(List<String> addOperatingRegions) {
+    this.addOperatingRegions = addOperatingRegions;
+    return this;
+  }
+
+  public ModifyIpamResourceDiscoveryRequest addAddOperatingRegionsItem(String addOperatingRegionsItem) {
+    if (this.addOperatingRegions == null) {
+      this.addOperatingRegions = new ArrayList<String>();
+    }
+    this.addOperatingRegions.add(addOperatingRegionsItem);
+    return this;
+  }
+
+   /**
+   * Get addOperatingRegions
+   * @return addOperatingRegions
+  **/
+  @Schema(description = "")
+  public List<String> getAddOperatingRegions() {
+    return addOperatingRegions;
+  }
+
+  public void setAddOperatingRegions(List<String> addOperatingRegions) {
+    this.addOperatingRegions = addOperatingRegions;
+  }
 
   public ModifyIpamResourceDiscoveryRequest description(String description) {
     this.description = description;
@@ -48,7 +82,7 @@ public class ModifyIpamResourceDiscoveryRequest {
    * Get description
    * @return description
   **/
- @Size(min=1,max=255)  @Schema(description = "")
+ @Size(max=255)  @Schema(description = "")
   public String getDescription() {
     return description;
   }
@@ -85,13 +119,39 @@ public class ModifyIpamResourceDiscoveryRequest {
    * Get ipamResourceDiscoveryName
    * @return ipamResourceDiscoveryName
   **/
-  @Schema(description = "")
+ @Size(min=1,max=128)  @Schema(description = "")
   public String getIpamResourceDiscoveryName() {
     return ipamResourceDiscoveryName;
   }
 
   public void setIpamResourceDiscoveryName(String ipamResourceDiscoveryName) {
     this.ipamResourceDiscoveryName = ipamResourceDiscoveryName;
+  }
+
+  public ModifyIpamResourceDiscoveryRequest removeOperatingRegions(List<String> removeOperatingRegions) {
+    this.removeOperatingRegions = removeOperatingRegions;
+    return this;
+  }
+
+  public ModifyIpamResourceDiscoveryRequest addRemoveOperatingRegionsItem(String removeOperatingRegionsItem) {
+    if (this.removeOperatingRegions == null) {
+      this.removeOperatingRegions = new ArrayList<String>();
+    }
+    this.removeOperatingRegions.add(removeOperatingRegionsItem);
+    return this;
+  }
+
+   /**
+   * Get removeOperatingRegions
+   * @return removeOperatingRegions
+  **/
+  @Schema(description = "")
+  public List<String> getRemoveOperatingRegions() {
+    return removeOperatingRegions;
+  }
+
+  public void setRemoveOperatingRegions(List<String> removeOperatingRegions) {
+    this.removeOperatingRegions = removeOperatingRegions;
   }
 
 
@@ -104,14 +164,16 @@ public class ModifyIpamResourceDiscoveryRequest {
       return false;
     }
     ModifyIpamResourceDiscoveryRequest modifyIpamResourceDiscoveryRequest = (ModifyIpamResourceDiscoveryRequest) o;
-    return Objects.equals(this.description, modifyIpamResourceDiscoveryRequest.description) &&
+    return Objects.equals(this.addOperatingRegions, modifyIpamResourceDiscoveryRequest.addOperatingRegions) &&
+        Objects.equals(this.description, modifyIpamResourceDiscoveryRequest.description) &&
         Objects.equals(this.ipamResourceDiscoveryId, modifyIpamResourceDiscoveryRequest.ipamResourceDiscoveryId) &&
-        Objects.equals(this.ipamResourceDiscoveryName, modifyIpamResourceDiscoveryRequest.ipamResourceDiscoveryName);
+        Objects.equals(this.ipamResourceDiscoveryName, modifyIpamResourceDiscoveryRequest.ipamResourceDiscoveryName) &&
+        Objects.equals(this.removeOperatingRegions, modifyIpamResourceDiscoveryRequest.removeOperatingRegions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, ipamResourceDiscoveryId, ipamResourceDiscoveryName);
+    return Objects.hash(addOperatingRegions, description, ipamResourceDiscoveryId, ipamResourceDiscoveryName, removeOperatingRegions);
   }
 
 
@@ -120,9 +182,11 @@ public class ModifyIpamResourceDiscoveryRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class ModifyIpamResourceDiscoveryRequest {\n");
     
+    sb.append("    addOperatingRegions: ").append(toIndentedString(addOperatingRegions)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    ipamResourceDiscoveryId: ").append(toIndentedString(ipamResourceDiscoveryId)).append("\n");
     sb.append("    ipamResourceDiscoveryName: ").append(toIndentedString(ipamResourceDiscoveryName)).append("\n");
+    sb.append("    removeOperatingRegions: ").append(toIndentedString(removeOperatingRegions)).append("\n");
     sb.append("}");
     return sb.toString();
   }
