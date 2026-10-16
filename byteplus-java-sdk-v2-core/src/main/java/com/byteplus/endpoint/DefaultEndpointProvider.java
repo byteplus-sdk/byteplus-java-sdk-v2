@@ -185,6 +185,17 @@ public class DefaultEndpointProvider implements EndpointResolver {
         // customBootstrapRegion is intentionally ignored: bootstrap-region-based
         // routing is deprecated and no longer participates in addressing.
 
+        // service and region are concatenated into the host name below (global,
+        // regional, dual stack and .cn branches), reject anything that could
+        // alter the host structure before any branch is taken. The region is
+        // validated after normalization (trim + lowercase), which is the value
+        // actually placed in the host, so inputs accepted before are unchanged.
+        try {
+            EndpointValidation.validateServiceAndRegion(service, normalizeRegion(regionCode));
+        } catch (EndpointValidationException e) {
+            throw e.toApiException();
+        }
+
         ServiceEndpointInfo endpointInfo = DEFAULT_ENDPOINT_MAP.get(service);
         if (endpointInfo == null) {
             throw new ApiException("service '" + service + "' not registered in default endpoint map");

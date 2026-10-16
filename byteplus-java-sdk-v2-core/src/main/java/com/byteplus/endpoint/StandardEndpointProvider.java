@@ -347,6 +347,10 @@ public class StandardEndpointProvider implements EndpointResolver {
         Boolean useDualStack = option.getUseDualStack();
         checkParamNonBlank("region", region);
         checkParamNonBlank("service", service);
+        // region and service are rendered into the host template, including the
+        // custom services branch, reject anything that could alter the host
+        // structure before rendering.
+        EndpointValidation.validateServiceAndRegion(service, region);
         if (!REGION_MATCHER.validate(region)) {
             throw new IllegalArgumentException(String.format(
                     "InvalidRegion: invalid region [%s] for standard endpoint resolver, please upgrade the sdk endpoint resolver to the latest version",
