@@ -69,7 +69,7 @@ BytePlus provides a flexible endpoint resolution mechanism. The SDK automaticall
 
     When a service entry has `goChinaEnabled=true` and the request region is in the Chinese mainland (a `cn-*` prefix but not one of the non-mainland regions such as `cn-hongkong`), the resolver appends the `.cn` suffix.
 
-    Whether Go China applies is decided by the service itself and cannot be overridden. Regions are normalized with `trim + toLowerCase` before matching, so `CN-Beijing`, `  cn-beijing  ` and `cn-beijing` are treated identically.
+    Whether Go China applies is decided by the service itself and cannot be overridden. Regions are normalized with `trim + toLowerCase` before matching, so `CN-Beijing`, `  cn-beijing  ` and `cn-beijing` are treated identically. Note that for requests sent through `ApiClient`, a region with leading or trailing whitespace is rejected (`InvalidRegion`) before resolution; the trimming only applies when `DefaultEndpointProvider` is called directly. See [Region and service validation](#region-and-service-validation).
 
 4. **Endpoint construction**
 
@@ -137,6 +137,71 @@ try {
 ```
 
 When you hit this error, first try upgrading the SDK. If the service is genuinely not carried by the SDK yet, set the endpoint explicitly via `setEndpoint(...)` or supply a custom `EndpointResolver`.
+
+##### Region and service validation
+
+Automatic endpoint resolution places the service and region in the endpoint host (for example `{service}.{region}.byteplusapi.com`). To prevent a region or service from redirecting the request to a different host (SSRF), the SDK validates both values before any host is built. This applies to the default resolver, the standard resolver and any custom `EndpointResolver`.
+
+**Rules**: a non-empty region or service must be a single valid host name label:
+
+- only ASCII letters, digits, `-` and `_`;
+- starts with a letter;
+- does not end with `-` or `_`.
+
+`null` and the empty string are not covered by this check and keep the existing handling of each entry point; a whitespace-only string (such as `" "`) is not empty and is rejected. Values such as `ap-southeast-1@127.0.0.1`, `ap/southeast-1`, `evil.com#` or `x:443` are rejected (`.` is not allowed either).
+
+**When and where it applies**:
+
+- Client requests: when no endpoint is set, `ResolveEndpointInterceptor` validates the raw region of the `ApiClient` and the service before calling `EndpointResolver#endpointFor` (including a custom resolver set with `setEndpointResolver(...)`). This interceptor runs before the request is built and signed, so a request that fails validation is neither signed nor sent.
+- `UniversalApi` (`doCall` / `doCallWithHttpInfo`): when no endpoint is set, the service name of the `UniversalRequest` and the region of the `ApiClient` are validated before the service name is written into the request path.
+- `DefaultEndpointProvider.getDefaultEndpointByServiceInfo` (which `DefaultEndpointProvider#endpointFor` also resolves through): the region is normalized with `trim + toLowerCase` first, and the normalized value (the value actually placed in the host) is validated; a failure throws `ApiException` (see "Errors" below).
+- Calling `StandardEndpointProvider#endpointFor` directly also validates, and throws `EndpointValidationException` directly. It runs its existing non-blank check first (blank values still fail with `region must not be null.` / `service must not be null.`), then this validation.
+- RDS IAM auth token (`ConnectUtils.buildAuthToken`): when no endpoint is set, the endpoint is resolved with `StandardEndpointProvider`, and an invalid region throws `EndpointValidationException`.
+- SSO credentials: the region is validated before `cloudidentity-oauth.{region}.bytepluses.com` / `cloudidentity-portal.{region}.bytepluses.com` is called. A `null`, empty or whitespace-only configured region falls back to `ap-southeast-1`; any other value is trimmed first and the trimmed value is validated. On failure, retrieving the credentials fails with an `ApiException` whose message contains `InvalidRegion`.
+
+**When it is skipped**: when a non-blank endpoint is set on the `ApiClient` with `setEndpoint(...)`, neither `ResolveEndpointInterceptor` nor `UniversalApi` runs this validation and the endpoint is used as is; the explicitly configured endpoint itself is not restricted by these rules.
+
+**Errors**:
+
+- The underlying error is `com.byteplus.endpoint.EndpointValidationException`, which extends `IllegalArgumentException`. `getCode()` returns the error code `InvalidRegion` or `InvalidService` (constants `EndpointValidation.ERR_CODE_INVALID_REGION` / `EndpointValidation.ERR_CODE_INVALID_SERVICE`), `getErrorMessage()` returns the message without the code, and `getMessage()` looks like `InvalidRegion: invalid region "..."...`. When both values are invalid, the service is reported first.
+- When triggered by an API call (including `UniversalApi`), or by calling `DefaultEndpointProvider.getDefaultEndpointByServiceInfo` / `DefaultEndpointProvider#endpointFor` directly, it is wrapped in `com.byteplus.ApiException`: `getCode()` is `400`, `getCause()` is the original `EndpointValidationException`, and `getResponseMetadata().getError().getCode()` is `InvalidRegion` / `InvalidService`. No request was sent, so there is no RequestId.
+- Synchronous calls throw this `ApiException`; asynchronous calls (such as `describeRegionsAsync`) deliver it to `ApiCallback#onFailure` with a `statusCode` argument of `0`, so use `e.getCode()` for the status code.
+
+```java
+import com.byteplus.ApiClient;
+import com.byteplus.ApiException;
+import com.byteplus.ecs.EcsApi;
+import com.byteplus.ecs.model.DescribeRegionsRequest;
+import com.byteplus.endpoint.EndpointValidation;
+import com.byteplus.model.Error;
+import com.byteplus.sign.Credentials;
+
+public class SampleCode {
+    public static void main(String[] args) {
+        ApiClient apiClient = new ApiClient()
+                .setCredentials(Credentials.getEnvCredentials())
+                .setRegion("ap-southeast-1@127.0.0.1"); // invalid region
+        EcsApi api = new EcsApi(apiClient);
+        try {
+            api.describeRegions(new DescribeRegionsRequest());
+        } catch (ApiException e) {
+            Error error = e.getResponseMetadata() == null ? null : e.getResponseMetadata().getError();
+            if (e.getCode() == 400 && error != null
+                    && EndpointValidation.ERR_CODE_INVALID_REGION.equals(error.getCode())) {
+                // The request was neither signed nor sent.
+                System.out.println("invalid region: " + error.getMessage());
+            }
+        }
+    }
+}
+```
+
+**Behavior change**:
+
+- On the client request path, a region with leading or trailing whitespace (such as `"ap-southeast-1 "`) is no longer accepted and fails with `InvalidRegion`. Previously the default resolver trimmed the region before placing it in the host, but the request was always signed with the untrimmed value, so the server rejected such requests anyway. Remove the surrounding whitespace from the region. Letter case is not affected: values such as `CN-Beijing` are still valid.
+- The region configured for SSO credentials is still trimmed first, then validated.
+- When `DefaultEndpointProvider.getDefaultEndpointByServiceInfo` (or `DefaultEndpointProvider#endpointFor`) is called directly, the region is trimmed and lowercased before validation, so a value with leading or trailing whitespace still works there and resolves to the same host as before.
+- New public validation helpers: `EndpointValidation.validateRegion(String)`, `EndpointValidation.validateService(String)`, `EndpointValidation.validateServiceAndRegion(String, String)`, the constants `EndpointValidation.ERR_CODE_INVALID_REGION` and `EndpointValidation.ERR_CODE_INVALID_SERVICE`, and `EndpointValidationException` (`getCode()`, `getErrorMessage()`, `toApiException()`). Custom `EndpointResolver` implementations can reuse them.
 
 #### Standard Endpoint Resolution
 

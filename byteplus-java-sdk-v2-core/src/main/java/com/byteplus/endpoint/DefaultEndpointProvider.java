@@ -189,7 +189,11 @@ public class DefaultEndpointProvider implements EndpointResolver {
         // regional, dual stack and .cn branches), reject anything that could
         // alter the host structure before any branch is taken. The region is
         // validated after normalization (trim + lowercase), which is the value
-        // actually placed in the host, so inputs accepted before are unchanged.
+        // actually placed in the host, so direct callers of this method keep
+        // accepting the inputs accepted before. Note that requests sent through
+        // ApiClient are validated earlier on the raw region in
+        // ResolveEndpointInterceptor (the raw region is also used for signing),
+        // so a region with leading/trailing whitespace is rejected there.
         try {
             EndpointValidation.validateServiceAndRegion(service, normalizeRegion(regionCode));
         } catch (EndpointValidationException e) {
