@@ -75,7 +75,7 @@ public class SampleCode {
 
     当服务在内置映射中标记 `goChinaEnabled=true`，并且请求 Region 属于中国大陆（`cn-*` 前缀且不属于 `cn-hongkong` 等非大陆港澳台 Region）时，在域名后追加 `.cn` 后缀。
 
-    是否 GoChina 由服务侧决定，不可修改。Region 匹配前会做 `trim + toLowerCase` 归一化，因此 `CN-Beijing`、`  cn-beijing  ` 与 `cn-beijing` 等价。注意：通过 `ApiClient` 发起请求时，带首尾空白的 region 会在寻址之前被拒绝（`InvalidRegion`），上述 trim 只对直接调用 `DefaultEndpointProvider` 生效，参见 [region / service 合法性校验](#region--service-合法性校验)。
+    是否 GoChina 由服务侧决定，不可修改。Region 匹配前会转为小写，因此 `CN-Beijing` 与 `cn-beijing` 等价。带首尾空白的 region（如 `"  cn-beijing  "`）不会被 trim，无论通过 `ApiClient` 发起请求还是直接调用 `DefaultEndpointProvider`，都会以 `InvalidRegion` 被拒绝，参见 [region / service 合法性校验](#region--service-合法性校验)。
 
 4. **根据服务名和区域自动构造 Endpoint 地址**
 
@@ -159,7 +159,7 @@ try {
 
 - 客户端请求：未设置 Endpoint 时，`ResolveEndpointInterceptor` 在调用 `EndpointResolver#endpointFor`（包括通过 `setEndpointResolver(...)` 设置的自定义 resolver）之前，对 `ApiClient` 中的原始 region 和 service 做校验。该拦截器在构建请求和签名之前执行，因此校验失败时请求既不会被签名，也不会被发送。
 - `UniversalApi`（`doCall` / `doCallWithHttpInfo`）：未设置 Endpoint 时，在把 service name 写入请求路径之前校验 `UniversalRequest` 的 service name 和 `ApiClient` 的 region。
-- `DefaultEndpointProvider.getDefaultEndpointByServiceInfo`（`DefaultEndpointProvider#endpointFor` 也经由它寻址）：先对 region 做 `trim + toLowerCase` 归一化，再校验归一化后的值（即实际拼进域名的值）；校验失败时抛出 `ApiException`（见下文“错误类型”）。
+- `DefaultEndpointProvider.getDefaultEndpointByServiceInfo`（`DefaultEndpointProvider#endpointFor` 也经由它寻址）：按原值校验 region（不做 trim），校验通过后再转为小写拼进域名；校验失败时抛出 `ApiException`（见下文“错误类型”）。
 - 直接调用 `StandardEndpointProvider#endpointFor` 时同样会校验，并直接抛出 `EndpointValidationException`。它先执行原有的非空检查（空白值仍报 `region must not be null.` / `service must not be null.`），再执行本校验。
 - RDS IAM 鉴权 Token（`ConnectUtils.buildAuthToken`）：未设置 Endpoint 时通过 `StandardEndpointProvider` 寻址，region 非法时抛出 `EndpointValidationException`。
 - SSO 凭证：访问 `cloudidentity-oauth.{region}.bytepluses.com` / `cloudidentity-portal.{region}.bytepluses.com` 之前校验 region。配置的 region 为 `null`、空字符串或纯空白时使用默认值 `ap-southeast-1`；否则先 trim，再校验 trim 后的值。校验失败时凭证获取以 `ApiException` 失败，错误消息中包含 `InvalidRegion`。
@@ -205,7 +205,7 @@ public class SampleCode {
 
 - 客户端请求路径上，带首尾空白的 region（如 `"ap-southeast-1 "`）不再被接受，会直接以 `InvalidRegion` 失败。此前默认寻址会把 region trim 后拼进域名，但签名使用的始终是未 trim 的原值，这类请求本就会被服务端拒绝。请去掉 region 的首尾空白。大小写不受影响，`CN-Beijing` 这类值仍然合法。
 - SSO 凭证配置的 region 仍会先 trim，再校验。
-- 直接调用 `DefaultEndpointProvider.getDefaultEndpointByServiceInfo`（或 `DefaultEndpointProvider#endpointFor`）时，region 先 `trim + toLowerCase` 再校验，因此带首尾空白的值在直接调用时仍然可用，得到的域名与此前相同。
+- 直接调用 `DefaultEndpointProvider.getDefaultEndpointByServiceInfo`（或 `DefaultEndpointProvider#endpointFor`）时同样按原值校验：带首尾空白或纯空白的 region 会以 `InvalidRegion` 失败，不再被 trim。大小写仍然合法，并会转为小写。
 - 新增公开的校验工具：`EndpointValidation.validateRegion(String)`、`EndpointValidation.validateService(String)`、`EndpointValidation.validateServiceAndRegion(String, String)`，常量 `EndpointValidation.ERR_CODE_INVALID_REGION`、`EndpointValidation.ERR_CODE_INVALID_SERVICE`，以及 `EndpointValidationException`（`getCode()`、`getErrorMessage()`、`toApiException()`）。自定义 `EndpointResolver` 可以复用这些方法。
 
 #### Endpoint 标准寻址

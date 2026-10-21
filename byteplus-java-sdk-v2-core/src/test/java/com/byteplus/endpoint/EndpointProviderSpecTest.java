@@ -22,8 +22,7 @@ public class EndpointProviderSpecTest {
     @Test public void testDefaultProvider_invalidRegionRejectedBeforeAnyBranch() {
         DefaultEndpointProvider provider = new DefaultEndpointProvider();
         for (String region : EndpointTestSupport.invalidValues()) {
-            // The default resolver trims the region before using it, see testDefaultProvider_regionValidatedAfterNormalization.
-            if (!region.equals(region.trim())) continue;
+            // The raw region is validated, values with surrounding whitespace included.
             for (String service : DEFAULT_SERVICES) {
                 for (boolean dual : new boolean[]{false, true}) {
                     ResolveEndpointOption o = option(service, region, dual);
@@ -74,36 +73,42 @@ public class EndpointProviderSpecTest {
     }
 
     /**
-     * The default resolver places the trimmed and lowercased region in the host:
-     * that is the value validated, so inputs it accepted before resolve to the
-     * same hosts, and values still invalid after normalization are rejected.
+     * The default resolver validates the raw region, the same value the request
+     * pipeline validates and signs with: surrounding whitespace is rejected
+     * instead of being trimmed, letter case is still accepted and lowercased.
      */
-    @Test public void testDefaultProvider_regionValidatedAfterNormalization() {
+    @Test public void testDefaultProvider_regionValidatedAsIs() {
         DefaultEndpointProvider provider = new DefaultEndpointProvider();
+        // Letter case is not part of the rule, the host is still lowercased.
+        assertEquals("ecs.ap-southeast-1.byteplusapi.com", provider.endpointFor(option("ecs", "AP-Southeast-1", false)).getEndpoint());
+        assertEquals("ecs.ap-southeast-1.byteplusapi.com",
+                DefaultEndpointProvider.getDefaultEndpointByServiceInfo("ecs", "AP-Southeast-1", null, false));
         String[][] cases = {
-                // service, region, expected host (same as before the change)
-                {"ecs", " ap-southeast-1 ", "ecs.ap-southeast-1.byteplusapi.com"},
-                {"ecs", "\tap-southeast-1", "ecs.ap-southeast-1.byteplusapi.com"},
-                {"ecs", "cn-beijing\n", "ecs.cn-beijing.byteplusapi.com.cn"},
-                {"ecs", "AP-Southeast-1", "ecs.ap-southeast-1.byteplusapi.com"},
-                {"iam", " cn-beijing ", "iam.byteplusapi.com.cn"},
-                {"iam", "   ", "iam.byteplusapi.com"},
-                {"ecs", "   ", "ecs..byteplusapi.com"},
+                // service, region, quoted region, reason
+                {"ecs", " ap-southeast-1 ", "\" ap-southeast-1 \"", "illegal character at index 0"},
+                {"ecs", "\tap-southeast-1", "\"\\tap-southeast-1\"", "illegal character at index 0"},
+                {"ecs", "cn-beijing\n", "\"cn-beijing\\n\"", "illegal character at index 10"},
+                {"iam", " cn-beijing ", "\" cn-beijing \"", "illegal character at index 0"},
+                {"iam", "   ", "\"   \"", "illegal character at index 0"},
+                {"ecs", "   ", "\"   \"", "illegal character at index 0"},
+                {"ecs", " cn/beijing ", "\" cn/beijing \"", "illegal character at index 0"},
+                {"ecs", "\tevil.com", "\"\\tevil.com\"", "illegal character at index 0"},
+                {"ecs", "cn-beijing- ", "\"cn-beijing- \"", "illegal character at index 11"},
         };
         for (String[] c : cases) {
-            assertEquals(Arrays.toString(c), c[2], provider.endpointFor(option(c[0], c[1], false)).getEndpoint());
-            assertEquals(c[2], DefaultEndpointProvider.getDefaultEndpointByServiceInfo(c[0], c[1], null, false));
+            for (boolean dual : new boolean[]{false, true}) {
+                EndpointValidationException viaProvider = validationCause(assertThrows(ApiException.class,
+                        () -> provider.endpointFor(option(c[0], c[1], dual))));
+                assertEquals(Arrays.toString(c), "InvalidRegion", viaProvider.getCode());
+                assertEquals(Arrays.toString(c), EndpointTestSupport.expectedMessage("region", c[2], c[3]),
+                        viaProvider.getErrorMessage());
+                EndpointValidationException direct = validationCause(assertThrows(ApiException.class,
+                        () -> DefaultEndpointProvider.getDefaultEndpointByServiceInfo(c[0], c[1], null, dual)));
+                assertEquals(Arrays.toString(c), "InvalidRegion", direct.getCode());
+                assertEquals(Arrays.toString(c), EndpointTestSupport.expectedMessage("region", c[2], c[3]),
+                        direct.getErrorMessage());
+            }
         }
-        for (String region : new String[]{" cn/beijing ", "\tevil.com", " cn-beijing@127.0.0.1\n", " 1cn-beijing", "cn-beijing- "}) {
-            EndpointValidationException e = validationCause(assertThrows(ApiException.class,
-                    () -> provider.endpointFor(option("ecs", region, false))));
-            assertEquals("InvalidRegion", e.getCode());
-        }
-        assertTrue(validationCause(assertThrows(ApiException.class, () -> provider.endpointFor(option("ecs", " cn/beijing ", false))))
-                .getErrorMessage().startsWith("invalid region \"cn/beijing\": illegal character at index 2,"));
-        // The request pipeline still validates the raw region, which is also used to sign.
-        assertEquals("InvalidRegion", assertThrows(EndpointValidationException.class,
-                () -> EndpointValidation.validateRegion(" ap-southeast-1 ")).getCode());
     }
 
     /** Blank values keep the errors reported before the change. */
