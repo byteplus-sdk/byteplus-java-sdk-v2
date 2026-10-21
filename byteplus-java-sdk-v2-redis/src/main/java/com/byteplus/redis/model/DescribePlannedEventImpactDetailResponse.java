@@ -14,6 +14,7 @@ package com.byteplus.redis.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.redis.model.ImpactForDescribePlannedEventImpactDetailOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,52 +25,32 @@ import java.io.IOException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * TagForCreateEnterpriseDBInstanceInput
+ * DescribePlannedEventImpactDetailResponse
  */
 
 
 
-public class TagForCreateEnterpriseDBInstanceInput {
-  @SerializedName("Key")
-  private String key = null;
+public class DescribePlannedEventImpactDetailResponse extends com.byteplus.model.AbstractResponse {
+  @SerializedName("Impact")
+  private ImpactForDescribePlannedEventImpactDetailOutput impact = null;
 
-  @SerializedName("Value")
-  private String value = null;
-
-  public TagForCreateEnterpriseDBInstanceInput key(String key) {
-    this.key = key;
+  public DescribePlannedEventImpactDetailResponse impact(ImpactForDescribePlannedEventImpactDetailOutput impact) {
+    this.impact = impact;
     return this;
   }
 
    /**
-   * Get key
-   * @return key
+   * Get impact
+   * @return impact
   **/
+  @Valid
   @Schema(description = "")
-  public String getKey() {
-    return key;
+  public ImpactForDescribePlannedEventImpactDetailOutput getImpact() {
+    return impact;
   }
 
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public TagForCreateEnterpriseDBInstanceInput value(String value) {
-    this.value = value;
-    return this;
-  }
-
-   /**
-   * Get value
-   * @return value
-  **/
-  @Schema(description = "")
-  public String getValue() {
-    return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
+  public void setImpact(ImpactForDescribePlannedEventImpactDetailOutput impact) {
+    this.impact = impact;
   }
 
 
@@ -81,24 +62,22 @@ public class TagForCreateEnterpriseDBInstanceInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TagForCreateEnterpriseDBInstanceInput tagForCreateEnterpriseDBInstanceInput = (TagForCreateEnterpriseDBInstanceInput) o;
-    return Objects.equals(this.key, tagForCreateEnterpriseDBInstanceInput.key) &&
-        Objects.equals(this.value, tagForCreateEnterpriseDBInstanceInput.value);
+    DescribePlannedEventImpactDetailResponse describePlannedEventImpactDetailResponse = (DescribePlannedEventImpactDetailResponse) o;
+    return Objects.equals(this.impact, describePlannedEventImpactDetailResponse.impact);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, value);
+    return Objects.hash(impact);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TagForCreateEnterpriseDBInstanceInput {\n");
+    sb.append("class DescribePlannedEventImpactDetailResponse {\n");
     
-    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    impact: ").append(toIndentedString(impact)).append("\n");
     sb.append("}");
     return sb.toString();
   }
