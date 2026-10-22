@@ -72,7 +72,7 @@ import java.util.regex.Pattern;
 import static com.byteplus.observability.debugger.LogLevel.LOG_DEBUG_WITH_CONFIG;
 import static com.byteplus.observability.debugger.SdkDebugLog.SDK_CORE_LOGGER;
 
-public class ApiClient extends BaseClient{
+public class ApiClient extends BaseClient implements Cloneable {
     private final static String DefaultAuthentication = "byteplusSign";
 
     private boolean debugging = false;
@@ -105,6 +105,7 @@ public class ApiClient extends BaseClient{
     private EndpointResolver endpointResolver;
 
     private CredentialProvider credentialProvider;
+    private CredentialProvider boundCredentialProvider;
 
     private Integer maxIdleConns = 5;
 
@@ -115,7 +116,7 @@ public class ApiClient extends BaseClient{
     private Boolean useDualStack;
 
     private boolean autoRetry = DefaultRetryerSetting.DEFAULT_AUTO_RETRY_ENABLED;
-    private final Retryer retryer = DefaultRetryerSetting.newDefaultRetryer();
+    private Retryer retryer = DefaultRetryerSetting.newDefaultRetryer();
 
     private String httpProxy;
     private String httpsProxy;
@@ -204,8 +205,11 @@ public class ApiClient extends BaseClient{
      * @param disableSSL
      * @return An instance of OkHttpClient
      */
-    public ApiClient setDisableSSL(boolean disableSSL) {
+    public synchronized ApiClient setDisableSSL(boolean disableSSL) {
         this.disableSSL = disableSSL;
+        if (httpClient.getProxySelector() instanceof ManagedProxySelector) {
+            updateClientProxy();
+        }
         return this;
     }
 
@@ -600,8 +604,9 @@ public class ApiClient extends BaseClient{
      *
      * @return Api client
      */
-    public ApiClient setHttpProxy(String httpProxy) {
+    public synchronized ApiClient setHttpProxy(String httpProxy) {
         this.httpProxy = httpProxy;
+        boundCredentialProvider = null;
         updateClientProxy();
         return this;
     }
@@ -620,8 +625,9 @@ public class ApiClient extends BaseClient{
      *
      * @return Api client
      */
-    public ApiClient setHttpsProxy(String httpsProxy) {
+    public synchronized ApiClient setHttpsProxy(String httpsProxy) {
         this.httpsProxy = httpsProxy;
+        boundCredentialProvider = null;
         updateClientProxy();
         return this;
     }
@@ -636,38 +642,123 @@ public class ApiClient extends BaseClient{
     }
 
     /**
-     * Set the no proxy.
+     * Set comma-separated proxy bypass hosts, domains, IP literals or {@code *}.
+     * Domains include subdomains; a leading dot or {@code *.} matches only
+     * subdomains. Entries may specify a port (bracket IPv6 when using a port).
+     * Null uses NO_PROXY/no_proxy; an empty string disables environment bypass.
+     * Applies to the SDK-managed proxy selector, not explicit transport proxies.
      *
      * @return Api client
      */
-    public ApiClient setNoProxy(String noProxy) {
+    public synchronized ApiClient setNoProxy(String noProxy) {
         this.noProxy = noProxy;
         updateClientProxy();
         return this;
     }
 
     private void updateClientProxy() {
-        httpClient.setProxySelector(new ProxySelector() {
-            @Override
-            public List<Proxy> select(URI uri) {
-                List<Proxy> proxies = new ArrayList<>();
-
-                if (disableSSL) {
-                    addProxy(proxies, httpProxy, "HTTP_PROXY");
-                } else {
-                    addProxy(proxies, httpsProxy, "HTTPS_PROXY");
-                }
-
-                return proxies;
-            }
-
-            @Override
-            public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {
-            }
-        });
+        httpClient.setProxySelector(new ManagedProxySelector(disableSSL, httpProxy, httpsProxy, noProxy));
     }
 
-    private void addProxy(List<Proxy> proxies, String proxy, String env) {
+    private static final class ManagedProxySelector extends ProxySelector {
+        private final boolean plain;
+        private final String httpProxy;
+        private final String httpsProxy;
+        private final String noProxy;
+
+        private ManagedProxySelector(boolean plain, String httpProxy, String httpsProxy, String noProxy) {
+            this.plain = plain;
+            this.httpProxy = httpProxy;
+            this.httpsProxy = httpsProxy;
+            if (noProxy == null) {
+                noProxy = System.getenv("NO_PROXY");
+                if (StringUtils.isEmpty(noProxy)) {
+                    noProxy = System.getenv("no_proxy");
+                }
+            }
+            this.noProxy = noProxy;
+        }
+
+        @Override
+        public List<Proxy> select(URI uri) {
+            if (bypassesProxy(uri)) {
+                return Collections.singletonList(Proxy.NO_PROXY);
+            }
+            List<Proxy> proxies = new ArrayList<Proxy>();
+            if (plain) {
+                addProxy(proxies, httpProxy, "HTTP_PROXY");
+            } else {
+                addProxy(proxies, httpsProxy, "HTTPS_PROXY");
+            }
+            return proxies;
+        }
+
+        private boolean bypassesProxy(URI uri) {
+            if (StringUtils.isEmpty(noProxy) || uri == null) {
+                return false;
+            }
+            HttpUrl target = HttpUrl.parse(uri.toString());
+            if (target == null) {
+                return false;
+            }
+            String host = trimTrailingDot(target.host());
+            for (String entry : noProxy.split(",")) {
+                String rule = entry.trim();
+                if ("*".equals(rule)) {
+                    return true;
+                }
+                boolean subdomainsOnly = rule.startsWith(".");
+                if (rule.startsWith("*.")) {
+                    rule = rule.substring(1);
+                    subdomainsOnly = true;
+                }
+                if (subdomainsOnly) {
+                    rule = rule.substring(1);
+                }
+                // Bypass entries are host names, not URLs, paths or CIDR ranges.
+                if (rule.isEmpty() || rule.matches(".*[\\s/@?#\\\\*].*")) {
+                    continue;
+                }
+                boolean hasPort;
+                String authority = rule;
+                if (rule.startsWith("[")) {
+                    int end = rule.indexOf(']');
+                    hasPort = end >= 0 && rule.length() > end + 1;
+                } else if (rule.indexOf(':') != rule.lastIndexOf(':')) {
+                    authority = "[" + rule + "]";
+                    hasPort = false;
+                } else {
+                    hasPort = rule.indexOf(':') >= 0;
+                }
+                if (hasPort && rule.endsWith(":")) {
+                    continue;
+                }
+                HttpUrl match = HttpUrl.parse("http://" + authority);
+                if (match == null || (hasPort && match.port() != target.port())) {
+                    continue;
+                }
+                String matchHost = trimTrailingDot(match.host());
+                if (!subdomainsOnly && host.equals(matchHost)) {
+                    return true;
+                }
+                boolean ipLiteral = matchHost.indexOf(':') >= 0 || matchHost.matches("[0-9.]+");
+                if (!ipLiteral && host.endsWith("." + matchHost)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static String trimTrailingDot(String host) {
+            return host.endsWith(".") ? host.substring(0, host.length() - 1) : host;
+        }
+
+        @Override
+        public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {
+        }
+    }
+
+    private static void addProxy(List<Proxy> proxies, String proxy, String env) {
         if (!StringUtils.isEmpty(proxy)) {
             try {
                 URI u = new URI(proxy);
@@ -690,6 +781,37 @@ public class ApiClient extends BaseClient{
                 }
             }
         }
+    }
+
+    /**
+     * Legacy proxy lookup retained for compatibility. Selects by this business
+     * client's {@code disableSSL}: HTTP when true, HTTPS otherwise. The client
+     * field takes precedence over the upper-case, then lower-case environment
+     * variable.
+     *
+     * <p>Credential-provider binding does not call this method. Built-in providers
+     * select the explicit client fallback by their STS URL scheme and otherwise
+     * retain their original transport's proxy selection. This return value does
+     * not describe the route taken by an STS request.
+     *
+     * @return the resolved proxy URL, or {@code null} if none is configured.
+     */
+    public String resolveCredsProxy() {
+        if (disableSSL) {
+            return firstNonEmpty(httpProxy, "HTTP_PROXY");
+        }
+        return firstNonEmpty(httpsProxy, "HTTPS_PROXY");
+    }
+
+    private static String firstNonEmpty(String value, String env) {
+        if (!StringUtils.isEmpty(value)) {
+            return value;
+        }
+        String envProxy = System.getenv(env.toUpperCase());
+        if (StringUtils.isEmpty(envProxy)) {
+            envProxy = System.getenv(env.toLowerCase());
+        }
+        return StringUtils.isEmpty(envProxy) ? null : envProxy;
     }
 
     /**
@@ -1447,6 +1569,7 @@ public class ApiClient extends BaseClient{
             } catch (Exception e) {
                 throw new ApiException(e);
             }
+            return;
         }
 
         if (!clazz.getName().startsWith("com.byteplus")) {
@@ -1896,13 +2019,95 @@ public class ApiClient extends BaseClient{
         }
     }
 
-    public CredentialProvider getCredentialProvider() {
-        return credentialProvider;
+    public synchronized CredentialProvider getCredentialProvider() {
+        if (credentialProvider == null) {
+            return null;
+        }
+        if (boundCredentialProvider == null) {
+            boundCredentialProvider = credentialProvider.bind(httpProxy, httpsProxy);
+        }
+        return boundCredentialProvider;
     }
 
-    public ApiClient setCredentialProvider(CredentialProvider credentialProvider) {
+    public synchronized ApiClient setCredentialProvider(CredentialProvider credentialProvider) {
         this.credentialProvider = credentialProvider;
+        this.boundCredentialProvider = null;
         return this;
+    }
+
+    /**
+     * Configuration copy for a built-in credential provider. Transport options,
+     * including caller TLS factories and timeouts, are retained without replaying
+     * a possibly consumed CA InputStream. Retry configuration uses the strategies'
+     * copy contracts; custom strategies must copy any additional mutable references.
+     */
+    public synchronized ApiClient copyForCredentialProvider() {
+        try {
+            ApiClient copy = (ApiClient) super.clone();
+            copy.httpClient = httpClient.clone();
+            copy.retryer = retryer.copy();
+            copy.defaultHeaderMap = new HashMap<String, String>(defaultHeaderMap);
+            copy.keyManagers = keyManagers == null ? null : keyManagers.clone();
+            copy.customBootstrapRegion = customBootstrapRegion == null ? null
+                    : new java.util.HashSet<String>(customBootstrapRegion);
+            copy.authentications = new HashMap<String, Authentication>(authentications);
+            Authentication auth = authentications.get(DefaultAuthentication);
+            if (auth instanceof ByteplusSign) {
+                copy.authentications.put(DefaultAuthentication, ((ByteplusSign) auth).copy());
+            }
+            copy.authentications = Collections.unmodifiableMap(copy.authentications);
+            if (credentials != null) {
+                copy.setCredentials(Credentials.getCredentials(credentials.getAccessKey(),
+                        credentials.getSecretKey(), credentials.getSessionToken()));
+            }
+            copy.boundCredentialProvider = null;
+            copy.sdkConfigLog = null;
+            if (httpClient.getProxySelector() instanceof ManagedProxySelector) {
+                copy.updateClientProxy();
+            }
+            return copy;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+    /** Effective TLS state, including caller-owned factories, without replaying streams. */
+    public static final class TlsSettings {
+        private final InputStream ca;
+        private final boolean verifying;
+        private final javax.net.ssl.SSLSocketFactory factory;
+        private final HostnameVerifier verifier;
+
+        private TlsSettings(ApiClient client) {
+            ca = client.sslCaCert;
+            verifying = client.verifyingSsl;
+            factory = client.httpClient.getSslSocketFactory();
+            verifier = client.httpClient.getHostnameVerifier();
+        }
+    }
+
+    public TlsSettings snapshotTlsSettings() {
+        return new TlsSettings(this);
+    }
+
+    public void restoreTlsSettings(TlsSettings settings) {
+        sslCaCert = settings.ca;
+        verifyingSsl = settings.verifying;
+        httpClient.setSslSocketFactory(settings.factory);
+        httpClient.setHostnameVerifier(settings.verifier);
+    }
+
+    /** Validate and publish a single TLS update, retaining client key managers. */
+    public void applyStsTlsSettings(boolean insecure, byte[] ca) {
+        TlsSettings previous = snapshotTlsSettings();
+        try {
+            sslCaCert = ca == null ? null : new java.io.ByteArrayInputStream(ca);
+            verifyingSsl = !insecure;
+            applySslSettings();
+        } catch (RuntimeException e) {
+            restoreTlsSettings(previous);
+            throw e;
+        }
     }
 
     public EndpointResolver getEndpointResolver() {

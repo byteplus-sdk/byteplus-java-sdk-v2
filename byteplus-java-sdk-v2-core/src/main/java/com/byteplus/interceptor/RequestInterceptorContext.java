@@ -11,6 +11,16 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RequestInterceptorContext {
+    private com.byteplus.auth.CredentialProvider credentialProvider;
+
+    public com.byteplus.auth.CredentialProvider getCredentialProvider() {
+        return credentialProvider;
+    }
+
+    public void setCredentialProvider(com.byteplus.auth.CredentialProvider credentialProvider) {
+        this.credentialProvider = credentialProvider;
+    }
+
     private final String invocationId = UUID.randomUUID().toString();
     private int retryCount;
     private int maxAttempts = 1;

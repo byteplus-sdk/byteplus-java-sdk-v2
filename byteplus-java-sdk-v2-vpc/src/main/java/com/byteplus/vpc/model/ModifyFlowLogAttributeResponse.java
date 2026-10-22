@@ -36,6 +36,9 @@ public class ModifyFlowLogAttributeResponse extends com.byteplus.model.AbstractR
   @SerializedName("RequestId")
   private String requestId = null;
 
+  @SerializedName("Version")
+  private Integer version = null;
+
   public ModifyFlowLogAttributeResponse asyncTaskId(String asyncTaskId) {
     this.asyncTaskId = asyncTaskId;
     return this;
@@ -72,6 +75,24 @@ public class ModifyFlowLogAttributeResponse extends com.byteplus.model.AbstractR
     this.requestId = requestId;
   }
 
+  public ModifyFlowLogAttributeResponse version(Integer version) {
+    this.version = version;
+    return this;
+  }
+
+   /**
+   * Get version
+   * @return version
+  **/
+  @Schema(description = "")
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(Integer version) {
+    this.version = version;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -83,12 +104,13 @@ public class ModifyFlowLogAttributeResponse extends com.byteplus.model.AbstractR
     }
     ModifyFlowLogAttributeResponse modifyFlowLogAttributeResponse = (ModifyFlowLogAttributeResponse) o;
     return Objects.equals(this.asyncTaskId, modifyFlowLogAttributeResponse.asyncTaskId) &&
-        Objects.equals(this.requestId, modifyFlowLogAttributeResponse.requestId);
+        Objects.equals(this.requestId, modifyFlowLogAttributeResponse.requestId) &&
+        Objects.equals(this.version, modifyFlowLogAttributeResponse.version);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(asyncTaskId, requestId);
+    return Objects.hash(asyncTaskId, requestId, version);
   }
 
 
@@ -99,6 +121,7 @@ public class ModifyFlowLogAttributeResponse extends com.byteplus.model.AbstractR
     
     sb.append("    asyncTaskId: ").append(toIndentedString(asyncTaskId)).append("\n");
     sb.append("    requestId: ").append(toIndentedString(requestId)).append("\n");
+    sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
   }
