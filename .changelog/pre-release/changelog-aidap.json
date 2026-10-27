@@ -1,0 +1,17 @@
+{
+  "actions": [
+    "RecoverDelayedDeleteWorkspace",
+    "DescribeWorkspaceDetailList",
+    "ModifyWorkspaceName",
+    "CreateWorkspace",
+    "DescribeWorkspaces",
+    "ModifyComputeSettings",
+    "DeleteWorkspace",
+    "DescribeBranchDetail",
+    "DescribeWorkspaceDetail",
+    "ModifyWorkspaceSettings"
+  ],
+  "description": "AIDAP: added RecoverDelayedDeleteWorkspace；modified DescribeWorkspaceDetailList, ModifyWorkspaceName, DescribeBranchDetail, CreateWorkspace, DescribeWorkspaceDetail, DescribeWorkspaces, ModifyComputeSettings, ModifyWorkspaceSettings, DeleteWorkspace",
+  "modules": "service/aidap",
+  "type": "breaking-change"
+}
