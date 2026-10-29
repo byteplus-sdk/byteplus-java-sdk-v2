@@ -69,7 +69,7 @@ BytePlus provides a flexible endpoint resolution mechanism. The SDK automaticall
 
     When a service entry has `goChinaEnabled=true` and the request region is in the Chinese mainland (a `cn-*` prefix but not one of the non-mainland regions such as `cn-hongkong`), the resolver appends the `.cn` suffix.
 
-    Whether Go China applies is decided by the service itself and cannot be overridden. Regions are lowercased before matching, so `CN-Beijing` and `cn-beijing` are treated identically. A region with leading or trailing whitespace (such as `"  cn-beijing  "`) is not trimmed: it is rejected with `InvalidRegion`, both for requests sent through `ApiClient` and when `DefaultEndpointProvider` is called directly. See [Region and service validation](#region-and-service-validation).
+    Whether Go China applies is decided by the service itself and cannot be overridden. Regions are lowercased before matching and before being placed in the host, so a value such as `CN-Beijing` passes local validation. However, the request is still signed with the original value, and the server is case-sensitive about the region, so such a request is rejected: always use lowercase regions (for example `cn-beijing`). A region with leading or trailing whitespace (such as `"  cn-beijing  "`) is not trimmed: it is rejected with `InvalidRegion`, both for requests sent through `ApiClient` and when `DefaultEndpointProvider` is called directly. See [Region and service validation](#region-and-service-validation).
 
 4. **Endpoint construction**
 
@@ -198,9 +198,9 @@ public class SampleCode {
 
 **Behavior change**:
 
-- On the client request path, a region with leading or trailing whitespace (such as `"ap-southeast-1 "`) is no longer accepted and fails with `InvalidRegion`. Previously the default resolver trimmed the region before placing it in the host, but the request was always signed with the untrimmed value, so the server rejected such requests anyway. Remove the surrounding whitespace from the region. Letter case is not affected: values such as `CN-Beijing` are still valid.
+- On the client request path, a region with leading or trailing whitespace (such as `"ap-southeast-1 "`) is no longer accepted and fails with `InvalidRegion`. Previously the default resolver trimmed the region before placing it in the host, but the request was always signed with the untrimmed value, so the server rejected such requests anyway. Remove the surrounding whitespace from the region. Letter case is not checked locally: a value such as `CN-Beijing` still passes validation, but the server is case-sensitive about the region and rejects it, so use lowercase.
 - The region configured for SSO credentials is still trimmed first, then validated.
-- When `DefaultEndpointProvider.getDefaultEndpointByServiceInfo` (or `DefaultEndpointProvider#endpointFor`) is called directly, the raw region is validated as well: a value with leading or trailing whitespace, or made only of whitespace, fails with `InvalidRegion` instead of being trimmed. Letter case is still accepted and lowercased.
+- When `DefaultEndpointProvider.getDefaultEndpointByServiceInfo` (or `DefaultEndpointProvider#endpointFor`) is called directly, the raw region is validated as well: a value with leading or trailing whitespace, or made only of whitespace, fails with `InvalidRegion` instead of being trimmed. Letter case is still accepted and lowercased in the returned host, but this does not make an uppercase region valid for requests (see above): use lowercase.
 - New public validation helpers: `EndpointValidation.validateRegion(String)`, `EndpointValidation.validateService(String)`, `EndpointValidation.validateServiceAndRegion(String, String)`, the constants `EndpointValidation.ERR_CODE_INVALID_REGION` and `EndpointValidation.ERR_CODE_INVALID_SERVICE`, and `EndpointValidationException` (`getCode()`, `getErrorMessage()`, `toApiException()`). Custom `EndpointResolver` implementations can reuse them.
 
 #### Standard Endpoint Resolution

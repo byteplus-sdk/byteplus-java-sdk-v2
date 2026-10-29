@@ -75,7 +75,7 @@ public class SampleCode {
 
     当服务在内置映射中标记 `goChinaEnabled=true`，并且请求 Region 属于中国大陆（`cn-*` 前缀且不属于 `cn-hongkong` 等非大陆港澳台 Region）时，在域名后追加 `.cn` 后缀。
 
-    是否 GoChina 由服务侧决定，不可修改。Region 匹配前会转为小写，因此 `CN-Beijing` 与 `cn-beijing` 等价。带首尾空白的 region（如 `"  cn-beijing  "`）不会被 trim，无论通过 `ApiClient` 发起请求还是直接调用 `DefaultEndpointProvider`，都会以 `InvalidRegion` 被拒绝，参见 [region / service 合法性校验](#region--service-合法性校验)。
+    是否 GoChina 由服务侧决定，不可修改。Region 在匹配和拼进域名前会转为小写，因此 `CN-Beijing` 这类值能通过本地校验；但请求仍用原值签名，而服务端对 region 区分大小写，这样的请求会被拒绝，请始终使用小写 region（如 `cn-beijing`）。带首尾空白的 region（如 `"  cn-beijing  "`）不会被 trim，无论通过 `ApiClient` 发起请求还是直接调用 `DefaultEndpointProvider`，都会以 `InvalidRegion` 被拒绝，参见 [region / service 合法性校验](#region--service-合法性校验)。
 
 4. **根据服务名和区域自动构造 Endpoint 地址**
 
@@ -203,9 +203,9 @@ public class SampleCode {
 
 **与旧版本不同**：
 
-- 客户端请求路径上，带首尾空白的 region（如 `"ap-southeast-1 "`）不再被接受，会直接以 `InvalidRegion` 失败。此前默认寻址会把 region trim 后拼进域名，但签名使用的始终是未 trim 的原值，这类请求本就会被服务端拒绝。请去掉 region 的首尾空白。大小写不受影响，`CN-Beijing` 这类值仍然合法。
+- 客户端请求路径上，带首尾空白的 region（如 `"ap-southeast-1 "`）不再被接受，会直接以 `InvalidRegion` 失败。此前默认寻址会把 region trim 后拼进域名，但签名使用的始终是未 trim 的原值，这类请求本就会被服务端拒绝。请去掉 region 的首尾空白。本地不检查大小写：`CN-Beijing` 这类值仍能通过校验，但服务端对 region 区分大小写，会拒绝这样的请求，请使用小写。
 - SSO 凭证配置的 region 仍会先 trim，再校验。
-- 直接调用 `DefaultEndpointProvider.getDefaultEndpointByServiceInfo`（或 `DefaultEndpointProvider#endpointFor`）时同样按原值校验：带首尾空白或纯空白的 region 会以 `InvalidRegion` 失败，不再被 trim。大小写仍然合法，并会转为小写。
+- 直接调用 `DefaultEndpointProvider.getDefaultEndpointByServiceInfo`（或 `DefaultEndpointProvider#endpointFor`）时同样按原值校验：带首尾空白或纯空白的 region 会以 `InvalidRegion` 失败，不再被 trim。大小写仍然接受，并会在返回的域名中转为小写，但这不代表大写 region 可用于请求（见上文），请使用小写。
 - 新增公开的校验工具：`EndpointValidation.validateRegion(String)`、`EndpointValidation.validateService(String)`、`EndpointValidation.validateServiceAndRegion(String, String)`，常量 `EndpointValidation.ERR_CODE_INVALID_REGION`、`EndpointValidation.ERR_CODE_INVALID_SERVICE`，以及 `EndpointValidationException`（`getCode()`、`getErrorMessage()`、`toApiException()`）。自定义 `EndpointResolver` 可以复用这些方法。
 
 #### Endpoint 标准寻址
