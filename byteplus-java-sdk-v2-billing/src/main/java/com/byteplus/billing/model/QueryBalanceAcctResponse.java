@@ -31,7 +31,7 @@ import javax.validation.Valid;
 
 public class QueryBalanceAcctResponse extends com.byteplus.model.AbstractResponse {
   @SerializedName("AccountID")
-  private Integer accountID = null;
+  private Long accountID = null;
 
   @SerializedName("ArrearsBalance")
   private String arrearsBalance = null;
@@ -45,10 +45,13 @@ public class QueryBalanceAcctResponse extends com.byteplus.model.AbstractRespons
   @SerializedName("CreditLimit")
   private String creditLimit = null;
 
+  @SerializedName("Currency")
+  private String currency = null;
+
   @SerializedName("FreezeAmount")
   private String freezeAmount = null;
 
-  public QueryBalanceAcctResponse accountID(Integer accountID) {
+  public QueryBalanceAcctResponse accountID(Long accountID) {
     this.accountID = accountID;
     return this;
   }
@@ -58,11 +61,11 @@ public class QueryBalanceAcctResponse extends com.byteplus.model.AbstractRespons
    * @return accountID
   **/
   @Schema(description = "")
-  public Integer getAccountID() {
+  public Long getAccountID() {
     return accountID;
   }
 
-  public void setAccountID(Integer accountID) {
+  public void setAccountID(Long accountID) {
     this.accountID = accountID;
   }
 
@@ -138,6 +141,24 @@ public class QueryBalanceAcctResponse extends com.byteplus.model.AbstractRespons
     this.creditLimit = creditLimit;
   }
 
+  public QueryBalanceAcctResponse currency(String currency) {
+    this.currency = currency;
+    return this;
+  }
+
+   /**
+   * Get currency
+   * @return currency
+  **/
+  @Schema(description = "")
+  public String getCurrency() {
+    return currency;
+  }
+
+  public void setCurrency(String currency) {
+    this.currency = currency;
+  }
+
   public QueryBalanceAcctResponse freezeAmount(String freezeAmount) {
     this.freezeAmount = freezeAmount;
     return this;
@@ -171,12 +192,13 @@ public class QueryBalanceAcctResponse extends com.byteplus.model.AbstractRespons
         Objects.equals(this.availableBalance, queryBalanceAcctResponse.availableBalance) &&
         Objects.equals(this.cashBalance, queryBalanceAcctResponse.cashBalance) &&
         Objects.equals(this.creditLimit, queryBalanceAcctResponse.creditLimit) &&
+        Objects.equals(this.currency, queryBalanceAcctResponse.currency) &&
         Objects.equals(this.freezeAmount, queryBalanceAcctResponse.freezeAmount);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountID, arrearsBalance, availableBalance, cashBalance, creditLimit, freezeAmount);
+    return Objects.hash(accountID, arrearsBalance, availableBalance, cashBalance, creditLimit, currency, freezeAmount);
   }
 
 
@@ -190,6 +212,7 @@ public class QueryBalanceAcctResponse extends com.byteplus.model.AbstractRespons
     sb.append("    availableBalance: ").append(toIndentedString(availableBalance)).append("\n");
     sb.append("    cashBalance: ").append(toIndentedString(cashBalance)).append("\n");
     sb.append("    creditLimit: ").append(toIndentedString(creditLimit)).append("\n");
+    sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
     sb.append("    freezeAmount: ").append(toIndentedString(freezeAmount)).append("\n");
     sb.append("}");
     return sb.toString();

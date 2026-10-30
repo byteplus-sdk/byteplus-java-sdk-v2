@@ -33,6 +33,9 @@ public class BudgetListForListBudgetOutput {
   @SerializedName("ActualAmount")
   private String actualAmount = null;
 
+  @SerializedName("AmountType")
+  private String amountType = null;
+
   @SerializedName("BudgetAmount")
   private String budgetAmount = null;
 
@@ -48,97 +51,14 @@ public class BudgetListForListBudgetOutput {
   @SerializedName("BudgetStartTime")
   private String budgetStartTime = null;
 
-  /**
-   * Gets or Sets budgetType
-   */
-  @JsonAdapter(BudgetTypeEnum.Adapter.class)
-  public enum BudgetTypeEnum {
-    @SerializedName("cost_budget")
-    COST_BUDGET("cost_budget");
+  @SerializedName("BudgetType")
+  private String budgetType = null;
 
-    private String value;
+  @SerializedName("CurrencySettlement")
+  private String currencySettlement = null;
 
-    BudgetTypeEnum(String value) {
-      this.value = value;
-    }
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-    public static BudgetTypeEnum fromValue(String input) {
-      for (BudgetTypeEnum b : BudgetTypeEnum.values()) {
-        if (b.value.equals(input)) {
-          return b;
-        }
-      }
-      return null;
-    }
-    public static class Adapter extends TypeAdapter<BudgetTypeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final BudgetTypeEnum enumeration) throws IOException {
-        jsonWriter.value(String.valueOf(enumeration.getValue()));
-      }
-
-      @Override
-      public BudgetTypeEnum read(final JsonReader jsonReader) throws IOException {
-        Object value = jsonReader.nextString();
-        return BudgetTypeEnum.fromValue((String)(value));
-      }
-    }
-  }  @SerializedName("BudgetType")
-  private BudgetTypeEnum budgetType = null;
-
-  /**
-   * Gets or Sets period
-   */
-  @JsonAdapter(PeriodEnum.Adapter.class)
-  public enum PeriodEnum {
-    @SerializedName("month")
-    MONTH("month"),
-    @SerializedName("quarter")
-    QUARTER("quarter"),
-    @SerializedName("year")
-    YEAR("year");
-
-    private String value;
-
-    PeriodEnum(String value) {
-      this.value = value;
-    }
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-    public static PeriodEnum fromValue(String input) {
-      for (PeriodEnum b : PeriodEnum.values()) {
-        if (b.value.equals(input)) {
-          return b;
-        }
-      }
-      return null;
-    }
-    public static class Adapter extends TypeAdapter<PeriodEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final PeriodEnum enumeration) throws IOException {
-        jsonWriter.value(String.valueOf(enumeration.getValue()));
-      }
-
-      @Override
-      public PeriodEnum read(final JsonReader jsonReader) throws IOException {
-        Object value = jsonReader.nextString();
-        return PeriodEnum.fromValue((String)(value));
-      }
-    }
-  }  @SerializedName("Period")
-  private PeriodEnum period = null;
+  @SerializedName("Period")
+  private String period = null;
 
   @SerializedName("Ratio")
   private String ratio = null;
@@ -162,6 +82,24 @@ public class BudgetListForListBudgetOutput {
 
   public void setActualAmount(String actualAmount) {
     this.actualAmount = actualAmount;
+  }
+
+  public BudgetListForListBudgetOutput amountType(String amountType) {
+    this.amountType = amountType;
+    return this;
+  }
+
+   /**
+   * Get amountType
+   * @return amountType
+  **/
+  @Schema(description = "")
+  public String getAmountType() {
+    return amountType;
+  }
+
+  public void setAmountType(String amountType) {
+    this.amountType = amountType;
   }
 
   public BudgetListForListBudgetOutput budgetAmount(String budgetAmount) {
@@ -254,7 +192,7 @@ public class BudgetListForListBudgetOutput {
     this.budgetStartTime = budgetStartTime;
   }
 
-  public BudgetListForListBudgetOutput budgetType(BudgetTypeEnum budgetType) {
+  public BudgetListForListBudgetOutput budgetType(String budgetType) {
     this.budgetType = budgetType;
     return this;
   }
@@ -264,15 +202,33 @@ public class BudgetListForListBudgetOutput {
    * @return budgetType
   **/
   @Schema(description = "")
-  public BudgetTypeEnum getBudgetType() {
+  public String getBudgetType() {
     return budgetType;
   }
 
-  public void setBudgetType(BudgetTypeEnum budgetType) {
+  public void setBudgetType(String budgetType) {
     this.budgetType = budgetType;
   }
 
-  public BudgetListForListBudgetOutput period(PeriodEnum period) {
+  public BudgetListForListBudgetOutput currencySettlement(String currencySettlement) {
+    this.currencySettlement = currencySettlement;
+    return this;
+  }
+
+   /**
+   * Get currencySettlement
+   * @return currencySettlement
+  **/
+  @Schema(description = "")
+  public String getCurrencySettlement() {
+    return currencySettlement;
+  }
+
+  public void setCurrencySettlement(String currencySettlement) {
+    this.currencySettlement = currencySettlement;
+  }
+
+  public BudgetListForListBudgetOutput period(String period) {
     this.period = period;
     return this;
   }
@@ -282,11 +238,11 @@ public class BudgetListForListBudgetOutput {
    * @return period
   **/
   @Schema(description = "")
-  public PeriodEnum getPeriod() {
+  public String getPeriod() {
     return period;
   }
 
-  public void setPeriod(PeriodEnum period) {
+  public void setPeriod(String period) {
     this.period = period;
   }
 
@@ -337,12 +293,14 @@ public class BudgetListForListBudgetOutput {
     }
     BudgetListForListBudgetOutput budgetListForListBudgetOutput = (BudgetListForListBudgetOutput) o;
     return Objects.equals(this.actualAmount, budgetListForListBudgetOutput.actualAmount) &&
+        Objects.equals(this.amountType, budgetListForListBudgetOutput.amountType) &&
         Objects.equals(this.budgetAmount, budgetListForListBudgetOutput.budgetAmount) &&
         Objects.equals(this.budgetEndTime, budgetListForListBudgetOutput.budgetEndTime) &&
         Objects.equals(this.budgetID, budgetListForListBudgetOutput.budgetID) &&
         Objects.equals(this.budgetName, budgetListForListBudgetOutput.budgetName) &&
         Objects.equals(this.budgetStartTime, budgetListForListBudgetOutput.budgetStartTime) &&
         Objects.equals(this.budgetType, budgetListForListBudgetOutput.budgetType) &&
+        Objects.equals(this.currencySettlement, budgetListForListBudgetOutput.currencySettlement) &&
         Objects.equals(this.period, budgetListForListBudgetOutput.period) &&
         Objects.equals(this.ratio, budgetListForListBudgetOutput.ratio) &&
         Objects.equals(this.status, budgetListForListBudgetOutput.status);
@@ -350,7 +308,7 @@ public class BudgetListForListBudgetOutput {
 
   @Override
   public int hashCode() {
-    return Objects.hash(actualAmount, budgetAmount, budgetEndTime, budgetID, budgetName, budgetStartTime, budgetType, period, ratio, status);
+    return Objects.hash(actualAmount, amountType, budgetAmount, budgetEndTime, budgetID, budgetName, budgetStartTime, budgetType, currencySettlement, period, ratio, status);
   }
 
 
@@ -360,12 +318,14 @@ public class BudgetListForListBudgetOutput {
     sb.append("class BudgetListForListBudgetOutput {\n");
     
     sb.append("    actualAmount: ").append(toIndentedString(actualAmount)).append("\n");
+    sb.append("    amountType: ").append(toIndentedString(amountType)).append("\n");
     sb.append("    budgetAmount: ").append(toIndentedString(budgetAmount)).append("\n");
     sb.append("    budgetEndTime: ").append(toIndentedString(budgetEndTime)).append("\n");
     sb.append("    budgetID: ").append(toIndentedString(budgetID)).append("\n");
     sb.append("    budgetName: ").append(toIndentedString(budgetName)).append("\n");
     sb.append("    budgetStartTime: ").append(toIndentedString(budgetStartTime)).append("\n");
     sb.append("    budgetType: ").append(toIndentedString(budgetType)).append("\n");
+    sb.append("    currencySettlement: ").append(toIndentedString(currencySettlement)).append("\n");
     sb.append("    period: ").append(toIndentedString(period)).append("\n");
     sb.append("    ratio: ").append(toIndentedString(ratio)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

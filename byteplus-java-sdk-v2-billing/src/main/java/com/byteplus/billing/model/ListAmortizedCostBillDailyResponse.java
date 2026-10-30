@@ -45,6 +45,9 @@ public class ListAmortizedCostBillDailyResponse extends com.byteplus.model.Abstr
   @SerializedName("Total")
   private Integer total = null;
 
+  @SerializedName("Warning")
+  private String warning = null;
+
   public ListAmortizedCostBillDailyResponse limit(Integer limit) {
     this.limit = limit;
     return this;
@@ -126,6 +129,24 @@ public class ListAmortizedCostBillDailyResponse extends com.byteplus.model.Abstr
     this.total = total;
   }
 
+  public ListAmortizedCostBillDailyResponse warning(String warning) {
+    this.warning = warning;
+    return this;
+  }
+
+   /**
+   * Get warning
+   * @return warning
+  **/
+  @Schema(description = "")
+  public String getWarning() {
+    return warning;
+  }
+
+  public void setWarning(String warning) {
+    this.warning = warning;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -139,12 +160,13 @@ public class ListAmortizedCostBillDailyResponse extends com.byteplus.model.Abstr
     return Objects.equals(this.limit, listAmortizedCostBillDailyResponse.limit) &&
         Objects.equals(this.list, listAmortizedCostBillDailyResponse.list) &&
         Objects.equals(this.offset, listAmortizedCostBillDailyResponse.offset) &&
-        Objects.equals(this.total, listAmortizedCostBillDailyResponse.total);
+        Objects.equals(this.total, listAmortizedCostBillDailyResponse.total) &&
+        Objects.equals(this.warning, listAmortizedCostBillDailyResponse.warning);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(limit, list, offset, total);
+    return Objects.hash(limit, list, offset, total, warning);
   }
 
 
@@ -157,6 +179,7 @@ public class ListAmortizedCostBillDailyResponse extends com.byteplus.model.Abstr
     sb.append("    list: ").append(toIndentedString(list)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
     sb.append("    total: ").append(toIndentedString(total)).append("\n");
+    sb.append("    warning: ").append(toIndentedString(warning)).append("\n");
     sb.append("}");
     return sb.toString();
   }
