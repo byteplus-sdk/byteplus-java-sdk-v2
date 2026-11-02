@@ -75,7 +75,7 @@ public class SampleCode {
 
     当服务在内置映射中标记 `goChinaEnabled=true`，并且请求 Region 属于中国大陆（`cn-*` 前缀且不属于 `cn-hongkong` 等非大陆港澳台 Region）时，在域名后追加 `.cn` 后缀。
 
-    是否 GoChina 由服务侧决定，不可修改。Region 在匹配和拼进域名前会转为小写，因此 `CN-Beijing` 这类值能通过本地校验；但请求仍用原值签名，而服务端对 region 区分大小写，这样的请求会被拒绝，请始终使用小写 region（如 `cn-beijing`）。带首尾空白的 region（如 `"  cn-beijing  "`）不会被 trim，无论通过 `ApiClient` 发起请求还是直接调用 `DefaultEndpointProvider`，都会以 `InvalidRegion` 被拒绝，参见 [region / service 合法性校验](#region--service-合法性校验)。
+    是否 GoChina 由服务侧决定，不可修改。本地校验允许大写字母，`CN-Beijing` 这类值能通过校验，并在匹配和拼进域名前转为小写；但请求仍用原值签名，而服务端对 region 区分大小写，这样的请求会被拒绝，请始终使用小写 region（如 `cn-beijing`）。带首尾空白的 region（如 `"  cn-beijing  "`）不会被 trim，无论通过 `ApiClient` 发起请求还是直接调用 `DefaultEndpointProvider`，都会以 `InvalidRegion` 被拒绝，参见 [region / service 合法性校验](#region--service-合法性校验)。
 
 4. **根据服务名和区域自动构造 Endpoint 地址**
 
