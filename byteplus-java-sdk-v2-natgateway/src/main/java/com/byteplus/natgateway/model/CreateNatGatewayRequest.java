@@ -42,8 +42,14 @@ public class CreateNatGatewayRequest {
   @SerializedName("Description")
   private String description = null;
 
+  @SerializedName("DirectMode")
+  private Boolean directMode = null;
+
   @SerializedName("NatGatewayName")
   private String natGatewayName = null;
+
+  @SerializedName("NetworkType")
+  private String networkType = null;
 
   @SerializedName("Period")
   private Integer period = null;
@@ -53,6 +59,9 @@ public class CreateNatGatewayRequest {
 
   @SerializedName("ProjectName")
   private String projectName = null;
+
+  @SerializedName("RenewType")
+  private Integer renewType = null;
 
   @SerializedName("Spec")
   private String spec = null;
@@ -122,6 +131,24 @@ public class CreateNatGatewayRequest {
     this.description = description;
   }
 
+  public CreateNatGatewayRequest directMode(Boolean directMode) {
+    this.directMode = directMode;
+    return this;
+  }
+
+   /**
+   * Get directMode
+   * @return directMode
+  **/
+  @Schema(description = "")
+  public Boolean isDirectMode() {
+    return directMode;
+  }
+
+  public void setDirectMode(Boolean directMode) {
+    this.directMode = directMode;
+  }
+
   public CreateNatGatewayRequest natGatewayName(String natGatewayName) {
     this.natGatewayName = natGatewayName;
     return this;
@@ -138,6 +165,24 @@ public class CreateNatGatewayRequest {
 
   public void setNatGatewayName(String natGatewayName) {
     this.natGatewayName = natGatewayName;
+  }
+
+  public CreateNatGatewayRequest networkType(String networkType) {
+    this.networkType = networkType;
+    return this;
+  }
+
+   /**
+   * Get networkType
+   * @return networkType
+  **/
+  @Schema(description = "")
+  public String getNetworkType() {
+    return networkType;
+  }
+
+  public void setNetworkType(String networkType) {
+    this.networkType = networkType;
   }
 
   public CreateNatGatewayRequest period(Integer period) {
@@ -192,6 +237,24 @@ public class CreateNatGatewayRequest {
 
   public void setProjectName(String projectName) {
     this.projectName = projectName;
+  }
+
+  public CreateNatGatewayRequest renewType(Integer renewType) {
+    this.renewType = renewType;
+    return this;
+  }
+
+   /**
+   * Get renewType
+   * @return renewType
+  **/
+  @Schema(description = "")
+  public Integer getRenewType() {
+    return renewType;
+  }
+
+  public void setRenewType(Integer renewType) {
+    this.renewType = renewType;
   }
 
   public CreateNatGatewayRequest spec(String spec) {
@@ -289,10 +352,13 @@ public class CreateNatGatewayRequest {
     return Objects.equals(this.billingType, createNatGatewayRequest.billingType) &&
         Objects.equals(this.clientToken, createNatGatewayRequest.clientToken) &&
         Objects.equals(this.description, createNatGatewayRequest.description) &&
+        Objects.equals(this.directMode, createNatGatewayRequest.directMode) &&
         Objects.equals(this.natGatewayName, createNatGatewayRequest.natGatewayName) &&
+        Objects.equals(this.networkType, createNatGatewayRequest.networkType) &&
         Objects.equals(this.period, createNatGatewayRequest.period) &&
         Objects.equals(this.periodUnit, createNatGatewayRequest.periodUnit) &&
         Objects.equals(this.projectName, createNatGatewayRequest.projectName) &&
+        Objects.equals(this.renewType, createNatGatewayRequest.renewType) &&
         Objects.equals(this.spec, createNatGatewayRequest.spec) &&
         Objects.equals(this.subnetId, createNatGatewayRequest.subnetId) &&
         Objects.equals(this.tags, createNatGatewayRequest.tags) &&
@@ -301,7 +367,7 @@ public class CreateNatGatewayRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(billingType, clientToken, description, natGatewayName, period, periodUnit, projectName, spec, subnetId, tags, vpcId);
+    return Objects.hash(billingType, clientToken, description, directMode, natGatewayName, networkType, period, periodUnit, projectName, renewType, spec, subnetId, tags, vpcId);
   }
 
 
@@ -313,10 +379,13 @@ public class CreateNatGatewayRequest {
     sb.append("    billingType: ").append(toIndentedString(billingType)).append("\n");
     sb.append("    clientToken: ").append(toIndentedString(clientToken)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    directMode: ").append(toIndentedString(directMode)).append("\n");
     sb.append("    natGatewayName: ").append(toIndentedString(natGatewayName)).append("\n");
+    sb.append("    networkType: ").append(toIndentedString(networkType)).append("\n");
     sb.append("    period: ").append(toIndentedString(period)).append("\n");
     sb.append("    periodUnit: ").append(toIndentedString(periodUnit)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
+    sb.append("    renewType: ").append(toIndentedString(renewType)).append("\n");
     sb.append("    spec: ").append(toIndentedString(spec)).append("\n");
     sb.append("    subnetId: ").append(toIndentedString(subnetId)).append("\n");
     sb.append("    tags: ").append(toIndentedString(tags)).append("\n");

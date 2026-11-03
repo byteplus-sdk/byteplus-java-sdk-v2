@@ -15,6 +15,7 @@ package com.byteplus.natgateway.model;
 import java.util.Objects;
 import java.util.Arrays;
 import com.byteplus.natgateway.model.EipAddressForDescribeNatGatewayAttributesOutput;
+import com.byteplus.natgateway.model.NatIpAddressForDescribeNatGatewayAttributesOutput;
 import com.byteplus.natgateway.model.TagForDescribeNatGatewayAttributesOutput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -49,6 +50,9 @@ public class DescribeNatGatewayAttributesResponse extends com.byteplus.model.Abs
   @SerializedName("Description")
   private String description = null;
 
+  @SerializedName("DirectMode")
+  private Boolean directMode = null;
+
   @SerializedName("DnatEntryIds")
   private List<String> dnatEntryIds = null;
 
@@ -66,6 +70,9 @@ public class DescribeNatGatewayAttributesResponse extends com.byteplus.model.Abs
 
   @SerializedName("NatGatewayName")
   private String natGatewayName = null;
+
+  @SerializedName("NatIpAddresses")
+  private List<NatIpAddressForDescribeNatGatewayAttributesOutput> natIpAddresses = null;
 
   @SerializedName("NetworkInterfaceId")
   private String networkInterfaceId = null;
@@ -202,6 +209,24 @@ public class DescribeNatGatewayAttributesResponse extends com.byteplus.model.Abs
     this.description = description;
   }
 
+  public DescribeNatGatewayAttributesResponse directMode(Boolean directMode) {
+    this.directMode = directMode;
+    return this;
+  }
+
+   /**
+   * Get directMode
+   * @return directMode
+  **/
+  @Schema(description = "")
+  public Boolean isDirectMode() {
+    return directMode;
+  }
+
+  public void setDirectMode(Boolean directMode) {
+    this.directMode = directMode;
+  }
+
   public DescribeNatGatewayAttributesResponse dnatEntryIds(List<String> dnatEntryIds) {
     this.dnatEntryIds = dnatEntryIds;
     return this;
@@ -325,6 +350,33 @@ public class DescribeNatGatewayAttributesResponse extends com.byteplus.model.Abs
 
   public void setNatGatewayName(String natGatewayName) {
     this.natGatewayName = natGatewayName;
+  }
+
+  public DescribeNatGatewayAttributesResponse natIpAddresses(List<NatIpAddressForDescribeNatGatewayAttributesOutput> natIpAddresses) {
+    this.natIpAddresses = natIpAddresses;
+    return this;
+  }
+
+  public DescribeNatGatewayAttributesResponse addNatIpAddressesItem(NatIpAddressForDescribeNatGatewayAttributesOutput natIpAddressesItem) {
+    if (this.natIpAddresses == null) {
+      this.natIpAddresses = new ArrayList<NatIpAddressForDescribeNatGatewayAttributesOutput>();
+    }
+    this.natIpAddresses.add(natIpAddressesItem);
+    return this;
+  }
+
+   /**
+   * Get natIpAddresses
+   * @return natIpAddresses
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<NatIpAddressForDescribeNatGatewayAttributesOutput> getNatIpAddresses() {
+    return natIpAddresses;
+  }
+
+  public void setNatIpAddresses(List<NatIpAddressForDescribeNatGatewayAttributesOutput> natIpAddresses) {
+    this.natIpAddresses = natIpAddresses;
   }
 
   public DescribeNatGatewayAttributesResponse networkInterfaceId(String networkInterfaceId) {
@@ -629,12 +681,14 @@ public class DescribeNatGatewayAttributesResponse extends com.byteplus.model.Abs
         Objects.equals(this.creationTime, describeNatGatewayAttributesResponse.creationTime) &&
         Objects.equals(this.deletedTime, describeNatGatewayAttributesResponse.deletedTime) &&
         Objects.equals(this.description, describeNatGatewayAttributesResponse.description) &&
+        Objects.equals(this.directMode, describeNatGatewayAttributesResponse.directMode) &&
         Objects.equals(this.dnatEntryIds, describeNatGatewayAttributesResponse.dnatEntryIds) &&
         Objects.equals(this.eipAddresses, describeNatGatewayAttributesResponse.eipAddresses) &&
         Objects.equals(this.expiredTime, describeNatGatewayAttributesResponse.expiredTime) &&
         Objects.equals(this.lockReason, describeNatGatewayAttributesResponse.lockReason) &&
         Objects.equals(this.natGatewayId, describeNatGatewayAttributesResponse.natGatewayId) &&
         Objects.equals(this.natGatewayName, describeNatGatewayAttributesResponse.natGatewayName) &&
+        Objects.equals(this.natIpAddresses, describeNatGatewayAttributesResponse.natIpAddresses) &&
         Objects.equals(this.networkInterfaceId, describeNatGatewayAttributesResponse.networkInterfaceId) &&
         Objects.equals(this.networkType, describeNatGatewayAttributesResponse.networkType) &&
         Objects.equals(this.overdueTime, describeNatGatewayAttributesResponse.overdueTime) &&
@@ -654,7 +708,7 @@ public class DescribeNatGatewayAttributesResponse extends com.byteplus.model.Abs
 
   @Override
   public int hashCode() {
-    return Objects.hash(billingType, businessStatus, creationTime, deletedTime, description, dnatEntryIds, eipAddresses, expiredTime, lockReason, natGatewayId, natGatewayName, networkInterfaceId, networkType, overdueTime, projectName, requestId, smartScheduleEnabled, smartScheduleRule, snatEntryIds, spec, status, subnetId, tags, updatedAt, vpcId, zoneId);
+    return Objects.hash(billingType, businessStatus, creationTime, deletedTime, description, directMode, dnatEntryIds, eipAddresses, expiredTime, lockReason, natGatewayId, natGatewayName, natIpAddresses, networkInterfaceId, networkType, overdueTime, projectName, requestId, smartScheduleEnabled, smartScheduleRule, snatEntryIds, spec, status, subnetId, tags, updatedAt, vpcId, zoneId);
   }
 
 
@@ -668,12 +722,14 @@ public class DescribeNatGatewayAttributesResponse extends com.byteplus.model.Abs
     sb.append("    creationTime: ").append(toIndentedString(creationTime)).append("\n");
     sb.append("    deletedTime: ").append(toIndentedString(deletedTime)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    directMode: ").append(toIndentedString(directMode)).append("\n");
     sb.append("    dnatEntryIds: ").append(toIndentedString(dnatEntryIds)).append("\n");
     sb.append("    eipAddresses: ").append(toIndentedString(eipAddresses)).append("\n");
     sb.append("    expiredTime: ").append(toIndentedString(expiredTime)).append("\n");
     sb.append("    lockReason: ").append(toIndentedString(lockReason)).append("\n");
     sb.append("    natGatewayId: ").append(toIndentedString(natGatewayId)).append("\n");
     sb.append("    natGatewayName: ").append(toIndentedString(natGatewayName)).append("\n");
+    sb.append("    natIpAddresses: ").append(toIndentedString(natIpAddresses)).append("\n");
     sb.append("    networkInterfaceId: ").append(toIndentedString(networkInterfaceId)).append("\n");
     sb.append("    networkType: ").append(toIndentedString(networkType)).append("\n");
     sb.append("    overdueTime: ").append(toIndentedString(overdueTime)).append("\n");
