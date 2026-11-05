@@ -1,13 +1,8 @@
 {
   "actions": [
-    "CreateRegistry",
-    "GetAuthorizationToken",
-    "ListRegistries",
-    "UpdatePublicEndpoint",
-    "UpdateVpcEndpoint",
-    "CreateNamespace"
+    "CreateTag"
   ],
-  "description": "CR: modified ListRegistries, UpdatePublicEndpoint, UpdateVpcEndpoint, CreateNamespace, CreateRegistry, GetAuthorizationToken",
+  "description": "CR: added CreateTag",
   "modules": "service/cr",
   "type": "feature"
 }
