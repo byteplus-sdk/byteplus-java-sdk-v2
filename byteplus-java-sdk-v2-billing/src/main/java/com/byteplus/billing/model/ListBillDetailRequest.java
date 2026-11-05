@@ -14,6 +14,7 @@ package com.byteplus.billing.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.billing.model.TagKVForListBillDetailInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -76,6 +77,15 @@ public class ListBillDetailRequest {
 
   @SerializedName("Project")
   private List<String> project = null;
+
+  @SerializedName("SalesChannel")
+  private List<String> salesChannel = null;
+
+  @SerializedName("TagKV")
+  private List<TagKVForListBillDetailInput> tagKV = null;
+
+  @SerializedName("TagKVFilterMode")
+  private Integer tagKVFilterMode = null;
 
   public ListBillDetailRequest billCategory(List<String> billCategory) {
     this.billCategory = billCategory;
@@ -397,6 +407,77 @@ public class ListBillDetailRequest {
     this.project = project;
   }
 
+  public ListBillDetailRequest salesChannel(List<String> salesChannel) {
+    this.salesChannel = salesChannel;
+    return this;
+  }
+
+  public ListBillDetailRequest addSalesChannelItem(String salesChannelItem) {
+    if (this.salesChannel == null) {
+      this.salesChannel = new ArrayList<String>();
+    }
+    this.salesChannel.add(salesChannelItem);
+    return this;
+  }
+
+   /**
+   * Get salesChannel
+   * @return salesChannel
+  **/
+  @Schema(description = "")
+  public List<String> getSalesChannel() {
+    return salesChannel;
+  }
+
+  public void setSalesChannel(List<String> salesChannel) {
+    this.salesChannel = salesChannel;
+  }
+
+  public ListBillDetailRequest tagKV(List<TagKVForListBillDetailInput> tagKV) {
+    this.tagKV = tagKV;
+    return this;
+  }
+
+  public ListBillDetailRequest addTagKVItem(TagKVForListBillDetailInput tagKVItem) {
+    if (this.tagKV == null) {
+      this.tagKV = new ArrayList<TagKVForListBillDetailInput>();
+    }
+    this.tagKV.add(tagKVItem);
+    return this;
+  }
+
+   /**
+   * Get tagKV
+   * @return tagKV
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<TagKVForListBillDetailInput> getTagKV() {
+    return tagKV;
+  }
+
+  public void setTagKV(List<TagKVForListBillDetailInput> tagKV) {
+    this.tagKV = tagKV;
+  }
+
+  public ListBillDetailRequest tagKVFilterMode(Integer tagKVFilterMode) {
+    this.tagKVFilterMode = tagKVFilterMode;
+    return this;
+  }
+
+   /**
+   * Get tagKVFilterMode
+   * @return tagKVFilterMode
+  **/
+  @Schema(description = "")
+  public Integer getTagKVFilterMode() {
+    return tagKVFilterMode;
+  }
+
+  public void setTagKVFilterMode(Integer tagKVFilterMode) {
+    this.tagKVFilterMode = tagKVFilterMode;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -421,12 +502,15 @@ public class ListBillDetailRequest {
         Objects.equals(this.ownerID, listBillDetailRequest.ownerID) &&
         Objects.equals(this.payerID, listBillDetailRequest.payerID) &&
         Objects.equals(this.product, listBillDetailRequest.product) &&
-        Objects.equals(this.project, listBillDetailRequest.project);
+        Objects.equals(this.project, listBillDetailRequest.project) &&
+        Objects.equals(this.salesChannel, listBillDetailRequest.salesChannel) &&
+        Objects.equals(this.tagKV, listBillDetailRequest.tagKV) &&
+        Objects.equals(this.tagKVFilterMode, listBillDetailRequest.tagKVFilterMode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategory, billPeriod, billingMode, expenseDate, groupPeriod, groupTerm, ignoreZero, instanceNo, limit, needRecordNum, offset, ownerID, payerID, product, project);
+    return Objects.hash(billCategory, billPeriod, billingMode, expenseDate, groupPeriod, groupTerm, ignoreZero, instanceNo, limit, needRecordNum, offset, ownerID, payerID, product, project, salesChannel, tagKV, tagKVFilterMode);
   }
 
 
@@ -450,6 +534,9 @@ public class ListBillDetailRequest {
     sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("    project: ").append(toIndentedString(project)).append("\n");
+    sb.append("    salesChannel: ").append(toIndentedString(salesChannel)).append("\n");
+    sb.append("    tagKV: ").append(toIndentedString(tagKV)).append("\n");
+    sb.append("    tagKVFilterMode: ").append(toIndentedString(tagKVFilterMode)).append("\n");
     sb.append("}");
     return sb.toString();
   }

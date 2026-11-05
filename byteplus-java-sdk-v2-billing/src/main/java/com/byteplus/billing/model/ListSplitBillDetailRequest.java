@@ -14,6 +14,7 @@ package com.byteplus.billing.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.byteplus.billing.model.TagKVForListSplitBillDetailInput;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -74,11 +75,20 @@ public class ListSplitBillDetailRequest {
   @SerializedName("Project")
   private List<String> project = null;
 
+  @SerializedName("SalesChannel")
+  private List<String> salesChannel = null;
+
   @SerializedName("SplitDimension")
   private String splitDimension = null;
 
   @SerializedName("SplitItemID")
   private String splitItemID = null;
+
+  @SerializedName("TagKV")
+  private List<TagKVForListSplitBillDetailInput> tagKV = null;
+
+  @SerializedName("TagKVFilterMode")
+  private Integer tagKVFilterMode = null;
 
   public ListSplitBillDetailRequest billCategory(List<String> billCategory) {
     this.billCategory = billCategory;
@@ -382,6 +392,32 @@ public class ListSplitBillDetailRequest {
     this.project = project;
   }
 
+  public ListSplitBillDetailRequest salesChannel(List<String> salesChannel) {
+    this.salesChannel = salesChannel;
+    return this;
+  }
+
+  public ListSplitBillDetailRequest addSalesChannelItem(String salesChannelItem) {
+    if (this.salesChannel == null) {
+      this.salesChannel = new ArrayList<String>();
+    }
+    this.salesChannel.add(salesChannelItem);
+    return this;
+  }
+
+   /**
+   * Get salesChannel
+   * @return salesChannel
+  **/
+  @Schema(description = "")
+  public List<String> getSalesChannel() {
+    return salesChannel;
+  }
+
+  public void setSalesChannel(List<String> salesChannel) {
+    this.salesChannel = salesChannel;
+  }
+
   public ListSplitBillDetailRequest splitDimension(String splitDimension) {
     this.splitDimension = splitDimension;
     return this;
@@ -418,6 +454,51 @@ public class ListSplitBillDetailRequest {
     this.splitItemID = splitItemID;
   }
 
+  public ListSplitBillDetailRequest tagKV(List<TagKVForListSplitBillDetailInput> tagKV) {
+    this.tagKV = tagKV;
+    return this;
+  }
+
+  public ListSplitBillDetailRequest addTagKVItem(TagKVForListSplitBillDetailInput tagKVItem) {
+    if (this.tagKV == null) {
+      this.tagKV = new ArrayList<TagKVForListSplitBillDetailInput>();
+    }
+    this.tagKV.add(tagKVItem);
+    return this;
+  }
+
+   /**
+   * Get tagKV
+   * @return tagKV
+  **/
+  @Valid
+  @Schema(description = "")
+  public List<TagKVForListSplitBillDetailInput> getTagKV() {
+    return tagKV;
+  }
+
+  public void setTagKV(List<TagKVForListSplitBillDetailInput> tagKV) {
+    this.tagKV = tagKV;
+  }
+
+  public ListSplitBillDetailRequest tagKVFilterMode(Integer tagKVFilterMode) {
+    this.tagKVFilterMode = tagKVFilterMode;
+    return this;
+  }
+
+   /**
+   * Get tagKVFilterMode
+   * @return tagKVFilterMode
+  **/
+  @Schema(description = "")
+  public Integer getTagKVFilterMode() {
+    return tagKVFilterMode;
+  }
+
+  public void setTagKVFilterMode(Integer tagKVFilterMode) {
+    this.tagKVFilterMode = tagKVFilterMode;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -442,13 +523,16 @@ public class ListSplitBillDetailRequest {
         Objects.equals(this.payerID, listSplitBillDetailRequest.payerID) &&
         Objects.equals(this.product, listSplitBillDetailRequest.product) &&
         Objects.equals(this.project, listSplitBillDetailRequest.project) &&
+        Objects.equals(this.salesChannel, listSplitBillDetailRequest.salesChannel) &&
         Objects.equals(this.splitDimension, listSplitBillDetailRequest.splitDimension) &&
-        Objects.equals(this.splitItemID, listSplitBillDetailRequest.splitItemID);
+        Objects.equals(this.splitItemID, listSplitBillDetailRequest.splitItemID) &&
+        Objects.equals(this.tagKV, listSplitBillDetailRequest.tagKV) &&
+        Objects.equals(this.tagKVFilterMode, listSplitBillDetailRequest.tagKVFilterMode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(billCategory, billPeriod, billingMode, expenseDate, groupPeriod, ignoreZero, instanceNo, limit, needRecordNum, offset, ownerID, payerID, product, project, splitDimension, splitItemID);
+    return Objects.hash(billCategory, billPeriod, billingMode, expenseDate, groupPeriod, ignoreZero, instanceNo, limit, needRecordNum, offset, ownerID, payerID, product, project, salesChannel, splitDimension, splitItemID, tagKV, tagKVFilterMode);
   }
 
 
@@ -471,8 +555,11 @@ public class ListSplitBillDetailRequest {
     sb.append("    payerID: ").append(toIndentedString(payerID)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("    project: ").append(toIndentedString(project)).append("\n");
+    sb.append("    salesChannel: ").append(toIndentedString(salesChannel)).append("\n");
     sb.append("    splitDimension: ").append(toIndentedString(splitDimension)).append("\n");
     sb.append("    splitItemID: ").append(toIndentedString(splitItemID)).append("\n");
+    sb.append("    tagKV: ").append(toIndentedString(tagKV)).append("\n");
+    sb.append("    tagKVFilterMode: ").append(toIndentedString(tagKVFilterMode)).append("\n");
     sb.append("}");
     return sb.toString();
   }
