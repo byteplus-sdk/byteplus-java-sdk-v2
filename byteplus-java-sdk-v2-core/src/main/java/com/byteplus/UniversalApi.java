@@ -1,6 +1,9 @@
 package com.byteplus;
 
 import com.google.gson.reflect.TypeToken;
+import com.byteplus.endpoint.EndpointValidation;
+import com.byteplus.endpoint.EndpointValidationException;
+import org.apache.commons.lang.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -75,6 +78,18 @@ public class UniversalApi {
     }
 
     private com.squareup.okhttp.Call doCall(UniversalRequest info, Map<String, Object> input, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+
+        // The service name is provided by the caller and used to build the
+        // endpoint host. It must be validated before being written into the
+        // path: a '/' would change how the path is split later on and the raw
+        // value would never be checked.
+        if (StringUtils.isBlank(apiClient.getEndpoint())) {
+            try {
+                EndpointValidation.validateServiceAndRegion(info.getServiceName(), apiClient.getRegion());
+            } catch (EndpointValidationException e) {
+                throw e.toApiException();
+            }
+        }
 
         // create path and map variables
         String localVarPath = String.format("/%s/%s/%s/%s/",info.getAction(),info.getVersion(),info.getServiceName(),info.getHttpMethod().GetMethod().toLowerCase());

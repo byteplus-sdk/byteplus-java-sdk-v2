@@ -2,6 +2,8 @@ package com.byteplus.interceptor;
 
 import com.byteplus.ApiException;
 import com.byteplus.endpoint.EndpointResolver;
+import com.byteplus.endpoint.EndpointValidation;
+import com.byteplus.endpoint.EndpointValidationException;
 import com.byteplus.endpoint.ResolveEndpointOption;
 import com.byteplus.endpoint.ResolvedEndpoint;
 import org.apache.commons.lang.StringUtils;
@@ -40,6 +42,15 @@ public class ResolveEndpointInterceptor implements RequestInterceptor {
                 throw new ApiException("Path Param not meet the requirements");
             }
             String service = param[3];
+            // region and service are used to build the endpoint host, make sure
+            // they can not be used to inject a different host (SSRF). This runs
+            // before any resolver, including user-defined ones, and before the
+            // request is signed and sent.
+            try {
+                EndpointValidation.validateServiceAndRegion(service, context.getApiClient().getRegion());
+            } catch (EndpointValidationException e) {
+                throw e.toApiException();
+            }
             ResolveEndpointOption option = new ResolveEndpointOption();
             option.setService(service);
             option.setRegion(context.getApiClient().getRegion());

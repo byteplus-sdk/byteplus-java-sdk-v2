@@ -114,8 +114,13 @@ public class DefaultEndpointProvider implements EndpointResolver {
         return serviceCode.toLowerCase(Locale.ROOT).replaceAll("_", "-");
     }
 
+    /**
+     * Lowercases a region that already passed
+     * {@link EndpointValidation#validateRegion(String)}. No trimming: a region
+     * with surrounding whitespace is rejected by the validation instead.
+     */
     private static String normalizeRegion(String region) {
-        return region == null ? "" : region.trim().toLowerCase(Locale.ROOT);
+        return region == null ? "" : region.toLowerCase(Locale.ROOT);
     }
 
     @Override
@@ -169,8 +174,9 @@ public class DefaultEndpointProvider implements EndpointResolver {
      *       {@code {service}.{region}.byteplusapi.com}.</li>
      * </ol>
      *
-     * <p>{@code regionCode} is normalized (trim + lowercase) before being
-     * placed in the returned host, so callers may pass mixed-case values.
+     * <p>{@code regionCode} is validated as is (no trimming), then lowercased
+     * before being placed in the returned host, so callers may pass
+     * mixed-case values but not values with leading/trailing whitespace.
      *
      * @param service              service code registered in the default endpoint map.
      * @param regionCode           request region.
@@ -179,12 +185,28 @@ public class DefaultEndpointProvider implements EndpointResolver {
      *                              in addressing.
      * @param useDualStack         nullable dual-stack override; when {@code null}
      *                              falls back to {@code BYTEPLUS_ENABLE_DUALSTACK}.
-     * @throws ApiException when {@code service} is not registered in the default endpoint map.
+     * @throws ApiException when {@code service} or {@code regionCode} is not a
+     *                      valid endpoint label (code InvalidService /
+     *                      InvalidRegion, status 400), or when {@code service}
+     *                      is not registered in the default endpoint map.
      */
     public static String getDefaultEndpointByServiceInfo(String service, String regionCode,
                                                          Set<String> customBootstrapRegion, Boolean useDualStack) throws ApiException {
         // customBootstrapRegion is intentionally ignored: bootstrap-region-based
         // routing is deprecated and no longer participates in addressing.
+
+        // service and region are concatenated into the host name below (global,
+        // regional, dual stack and .cn branches), reject anything that could
+        // alter the host structure before any branch is taken. The raw region
+        // is validated, the same value ResolveEndpointInterceptor validates and
+        // signs with: a region with leading/trailing whitespace is rejected
+        // instead of being silently trimmed. normalizeRegion below only
+        // lowercases values that already passed validation.
+        try {
+            EndpointValidation.validateServiceAndRegion(service, regionCode);
+        } catch (EndpointValidationException e) {
+            throw e.toApiException();
+        }
 
         ServiceEndpointInfo endpointInfo = DEFAULT_ENDPOINT_MAP.get(service);
         if (endpointInfo == null) {
