@@ -107,6 +107,7 @@ public class DefaultEndpointProvider implements EndpointResolver {
         DEFAULT_ENDPOINT_MAP.put("vod", new ServiceEndpointInfo("vod", false, false));
         DEFAULT_ENDPOINT_MAP.put("vs", new ServiceEndpointInfo("vs", true, false));
         DEFAULT_ENDPOINT_MAP.put("aidap", new ServiceEndpointInfo("aidap", false, false));
+        DEFAULT_ENDPOINT_MAP.put("mse", new ServiceEndpointInfo("mse", false, false));
     }
 
     private static String standardizeDomainServiceCode(String serviceCode) {
