@@ -42,6 +42,9 @@ public class DescribeNatGatewaysRequest {
   @SerializedName("NatGatewayName")
   private String natGatewayName = null;
 
+  @SerializedName("NetworkType")
+  private String networkType = null;
+
   @SerializedName("PageNumber")
   private Integer pageNumber = null;
 
@@ -123,6 +126,24 @@ public class DescribeNatGatewaysRequest {
 
   public void setNatGatewayName(String natGatewayName) {
     this.natGatewayName = natGatewayName;
+  }
+
+  public DescribeNatGatewaysRequest networkType(String networkType) {
+    this.networkType = networkType;
+    return this;
+  }
+
+   /**
+   * Get networkType
+   * @return networkType
+  **/
+  @Schema(description = "")
+  public String getNetworkType() {
+    return networkType;
+  }
+
+  public void setNetworkType(String networkType) {
+    this.networkType = networkType;
   }
 
   public DescribeNatGatewaysRequest pageNumber(Integer pageNumber) {
@@ -274,6 +295,7 @@ public class DescribeNatGatewaysRequest {
     return Objects.equals(this.description, describeNatGatewaysRequest.description) &&
         Objects.equals(this.natGatewayIds, describeNatGatewaysRequest.natGatewayIds) &&
         Objects.equals(this.natGatewayName, describeNatGatewaysRequest.natGatewayName) &&
+        Objects.equals(this.networkType, describeNatGatewaysRequest.networkType) &&
         Objects.equals(this.pageNumber, describeNatGatewaysRequest.pageNumber) &&
         Objects.equals(this.pageSize, describeNatGatewaysRequest.pageSize) &&
         Objects.equals(this.projectName, describeNatGatewaysRequest.projectName) &&
@@ -285,7 +307,7 @@ public class DescribeNatGatewaysRequest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, natGatewayIds, natGatewayName, pageNumber, pageSize, projectName, spec, subnetId, tagFilters, vpcId);
+    return Objects.hash(description, natGatewayIds, natGatewayName, networkType, pageNumber, pageSize, projectName, spec, subnetId, tagFilters, vpcId);
   }
 
 
@@ -297,6 +319,7 @@ public class DescribeNatGatewaysRequest {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    natGatewayIds: ").append(toIndentedString(natGatewayIds)).append("\n");
     sb.append("    natGatewayName: ").append(toIndentedString(natGatewayName)).append("\n");
+    sb.append("    networkType: ").append(toIndentedString(networkType)).append("\n");
     sb.append("    pageNumber: ").append(toIndentedString(pageNumber)).append("\n");
     sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");

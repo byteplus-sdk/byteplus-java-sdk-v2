@@ -33,11 +33,20 @@ public class ModifyNatGatewayAttributesRequest {
   @SerializedName("Description")
   private String description = null;
 
+  @SerializedName("DirectMode")
+  private Boolean directMode = null;
+
   @SerializedName("NatGatewayId")
   private String natGatewayId = null;
 
   @SerializedName("NatGatewayName")
   private String natGatewayName = null;
+
+  @SerializedName("SmartScheduleEnabled")
+  private Boolean smartScheduleEnabled = null;
+
+  @SerializedName("SmartScheduleRule")
+  private String smartScheduleRule = null;
 
   @SerializedName("Spec")
   private String spec = null;
@@ -58,6 +67,24 @@ public class ModifyNatGatewayAttributesRequest {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public ModifyNatGatewayAttributesRequest directMode(Boolean directMode) {
+    this.directMode = directMode;
+    return this;
+  }
+
+   /**
+   * Get directMode
+   * @return directMode
+  **/
+  @Schema(description = "")
+  public Boolean isDirectMode() {
+    return directMode;
+  }
+
+  public void setDirectMode(Boolean directMode) {
+    this.directMode = directMode;
   }
 
   public ModifyNatGatewayAttributesRequest natGatewayId(String natGatewayId) {
@@ -97,6 +124,42 @@ public class ModifyNatGatewayAttributesRequest {
     this.natGatewayName = natGatewayName;
   }
 
+  public ModifyNatGatewayAttributesRequest smartScheduleEnabled(Boolean smartScheduleEnabled) {
+    this.smartScheduleEnabled = smartScheduleEnabled;
+    return this;
+  }
+
+   /**
+   * Get smartScheduleEnabled
+   * @return smartScheduleEnabled
+  **/
+  @Schema(description = "")
+  public Boolean isSmartScheduleEnabled() {
+    return smartScheduleEnabled;
+  }
+
+  public void setSmartScheduleEnabled(Boolean smartScheduleEnabled) {
+    this.smartScheduleEnabled = smartScheduleEnabled;
+  }
+
+  public ModifyNatGatewayAttributesRequest smartScheduleRule(String smartScheduleRule) {
+    this.smartScheduleRule = smartScheduleRule;
+    return this;
+  }
+
+   /**
+   * Get smartScheduleRule
+   * @return smartScheduleRule
+  **/
+  @Schema(description = "")
+  public String getSmartScheduleRule() {
+    return smartScheduleRule;
+  }
+
+  public void setSmartScheduleRule(String smartScheduleRule) {
+    this.smartScheduleRule = smartScheduleRule;
+  }
+
   public ModifyNatGatewayAttributesRequest spec(String spec) {
     this.spec = spec;
     return this;
@@ -126,14 +189,17 @@ public class ModifyNatGatewayAttributesRequest {
     }
     ModifyNatGatewayAttributesRequest modifyNatGatewayAttributesRequest = (ModifyNatGatewayAttributesRequest) o;
     return Objects.equals(this.description, modifyNatGatewayAttributesRequest.description) &&
+        Objects.equals(this.directMode, modifyNatGatewayAttributesRequest.directMode) &&
         Objects.equals(this.natGatewayId, modifyNatGatewayAttributesRequest.natGatewayId) &&
         Objects.equals(this.natGatewayName, modifyNatGatewayAttributesRequest.natGatewayName) &&
+        Objects.equals(this.smartScheduleEnabled, modifyNatGatewayAttributesRequest.smartScheduleEnabled) &&
+        Objects.equals(this.smartScheduleRule, modifyNatGatewayAttributesRequest.smartScheduleRule) &&
         Objects.equals(this.spec, modifyNatGatewayAttributesRequest.spec);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, natGatewayId, natGatewayName, spec);
+    return Objects.hash(description, directMode, natGatewayId, natGatewayName, smartScheduleEnabled, smartScheduleRule, spec);
   }
 
 
@@ -143,8 +209,11 @@ public class ModifyNatGatewayAttributesRequest {
     sb.append("class ModifyNatGatewayAttributesRequest {\n");
     
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    directMode: ").append(toIndentedString(directMode)).append("\n");
     sb.append("    natGatewayId: ").append(toIndentedString(natGatewayId)).append("\n");
     sb.append("    natGatewayName: ").append(toIndentedString(natGatewayName)).append("\n");
+    sb.append("    smartScheduleEnabled: ").append(toIndentedString(smartScheduleEnabled)).append("\n");
+    sb.append("    smartScheduleRule: ").append(toIndentedString(smartScheduleRule)).append("\n");
     sb.append("    spec: ").append(toIndentedString(spec)).append("\n");
     sb.append("}");
     return sb.toString();
