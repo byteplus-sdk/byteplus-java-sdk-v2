@@ -279,5 +279,6 @@
         <module>byteplus-java-sdk-v2-seccenter20240508</module>
         <module>byteplus-java-sdk-v2-aidap</module>
         <module>byteplus-java-sdk-v2-mse</module>
+        <module>byteplus-java-sdk-v2-hbase</module>
     </modules>
 </project>

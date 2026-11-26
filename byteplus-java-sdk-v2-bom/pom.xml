@@ -361,6 +361,12 @@
                 <optional>false</optional>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.byteplus</groupId>
+                <artifactId>byteplus-java-sdk-v2-hbase</artifactId>
+                <optional>false</optional>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
